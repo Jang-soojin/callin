@@ -220,6 +220,8 @@
 		    //Date range picker
 		    $('#reservation').daterangepicker()})
 		</script>
+		
+		
 		<script type="text/javascript">
 			$(document).ready(function(){
 				// 전체 선택
@@ -240,6 +242,7 @@
 				});
 			});
 			
+			
 			// 선택 시 옮기기
 			function gorallSelect(){
 				var sHtml = "";
@@ -255,6 +258,19 @@
 				
 				$("#moveSlct").append(sHtml);
 			}
+		 	$(document).on("click", function gorSelect(){
+				var sHtml = "";
+				var chkVal = "";
+				
+					
+				
+					
+					if($("#moveSlct option").filter(function(){ return this.value == chkVal; }).length == 0){
+						sHtml += "<option value='" + $(this).val() + "'>" + $(this).closest("td").next().text() + "[" + $(this).closest("td").next().next().text() + "]" + "</option>";
+					}
+				
+				$("#moveSlct").append(sHtml);
+			}); 
 			
 			// 초기화
 			function fnReset(){
