@@ -63,6 +63,8 @@ public class MileageController {
 		  model.addAttribute("studentId", student.getStudentId()); 
 		  model.addAttribute("studentName", student.getStudentName()); 
 		  model.addAttribute("degreeName",  student.getDegreeName());
+			model.addAttribute("title", "마일리지");
+			model.addAttribute("midTitle", "마일리지등록");
 		  
 		  //System.out.println("### map : " + studentService.getTest());
 		 
@@ -81,11 +83,11 @@ public class MileageController {
 	public @ResponseBody Map<String, Object> mileageSearch(@RequestParam Map<String, Object> param, HttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
-		//암튼 여기도 list 타입으로 가져오는 쿼리로 바꿔야하고
+		// list 타입으로 가져오는 쿼리로 
 		param.put("name", "홍길동");
 		param.put("id", "hong");
 		param.put("value", "hong");
-		// 아까 안됫던 이유는 스프링부트 설정 자체가 sql에 설정하는 namespace랑 해당 id 기준으로 찾나봐
+		
 		resultList.add(param);
 		
 		param = new HashMap<String, Object>();
@@ -109,15 +111,15 @@ public class MileageController {
 	@RequestMapping(value="mileageSave")
 	public String mileageSave(@RequestParam Map<String, Object> param, @RequestParam(value="moveSlct", required=false) String[] moveSlcts, HttpServletRequest request) throws Exception {
 		System.out.println("### param : " + param);
-		//여기도 실제 insert문 태우는걸로 바꿔야하구 끝! 이거 다 인천이가 할줄 아는거지? 회사에서 맨날 하는게 그거여 ㅋㅋㅋ 그렇군 암튼 고마웡 ㅎㅎㅎ 웅 담에 봥빠
-		// 지금 moveSlcts 가 없어서 그래 다시 헤바바
+		//여기도 실제 insert문 태우는걸로 
+		//  moveSlcts 가 없어
 		if(moveSlcts != null && moveSlcts.length > 0) {
 			for(String dd : moveSlcts) {
 				System.out.println("### moveSlcts : " + dd);
 			}
 		}
 		
-		return "forward:/mileageAdd";// 구조가 너무 신기하다 xml 파일은 없어? 그건 만들어야해 
+		return "forward:/mileageAdd";
 		
 	}
 
