@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	  	  
+	  
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+<head th:replace="fragments/head :: headFragment"></head>
+	<!-- daterange picker -->
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<div id="wrapper">
+			<!-- begin topNav -->
+			<div th:replace="fragments/topNav :: topNavFragment"></div>
+			<!-- end topNav -->
+			
+			<!-- Main Sidebar Container -->
+			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
+			<th:block layout:fragment="LTApply"> 
+				<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 th:text="${midTitle}"></h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a th:href="@{/admin/LT/LTApply}"> 레벨테스트 관리 </a></li>
+									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+								</ol>
+							</div>
+						</div>
+					</div><!-- /.container-fluid -->
+				</section>
+			
+		<!-- Main content -->
+			<section class="content">
+		      <div class="container-fluid">
+		        <div class="row">
+		          <div class="col-12">
+		
+		            <div class="card card">
+		              <div class="card-header">
+		                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+		                  <label class="btn bg-olive active">
+		                    <input type="radio" name="options" id="option_b1" autocomplete="off" checked="">
+		                    	<a href="/admin/LT/lLTListDetail.html">레벨테스트 상세정보</a>
+		                  </label>
+		                  <label class="btn bg-olive">
+		                    <input type="radio" name="options" id="option_b3" autocomplete="off">
+		                   		<a href="/admin/LT/LTListMynote.html">레벨테스트 학습노트</a>
+		                  </label>
+		                </div>
+		              </div>
+		            </div>
+		
+		              <!-- /.card-header -->
+		            <div class="card card-primary">
+		              <div class="card-header">
+		                <h3 class="card-title">레벨테스트 고객 상세정보</h3>
+		              </div>
+		              <!-- /.card-header -->
+		              <div class="card-body">
+		                <form>
+		                  <div class="row">
+		                    <div class="col-sm-4">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>이메일(ID)</label>
+		                        <input type="email" class="form-control" placeholder="Enter ...">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-4">
+		                      <!-- select -->
+		                      <div class="form-group">
+		                        <label>테스트 진행현황</label>
+		                        <select class="custom-select">
+		                          <option>선택</option>
+		                          <option>1. 진행중</option> <!-- 수강신청 후 강사 배정되면 선택 -->
+		                          <option>2. 완료</option> <!-- 장기 수강신청 결제 후  사정상 휴강중 -->
+		                          <option>3. 취소</option>  <!-- 수강신청 종료 후 재수강 없으면 선택 -->
+		                        </select>
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-4">
+		                      <!-- select -->
+		                      <div class="form-group">
+		                        <label>테스트 진행방식</label>
+		                        <select class="custom-select">
+		                          <option>선택</option>
+		                          <option>화상영어 : Skype</option>
+		                          <option>화상영어 : ZOOM</option>
+		                          <option>전화영어 : 보이스톡(카톡)</option>
+		                          <option>------------------</option>
+		                          <option>전화영어 : 페이스톡</option>
+		                          <option>전화영어 : 선불카드</option>
+		                          <option>화상영어 : etc.</option>
+		                          <option>전화영어 : etc.</option>
+		                        </select>
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-12">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>SNS(Skype, ZOOM, Kakao Talk) 초대 링크</label>
+		                        <input type="text" class="form-control" placeholder="Enter ...">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-6">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>한글 이름</label>
+		                        <input type="text" class="form-control" placeholder="Enter ...">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-6">
+		                      <div class="form-group">
+		                        <label>전화번호</label>
+		                        <input type="text" class="form-control" placeholder="Enter ...">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-6">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>비밀번호</label>
+		                        <input type="text" class="form-control" placeholder="Enter ...">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-6">
+		                      <div class="form-group">
+		                        <label>비밀번호 확인</label>
+		                        <input type="text" class="form-control" placeholder="Enter ...">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-6">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>휴대폰</label>
+		                        <input type="text" class="form-control" placeholder="Enter ...">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-6">
+		                      <!-- select -->
+		                      <div class="form-group">
+		                        <label>고객연락 유/무</label>
+		                        <select class="custom-select">
+		                          <option>선택</option>
+		                          <option>1. 연락완료</option> <!-- 수강신청 후 강사 배정되면 선택 -->
+		                          <option>2. 부재</option> <!-- 장기 수강신청 결제 후  사정상 휴강중 -->
+		                          <option>3. 취소</option>  <!-- 수강신청 종료 후 재수강 없으면 선택 -->
+		                        </select>
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-6">
+		                      <!-- Date and time range -->
+		                      <div class="form-group">
+		                        <label>희망 날짜 시간</label>
+		                        <div class="input-group">
+		                          <input type="text" id="l_HopeDate" name="l_HopeDate" readonly="true" onclick="HolidayCalendar('l_HopeDate','LevelTestAppli'); return false;">
+		                          &nbsp;<img src="/images/calendar01.png" title="" alt="" onclick="HolidayCalendar('l_HopeDate','LevelTestAppli'); return false;">&nbsp;
+		                          <select id="l_HopeHour" name="l_HopeHour">
+		                              <option value="">선택</option>
+		                              <option value="8">06</option>
+		                              <option value="8">07</option>
+		                              <option value="8">08</option>
+		                              <option value="9">09</option>
+		                              <option value="10">10</option>
+		                              <option value="11">11</option>
+		                              <option value="12">12</option>
+		                              <option value="13">13</option>
+		                              <option value="14">14</option>
+		                              <option value="15">15</option>
+		                              <option value="16">16</option>
+		                              <option value="17">17</option>
+		                              <option value="18">18</option>
+		                              <option value="19">19</option>
+		                              <option value="20">20</option>
+		                              <option value="21">21</option>
+		                              <option value="22">22</option>
+		                              <option value="23">23</option>
+		                          </select>
+		                          시 &nbsp;&nbsp;
+		                          <select id="l_HopeMin" name="l_HopeMin">
+		                              <option value="">선택</option>
+		                              <option value="0">00</option>
+		                              <option value="10">10</option>
+		                              <option value="20">20</option>
+		                              <option value="30">30</option>
+		                              <option value="40">40</option>
+		                              <option value="50">50</option>
+		                          </select>
+		                          분
+		                          <!-- <div class="input-group-prepend">
+		                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+		                          </div>
+		                          <input type="text" class="form-control float-right" id="reservationtime"> -->
+		                        </div>
+		                        <!-- /.input group -->
+		                      </div>
+		                      <!-- /.form group -->
+		                    </div>
+		
+		                    <div class="col-sm-6">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>테스트 확정 날짜 시간</label>
+		                        <div class="input-group">
+		                          <input type="text" id="l_HopeDate" name="l_HopeDate" readonly="true" onclick="HolidayCalendar('l_HopeDate','LevelTestAppli'); return false;">
+		                          &nbsp;<img src="/images/calendar01.png" title="" alt="" onclick="HolidayCalendar('l_HopeDate','LevelTestAppli'); return false;">&nbsp;
+		                          <select id="l_HopeHour" name="l_HopeHour">
+		                              <option value="">선택</option>
+		                              <option value="8">06</option>
+		                              <option value="8">07</option>
+		                              <option value="8">08</option>
+		                              <option value="9">09</option>
+		                              <option value="10">10</option>
+		                              <option value="11">11</option>
+		                              <option value="12">12</option>
+		                              <option value="13">13</option>
+		                              <option value="14">14</option>
+		                              <option value="15">15</option>
+		                              <option value="16">16</option>
+		                              <option value="17">17</option>
+		                              <option value="18">18</option>
+		                              <option value="19">19</option>
+		                              <option value="20">20</option>
+		                              <option value="21">21</option>
+		                              <option value="22">22</option>
+		                              <option value="23">23</option>
+		                          </select>
+		                          시 &nbsp;&nbsp;
+		                          <select id="l_HopeMin" name="l_HopeMin">
+		                              <option value="">선택</option>
+		                              <option value="0">00</option>
+		                              <option value="10">10</option>
+		                              <option value="20">20</option>
+		                              <option value="30">30</option>
+		                              <option value="40">40</option>
+		                              <option value="50">50</option>
+		                          </select>
+		                          분
+		                        </div>
+		                        <!-- <div class="input-group date" id="reservationdate" data-target-input="nearest">
+		                          <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+		                          <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+		                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+		                          </div>
+		                        </div> -->
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-6">
+		                      <div class="form-group">
+		                        <label>레벨테스트 강사명</label>
+		                        <input type="text" class="form-control" placeholder="Teacher Name">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-6">
+		                      <div class="form-group">
+		                        <label>레벨 결과</label>
+		                        <input type="text" class="form-control" placeholder="Level 1 ~ 8">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-2">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>결과 평균점수</label>
+		                        <input type="text" class="form-control" placeholder="5개 항목 평점"> <!-- 아래 듣기, 말하기, 발음, 어휘, 문법 평균 점수 자동입력 되도록 진행 바랍니다. -->
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-2">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>1. 듣기</label>
+		                        <input type="text" class="form-control" placeholder="1 ~ 10점 만점">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-2">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>2. 말하기</label>
+		                        <input type="text" class="form-control" placeholder="1 ~ 10점 만점">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-2">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>3. 발음</label>
+		                        <input type="text" class="form-control" placeholder="1 ~ 10점 만점">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-2">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>4. 어휘</label>
+		                        <input type="text" class="form-control" placeholder="1 ~ 10점 만점">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-2">
+		                      <!-- text input -->
+		                      <div class="form-group">
+		                        <label>5. 문법</label>
+		                        <input type="text" class="form-control" placeholder="1 ~ 10점 만점">
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-12">
+		                      <!-- textarea -->
+		                      <div class="form-group">
+		                        <label>학습노트</label>
+		                        <textarea class="form-control" rows="2" placeholder="Enter ..."></textarea>
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-12">
+		                      <!-- textarea -->
+		                      <div class="form-group">
+		                        <label>[강사 전달사항]</label>
+		                        <textarea class="form-control" rows="2" placeholder="Enter ..."></textarea>
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-12">
+		                      <!-- textarea -->
+		                      <div class="form-group">
+		                        <label>학생 요청사항</label>
+		                        <textarea class="form-control" rows="2" placeholder="Enter ..."></textarea>
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-1" style="center">
+		                      <div class="form-group">
+		                        <button type="button" class="btn btn-block btn-success">수정</button>
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-1" style="center">
+		                      <div class="form-group">
+		                        <button type="button" class="btn btn-block btn-warning">취소</button>
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-1" style="center">
+		                      <div class="form-group">
+		                        <button type="button" class="btn btn-block btn-danger">탈퇴</button>
+		                      </div>
+		                    </div>
+		                    <div class="col-sm-1" style="center">
+		                      <div class="form-group">
+		                        <button type="button" class="btn btn-block btn-info">목록</button>
+		                      </div>
+		                    </div>
+		                  </div>
+		                </form>
+		              </div>
+		              <!-- /.card-body -->
+		            </div>
+		            <!-- /.card -->
+		          </div>
+		          <!-- /.col -->
+		        </div>
+		        <!-- /.row -->
+		      </div>
+		      <!-- /.container-fluid -->
+		    </section>
+		<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+			</th:block>
+
+			
+		<div th:replace="fragments/footer :: footerFragment"></div>
+		</div>
+		<!-- jQuery -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<!-- jQuery UI 1.11.4 -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+		  $.widget.bridge('uibutton', $.ui.button)
+		</script>
+		<!-- Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- ChartJS -->
+		<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
+		<!-- Sparkline -->
+		<script th:src="@{/AdminLTE-master/plugins/sparklines/sparkline.js}"></script>
+		<!-- daterangepicker -->
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- date-range-picker -->
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- Tempusdominus Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+		<!-- Summernote -->
+		<script th:src="@{/AdminLTE-master/plugins/summernote/summernote-bs4.min.js}"></script>
+		<!-- overlayScrollbars -->
+		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
+		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		
+		<script>
+			$(function () {
+		    //Date range picker
+		    $('#reservation').daterangepicker()})
+  		</script>
+  		
+		
+		
+		
+</body>
+</html>

@@ -29,6 +29,17 @@ public final LTMapper ltMapper;
 		return null;
 	}
 
+	public static List<LT> getLTListDetail() {
+		
+		return null;
+	}
+
+
+	public static List<LT> getLTListMynote() {
+		
+		return null;
+	}
+
 
 
 

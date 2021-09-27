@@ -64,4 +64,30 @@ public class LTController {
 		
 		return map; 
 	}
+	
+	@GetMapping("/LTListDetail")
+	public String LTListDetail(Model model){ 
+		System.out.println("constroller 실행");
+		
+		List<LT> LTListDetail = LTService.getLTListDetail();
+		System.out.println(LTListDetail);
+		model.addAttribute("title", "레벨테스트 상세정보");
+		model.addAttribute("midTitle", "레벨테스트 상세정보"); 
+		
+		return "LT/LTListDetail"; 
+	}
+	
+	@GetMapping("/LTListMynote")
+	public String LTListMynote(Model model){ 
+		System.out.println("constroller 실행");
+		
+		List<LT> LTListMynote = LTService.getLTListMynote();
+		System.out.println(LTListMynote);
+		model.addAttribute("title", "레벨테스트신청리스트");
+		model.addAttribute("midTitle", "레벨테스트신청리스트"); 
+		
+		return "LT/LTListMynote"; 
+	}
+	
+	
 }

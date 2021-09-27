@@ -12,5 +12,9 @@ public interface LTMapper {
 	public List<LT> getLTList();
 	
 	public List<LT> getLTApplyList();
+	
+	public List<LT> getLTListDetail();
 		
+	public List<LT> LTListMynote();
+	
 }

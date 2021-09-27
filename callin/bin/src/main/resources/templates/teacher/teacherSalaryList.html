@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="@{layout/default}">
+	  
+	  
+	<th:block layout:fragment="customContents"> 
+		<div class="content-wrapper">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 th:text="${midTitle}">급여 정산</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+							<li class="breadcrumb-item active" th:text="${midTitle}">급여 정산</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card card-secondary">
+							<div class="card-header">
+								<h3 class="card-title">검색</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="searchSalaryList" th:action="@{/teacherSalary}"
+									method="post">
+									<table class="table table-bordered table-hover" border="1"
+										style="width: 100%; vertical-align: inherit;">
+										<tr>
+											<td class="searchInfo"><span>키워드 검색</span></td>
+											<td colspan="3"><select
+												class="form-control select2 select2-hidden-accessible"
+												style="width: 100px; display: inline;">
+													<option value="아이디">아이디</option>
+													<option value="이름">이름</option>
+											</select> <input class="form-control" type="text"
+												style="width: 400px; display: inline;"></td>
+										</tr>
+										<tr>
+											<td class="searchInfo"><span>날짜 검색 </span></td>
+											<td colspan="3">
+												<div>
+													<div class="input-group">
+														<div class="input-group-prepend">
+															<span class="input-group-text"> <i
+																class="far fa-calendar-alt"></i>
+															</span>
+														</div>
+														<input type="text" class="form-control float-right"
+															id="reservation" style="width: 200px;">
+													</div>
+													<!-- /.input group -->
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="searchInfo"><span>지급 강사 </span></td>
+											<td><select
+												class="form-control select2 select2-hidden-accessible">
+													<option value="">강사 선택</option>
+													<option value="아이디">아이디</option>
+													<option value="이름">이름</option>
+											</select></td>
+											<td class="searchInfo"><span>금액 </span></td>
+
+											<td><select
+												class="form-control select2 select2-hidden-accessible"
+												style="width: 100px; display: inline;">
+													<option value="">선택</option>
+													<option value="아이디">아이디</option>
+													<option value="이름">이름</option>
+											</select> <input type="text" class="form-control"
+												style="width: 300px; display: inline;"></td>
+										</tr>
+									</table>
+									<div class="row">
+									<div class="col-md-4">
+											
+									</div>
+									<div class="col-md-3" style="align-items: center;">
+										<div>
+											<button type="button" class="btn btn-block btn-dark btn-md float-right" style="width:30%; margin-left: 20px;">검색</button>
+										</div>
+										<div>
+											<button type="button" class="btn btn-block btn-default btn-md disabled float-right" style="width:33%; border-color:#68736a" >초기화</button>
+										</div>
+									</div>
+									<div class="col-md-5">
+									
+									</div>
+									</div>
+								</form>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card1 -->
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">강사료 정산 리스트</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="chooseTeacher" th:action="@{/teacherSalary}"
+									method="post">
+									<table id="example2" class="table table-bordered table-hover"
+										style="text-align: center;">
+										<thead>
+											<tr>
+												<th><input type="checkbox"></th>
+												<th>No.</th>
+												<th>강사명</th>
+												<th>강사ID</th>
+												<th>정산일자 </th>
+												<th>금액</th>
+												<td>메모</td>
+												<td>지급여부</td>
+												<td>지급일자</td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="teacher : ${teacherList}">
+												<th><input type="checkbox"></th>
+												<td class="ID">
+													<span class="teacherId">[[${teacher.teacherId}]]</span>
+													<input type="hidden" id="teacherId" name="teacherId" th:value="${teacher.teacherId}"></td>
+												<td th:text="${teacher.teacherName}"></td>
+												<td th:text="${teacher.contractType}"></td>
+												<td th:text="${teacher.hourlyRate}"></td>
+												<th>금액</th>
+												<td>메모</td>
+												<td>지급여부</td>
+												<td>지급일자</td>
+											</tr>
+
+										</tbody>
+									</table>
+								</form>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card2 -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+	</div>
+	<!-- jQuery -->
+<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- DataTables  & Plugins -->
+<script th:src="@{/AdminLTE-master/plugins/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/jszip/jszip.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/pdfmake/pdfmake.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/pdfmake/vfs_fonts.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.html5.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.print.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/AdminLTE-master/dist/js/adminlte.min.js}"></script>
+<!-- AdminLTE for demo purposes -->
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+	
+</script>
+	</th:block>
+</html>

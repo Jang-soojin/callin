@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	  	  
+	  
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+<head th:replace="fragments/head :: headFragment"></head>
+	<!-- daterange picker -->
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<div id="wrapper">
+			<!-- begin topNav -->
+			<div th:replace="fragments/topNav :: topNavFragment"></div>
+			<!-- end topNav -->
+			
+			<!-- Main Sidebar Container -->
+			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
+			<th:block layout:fragment="LTApply"> 
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 th:text="${midTitle}"></h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a th:href="@{/admin/LT/LTApply}"> 레벨테스트 관리 </a></li>
+									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+								</ol>
+							</div>
+						</div>
+					</div><!-- /.container-fluid -->
+				</section>
+			
+		<!-- Main content -->
+				<section class="content">
+			      <div class="container-fluid">
+			        <div class="row">
+			          <div class="col-12">
+			
+			            <div class="card card">
+			              <div class="card-header">
+			                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+			                  <label class="btn bg-olive">
+			                    <input type="radio" name="options" id="option_b1" autocomplete="off">
+			                    <a href="/admin/LT/lLTListDetail.html">레벨테스트 상세정보</a>
+			                  </label>
+			                  <label class="btn bg-olive active">
+			                    <input type="radio" name="options" id="option_b3" autocomplete="off" checked="">
+			                    <a href="/admin/LT/LTListMynote.html">레벨테스트 학습노트</a>
+			                  </label>
+			                </div>
+			              </div>
+			            </div>
+			
+			              <!-- /.card-header -->
+			            <div class="card card-info">
+			              <div class="card-header">
+			                <h3 class="card-title">학습노트</h3>
+			              </div>
+			              <!-- /.card-header -->
+			              <div class="card-body">
+			                  <div class="row">
+			                    <div class="col-sm-12">
+			                    
+			                    
+			                    
+			                    선생님 코멘트 키노트
+			                    
+			                    
+			                    
+			                    </div>
+			                    <div class="col-sm-3">
+			                      <!-- text input -->
+			                      <div class="form-group">
+			                        <label>강사명</label>
+			                        <input type="text" class="form-control" placeholder="강사명..">
+			                      </div>
+			                    </div>
+			                    <div class="col-sm-3">
+			                      <div class="form-group">
+			                        <label>교육과정</label>
+			                        <input type="text" class="form-control" placeholder="수강 교육과정..">
+			                      </div>
+			                    </div>
+			                    <div class="col-sm-3">
+			                      <div class="form-group">
+			                        <label>작성날짜</label>
+			                        <input type="text" class="form-control" placeholder="작성날짜.."><!-- 작성 날짜 자동으로 등록 진행 바랍니다. -->
+			                      </div>
+			                    </div>
+			
+			                    <div class="col-sm-12">
+			                      <div class="form-group">
+			                        <div class="text-center">
+			                          <button2 type="submit" class="button2"><a href="/admin/leveltest/leveltest_data_mynote.html" style="color: #ffffff;">글저장</a>
+			                          </button2>
+			                        </div>
+			                      </div>
+			                    </div>
+			                    <br>
+			                      <div class="col-sm-12">
+			                        <div class="form-group">
+			                          <div class="table-container">
+			                            <!-- table-container 20201121 추가-->
+			                            <table class="table" style="border-top: 3px solid #4cbcd0; border-bottom: 1px solid #4cbcd0;">
+			                              <tbody>
+			                                <tr style="background-color: #e4e4e4;">
+			                                  <th style="text-align: center">선택</th>
+			                                  <th style="text-align: center">NO</th>
+			                                  <th style="text-align: center">교육과정</th>
+			                                  <th style="text-align: center">강사명</th>
+			                                  <th style="text-align: center">작성일</th>
+			                                  <th style="text-align: center">내용선택</th>
+			                                </tr><tr>
+			                                  <td>
+			                                    <div class="form-check">
+			                                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+			                                    </div>
+			                                  </td>
+			                                  <td style="text-align: center">3</td>
+			                                  <td style="text-align: center">일반성인회화</td>
+			                                  <td style="text-align: center">Becca</td>
+			                                  <td style="text-align: center">2121-03-02</td>
+			                                  <td style="text-align: center">
+			                                      <button3 class="button3">최근내용</button3>
+			                                  </td>
+			                                </tr>
+			                                <tr>
+			                                  <td>
+			                                    <div class="form-check">
+			                                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+			                                    </div>
+			                                  </td>
+			                                  <td style="text-align: center">2</td>
+			                                  <td style="text-align: center">비지니스</td>
+			                                  <td style="text-align: center">Becca</td>
+			                                  <td style="text-align: center">2121-02-10</td>
+			                                  <td style="text-align: center">
+			                                      <button2 class="button2">내용보기</button2>
+			                                  </td>
+			                                </tr>
+			                                <tr>
+			                                  <td>
+			                                    <div class="form-check">
+			                                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+			                                    </div>
+			                                  </td>
+			                                  <td style="text-align: center">1</td>
+			                                  <td style="text-align: center">시험영어</td>
+			                                  <td style="text-align: center">Cendy</td>
+			                                  <td style="text-align: center">2121-01-11</td>
+			                                  <td style="text-align: center">
+			                                      <button2 class="button2">내용보기</button2>
+			                                  </td>
+			                                </tr>
+			                              </tbody>
+			                            </table>
+			                          </div>
+			                        </div>
+			                      </div>
+			                      <div class="col-sm-12">
+			                        <div class="form-group">
+			                          <div class="text-center">
+			                            <button3 type="submit" class="button3"><a href="/admin/leveltest/leveltest_data_mynote.html" style="color: #ffffff;">선택삭제</a></button3>
+			                          </div>
+			                        </div>
+			                      </div>
+			                      <!-- /.card-body -->
+			                      <div class="col-sm-12">
+			                        <div class="card-footer clearfix">
+			                          <ul class="pagination pagination-sm m-0 float-right">
+			                            <li class="page-item"><a class="page-link" href="#">«</a></li>
+			                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+			                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+			                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+			                            <li class="page-item"><a class="page-link" href="#">»</a></li>
+			                          </ul>
+			                        </div>
+			                      </div>
+			                  </div>
+			              </div>
+			              <!-- /.card-body -->
+			            </div>
+			            <!-- /.card -->
+			          </div>
+			          <!-- /.col -->
+			        </div>
+			        <!-- /.row -->
+			      </div>
+			      <!-- /.container-fluid -->
+			    </section>
+		<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+			</th:block>
+
+			
+		<div th:replace="fragments/footer :: footerFragment"></div>
+		</div>
+		<!-- jQuery -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<!-- jQuery UI 1.11.4 -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+		  $.widget.bridge('uibutton', $.ui.button)
+		</script>
+		<!-- Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- ChartJS -->
+		<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
+		<!-- Sparkline -->
+		<script th:src="@{/AdminLTE-master/plugins/sparklines/sparkline.js}"></script>
+		<!-- daterangepicker -->
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- date-range-picker -->
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- Tempusdominus Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+		<!-- Summernote -->
+		<script th:src="@{/AdminLTE-master/plugins/summernote/summernote-bs4.min.js}"></script>
+		<!-- overlayScrollbars -->
+		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
+		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		
+		<script>
+			$(function () {
+		    //Date range picker
+		    $('#reservation').daterangepicker()})
+  		</script>
+  		
+		
+		
+		
+</body>
+</html>

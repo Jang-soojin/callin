@@ -3,6 +3,7 @@ package callinedu.callin.domain;
 public class LT {
 	private String classType;
 	private String studentId;
+	private String userEmail;
 	private String krName;
 	private String enName;
 	private String skypeId;
@@ -12,10 +13,11 @@ public class LT {
 	
 	public LT() {}
 	
-	public LT(String classType, String userId, String krName, String enName
+	public LT(String classType, String studentId, String userEmail,String krName, String enName
 					, String skypeId, String userPhone, String tdate, String requestedTerm) {
 		this.classType = classType;
 		this.studentId = studentId;
+		this.userEmail = userEmail;
 		this.krName = krName;
 		this.enName = enName;
 		this.skypeId = skypeId;
@@ -32,12 +34,20 @@ public class LT {
 		this.classType = classType;
 	}
 
-	public String getUserId() {
+	public String getStudentId() {
 		return studentId;
 	}
 
-	public void setUserId(String studentId) {
+	public void setStudentId(String studentId) {
 		this.studentId = studentId;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	public String getKrName() {
@@ -93,8 +103,10 @@ public class LT {
 		StringBuilder builder = new StringBuilder();
 		builder.append("LT [classType=");
 		builder.append(classType);
-		builder.append(", userId=");
+		builder.append(", studentId=");
 		builder.append(studentId);
+		builder.append(", userEmail=");
+		builder.append(userEmail);
 		builder.append(", krName=");
 		builder.append(krName);
 		builder.append(", enName=");
@@ -110,6 +122,8 @@ public class LT {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 	
 	
 	
