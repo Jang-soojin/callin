@@ -10,5 +10,7 @@ import callinedu.callin.domain.LT;
 public interface LTMapper {
 	
 	public List<LT> getLTList();
+	
+	public List<LT> getLTApplyList();
 		
 }
