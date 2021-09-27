@@ -261,9 +261,6 @@
 		 	$(document).on("click", function gorSelect(){
 				var sHtml = "";
 				var chkVal = "";
-				
-					
-				
 					
 					if($("#moveSlct option").filter(function(){ return this.value == chkVal; }).length == 0){
 						sHtml += "<option value='" + $(this).val() + "'>" + $(this).closest("td").next().text() + "[" + $(this).closest("td").next().next().text() + "]" + "</option>";
