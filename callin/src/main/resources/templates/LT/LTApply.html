@@ -2,6 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	  	  
+	  
 <th:block layout:fragment="customTitle">
 	<title th:text="${title}"></title>
 </th:block>
@@ -39,12 +45,11 @@
 			    <!-- Main content -->
 		<section class="content">
 		<div class="con">
-		<form method="post" name="ftest" id="ftest" class="sky-form" action="/registration/free_test_ok.exe.php" onsubmit="return ck_form();" target="h_frame">
+		<form method="get" name="ftest" id="ftest" class="sky-form" action="/admin/LT/LTApply" onsubmit="return ck_form();" target="h_frame">
 			<input type="hidden" name="ckd_email" class="ckd_email" value="1">
 			<input type="hidden" name="userid" value="3765">
 			<input type="hidden" name="shop_id" value="nilenglish">
 			<div class="title">
-				<h2>레벨테스트 신청</h2>
 					<ul>
 						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i>  레벨테스트는 월~금 9~22시 사이에 신청가능하며, 10~15분 정도 진행됩니다.</li>
 						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i>  주말과 공휴일에는 레벨테스트를 진행하지 않습니다.</li>
@@ -73,8 +78,8 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="userId" value="" style="background:#fff">
-											<b id="username_msg" class="tooltip tooltip-top-right">아이디를 입력해 주세요.</b>
+											<input type="text" name="studentId" value="" style="background:#fff">
+											<b id="studentname_msg" class="tooltip tooltip-top-right">아이디를 입력해 주세요.</b>
 										</label>
 									</div>
 								</td>
@@ -184,13 +189,13 @@
 		,300);
 	}
 	
-	//=== 레벨테스트 
+	//=== 레벨테스트 유효성검사
 	function ck_form() { 
 		var form = document.getElementById('ftest');
 	
-		if(form.userId.value=="") {	
+		if(form.studentId.value=="") {	
 			alert("아이디를 입력하세요");
-			form.userId.focus(); 
+			form.studentId.focus(); 
 			return false;
 		}
 		
@@ -225,15 +230,6 @@
 			form.tdate.focus();
 			return false;
 		}
-	
-		var tDay = form.tdate.value.split(" ");
-		var cDay = tDay[0].split("-");
-		cDate = new Date(cDay[0], cDay[1]-1, cDay[2]);
-		if(cDate.getDay()==6 || cDate.getDay()==0){
-			alert("토요일, 일요일에는 무료체험수업을 진행하지 않습니다.");
-			form.tdate.value="";
-			return false;
-		}	
 	}
 	</script>
 	
@@ -292,7 +288,8 @@
     font-size: 9pt;
     line-height: 13pt;
 }
-#nday {position:static;}
+#datepicker {position:static;}
+
 </style>
 
 		<!-- Modal Window -->
@@ -318,23 +315,25 @@
 								</tbody>
 							</table>
 							<p><font class="fc18"><strong>파란색</strong> : 예약가능</font> / <font class="fc20"><strong>빨강색</strong> : 예약불가</font></p>
-							<form method="post" name="selDay" id="selDay" class="sky-form">
+							<form method="get" name="selDay" id="selDay" class="sky-form">
 								<div class="input-group">
 									<span class="input-group-btn">
-										<button type="button" id="sDate" class="btn btn-info"><i class="fa fa-calendar"></i> 수업날짜</button>
+										<input type="text" name="datepicker" id="datepicker" maxlength="10" readonly="" style="position:none;" >
+										<button type="button" id="sDate" class="btn btn-info"> 수업날짜 조회</button>
 									</span>
-									<input type="text" class="form-control hasDatepicker" name="nday" id="nday" value="" maxlength="10" readonly="" style="position:none;">
 								</div>
 							</form>
 							<table class="table table-bordered">
 								<tbody>
-									
-									
-									
+									<tr class="td_16 linetop1px" th:each="num : ${#numbers.sequence(9,21)}">
+										<td class="td_16 linetop1px" th:text="${num + '시'}">
+										</td>
+										<th:block th:each="part : ${#numbers.sequence(0,5)} ">
+											<td class="td_17 fc18 choice-part" th:text="${(part * 10) + '분'}" th:data-time="${num}" th:data-part="${part}"></td>
+										</th:block>
+									</tr>
 								</tbody>
 							</table>
-				
-	
 					</div>
 				</div>
 			</div>
@@ -377,11 +376,95 @@
 		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
 		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		
 		<script>
 			$(function () {
 		    //Date range picker
 		    $('#reservation').daterangepicker()})
-		</script>
+		    
+			$( function() {
+			$( "#datepicker" ).datepicker();});
+  		</script>
+  		
+		<script type="text/javascript">
+		
+		
+			$('.choice-part').click(function(){
+				
+				var getTd = $(this);
+				var time = Number($(this).attr('data-time'));
+				var part = Number($(this).attr('data-part'));
+				var nday =  document.getElementById('datepicker');
+				
+				if(nday.value == ''){
+					alert('날짜를 선택해주세요.')
+					return false;
+				}
+				
+				
+				var request = $.ajax({
+				  url: "/admin/LT/LTApplyListAjax",
+				  method: "POST",
+				  data: { time:time, part:part, nday:nday.value},
+				  dataType: "json"
+				});
+				 
+				request.done(function( data ) {
+				 	console.log(data)
+				 	
+				 	if(data.result == 1){
+				 		
+				 		var cDay = nday.value.split("-");
+						cDate = new Date(cDay[0], cDay[1]-1, cDay[2]);
+						if(cDate.getDay()==6 || cDate.getDay()==0){
+							alert("토요일, 일요일에는 레벨테스트를 진행하지 않습니다.");
+							nday.value="";
+							return false;
+						}
+						
+						if(time ==0) {
+							nday.value = "";
+						}
+						
+						if(time < 10) time = "0" + time;
+						if(part < 10) part = "0" + part;
+						
+						setDateTime(nday.value+" " + time + "시 " + part + "분");
+						//getTd.addClass('fc20').removeClass('fc18');
+				 		
+				 	}else{
+				 		getTd.addClass('fc20').removeClass('fc18');
+				 		alert('수강신청을 하실 수 없습니다.');
+				 	}
+				 	
+				 	
+				 	
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+					
+				
+				
+				
+			});
+				
+			$("#datepicker").datepicker({
+					dateFormat:"yy-mm-dd",
+					showOtherMonths:true,
+					selectOthereMonths:true,
+					changeMonth:true,
+					changeYear:true
+				}).change(function() {
+					$("#bf-modal").removeData('modal');
+					$("#bf-modal").find(".modal-body").load("/registration/free_time.exe.php?nday="+document.getElementById('datepicker').value);
+				});
+			
+			$('#sDate').click(function(){
+			    $('#nday').css('position','static').datepicker("show");
+			});
+</script>
 		
 </body>
 </html>
