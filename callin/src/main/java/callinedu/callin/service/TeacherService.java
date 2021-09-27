@@ -22,8 +22,6 @@ public class TeacherService {
 		System.out.println("service.getTeacherList 실행");
 		
 		List<Teacher> teacherList = teacherMapper.getTeacherList();
-		System.out.println("티쳐리스트"+teacherList);
-		System.out.println(teacherList);
 		
 		return teacherList;
 	}
@@ -31,10 +29,14 @@ public class TeacherService {
 		System.out.println("service.getTeacherInfoById 실행");
 		
 		Teacher teacher = teacherMapper.getTeacherInfoById(teacherId);
-		System.out.println("티쳐 한 명"+teacher);
-		System.out.println(teacher);
 		
 		return teacher;
+	}
+	public int getTotalWorkHour(String teacherId,String dateRange1,String dateRange2 ){
+		System.out.println("service.getTotalWorkHour 실행");
+		int totalWorkHour = teacherMapper.getTotalWorkHour(teacherId, dateRange1, dateRange2);
+		System.out.println(totalWorkHour);
+		return totalWorkHour;
 	}
 		
 }

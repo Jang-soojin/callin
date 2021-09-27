@@ -10,4 +10,5 @@ import callinedu.callin.domain.Teacher;
 public interface TeacherMapper {
 	public List<Teacher> getTeacherList();
 	public Teacher getTeacherInfoById(String teacherId);
+	public int getTotalWorkHour(String teacherId, String dateRange1,String dateRange2);
 }

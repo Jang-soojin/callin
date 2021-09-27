@@ -35,15 +35,16 @@
 									</thead>
 									<tbody>
 										<tr th:each="teacher : ${teacherList}">
-											<td class="ID">
+											<td class="id">
 												<span class="teacherId">[[${teacher.teacherId}]]</span>
 												<input type="hidden" id="teacherId" name="teacherId" th:value="${teacher.teacherId}">
 											</td>
-											<td th:text="${teacher.teacherName}"></td>
-											<td th:text="${teacher.contractType}"></td>
-											<td th:text="${teacher.hourlyRate}"></td>
+											<td th:text="${teacher.teacherName}" class="name"></td>
+											<td th:text="${teacher.contractType}" class="contract"></td>
+											<td th:text="${teacher.hourlyRate}" class="hourlyRate"></td>
 											<td>
-												<a th:href="@{/teacherSalary(teacherId=${teacher.teacherId})}" class="pick")>선택</a>
+												<a th:href="@{#}" class="pick")>선택</a>
+<!-- 												<a th:href="@{/admin/teacher/teacherSalary(teacherId=${teacher.teacherId})}" class="pick")>선택</a> -->
 											</td>
 										</tr>
 	
@@ -107,22 +108,58 @@
   });
 	
 </script>
+
 <script>
-    $("#update_btn").click(function(){
-        var CT = $("#chooseTeacher").serialize(); // 해당하는 frm을 serialize를 해줍니다. ajax로 데이터를 보내기위해서 하는 작업입니다.
-        var pick = $(".pick").val(); // id값은 기본키이자 바뀌면안되는것이고 id값으로 조건을 줄꺼라서 고유 id 값을 받아옵니다.
-        $.ajax({
-            type : "post", // post방식으로 전송
-            url : "teacherSalary", // controller로 보낼 url
-            data : CT, // data로는 위에서 serialize한 frm을 보냅니다.
-            async : false, // 전역변수 사용을 위해서 설정해준다
-            dataType : "json", // serialize하면 json형태로 값을 보내줘야합니다.
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8", // 인코딩 설정
-            success : function(data){
-                $(opener.document).find("tr[id=" + pick + "]>td[id=teacherId]").text(data.teacherId); // 보모창에서 현재 변경될 td를 찾은 후 값을 변경해줍니다.
-                self.close(); // 변경 후 자식 창을 받아줍니다.
-            }
-        });
+    $(".pick").click(function(){
+    	var id = '';
+    	var name = '';
+    	var contract = '';
+    	var hourlyRate = '';
+    	var length = $(".pick").parents("tr").children(".id").length;
+    	
+    	for(var i=0; i<length ; i++){
+    		var buttonNumber = $(".pick")[i]
+    		if(this==buttonNumber){
+    			id=$($(".pick")[i]).parents("tr").children(".id")[0].innerText;
+    			name=$($(".pick")[i]).parents("tr").children(".name")[0].innerText;
+    			contract=$($(".pick")[i]).parents("tr").children(".contract")[0].innerText;
+    			hourlyRate=$($(".pick")[i]).parents("tr").children(".hourlyRate")[0].innerText;
+    		}
+    	}
+    	
+    	/* ********************************************** */
+    	//$.ajax() 호출시 ajax에 관련된 객체를 반환한다.
+		var request = $.ajax({
+		url: "/admin/teacher/teacherSalaryAjax", //요청 url
+		method: "POST", //요청 방식
+		data: {	 teacherId : id
+				,teacherName : name
+        		,contractType : contract
+        		,hourlyRate : hourlyRate}, //요청하는 곳에 전달될 데이타
+		dataType: "json" //응답되어 받은 데이타를 parsing 시킬 방식
+		});
+		//반환된 객체에는 done메서드가 있으며, 요청과 응답이 정상적으로 
+		//이루어 졌을 경우 해당 메서드가 실행이 된다.
+		request.done(function(data){
+			//강사 정보 부모창으로 가져오기
+			$($(opener.document).find("input")[2]).val(data.teacherId)
+			$($(opener.document).find("input")[3]).val(data.teacherName)
+			$($(opener.document).find("input")[4]).val(data.contractType)
+			$($(opener.document).find("input")[5]).val(data.hourlyRate)
+			
+			//정산 상세 내역 초기화
+			$($(opener.document).find("input")[8]).val('')
+			$($(opener.document).find("input")[9]).val('')
+			$($(opener.document).find("input")[10]).val('')
+			$($(opener.document).find("input")[11]).val('')
+			$($(opener.document).find("input")[12]).val('')
+			window.close();
+    	});
+		//반환된 객체에는 fail메서드가 있으며,
+		//응답 중 에러가 발생하거나, 데이타 parsing에러시 해당 메서드가 실행된다.
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		});
     });
 </script>
 

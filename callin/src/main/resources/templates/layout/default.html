@@ -18,11 +18,12 @@
 			<!-- Main Sidebar Container -->
 			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
 
-			<div th:replace="fragments/content :: contentFragment"></div>
+			<div style="overflow:scroll;">
+				<th:block layout:fragment ="customContents"></th:block>
+			</div>
 
 			<div th:replace="fragments/footer :: footerFragment"></div>
 			
-			<div th:replace="teacher/teacherSalary :: customContents"></div>
 		</div>
 		
 		<!-- jQuery -->
@@ -50,19 +51,14 @@
 		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
 		
-		<!-- 김경수의 자바스크립트 코드 시작  -->
-		<script type="text/javascript">
-		 function popUp(){
-				var popupOpt = 'width=820px, height=777px, left=100, top=100, scrollbar=no'; 
-				var popHref = 'teacherList';
-			  	open(popHref, "페이지 이름 뭐하지", popupOpt);
-			  }
-		</script>
+			<script>
+		$(function() {
+			//Date range picker
+			$('#reservation').daterangepicker()
+		})
+	</script>
 		
 	</body>
 </html>

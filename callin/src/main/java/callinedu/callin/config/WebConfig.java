@@ -26,6 +26,7 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(commonInterceptor)
 				.addPathPatterns("/**")
 				.excludePathPatterns("/css/**")
+				.excludePathPatterns("/AdminLTE-master/**")
 				.excludePathPatterns("/favicon.ico");
 		
 		registry.addInterceptor(menuInterceptor)
