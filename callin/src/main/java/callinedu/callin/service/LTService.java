@@ -22,9 +22,14 @@ public final LTMapper ltMapper;
 
 	public static List<LT> getLTList() {
 		
+		return null;
+	}
+	public static List<LT> getLTApplyList() {
 		
 		return null;
 	}
+
+
 
 
 	

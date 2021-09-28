@@ -2,7 +2,7 @@ package callinedu.callin.domain;
 
 public class LT {
 	private String classType;
-	private String userId;
+	private String studentId;
 	private String krName;
 	private String enName;
 	private String skypeId;
@@ -15,7 +15,7 @@ public class LT {
 	public LT(String classType, String userId, String krName, String enName
 					, String skypeId, String userPhone, String tdate, String requestedTerm) {
 		this.classType = classType;
-		this.userId = userId;
+		this.studentId = studentId;
 		this.krName = krName;
 		this.enName = enName;
 		this.skypeId = skypeId;
@@ -33,11 +33,11 @@ public class LT {
 	}
 
 	public String getUserId() {
-		return userId;
+		return studentId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserId(String studentId) {
+		this.studentId = studentId;
 	}
 
 	public String getKrName() {
@@ -94,7 +94,7 @@ public class LT {
 		builder.append("LT [classType=");
 		builder.append(classType);
 		builder.append(", userId=");
-		builder.append(userId);
+		builder.append(studentId);
 		builder.append(", krName=");
 		builder.append(krName);
 		builder.append(", enName=");
