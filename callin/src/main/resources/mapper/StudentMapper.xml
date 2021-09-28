@@ -3,11 +3,29 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="callinedu.callin.mapper.StudentMapper">
-
+	
+		<resultMap type="student" id="studentResultMap">
+		<result property="studentId" 			column="student_id"/>
+		<result property="userName" 			column="user_name"/>
+		<result property="studentDegreeCode" 	column="student_degree_code"/>
+		<result property="studentDegreeName" 	column="student_degree_name"/>
+	</resultMap>
+	
+	
 	<select id="getTest" resultType="java.lang.String">
 		SELECT
 			1 AS AA
 		FROM DUAL
 	</select>
+	
+	<select id ="getStudentList" resultMap="studentResultMap">
+	    SELECT
+	    	user_id
+		   ,user_name
+	    FROM
+			user_info
+	    WHERE user_level = "학생"
+
+</select>
 
 </mapper>

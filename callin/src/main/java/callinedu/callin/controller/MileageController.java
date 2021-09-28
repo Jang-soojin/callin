@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import callinedu.callin.domain.Student;
+import callinedu.callin.domain.Teacher;
 import callinedu.callin.service.StudentService;
 
 
@@ -28,43 +29,19 @@ public class MileageController {
 		this.studentService = studentService;
 	}
 	
-	
-	
-	/*
-	 * @GetMapping("/mileageAdd") public String
-	 * mileageAdd(@RequestParam(name="studentId", required = false) String
-	 * studentId, Model model) { if(studentId!=null) { student student =
-	 * studentService.getStudentInfoById(studentId); System.out.println(student+"");
-	 * model.addAttribute("studentId", student.getStudentId());
-	 * model.addAttribute("studentName", student.getStudentName());
-	 * model.addAttribute("degreeName", student.getDegreeName()); }
-	 * System.out.println("GET으로 실행"); model.addAttribute("title", "");
-	 * model.addAttribute("midTitle", ""); model.addAttribute("cardTitle", "");
-	 * 
-	 * return "mileage/mileageAdd"; }
-	 * 
-	 * @PostMapping("/mileageAdd") public String mileageAddPost(student studentInfo,
-	 * Model model) { System.out.println(""+studentInfo); student student =
-	 * studentService.getStudentInfoById("id001"); System.out.println(student+"");
-	 * model.addAttribute("studentId", student.getStudentId());
-	 * model.addAttribute("studentName", student.getStudentName());
-	 * model.addAttribute("degreeName", student.getDegreeName()); return
-	 * "/mileage/mileageAdd"; }
-	 * 
-	 * 
-	 */
 	  @RequestMapping(value="mileageAdd") 
 	  public String mileageAddPost(Student studentInfo, Model model) { 
 		
 		  System.out.println(""+studentInfo); 
 		  Student student = new Student();
-		  //student student = studentService.getStudentInfoById("id001"); // 지금 db 연결 안되어있잖앙ㅇㅇ 그래서 에러나는겨아까는 에러 안났어싾아 db연결 안되어있어서 내가 주석으로 막아논거였어아하
+		  //student student = studentService.getStudentInfoById("id001"); 
 		  System.out.println(student+"");
 		  model.addAttribute("studentId", student.getStudentId()); 
-		  model.addAttribute("studentName", student.getStudentName()); 
-		  model.addAttribute("degreeName",  student.getDegreeName());
-			model.addAttribute("title", "마일리지");
-			model.addAttribute("midTitle", "마일리지등록");
+		  model.addAttribute("userName", student.getUserName()); 
+		  model.addAttribute("studentDegreeCode",  student.getStudentDegreeCode());
+		  model.addAttribute("studentDegreeName",  student.getStudentDegreeName());
+		  model.addAttribute("title", "마일리지");
+		  model.addAttribute("midTitle", "마일리지등록");
 		  
 		  //System.out.println("### map : " + studentService.getTest());
 		 
@@ -79,28 +56,26 @@ public class MileageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="mileageSearch")
+	/*@RequestMapping(value="mileageSearch")
 	public @ResponseBody Map<String, Object> mileageSearch(@RequestParam Map<String, Object> param, HttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
-		// list 타입으로 가져오는 쿼리로 
-		param.put("name", "홍길동");
-		param.put("id", "hong");
-		param.put("value", "hong");
-		
-		resultList.add(param);
-		
-		param = new HashMap<String, Object>();
-		param.put("name", "홍길동2");
-		param.put("id", "hong22");
-		param.put("value", "hong22");
-		resultList.add(param);
+		List<Map<String, Object>> resultList = studentService.studentList();
+
 		
 		resultMap.put("resultList", resultList);
 		
 		return resultMap;
-	}
-	
+	}*/
+		@PostMapping(value="/mileageSearch", produces = "application/json")
+		@ResponseBody
+		public Student mileageSearch(Student studentInfo, Model model) {
+			model.addAttribute("studentId", studentInfo.getStudentId());
+			model.addAttribute("userName", studentInfo.getUserName()); 
+		    model.addAttribute("studentDegreeCode",  studentInfo.getStudentDegreeCode());
+			model.addAttribute("studentDegreeName",  studentInfo.getStudentDegreeName());
+		
+			return  studentInfo;
+		}
 	/**
 	 * 저장
 	 * @param param
