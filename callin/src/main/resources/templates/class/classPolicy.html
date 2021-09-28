@@ -202,46 +202,36 @@
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
 		<!-- AdminLTE for demo purposes -->
-		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
 		<script>
 			$(function () {
 		    //Date range picker
 		    $('#reservation').daterangepicker()})
 		</script>
+		<!-- 정책 이름 중복확인 에이잭스 부분 -->
 		<script type="text/javascript">
 		$(function(){
 			$("#policyCheck").on("click", function(){
-				
-			    var classPolicyName = $("#classPolicyName").val();
-			    var sendData = {"classPolicyName":classPolicyName}
-			    $.ajax({
-			        method : 'POST',
-			        url : 'classPolicyNameCheck',
-			        data : sendData,
-			        success : function(resp){
-			            if(resp=='fail'){
-			            	$('#available').css('display', 'none');
-			            	$('#in_use').css('display', 'inline');
-			                flag=false;
-			  
-			            }else{
-			            	$('#available').css('display', 'inline');
-			            	$('#in_use').css('display', 'none');
-			                flag=true;
-			            }}
+				var classPolicyName = $("#classPolicyName").val();
+				var sendData = {"classPolicyName":classPolicyName}
+				$.ajax({
+					method : 'POST',
+					url : 'classPolicyNameCheck',
+					data : sendData,
+					success : function(resp){
+						if(resp=='fail'){
+							$('#available').css('display', 'none');
+							$('#in_use').css('display', 'inline');
+							flag=false;
+						}else{
+							$('#available').css('display', 'inline');
+							$('#in_use').css('display', 'none');
+							flag=true;
+						}
+					}
 			    })	
-				
 			});
 		})
-		
-		function classPolicyNameCheck(policyName){
-		}
 		</script>
-		
-		<!-- $('선택자').css('display', 'none'); -->
-		<!-- $('선택자').css('display', 'inline'); -->
-		
 </body>
 </html>
