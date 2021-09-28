@@ -10,12 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import callinedu.callin.domain.ClassPolicy;
+import callinedu.callin.domain.Mileage;
 import callinedu.callin.domain.Student;
 import callinedu.callin.domain.Teacher;
 import callinedu.callin.service.StudentService;
@@ -82,18 +85,23 @@ public class MileageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="mileageSave")
-	public String mileageSave(@RequestParam Map<String, Object> param, @RequestParam(value="moveSlct", required=false) String[] moveSlcts, HttpServletRequest request) throws Exception {
+	public String mileageSave(@RequestParam Map<String, Object> param, @RequestParam(value="moveSlct", required=false) String[] moveSlcts, HttpServletRequest request, Mileage mileage ) throws Exception {
 		System.out.println("### param : " + param);
 		//여기도 실제 insert문 태우는걸로 
 		//  moveSlcts 가 없어
 		if(moveSlcts != null && moveSlcts.length > 0) {
 			for(String dd : moveSlcts) {
 				System.out.println("### moveSlcts : " + dd);
+				int result = studentService.addMileage(mileage);
+				
 			}
-		}
-		
-		return "forward:/mileageAdd";
-		
+			
+			
+			
+			
+		}	
+		return "redirect:/admin/maileage/maileageAdd";
+			
 	}
 
 

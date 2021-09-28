@@ -50,7 +50,43 @@
 	    FROM
 			user_info
 	    WHERE user_level = "학생"
-
-</select>
+	</select>
+	
+ 	<resultMap type="mileage" id="mailageResultMap">
+		<result property="mileageUseCode"            	column="mileage_use_code"/>
+		<result property="studentId"                  	column="mileage_user_rea_code"/>
+		<result property="mileagDeductDate" 			column="mileag_deduct"/>
+		<result property="mileageAnticipate_del_date" 	column="mileage_use_group_code"/>
+		<result property="mileageUse_group_code" 		column="mileage_use_group_code_table"/>
+		<result property="mileageUse_group_code_table" 	column="mileage_group_code"/>
+		<result property="mileageGroup_code" 			column="mileag_deduct"/>
+	</resultMap>
+	
+ 			<insert id="addMileage" parameterType="mileage">
+			    <selectKey keyProperty="mileageUseCode" resultType="int" order="BEFORE">
+			        SELECT MAX(mileage_use_code) + 1 FROM mileage_use
+			    </selectKey>
+					INSERT INTO mileage_use
+					(   mileage_use_code
+					   ,student_id
+					   ,mileage_user_rea_code
+					   ,mileag_deduct_date
+					   ,mileag_deduct
+					   ,mileage_anticipate_del_date
+					   ,mileage_use_group_code
+					   ,mileage_use_group_code_table
+					   ,mileage_group_code
+					) VALUES (
+					    #{mileageUseCode}
+					   ,#{studentId}
+					   ,#{mileageUserReaCode}
+					   ,CURDATE()
+					   ,#{mileagDeduct}
+					   ,CURDATE()
+					   ,#{mileageUse_group_code}
+					   ,#{mileageUse_group_code_table}
+					   ,#{"mileageGroup_code"}
+					);	
+	</insert>
 
 </mapper>
