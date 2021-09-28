@@ -58,5 +58,5 @@
 			class_policy
 	    WHERE
 			class_policy_name = #{classPolicyName};
-</select>
+	</select>
 </mapper>

@@ -53,23 +53,23 @@
 									<div class="col-sm-2">
 			                        <!-- select -->
 				                        <div class="form-group">
-				                            <select class="custom-select">
-				                                <option>이름</option>
-				                                <option>이메일</option>
-				                                <option>전화번호</option>
+				                            <select class="custom-select levelSearchKey">
+				                                <option value="studentName">이름</option>
+				                                <option value="studentEmail">이메일</option>
+				                                <option value="studentTel">전화번호</option>
 				                            </select>
 				                        </div>
 	                    			</div>
 					                    <div class="col-sm-5">
 					                        <!-- text input -->
 					                        <div class="form-group">
-					                            <input type="text" name="search" class="form-control" placeholder="검색어를 입력하세요.">
+					                            <input type="text" name="search" class="form-control" placeholder="검색어를 입력하세요." id="lTApplySearch">
 					                        </div>
 					                    </div>
 					                    <div class="col-sm-1">
 					                        <!-- text input -->
 					                        <div class="form-group">
-					                            <button type="button" class="btn btn-block btn-outline-success btn-md">검색</button>
+					                            <button type="button" class="btn btn-block btn-outline-success btn-md" id="LTApplySearchCheck">검색</button>
 					                        </div>
 					                    </div>
 					                    <div class="col-sm-5">
@@ -90,28 +90,9 @@
 						               
 	                			</div>
 	            			</div>
-					<div class="card-header">
-	                	<h3 class="card-title">Search에서 고객정보 전체 검색가능</h3>
-	              	</div>
 		              	<!-- /.card-header -->
 						<div class="card-body">
 		                	<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-		                		<div class="row">
-		                			<div class="col-sm-12 col-md-6">
-		                				<div class="dt-buttons btn-group flex-wrap">
-		                   					<div class="btn-group">
-							                   <button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="example1" type="button" aria-haspopup="true" aria-expanded="false">
-							                   	<span>Column visibility</span>
-							                   </button>
-											</div>
-		                   				</div>
-		                   			</div>
-		                   		<div class="col-sm-12 col-md-6">
-				                   <div id="example1_filter" class="dataTables_filter">
-										<label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1"></label>
-				                   </div>
-		                   		</div>
-		                   </div>
 						<div class="row">
 							<div class="col-sm-12">
 								<table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -129,63 +110,20 @@
 										</tr>
 		                  			</thead>
 									<tbody>
-										<tr role="row" class="odd">
+				                  		<tr role="row" class="odd" id="ltList">
 						                    <td class="dtr-control sorting_1" tabindex="0">
 							                    <div class="form-check">
 							                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
 							                    </div>
 						                    </td>
-						                    <td>0007</td>
-						                    <td>2020-12-08</td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">김준호</a></td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">123@123.com</a></td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">010-1234-1234</a></td>
-						                    <td>전화영어/Skepe</td>
-						                    <td>2021-01-30/진행중</td>
-				                 	 	</tr>
-				                  		<tr role="row" class="even">
-						                    <td class="dtr-control sorting_1" tabindex="0">
-							                    <div class="form-check">
-							                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-							                    </div>
-						                    </td>
-						                    <td>0008</td>
+						                    <td>0001</td>
 						                    <td>2020-12-07</td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">김준호</a></td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">123@123.com</a></td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">010-1234-1234</a></td>
-						                    <td>전화영어/Skepe</td>
-						                    <td>2021-01-30/완료</td>
-				                  		</tr>
-				                  		<tr role="row" class="odd">
-						                    <td class="dtr-control sorting_1" tabindex="0">
-							                    <div class="form-check">
-							                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-							                    </div>
-						                    </td>
-						                    <td>0009</td>
-						                    <td>2020-12-07</td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">이강민</a></td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">123@123.com</a></td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">010-1234-1234</a></td>
+						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">이희진</a></td>
+						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">123@123.com</a></td>
+						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">010-1234-1234</a></td>
 						                  	<td>전화영어/카톡</td>
 						                    <td>2021-01-30/취소</td>
 				                  		</tr>
-					                  	<tr role="row" class="odd">
-						                    <td class="sorting_1 dtr-control">
-							                    <div class="form-check">
-							                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-							                    </div>
-						                    </td>
-						                    <td>0011</td>
-						                    <td>2020-12-07</td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">이강민</a></td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">123@123.com</a></td>
-						                    <td><a href="/admin/LT/LTListDetail.html" class="nav-link">010-1234-1234</a></td>
-						                    <td>전화영어/Skepe</td>
-						                    <td>2021-01-30/진행중</td>
-						                  </tr>
-						                <tr role="row" class="even">
 									</tbody>
 								</table>
 							</div>
@@ -260,16 +198,79 @@
 		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
 		
 		<script>
 			$(function () {
 		    //Date range picker
 		    $('#reservation').daterangepicker()})
   		</script>
+  		<script type="text/javascript">
+		$(function(){
+			$("#LTApplySearchCheck").on("click", function(){
+				
+			    var levelSearchKey = $('.levelSearchKey').val();
+			    var lTApplySearchValue = $("#lTApplySearch").val();
+			    console.log(levelSearchKey)
+			    console.log(lTApplySearchValue)
+			    var htmltag = "";
+			    var sendData = {"levelSearchKey":levelSearchKey, "lTApplySearchValue":lTApplySearchValue};
+			    $.ajax({
+			        method : 'POST',
+			        url : '/admin/LT/LTApplyListBySearch',
+			        data : sendData,
+			        dataType:'json',
+			        success : function(data){
+			        	for(var i=0; i<data.length; i++){
+			        		
+			        		
+			        		htmltag += '<td class="dtr-control sorting_1" tabindex="0">';
+			        		htmltag += '<div class="form-check">';
+			        		htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
+			        		htmltag += '</div>';
+			        		htmltag += "</td>";
+			        		htmltag += "<td>";
+			        		htmltag += (i+1);
+			        		htmltag += "</td>";
+			        		htmltag += "<td>";
+			        		htmltag += data[i].lTApplyDate;
+			        		htmltag += "</td>";
+			        		htmltag += '<td><a href="/admin/LT/LTListDetail" class="nav-link">';
+			        		htmltag += data[i].user.userName;
+			        		htmltag += '</a></td>';
+			        		htmltag += "</td>";
+			        		htmltag += "<td>";
+			        		htmltag += data[i].user.userEmail;
+			        		htmltag += "</td>";
+			        		htmltag += "<td>";
+			        		htmltag += data[i].user.userPhone;
+			        		htmltag += "</td>";
+			        		
+			        		htmltag += "<td>전화영어/Skype</td>";
+			        		htmltag += "<td>2021-01-30/진행중</td>";
+			        	}
+			        	
+			        	
+			        	
+			        	/*
+			            if(resp=='fail'){
+			            	$('#available').css('display', 'none');
+			            	$('#in_use').css('display', 'inline');
+			                flag=false;
+			  
+			            }else{
+			            	$('#available').css('display', 'inline');
+			            	$('#in_use').css('display', 'none');
+			                flag=true;
+			            }*/
+			    console.log(data[0]);
+			    $("#ltList").html(htmltag);
+			        }
+			    });
+				
+			});
+		})
+		</script>
   		
 		
 		

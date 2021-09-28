@@ -10,21 +10,8 @@ public class LT {
 	private String userPhone;
 	private String tdate;
 	private String requestedTerm;
+
 	
-	public LT() {}
-	
-	public LT(String classType, String studentId, String userEmail,String krName, String enName
-					, String skypeId, String userPhone, String tdate, String requestedTerm) {
-		this.classType = classType;
-		this.studentId = studentId;
-		this.userEmail = userEmail;
-		this.krName = krName;
-		this.enName = enName;
-		this.skypeId = skypeId;
-		this.userPhone = userPhone;
-		this.tdate = tdate;
-		this.requestedTerm = requestedTerm;
-	}
 
 	public String getClassType() {
 		return classType;
@@ -98,6 +85,18 @@ public class LT {
 		this.requestedTerm = requestedTerm;
 	}
 
+	public LT(String classType, String studentId, String userEmail,String krName, String enName
+			, String skypeId, String userPhone, String tdate, String requestedTerm) {
+		this.classType = classType;
+		this.studentId = studentId;
+		this.userEmail = userEmail;
+		this.krName = krName;
+		this.enName = enName;
+		this.skypeId = skypeId;
+		this.userPhone = userPhone;
+		this.tdate = tdate;
+		this.requestedTerm = requestedTerm;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -122,6 +121,8 @@ public class LT {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+
 
 	
 	
