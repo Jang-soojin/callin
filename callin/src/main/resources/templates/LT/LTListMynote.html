@@ -70,12 +70,16 @@
 			              </div>
 			              <!-- /.card-header -->
 			              <div class="card-body">
-			                  <div class="row">
+			              	<div class="col-sm-12">
+								<div class="row">
 			                  	<!-- 섬머노트 시작 -->
-			                    <div class="col-sm-12">
-			                  		<textarea name="content" id="summernote" class="summernote"></textarea>
-			                    </div>
-			                    <!-- 섬머노트 끝 -->
+				                  	<div class="form-group">
+				                  		<label>선생님 코멘트</label>
+					                    <div class="col-sm-12">
+					                  		<textarea name="content" id="summernote" class="summernote"></textarea>
+					                    </div>
+				                    <!-- 섬머노트 끝 -->
+				                    </div>
 			                    <div class="col-sm-3">
 			                      <!-- text input -->
 			                      <div class="form-group">
@@ -95,15 +99,18 @@
 			                        <input type="text" class="form-control" placeholder="작성날짜.."><!-- 작성 날짜 자동으로 등록 진행 바랍니다. -->
 			                      </div>
 			                    </div>
+			                    </div>
 			
 			                    <div class="col-sm-12">
 			                      <div class="form-group">
 			                        <div class="text-center">
-			                          <button2 type="submit" class="button2"><a href="/admin/leveltest/leveltest_data_mynote.html" style="color: #ffffff;">글저장</a>
-			                          </button2>
+			                          <button type="submit" class="btn btn-secondary">
+			                          	<a href="" style="color: #ffffff;">글저장</a>
+			                          </button>
 			                        </div>
 			                      </div>
 			                    </div>
+			                    
 			                    <br>
 			                      <div class="col-sm-12">
 			                        <div class="form-group">
@@ -129,7 +136,7 @@
 			                                  <td style="text-align: center">Becca</td>
 			                                  <td style="text-align: center">2121-03-02</td>
 			                                  <td style="text-align: center">
-			                                      <button3 class="button3">최근내용</button3>
+			                                      <button class="btn btn-secondary">내용보기</button>
 			                                  </td>
 			                                </tr>
 			                                <tr>
@@ -143,7 +150,7 @@
 			                                  <td style="text-align: center">Becca</td>
 			                                  <td style="text-align: center">2121-02-10</td>
 			                                  <td style="text-align: center">
-			                                      <button2 class="button2">내용보기</button2>
+			                                      <button class="btn btn-secondary">내용보기</button>
 			                                  </td>
 			                                </tr>
 			                                <tr>
@@ -157,7 +164,7 @@
 			                                  <td style="text-align: center">Cendy</td>
 			                                  <td style="text-align: center">2121-01-11</td>
 			                                  <td style="text-align: center">
-			                                      <button2 class="button2">내용보기</button2>
+			                                      <button class="btn btn-secondary">내용보기</button>
 			                                  </td>
 			                                </tr>
 			                              </tbody>
@@ -168,7 +175,7 @@
 			                      <div class="col-sm-12">
 			                        <div class="form-group">
 			                          <div class="text-center">
-			                            <button3 type="submit" class="button3"><a href="/admin/leveltest/leveltest_data_mynote.html" style="color: #ffffff;">선택삭제</a></button3>
+			                            <button type="submit" class="btn btn-secondary">선택삭제</button>
 			                          </div>
 			                        </div>
 			                      </div>
