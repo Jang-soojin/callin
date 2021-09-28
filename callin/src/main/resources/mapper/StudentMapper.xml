@@ -4,13 +4,38 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="callinedu.callin.mapper.StudentMapper">
 	
-		<resultMap type="student" id="studentResultMap">
-		<result property="studentId" 			column="student_id"/>
+	<resultMap type="student" id="studentResultMap">
+		<result property="studentId" 			column="user_id"/>
 		<result property="userName" 			column="user_name"/>
 		<result property="studentDegreeCode" 	column="student_degree_code"/>
 		<result property="studentDegreeName" 	column="student_degree_name"/>
 	</resultMap>
 	
+	<select id="getMemberListBySearch" parameterType="map" resultMap="studentResultMap">
+		SELECT
+			 ui.user_id
+			,ui.user_name
+			,sd.student_degree_code
+			,sd.student_degree_name
+		FROM
+			user_info AS ui
+			INNER JOIN 
+			student AS s
+			ON 
+			ui.user_id = s.student_id
+			INNER JOIN
+			student_degree AS sd
+			ON 
+			s.student_degree_code = sd.student_degree_code
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchDegree != null and searchDegree != ''">
+				sd.student_degree_name LIKE CONCAT('%', #{searchDegree}, '%')
+			</if>
+			<if test="searchKey != null and searchKey != ''">
+				AND ${searchKey} LIKE CONCAT('%',#{searchValue}, '%')
+			</if>
+		</trim>
+	</select>
 	
 	<select id="getTest" resultType="java.lang.String">
 		SELECT

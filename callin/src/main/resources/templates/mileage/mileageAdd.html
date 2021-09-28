@@ -61,13 +61,13 @@
 																		<div class="BtnTBlack20" style="margin:0px 0 5px 5px;padding:5px 0 5px 0;">
 																			<select id="schMemGrade" name="schMemGrade" class="NSelect25">
 																				<option value="">전체 등급</option>
-																				<option value="">아이언</option>
-																				<option value="">브론즈</option>
-																				<option value="">실버</option>
-																				<option value="">골드</option>
-																				<option value="">다이아몬드</option>
+																				<option value="iron">아이언</option>
+																				<option value="bronze">브론즈</option>
+																				<option value="silver">실버</option>
+																				<option value="gold">골드</option>
+																				<option value="diamond">다이아몬드</option>
 																			</select>
-																			<select name="schGubun" class="NSelect25" onkeypress="if(event.keyCode==13) sch_Go();">
+																			<select id="schUser" name="schGubun" class="NSelect25" onkeypress="if(event.keyCode==13) sch_Go();">
 																				<option value="" selected="selected">검색 항목</option>
 																				<option value="schGubun_ID">아이디</option>
 																				<option value="schGubun_Name">이름</option>
@@ -100,16 +100,16 @@
 																							</tr>
 																						</thead>
 																						<tbody>
-																							<tr onmouseover="this.style.backgroundColor=&quot;#F2F6FF&quot;" onmouseout="this.style.backgroundColor=&quot;&quot;" style="">
+																							<tr th:each="student : ${searchList}" onmouseover="this.style.backgroundColor=&quot;#F2F6FF&quot;" onmouseout="this.style.backgroundColor=&quot;&quot;" style="">
 																								<td>
 																									<input type="hidden" id="s_MemSKU" name="s_MemSKU" value="ST_IT73931" />
 																									<input value="아이티맵[itmap]|ST_IT73931@@" type="checkbox" name="LCheck_List" />
 																								</td>
-																								<td>아이티맵</td>
-																								<td>itmap</td>
+																								<td th:text="${student.userName}"></td>
+																								<td th:text="${student.studentId}"></td>
 																								<td class="align_c">
 																									<div class="BtnGray15 align_c">
-																										<button type="button" class="btn btn-secondary" onclick="gorSelect('아이티맵[itmap]|ST_IT73931@@')" title="선택"><span>선택</span></button>
+																										<button th:href="@{/admin/mileage/mileageAdd}" type="button" class="btn btn-secondary" onclick="gorSelect('아이티맵[itmap]|ST_IT73931@@')" title="선택"><span>선택</span></button>
 																									</div>
 																								</td>
 																							</tr>
@@ -181,7 +181,7 @@
 										</tbody>
 									</table>
 									<div style="text-align:center; margin-bottom:10px;">
-										<button type="button" class="btn btn-secondary" id="saveBtn">저장</button>
+										<button type="submit" class="btn btn-secondary" id="saveBtn">저장</button>
 									</div>
 								</div><!-- /.container-fluid -->
 							</section>
@@ -250,6 +250,17 @@
 					frm.method = "POST";
 					frm.submit();
 				});
+				
+				$(document).on('click','.selectStudent',function(){
+					console.log($(this).attr('data-info'));
+					var sHtml = "";
+					
+					if($("#moveSlct option").filter(function(){ return this.value == chkVal; }).length == 0){
+						sHtml += "<option value='" + $(this).attr('data-info') + "'>" + $(this).attr('data-info') + "</option>";
+					}
+					
+					$("#moveSlct").append(sHtml);
+				});
 			});
 			
 			
@@ -276,14 +287,47 @@
 			
 			// 검색
 			function fnSearch(){
+				var searchDegree = $('#schMemGrade').val();
+				var searchKey = $('#schUser').val();
+				var searchValue = $('#schText').val();
+				var searchDataObj = {};
+				searchDataObj.searchDegree = searchDegree;
+				searchDataObj.searchKey = searchKey;
+				searchDataObj.searchValue = searchValue;
+				
 				$.ajax({
-					url : "/admin/mileage/mileageSearch"
+					  url : "/admin/mileage/mileageSearch"
+					, contentType:'application/json'
 					, dataType : "json"
+					, data : JSON.stringify(searchDataObj)
 					, type : "post"
-					, async : false
-					, success : function(reText, stText, xhr){
+					, success : function(data){
+						console.table(data);
+						
+						var searchListLength = data.length;
 						var sHtml = "";
 						
+						$(".search_student_table tbody").html("");
+						if(searchListLength > 0){							
+							for(var i = 0;  i < searchListLength; i++){							
+								sHtml += '<tr onmouseover="this.style.backgroundColor=&quot;#F2F6FF&quot;" onmouseout="this.style.backgroundColor=&quot;&quot;" style="">';
+								sHtml += '	<td>';
+								sHtml += '		<input type="hidden" id="s_MemSKU" name="s_MemSKU" value="ST_IT73931" />';
+								sHtml += '		<input value="' + data[i].userName + '[' + data[i].studentId + ']|ST_IT73931@@" type="checkbox" name="LCheck_List" />';
+								sHtml += '	</td>';
+								sHtml += '	<td>' + data[i].userName + '</td>';
+								sHtml += '	<td>' + data[i].studentId + '</td>';
+								sHtml += '	<td class="align_c">';
+								sHtml += '		<div class="BtnGray15 align_c">';
+								sHtml += '			<button type="button" class="btn btn-secondary selectStudent" data-info="'+ data[i].userName + '[' + data[i].studentId + ']' +'" title="선택"><span>선택</span></button>';
+								sHtml += '		</div>';
+								sHtml += '		</td>';
+								sHtml += '</tr>';
+							}
+						}
+						$(".search_student_table tbody").append(sHtml);
+						
+						/*
 						$(".search_student_table tbody").html("");
 						
 						for(var i = 0; i < reText.resultList.length; i++){
@@ -295,13 +339,14 @@
 							sHtml += "</tr>";
 						}
 						
-						$(".search_student_table tbody").append(sHtml);
+						$(".search_student_table tbody").append(sHtml);*/
 					}
-					, error : function(){
+					, error : function(reText, stText, xhr){
 						alert("조회 중 오류가 발생하였습니다.");
 						return false;
 					}
 				});
+				
 			}
 		</script>
 		

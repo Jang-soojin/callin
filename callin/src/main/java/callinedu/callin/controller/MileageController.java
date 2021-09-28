@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -66,16 +67,13 @@ public class MileageController {
 		
 		return resultMap;
 	}*/
-		@PostMapping(value="/mileageSearch", produces = "application/json")
-		@ResponseBody
-		public Student mileageSearch(Student studentInfo, Model model) {
-			model.addAttribute("studentId", studentInfo.getStudentId());
-			model.addAttribute("userName", studentInfo.getUserName()); 
-		    model.addAttribute("studentDegreeCode",  studentInfo.getStudentDegreeCode());
-			model.addAttribute("studentDegreeName",  studentInfo.getStudentDegreeName());
-		
-			return  studentInfo;
-		}
+	@PostMapping(value="/mileageSearch", produces = "application/json")
+	@ResponseBody
+	public List<Student> mileageSearch(@RequestBody Map<String, Object> paramMap) {
+		System.out.println(paramMap);
+		List<Student> searchList = studentService.getMemberListBySearch(paramMap);
+		return  searchList;
+	}
 	/**
 	 * 저장
 	 * @param param
