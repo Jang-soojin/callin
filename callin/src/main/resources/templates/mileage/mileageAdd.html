@@ -109,7 +109,7 @@
 																								<td>itmap</td>
 																								<td class="align_c">
 																									<div class="BtnGray15 align_c">
-																										<button type="button" id="selectBtn" class="btn btn-secondary" onclick="gorSelect('아이티맵[itmap]|ST_IT73931@@')" title="선택"><span>선택</span></button>
+																										<button type="button" class="btn btn-secondary" onclick="gorSelect('아이티맵[itmap]|ST_IT73931@@')" title="선택"><span>선택</span></button>
 																									</div>
 																								</td>
 																							</tr>
@@ -253,10 +253,10 @@
 			});
 			
 			
-			// 선택 시 옮기기
+			// 체크 시 옮기기
 			function gorallSelect(){
 				var sHtml = "";
-				var chkVal = "";
+				var chkVal = "";ㅌ
 				
 				$("input[name=LCheck_List]:checked").each(function(){
 					chkVal = $(this).val();
