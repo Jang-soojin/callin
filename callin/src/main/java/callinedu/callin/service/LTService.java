@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import callinedu.callin.domain.LT;
 import callinedu.callin.domain.LTApplyCode;
@@ -25,13 +26,13 @@ public class LTService {
 		this.ltMapper = ltMapper;
 	}
 	
-	public List<LTApplyCode> getLTApplyListBySearchKey(String levelSearchKey, String lTApplySearchValue){
-		
+	public List<LTApplyCode> getLTApplyListBySearchKey(String levelSearchKey, String lTApplySearchValue, String searchStartDate, String searchEndDate){
+
 		if("studentName".equals(levelSearchKey)) 	levelSearchKey = "user_name";
 		if("studentEmail".equals(levelSearchKey)) 	levelSearchKey = "user_email";
 		if("studentTel".equals(levelSearchKey))		levelSearchKey = "user_phone";
 		
-		List<LTApplyCode> lTApplyCodeList = ltMapper.getLTApplyListBySearchKey(levelSearchKey, lTApplySearchValue);
+		List<LTApplyCode> lTApplyCodeList = ltMapper.getLTApplyListBySearchKey(levelSearchKey, lTApplySearchValue, searchStartDate, searchEndDate );
 		
 		log.info("LTService 검색된 리스트: {}", lTApplyCodeList);
 		

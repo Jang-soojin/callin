@@ -32,10 +32,13 @@
 			user_info AS u
 		ON
 			u.user_id=l.student_id
-		<trim prefix="WHERE">
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
 			<if test="levelSearchKey != null and levelSearchKey != ''">
 				${levelSearchKey} LIKE CONCAT('%', #{lTApplySearchValue} ,'%')
-			</if>										
+			</if>
+			<if test="searchStartDate != null and searchStartDate != ''">
+				AND DATE(lt_apply_date) BETWEEN #{searchStartDate} AND #{searchEndDate}
+			</if>
 		</trim>
 	</select>
 	
