@@ -2,6 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	  	  
+	  
 <th:block layout:fragment="customTitle">
 	<title th:text="${title}"></title>
 </th:block>
@@ -17,7 +23,7 @@
 			<!-- Main Sidebar Container -->
 			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
 			<th:block layout:fragment="LTApply"> 
-				<!-- Content Wrapper. Contains page content -->
+			<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 				<section class="content-header">
@@ -36,17 +42,16 @@
 					</div><!-- /.container-fluid -->
 				</section>
 			
-			    <!-- Main content -->
+		<!-- Main content -->
 		<section class="content">
 		<div class="con">
-		<form method="post" name="ftest" id="ftest" class="sky-form" action="/registration/free_test_ok.exe.php" onsubmit="return ck_form();" target="h_frame">
+		<form method="get" name="ftest" id="ftest" class="sky-form" action="/admin/LT/LTApply" onsubmit="return ck_form();" target="h_frame">
 			<input type="hidden" name="ckd_email" class="ckd_email" value="1">
 			<input type="hidden" name="userid" value="3765">
 			<input type="hidden" name="shop_id" value="nilenglish">
 			<div class="title">
-				<h2>레벨테스트 신청</h2>
 					<ul>
-						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i>  레벨테스트는 월~금 9~22시 사이에 신청가능하며, 10~15분 정도 진행됩니다.</li>
+						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i>  레벨테스트는 월~금 9~22시 사이에 신청가능하며, 10분 진행됩니다.</li>
 						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i>  주말과 공휴일에는 레벨테스트를 진행하지 않습니다.</li>
 						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i>  평가결과는 홈페이지 &gt; 마이페이지에서 확인하실 수 있습니다.</li>
 						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i><font color="red">  선생님과의 시간조정으로 최대 앞뒤 30분정도 시간이 변경될수도 있습니다.</font></li>
@@ -73,8 +78,8 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="userId" value="" style="background:#fff">
-											<b id="username_msg" class="tooltip tooltip-top-right">아이디를 입력해 주세요.</b>
+											<input type="text" name="studentId" value="" style="background:#fff">
+											<b id="studentname_msg" class="tooltip tooltip-top-right">아이디를 입력해 주세요.</b>
 										</label>
 									</div>
 								</td>
@@ -117,6 +122,18 @@
 							</td>
 						  </tr> -->
 						  <tr>
+							<th class="linetop1px">이메일</th>
+								<td>
+									<div class="form-group">
+										<label class="input">
+											<i class="icon-append fa fa-envelope"></i>
+											<input type="tel" name="userEmail" value="" style="background:#fff">
+											<b class="tooltip tooltip-top-right">이메일을 입력해 주세요.</b>
+										</label>
+									</div>
+								</td>
+						  </tr>
+						  <tr>
 							<th class="linetop1px">연락처</th>
 								<td>
 									<div class="form-group">
@@ -148,94 +165,62 @@
 						  </tr>
 					</tbody>
 				</table>
-			</div>
 			<!-- /.container-fluid -->
 				<div style="text-align:center;">
-				  <input type="submit" class="btn btn-lg btn-primary" value="레벨테스트신청">
-				  <input type="button" class="btn btn-lg btn-warning" value="취소하기" data-dismiss="modal">
+				  <input type="submit" class="btn btn-secondary" value="레벨테스트신청">
 				</div>
-			</form>
 			</div>
+		</form>
+	</div>
+			<!-- Modal Window -->
+		<div class="modal fade" id="bf-modal" tabindex="-2" role="dialog" aria-labelledby="bf-header-title2" style="z-index: 9999; display: none;">
+	  		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="modal-header-title2" style="font-weight:bolder;">레벨테스트 시간 선택</h4>
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+		  			</div>
+		  				<div class="modal-body">
+		  					<table style="width:100%;">
+								<tbody>
+									<tr>
+										<td class="fc03"><i class="fa fa-arrow-right"></i> 레벨테스트를 받길 원하시는 시간을 선택하여주세요.</td>
+									</tr>
+									<tr>
+										<td class="fc03">&nbsp;&nbsp;<font color="#CC3300">(금일 기준 2주 이내로만 신청 가능합니다.)</font></td>
+									</tr>
+									<tr>
+										<td class="fc03"><i class="fa fa-arrow-right"></i> 월~금 9~22시</td>
+									</tr>
+								</tbody>
+							</table>
+							<p><font class="fc18"><strong>파란색</strong> : 예약가능</font> / <font class="fc20"><strong>빨강색</strong> : 예약불가</font></p>
+							<form method="get" name="selDay" id="selDay" class="sky-form">
+								<div class="input-group">
+									<span class="input-group-btn">
+										<input type="text" name="datepicker" id="datepicker" maxlength="10" readonly="" style="position:none;" >
+										<button type="button" id="sDate" class="btn btn-info"> 수업날짜 조회</button>
+									</span>
+								</div>
+							</form>
+							<table class="table table-bordered">
+								<tbody>
+									<tr class="td_16 linetop1px" th:each="num : ${#numbers.sequence(9,21)}">
+										<td class="td_16 linetop1px" th:text="${num + '시'}">
+										</td>
+										<th:block th:each="part : ${#numbers.sequence(0,5)} ">
+											<td class="td_17 fc18 choice-part" th:text="${(part * 10) + '분'}" th:data-time="${num}" th:data-part="${part}"></td>
+										</th:block>
+									</tr>
+								</tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+		</div>
 		</section>
-		
-		<!-- /.content -->
+	<!-- /.content -->
 	<!-- /.content-wrapper -->
-	
-	<script type="text/javascript">
-
-	//=== 레벨테스트
-	function selTime(){
-		$('#bf-modal .modal-title').html('레벨테스트 시간 선택');
-		var margin_left = parseInt(270)*(-1);
-			
-		$('#bf-modal').modal({
-			show:true,
-			backdrop:false
-		}).find(".modal-body").load("/registration/free_time.exe.php");
-	}
-	
-	function setDateTime(d) {
-		$("#bf-modal").modal('hide');
-		$("#bf-modal").removeData('modal');
-		
-		setTimeout(function() { 
-			$(document.body).addClass('modal-open');
-			document.getElementById('tdate').value = d ; }
-		,300);
-	}
-	
-	//=== 레벨테스트 
-	function ck_form() { 
-		var form = document.getElementById('ftest');
-	
-		if(form.userId.value=="") {	
-			alert("아이디를 입력하세요");
-			form.userId.focus(); 
-			return false;
-		}
-		
-		if(form.krName.value=="") {	
-			alert("한글이름을 입력하세요");
-			form.krName.focus(); 
-			return false;
-		}
-	
-		if(form.enName.value=="") {	
-			alert("영문닉네임을 입력하세요");
-			form.enName.focus(); 
-			return false;
-		}
-		
-		//=== 전화번호 체크
-		if(form.userPhone.value=="") {
-			alert("연락처를 입력하세요");
-			form.userPhone.focus();
-			return false;
-		}
-	
-		/* if($('input[name=cway]:checked').val()==3 && form.skype.value=="") {	
-			if(confirm("스카이프로 신청하실 경우 스카이프 아이디가 필요합니다. 지금 입력하시겠습니까?")) {
-				form.skype.focus(); 
-				return false;
-			}
-		} */
-		
-		if(form.tdate.value=="") {	
-			alert("테스트 가능한 날짜를 입력하세요");
-			form.tdate.focus();
-			return false;
-		}
-	
-		var tDay = form.tdate.value.split(" ");
-		var cDay = tDay[0].split("-");
-		cDate = new Date(cDay[0], cDay[1]-1, cDay[2]);
-		if(cDate.getDay()==6 || cDate.getDay()==0){
-			alert("토요일, 일요일에는 무료체험수업을 진행하지 않습니다.");
-			form.tdate.value="";
-			return false;
-		}	
-	}
-	</script>
 	
 <style>
 .td_16 {
@@ -292,53 +277,12 @@
     font-size: 9pt;
     line-height: 13pt;
 }
-#nday {position:static;}
+#datepicker {position:static;}
+
 </style>
 
-		<!-- Modal Window -->
-		<div class="modal fade" id="bf-modal" tabindex="-2" role="dialog" aria-labelledby="bf-header-title2" style="z-index: 9999; display: none;">
-	  		<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" id="modal-header-title2" style="font-weight:bolder;">레벨테스트 시간 선택</h4>
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-		  			</div>
-		  				<div class="modal-body">
-		  					<table style="width:100%;">
-								<tbody>
-									<tr>
-										<td class="fc03"><i class="fa fa-arrow-right"></i> 레벨테스트를 받길 원하시는 시간을 선택하여주세요.</td>
-									</tr>
-									<tr>
-										<td class="fc03">&nbsp;&nbsp;<font color="#CC3300">(금일 기준 2주 이내로만 신청 가능합니다.)</font></td>
-									</tr>
-									<tr>
-										<td class="fc03"><i class="fa fa-arrow-right"></i> 월~금 9~22시</td>
-									</tr>
-								</tbody>
-							</table>
-							<p><font class="fc18"><strong>파란색</strong> : 예약가능</font> / <font class="fc20"><strong>빨강색</strong> : 예약불가</font></p>
-							<form method="post" name="selDay" id="selDay" class="sky-form">
-								<div class="input-group">
-									<span class="input-group-btn">
-										<button type="button" id="sDate" class="btn btn-info"><i class="fa fa-calendar"></i> 수업날짜</button>
-									</span>
-									<input type="text" class="form-control hasDatepicker" name="nday" id="nday" value="" maxlength="10" readonly="" style="position:none;">
-								</div>
-							</form>
-							<table class="table table-bordered">
-								<tbody>
-									
-									
-									
-								</tbody>
-							</table>
-				
-	
-					</div>
-				</div>
-			</div>
-		</div>
+		
+		
 		<!-- /.row -->
 		</div><!-- /.container-fluid -->
 			<!-- /.content -->
@@ -373,14 +317,164 @@
 		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
+		
 		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
+		
 		<script>
 			$(function () {
 		    //Date range picker
 		    $('#reservation').daterangepicker()})
+		    
+			$( function() {
+			$( "#datepicker" ).datepicker();});
+  		</script>
+		
+		<script type="text/javascript">
+	
+			
+			//=== 레벨테스트 유효성검사
+			function ck_form() { 
+				var form = document.getElementById('ftest');
+			
+				if(form.studentId.value=="") {	
+					alert("아이디를 입력하세요");
+					form.studentId.focus(); 
+					return false;
+				}
+				
+				if(form.krName.value=="") {	
+					alert("한글이름을 입력하세요");
+					form.krName.focus(); 
+					return false;
+				}
+			
+				if(form.enName.value=="") {	
+					alert("영문닉네임을 입력하세요");
+					form.enName.focus(); 
+					return false;
+				}
+				//=== 이메일 체크
+				if(form.userEmail.value=="") {	
+					alert("이메일을 입력하세요");
+					form.userEmail.focus(); 
+					return false;
+				}
+				
+				//=== 전화번호 체크
+				if(form.userPhone.value=="") {
+					alert("연락처를 입력하세요");
+					form.userPhone.focus();
+					return false;
+				}
+			
+				/* if($('input[name=cway]:checked').val()==3 && form.skype.value=="") {	
+					if(confirm("스카이프로 신청하실 경우 스카이프 아이디가 필요합니다. 지금 입력하시겠습니까?")) {
+						form.skype.focus(); 
+						return false;
+					}
+				} */
+				
+				if(form.tdate.value=="") {	
+					alert("테스트 가능한 날짜를 입력하세요");
+					form.tdate.focus();
+					return false;
+					}
+				}
+			
+				//=== 레벨테스트 모달 시간선택
+				function selTime(){
+					$('#bf-modal .modal-title').html('레벨테스트 시간 선택');
+					var margin_left = parseInt(270)*(-1);
+						
+					$('#bf-modal').modal({
+						show:true,
+						backdrop:false
+					}).find(".modal-body").load("/registration/free_time.exe.php");
+				}
+				
+				function setDateTime(d) {
+					$("#bf-modal").modal('hide');
+					$("#bf-modal").removeData('modal');
+					
+					setTimeout(function() { 
+						$(document.body).addClass('modal-open');
+						document.getElementById('tdate').value = d ; }
+					,300);
+				}
+				
+		
+				$('.choice-part').click(function(){
+					
+					var getTd = $(this);
+					var time = Number($(this).attr('data-time'));
+					var part = Number($(this).attr('data-part'));
+					var nday =  document.getElementById('datepicker');
+					
+					if(nday.value == ''){
+						alert('날짜를 선택해주세요.')
+						return false;
+					}
+					
+					
+					var request = $.ajax({
+					  url: "/admin/LT/LTApplyListAjax",
+					  method: "POST",
+					  data: { time:time, part:part, nday:nday.value},
+					  dataType: "json"
+					});
+					 
+					request.done(function( data ) {
+					 	console.log(data)
+					 	
+					 	if(data.result == 1){
+					 		
+					 		var cDay = nday.value.split("-");
+							cDate = new Date(cDay[0], cDay[1]-1, cDay[2]);
+							if(cDate.getDay()==6 || cDate.getDay()==0){
+								alert("토요일, 일요일에는 레벨테스트를 진행하지 않습니다.");
+								nday.value="";
+								return false;
+							}
+							
+							if(time ==0) {
+								nday.value = "";
+							}
+							
+							if(time < 10) time = "0" + time;
+							if(part < 10) part = "0" + part;
+							
+							setDateTime(nday.value+" " + time + "시 " + part + "분");
+							//getTd.addClass('fc20').removeClass('fc18');
+					 		
+					 	}else{
+					 		getTd.addClass('fc20').removeClass('fc18');
+					 		alert('수강신청을 하실 수 없습니다.');
+					 	}
+					 	
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+						
+					
+				});
+					
+				$("#datepicker").datepicker({
+						dateFormat:"yy-mm-dd",
+						showOtherMonths:true,
+						selectOthereMonths:true,
+						changeMonth:true,
+						changeYear:true
+					}).change(function() {
+						$("#bf-modal").removeData('modal');
+						$("#bf-modal").find(".modal-body").load("/registration/free_time.exe.php?nday="+document.getElementById('datepicker').value);
+					});
+				
+				$('#sDate').click(function(){
+				    $('#nday').css('position','static').datepicker("show");
+				});
 		</script>
 		
 </body>
