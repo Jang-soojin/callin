@@ -55,6 +55,7 @@
 												<div class="input-group-prepend">
 													<input type="text" name="classPolicyName" id="classPolicyName">
 													<button class="form-control" style="background-color: gray; width: 100px; color: white" type="button" id="policyCheck"> 중복확인 </button>
+													<span id="no_name" style="color: red; display: none"> 정책명 없음! </span> 
 													<span id="available" style="color: blue; display: none"> 사용 가능! </span> 
 													<span id="in_use" style="color: red; display: none"> 사용중! </span> 
 												</div>
@@ -63,7 +64,7 @@
 												<label> 수업기간 선택 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classPeriod">
+														<select class="form-control" name="classPeriod" id="classPeriod">
 															<option> :: 선택하세요 ::</option>
 															<option value="4"> 4주 </option>
 															<option value="8"> 8주 </option>
@@ -76,7 +77,7 @@
 												<label> 수업요일 선택 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classDay">
+														<select class="form-control" name="classDay" id="classDay">
 															<option> :: 선택하세요 ::</option>
 															<option value="weekDay3"> 월, 수, 금 </option>
 															<option value="weekDay2"> 화, 목 </option>
@@ -91,7 +92,7 @@
 												<label> 수업시간 선택 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classTime">
+														<select class="form-control" name="classTime" id="classTime">
 															<option> :: 선택하세요 ::</option>
 															<option value="10"> 10분 </option>
 															<option value="20"> 20분 </option>
@@ -161,7 +162,7 @@
 							<!-- /.card -->
 							</div>
 							<div>
-								<button style="width: 200px; margin-left: 750px"  type="submit" class="form-control"> 정책 등록 </button>
+								<button style="width: 200px; margin-left: 750px" class="form-control" onclick="checkAll()" type="submit"> 정책 등록 </button>
 							</div>
 						</form>
 						<!--/.col (right) --> 
@@ -219,19 +220,58 @@
 					url : 'classPolicyNameCheck',
 					data : sendData,
 					success : function(resp){
-						if(resp=='fail'){
+						if(classPolicyName == null || classPolicyName == '') {
+							$('#available').css('display', 'none');
+							$('#in_use').css('display', 'none');
+							$('#no_name').css('display', 'inline');
+							flag=false;
+						}
+						else if(resp=='fail'){
 							$('#available').css('display', 'none');
 							$('#in_use').css('display', 'inline');
+							$('#no_name').css('display', 'none');
 							flag=false;
 						}else{
 							$('#available').css('display', 'inline');
 							$('#in_use').css('display', 'none');
+							$('#no_name').css('display', 'none');
 							flag=true;
 						}
 					}
 			    })	
 			});
 		})
+		function checkAll() {
+			if (document.getElementById('classPolicyName').value == '') {
+				alert('정책명을 입력해 주세요');
+				return false;
+			}else if (document.getElementById('classPeriod').value == ':: 선택하세요 ::') {
+				alert('기간을 입력해 주세요');
+				return false;
+			}else if (document.getElementById('classDay').value == ':: 선택하세요 ::') {
+				alert('요일을 입력해 주세요');
+				return false;
+			}else if (document.getElementById('classTime').value == ':: 선택하세요 ::') {
+				alert('기간을 입력해 주세요');
+				return false;
+			} else if (!checkPassword(form.userId.value, form.password1.value,
+			form.password2.value)) {
+				return false;
+			} else if (!checkMail(form.mail.value)) {
+				return false;
+			} else if (!checkName(form.name.value)) {
+				return false;
+			} else if (!checkBirth(form.identi1.value, form.identi2.value)) {
+				return false;
+			} else if (!checkFavorite()) {
+				return false;
+			} else if (!checkIntro()) {
+				return false;
+			}
+			return true;
+		}
+
+
 		</script>
 </body>
 </html>

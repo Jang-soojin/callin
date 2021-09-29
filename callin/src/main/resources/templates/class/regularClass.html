@@ -159,7 +159,7 @@
 														<td>1</td>
 														<td>2</td>
 														<td>3</td>
-														<td>4<d>
+														<td>4<td>
 														<td> <button type="button" class="btn btn-primary"> 선택 </button> </td>
 													</tr>
 													<tr>
@@ -179,9 +179,6 @@
 													
 												</tbody>
 											</table>
-											
-											
-											
 										</div>
 									</div>
 								</div>
@@ -242,26 +239,15 @@
 				var classDay = $("#classDay").val();
 				var classTime = $("#classTime").val();
 				var html = "";
-// 				var sendData = {"classPeriod":classPeriod
-// 								, "classDay":classDay
-// 								, "classTime":classTime}
+				var sendData = {	"classPeriod":classPeriod
+								,	"classDay":classDay
+								,	"classTime":classTime}
 				$.ajax({
 					method : 'POST',
-					url : 'searchPolicyList',
-					data : {"classPeriod":classPeriod
-						, "classDay":classDay
-						, "classTime":classTime},
+					url : '/admin/class/searchPolicyList',
+					data : sendData,
 					success : function(resp){
-						if(resp=='fail'){
-							$('#available').css('display', 'none');
-							$('#in_use').css('display', 'inline');
-							flag=false;
-							
-						}else{
-							$('#available').css('display', 'inline');
-							$('#in_use').css('display', 'none');
-				 			flag=true;
-				        }
+						console.log(resp[0])
 					}
 			    })	
 				
