@@ -36,57 +36,49 @@
 			</if>
 		</trim>
 	</select>
-	
-	<select id="getTest" resultType="java.lang.String">
-		SELECT
-			1 AS AA
-		FROM DUAL
-	</select>
-	
-	<select id ="getStudentList" resultMap="studentResultMap">
-	    SELECT
-	    	user_id
-		   ,user_name
-	    FROM
-			user_info
-	    WHERE user_level = "학생"
-	</select>
-	
- 	<resultMap type="mileage" id="mailageResultMap">
+	<resultMap type="mileage" id="mileageResultMap">
 		<result property="mileageUseCode"            	column="mileage_use_code"/>
-		<result property="studentId"                  	column="mileage_user_rea_code"/>
-		<result property="mileagDeductDate" 			column="mileag_deduct"/>
-		<result property="mileageAnticipate_del_date" 	column="mileage_use_group_code"/>
-		<result property="mileageUse_group_code" 		column="mileage_use_group_code_table"/>
-		<result property="mileageUse_group_code_table" 	column="mileage_group_code"/>
-		<result property="mileageGroup_code" 			column="mileag_deduct"/>
+		<result property="studentId"                  	column="student_id"/>
+		<result property="mileageUseReaCode" 			column="mileage_use_rea_code"/>
+		<result property="mileagDeductDate" 			column="mileag_deduct_date"/>
+		<result property="mileagDeduct" 				column="mileag_deduct"/>
+		<result property="mileageAnticipateDelDate" 	column="mileage_anticipate_del_date"/>
+		<result property="mileageUseGroupCode" 			column="mileage_use_group_code"/>
+		<result property="mileageGroupCode" 			column="mileage_group_code"/>
+		<result property="mileageDeductDivision" 				column="mileage_deduct_division"/>
+		<result property="mileageMemo" 					column="mileage_memo"/>
+		<result property="mileageWaitDivision" 			column="mileage_wait_division"/>
 	</resultMap>
 	
- 			<insert id="addMileage" parameterType="mileage">
-			    <selectKey keyProperty="mileageUseCode" resultType="int" order="BEFORE">
-			        SELECT MAX(mileage_use_code) + 1 FROM mileage_use
-			    </selectKey>
+ 			<insert id="addMileage" parameterType="Mileage">
+			    
 					INSERT INTO mileage_use
 					(   mileage_use_code
-					   ,student_id
-					   ,mileage_user_rea_code
+
+					   ,mileage_use_rea_code
 					   ,mileag_deduct_date
 					   ,mileag_deduct
 					   ,mileage_anticipate_del_date
 					   ,mileage_use_group_code
-					   ,mileage_use_group_code_table
 					   ,mileage_group_code
+					   ,mileage_deduct_division
+					   ,mileage_memo
+					   ,mileage_wait_division
 					) VALUES (
-					    #{mileageUseCode}
-					   ,#{studentId}
-					   ,#{mileageUserReaCode}
-					   ,CURDATE()
+					    CONCAT(NOW(),'id001')
+
+					   ,#{mileageUseReaCode}
+					   ,NOW()
 					   ,#{mileagDeduct}
 					   ,CURDATE()
-					   ,#{mileageUse_group_code}
-					   ,#{mileageUse_group_code_table}
-					   ,#{"mileageGroup_code"}
+					   ,#{mileageUseGroupCode}
+					   ,#{mileageGroupCode}
+					   ,#{mileageDeductDivision}
+					   ,#{mileageMemo}
+					   ,#{mileageWaitDivision}
 					);	
-	</insert>
+		</insert>
+
+ 	
 
 </mapper>
