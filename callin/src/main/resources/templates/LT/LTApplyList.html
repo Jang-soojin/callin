@@ -103,14 +103,13 @@
 							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="No.: activate to sort column ascending">No.</th>
 							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="신청일: activate to sort column ascending">신청일</th>
 							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="이름: activate to sort column ascending">이름</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="이메일(ID): activate to sort column ascending">이메일(ID)</th>
+							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="이메일: activate to sort column ascending">이메일</th>
 							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="전화번호: activate to sort column ascending">전화번호</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="테스트종류/Skepe/ZOOM/카톡: activate to sort column ascending">테스트종류/Skepe/ZOOM/카톡</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="신청정보/진행상황: activate to sort column ascending">신청정보/진행상황</th>
+							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="진행일자/진행상황: activate to sort column ascending">진행일자/진행상황</th>
 										</tr>
 		                  			</thead>
-									<tbody>
-				                  		<tr role="row" class="odd" id="ltList">
+									<tbody id="ltList">
+				                  		<!-- <tr role="row" class="odd" >
 						                    <td class="dtr-control sorting_1" tabindex="0">
 							                    <div class="form-check">
 							                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -123,8 +122,7 @@
 						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">010-1234-1234</a></td>
 						                  	<td>전화영어/카톡</td>
 						                    <td>2021-01-30/취소</td>
-						                    
-				                  		</tr>
+				                  		</tr> -->
 									</tbody>
 								</table>
 							</div>
@@ -141,9 +139,6 @@
 											</li>
 				                			<li class="paginate_button page-item active">
 				                				<a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-				                			</li>
-				                			<li class="paginate_button page-item ">
-				                				<a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">2</a>
 				                			</li>
 				                			<li class="paginate_button page-item next" id="example1_next">
 				                				<a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0" class="page-link">Next</a>
@@ -222,9 +217,9 @@
 			        data : sendData,
 			        dataType:'json',
 			        success : function(data){
+			        	$('#ltList').html("");
 			        	for(var i=0; i<data.length; i++){
-			        		
-			        		
+			        		htmltag += '<tr>';
 			        		htmltag += '<td class="dtr-control sorting_1" tabindex="0">';
 			        		htmltag += '<div class="form-check">';
 			        		htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
@@ -240,15 +235,14 @@
 			        		htmltag += data[i].user.userName;
 			        		htmltag += '</a></td>';
 			        		htmltag += "</td>";
-			        		htmltag += "<td>";
+			        		htmltag += '<td><a href="/admin/LT/LTListDetail" class="nav-link">';
 			        		htmltag += data[i].user.userEmail;
 			        		htmltag += "</td>";
-			        		htmltag += "<td>";
+			        		htmltag += '<td><a href="/admin/LT/LTListDetail" class="nav-link">';
 			        		htmltag += data[i].user.userPhone;
 			        		htmltag += "</td>";
-			        		
-			        		htmltag += "<td>전화영어/Skype</td>";
 			        		htmltag += "<td>2021-01-30/진행중</td>";
+			        		htmltag += '</tr>';
 			        	}
 			        	
 			        	
