@@ -46,32 +46,64 @@
 								<!-- general form elements -->
 									<div class="card card-secondary">
 										<div class="card-header">
-											<h3 class="card-title">수업 기본 정책 설정</h3>
+											<h3 class="card-title"> 정규 수업 개설 </h3>
 										</div>
 										<!-- /.card-header -->
 										<div class="card-body">
 											<div class="form-group">
-												<label> 정책 이름 </label>
+												<label> 수업명 </label>
 												<div class="input-group-prepend">
-													<input type="text" id="classPolicyName"> 
+													<input type="text" id="courseName"> 
 												</div>
 											</div>
 											<div class="form-group">
-												<label> 수업기간 선택 </label>
-												<div class="input-group mb-3">
+												<label> 수업 정책 </label>
+												<div class="input-group-prepend">
+													<input type="text" id="classPolicyName" readonly="readonly"> 
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 과정 수강료 </label>
+												<div class="input-group-prepend">
+													<input type="text" id="courseTuition"> 
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 등록자 </label>
+												<div class="input-group-prepend">
+													<input type="text" id="managerId" value="id001" readonly="readonly"> 
+												</div>
+											</div>
+										</div>
+									</div>
+								<!-- /.card -->
+								</div>
+								<!--/.col (left) -->
+								<!-- Right column -->
+								<div class="col-md-7">
+									<!-- general form elements -->
+									<div class="card card-secondary">
+										<div class="card-header">
+											<h3 class="card-title"> 수업 정책 선택 </h3>
+										</div>
+										<div class="card-body row">
+											<div class="form-group col-md-3">
+												<label> 수업 기간 선택 </label>
+												<div class="input-group md-3">
 													<div class="input-group-prepend">
 														<select class="form-control" id="classPeriod">
 															<option> :: 선택하세요 ::</option>
-															<option value="4"> 4주 </option>
-															<option value="8"> 8주 </option>
-															<option value="12"> 12주 </option>
+															<option value="1"> 4주 </option>
+															<option value="2"> 8주 </option>
+															<option value="3"> 12주 </option>
 														</select>
 													</div>
+												<!-- /btn-group -->
 												</div>
 											</div>
-											<div class="form-group">
-												<label> 수업요일 선택 </label>
-												<div class="input-group mb-3">
+											<div class="form-group col-md-4">
+												<label> 수업 요일 선택 </label>
+												<div class="input-group md-3">
 													<div class="input-group-prepend">
 														<select class="form-control" id="classDay">
 															<option> :: 선택하세요 ::</option>
@@ -82,11 +114,12 @@
 															<option value="allDay"> 월, 화, 수, 목, 금, 토, 일 </option>
 														</select>
 													</div>
+												<!-- /btn-group -->
 												</div>
 											</div>
-											<div class="form-group">
-												<label> 수업시간 선택 </label>
-												<div class="input-group mb-3">
+											<div class="form-group col-md-3">
+												<label> 수업 시간 선택 </label>
+												<div class="input-group md-3">
 													<div class="input-group-prepend">
 														<select class="form-control" id="classTime">
 															<option> :: 선택하세요 ::</option>
@@ -97,68 +130,62 @@
 															<option value="50"> 50분 </option>
 														</select>
 													</div>
+												<!-- /btn-group -->
 												</div>
+											</div>
+											<div class="form-group col-md-2">
+												<label> 　 </label>
+												<button type="button" class="btn btn-primary" style="font-size: 12px; height: 38px;" id="searchPolicy">정책 찾기</button>
 											</div>
 										</div>
 									</div>
-								<!-- /.card -->
-								</div>
-								<!--/.col (left) -->
-								<!-- Right column -->
-								<div class="col-md-5">
-									<!-- general form elements -->
 									<div class="card card-secondary">
 										<div class="card-header">
-											<h3 class="card-title"> 수업 연기 정책 설정 </h3>
+											<h3 class="card-title"> 정책 목록 </h3>
 										</div>
 										<div class="card-body">
-											<div class="form-group">
-												<label> 연기(일일) 횟수 설정 </label>
-												<div class="input-group mb-3">
-													<div class="input-group-prepend">
-														<select class="form-control" id="classPostponeDay">
-															<option> :: 선택하세요 ::</option>
-															<option value="1"> 1일 </option>
-															<option value="2"> 2일 </option>
-															<option value="3"> 3일 </option>
-															<option value="4"> 4일 </option>
-															<option value="5"> 5일 </option>
-															<option value="6"> 6일 </option>
-														</select>
-													</div>
-												<!-- /btn-group -->
-												</div>
-											</div>
-											<div class="form-group">
-												<label> 연기(장기) 횟수 설정 </label>
-												<div class="input-group mb-3">
-													<div class="input-group-prepend">
-														<select class="form-control" id="classPostponeDays">
-															<option> :: 선택하세요 ::</option>
-															<option value="1"> 1회 </option>
-															<option value="2"> 2회 </option>
-															<option value="3"> 3회 </option>
-															<option value="4"> 4회 </option>
-															<option value="5"> 5회 </option>
-															<option value="6"> 6회 </option>
-														</select>
-													</div>
-												<!-- /btn-group -->
-												</div>
-											</div>
-											<div class="form-group">
-												<label> 연기(장기) 기간 설정 </label>
-												<div class="input-group-prepend">
-													<input type="number" id="classPostponePeriod"> 일
-												</div>
-											</div>
+											<table class="form-group table">
+												<thead>
+													<tr>
+														<th> 정책명 뭐뭐 </th>
+														<th> 수업 기간 몇분 </th>
+														<th> 수업일 무슨요일 </th>
+														<th> 수업 시간 몇분 </th>
+														<th> 선택버튼 </th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>2</td>
+														<td>3</td>
+														<td>4<td>
+														<td> <button type="button" class="btn btn-primary"> 선택 </button> </td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>2</td>
+														<td>3</td>
+														<td>4</td>
+														<td> <button type="button" class="btn btn-primary"> 선택 </button> </td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>2</td>
+														<td>3</td>
+														<td>4</td>
+														<td> <button type="button" class="btn btn-primary"> 선택 </button> </td>
+													</tr>
+													
+												</tbody>
+											</table>
 										</div>
 									</div>
 								</div>
 							<!-- /.card -->
 							</div>
 							<div>
-								<button style="width: 200px; margin-left: 750px"  type="submit" class="form-control"> 정책 등록 </button>
+								<button style="width: 200px; margin-left: 750px"  type="submit" class="form-control"> 정규 수업 등록 </button>
 							</div>
 						</form>
 						<!--/.col (right) --> 
@@ -198,14 +225,34 @@
 		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
 		<script>
 			$(function () {
 		    //Date range picker
 		    $('#reservation').daterangepicker()})
+		</script>
+		<script type="text/javascript">
+		$(function(){
+			$("#searchPolicy").on("click", function(){
+				
+				var classPeriod = $("#classPeriod").val();
+				var classDay = $("#classDay").val();
+				var classTime = $("#classTime").val();
+				var html = "";
+				var sendData = {	"classPeriod":classPeriod
+								,	"classDay":classDay
+								,	"classTime":classTime}
+				$.ajax({
+					method : 'POST',
+					url : '/admin/class/searchPolicyList',
+					data : sendData,
+					success : function(resp){
+						console.log(resp[0])
+					}
+			    })	
+				
+			});
+		})
 		</script>
 		
 </body>
