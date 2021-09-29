@@ -1,105 +1,112 @@
 package callinedu.callin.domain;
 
 public class Mileage {
+	private String mileageUseCode;
 	private String studentId;
-	private String mileageUseCode;      	
-	private String mileageUserReaCode;		
+	private String mileageUseReaCode;      	
+	private String mileagDeductDate;		
 	private String mileagDeduct;			
-	private String mileageUse_group_code;
-	private String mileageUse_group_code_table;
-	private String mileageGroup_code;
-	
-	
-	
-	public  Mileage() {}
-	
-	public  Mileage(String studentId, String mileageUseCode, String mileageUserReaCode, String mileagDeduct, String mileageUse_group_code, String mileageUse_group_code_table, String mileageGroup_code) {
-		this.studentId = studentId;
-		this.mileageUseCode = mileageUseCode;
-		this.mileageUserReaCode = mileageUserReaCode;
-		this.mileagDeduct = mileagDeduct;
-		this.mileageUse_group_code = mileageUse_group_code;
-		this.mileageUse_group_code_table = mileageUse_group_code_table;
-		this.mileageGroup_code = mileageGroup_code;
-		
-	
+	private String mileageAnticipateDelDate;
+	private String mileageUseGroupCode;
+	private String mileageGroupCode;
+	private String mileageDeductDivision;
+	private String mileageMemo;
+	private String mileageWaitDivision;
+	public String getMileageUseCode() {
+		return mileageUseCode;
 	}
-	
-	
-
+	public void setMileageUseCode(String mileageUseCode) {
+		this.mileageUseCode = mileageUseCode;
+	}
 	public String getStudentId() {
 		return studentId;
 	}
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
-	
-	public String getMileageUseCode() {
-		return mileageUseCode;
+	public String getMileageUseReaCode() {
+		return mileageUseReaCode;
 	}
-
-	public void setMileageUseCode(String mileageUseCode) {
-		this.mileageUseCode = mileageUseCode;
+	public void setMileageUseReaCode(String mileageUseReaCode) {
+		this.mileageUseReaCode = mileageUseReaCode;
 	}
-
-	public String getMileageUserReaCode() {
-		return mileageUserReaCode;
+	public String getMileagDeductDate() {
+		return mileagDeductDate;
 	}
-
-	public void setMileageUserReaCode(String mileageUserReaCode) {
-		this.mileageUserReaCode = mileageUserReaCode;
+	public void setMileagDeductDate(String mileagDeductDate) {
+		this.mileagDeductDate = mileagDeductDate;
 	}
-
 	public String getMileagDeduct() {
 		return mileagDeduct;
 	}
-
 	public void setMileagDeduct(String mileagDeduct) {
 		this.mileagDeduct = mileagDeduct;
 	}
-
-	public String getMileageUse_group_code() {
-		return mileageUse_group_code;
+	public String getMileageAnticipateDelDate() {
+		return mileageAnticipateDelDate;
 	}
-
-	public void setMileageUse_group_code(String mileageUse_group_code) {
-		this.mileageUse_group_code = mileageUse_group_code;
+	public void setMileageAnticipateDelDate(String mileageAnticipateDelDate) {
+		this.mileageAnticipateDelDate = mileageAnticipateDelDate;
 	}
-
-	public String getMileageUse_group_code_table() {
-		return mileageUse_group_code_table;
+	public String getMileageUseGroupCode() {
+		return mileageUseGroupCode;
 	}
-
-	public void setMileageUse_group_code_table(String mileageUse_group_code_table) {
-		this.mileageUse_group_code_table = mileageUse_group_code_table;
+	public void setMileageUseGroupCode(String mileageUseGroupCode) {
+		this.mileageUseGroupCode = mileageUseGroupCode;
 	}
-
-	public String getMileageGroup_code() {
-		return mileageGroup_code;
+	public String getMileageGroupCode() {
+		return mileageGroupCode;
 	}
-
-	public void setMileageGroup_code(String mileageGroup_code) {
-		this.mileageGroup_code = mileageGroup_code;
+	public void setMileageGroupCode(String mileageGroupCode) {
+		this.mileageGroupCode = mileageGroupCode;
 	}
-
+	public String getMileageDeductDivision() {
+		return mileageDeductDivision;
+	}
+	public void setMileageDeductDivision(String mileageDeductDivision) {
+		this.mileageDeductDivision = mileageDeductDivision;
+	}
+	public String getMileageMemo() {
+		return mileageMemo;
+	}
+	public void setMileageMemo(String mileageMemo) {
+		this.mileageMemo = mileageMemo;
+	}
+	public String getMileageWaitDivision() {
+		return mileageWaitDivision;
+	}
+	public void setMileageWaitDivision(String mileageWaitDivision) {
+		this.mileageWaitDivision = mileageWaitDivision;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Student [studentId=");
-		builder.append(studentId);
-		builder.append(", mileageUseCode=");
+		builder.append("Mileage [mileageUseCode=");
 		builder.append(mileageUseCode);
-		builder.append(", mileageUserReaCode=");
-		builder.append(mileageUserReaCode);
+		builder.append(", studentId=");
+		builder.append(studentId);
+		builder.append(", mileageUseReaCode=");
+		builder.append(mileageUseReaCode);
+		builder.append(", mileagDeductDate=");
+		builder.append(mileagDeductDate);
 		builder.append(", mileagDeduct=");
 		builder.append(mileagDeduct);
-		builder.append(", mileageUse_group_code=");
-		builder.append(mileageUse_group_code);
-		builder.append(", mileageUse_group_code_table=");
-		builder.append(mileageUse_group_code_table);
-		builder.append(", mileageGroup_code=");
-		builder.append(mileageGroup_code);		
+		builder.append(", mileageAnticipateDelDate=");
+		builder.append(mileageAnticipateDelDate);
+		builder.append(", mileageUseGroupCode=");
+		builder.append(mileageUseGroupCode);
+		builder.append(", mileageGroupCode=");
+		builder.append(mileageGroupCode);
+		builder.append(", mileageDeductDivision=");
+		builder.append(mileageDeductDivision);
+		builder.append(", mileageMemo=");
+		builder.append(mileageMemo);
+		builder.append(", mileageWaitDivision=");
+		builder.append(mileageWaitDivision);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+
 }

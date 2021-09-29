@@ -60,10 +60,6 @@ public class StudentService {
 		
 		return student;
 	}
-	public String getTest(){
-
-		return studentMapper.getTest();
-	}
 	
 	public int addMileage(Mileage mileage) {
 		return studentMapper.addMileage(mileage);
