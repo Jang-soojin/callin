@@ -70,8 +70,7 @@
 	    WHERE
 			class_policy_name = #{classPolicyName};
 	</select>
-<<<<<<< HEAD
-=======
+
 	
 	<select id="searchPolicyList" parameterType="String" resultMap="classPolicyResultMap">
 		SELECT
@@ -91,10 +90,5 @@
 	</select>
 	
 	
-	
-	
-	
-	
-	
->>>>>>> refs/heads/soojin
+
 </mapper>
