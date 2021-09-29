@@ -40,7 +40,7 @@
 		   ,modify_date
 		   ,modify_user
 		) VALUES (
-		    CONCAT(CURDATE(), 'id001')
+		    CONCAT(NOW(), 'id001')
 		   ,#{classPolicyName}
 		   ,#{classPeriod}
 		   ,#{classDay}
@@ -82,11 +82,8 @@
 			, class_postpone_period
 		FROM
 			class_policy
-		WHERE
-			class_day = 'weekday2'
 		<where>
-			<if test="classPeriod != null and classPeriod != null"> 
-				$(classPeriod) LIKE #{classPeriod}
+			<if test="classPeriod != null and classPeriod != null">  classPeriod // classDay // classTime
 			</if>
 		</where>
 	</select>

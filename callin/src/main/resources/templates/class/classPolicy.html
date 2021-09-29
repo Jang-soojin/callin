@@ -39,7 +39,7 @@
 			    <!-- Main content -->
 				<section class="content">
 					<div class="container-fluid">
-						<form action="/admin/class/addClassPolicy" method="post">
+						<form id="submitAll" action="/admin/class/addClassPolicy" method="post">
 							<div class="row">
 							<!-- left column -->
 								<div class="col-md-5">
@@ -120,7 +120,7 @@
 												<label> 연기(일일) 횟수 설정 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classPostponeDay">
+														<select class="form-control" name="classPostponeDay" id="classPostponeDay">
 															<option> :: 선택하세요 ::</option>
 															<option value="1"> 1일 </option>
 															<option value="2"> 2일 </option>
@@ -137,7 +137,7 @@
 												<label> 연기(장기) 횟수 설정 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classPostponeDays">
+														<select class="form-control" name="classPostponeDays" id="classPostponeDays">
 															<option> :: 선택하세요 ::</option>
 															<option value="1"> 1회 </option>
 															<option value="2"> 2회 </option>
@@ -153,7 +153,7 @@
 											<div class="form-group">
 												<label> 연기(장기) 기간 설정 </label>
 												<div class="input-group-prepend">
-													<input type="number" name="classPostponePeriod"> 일
+													<input type="number" name="classPostponePeriod" id="classPostponePeriod"> 일
 												</div>
 											</div>
 										</div>
@@ -162,7 +162,7 @@
 							<!-- /.card -->
 							</div>
 							<div>
-								<button style="width: 200px; margin-left: 750px" class="form-control" onclick="checkAll()" type="submit"> 정책 등록 </button>
+								<button style="width: 200px; margin-left: 750px" class="form-control" onclick="checkAll()" type="button"> 정책 등록 </button>
 							</div>
 						</form>
 						<!--/.col (right) --> 
@@ -243,31 +243,29 @@
 		})
 		function checkAll() {
 			if (document.getElementById('classPolicyName').value == '') {
-				alert('정책명을 입력해 주세요');
+				alert('정책명을 입력해 주세요.');
 				return false;
 			}else if (document.getElementById('classPeriod').value == ':: 선택하세요 ::') {
-				alert('기간을 입력해 주세요');
+				alert('기간을 입력해 주세요.');
 				return false;
 			}else if (document.getElementById('classDay').value == ':: 선택하세요 ::') {
-				alert('요일을 입력해 주세요');
+				alert('요일을 입력해 주세요.');
 				return false;
 			}else if (document.getElementById('classTime').value == ':: 선택하세요 ::') {
-				alert('기간을 입력해 주세요');
+				alert('수업 시간을 입력해 주세요.');
 				return false;
-			} else if (!checkPassword(form.userId.value, form.password1.value,
-			form.password2.value)) {
+			}else if (document.getElementById('classPostponeDay').value == ':: 선택하세요 ::') {
+				alert('연기(일일)횟수를 입력해 주세요.');
 				return false;
-			} else if (!checkMail(form.mail.value)) {
+			}else if (document.getElementById('classPostponeDays').value == ':: 선택하세요 ::') {
+				alert('연기(장기)횟수를 입력해 주세요.');
 				return false;
-			} else if (!checkName(form.name.value)) {
-				return false;
-			} else if (!checkBirth(form.identi1.value, form.identi2.value)) {
-				return false;
-			} else if (!checkFavorite()) {
-				return false;
-			} else if (!checkIntro()) {
+			}else if (document.getElementById('classPostponePeriod').value == '') {
+				alert('연기 기간을 입력해 주세요.');
 				return false;
 			}
+			alert('정책 등록이 완료되었습니다!'); 
+			document.getElementById('submitAll').submit();
 			return true;
 		}
 
