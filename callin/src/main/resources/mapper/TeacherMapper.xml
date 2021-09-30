@@ -4,37 +4,89 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="callinedu.callin.mapper.TeacherMapper">
 	<resultMap type="Teacher" id="teacherResultMap">
-		<result property="teacherId" 		column="teacher_id"/>
-		<result property="teacherName" 		column="teacher_name"/>
-		<result property="contractType" 	column="contract_type"/>
-		<result property="hourlyRate" 		column="hourly_rate"/>
+		<result property="teacherId" 			column="teacher_id"/>
+		<result property="nationality" 			column="nationality"/>
+		<result property="residence" 			column="residence"/>
+		<result property="language" 			column="language"/>
+		<result property="timeZoneCode" 		column="time_zone_code"/>
+		<result property="contractTypeCode" 	column="contract_type_code"/>
+		<result property="unitPay" 				column="unit_pay"/>
+		<result property="educationLevel" 		column="education_level"/>
+		<result property="employmentStatus" 	column="employment_status"/>
+		<result property="dateOfEmployment" 	column="date_of_employment"/>
+		<result property="dateOfResignation" 	column="date_of_resignation"/>
+		<result property="introductionText" 	column="introduction_text"/>
+		<result property="introductionVoice" 	column="introduction_voice"/>
+		<result property="bankCode" 			column="bank_code"/>
+		<result property="accountNumber" 		column="account_number"/>
+		<result property="nameOfDepositor" 		column="name_of_depositor"/>
+		<result property="classStartTime" 		column="class_start_time"/>
+		<result property="classEndTime" 		column="class_end_time"/>
+		<result property="subjectInCharge" 		column="subject_in_charge"/>
+		<result property="workingDayOfWeek" 	column="working_day_of_week"/>
+		<result property="managerId" 			column="manager_id"/>
+		<result property="managerInChargeGroup" column="manager_in_charge_group"/>
 	</resultMap>
 	
-	<resultMap type="TeacherAttendance" id="teacherAttendanceResultMap">
-		<result property="attendanceCode" 	column="attendance_code"/>
-		<result property="teacherId" 		column="teacher_id"/>
-		<result property="teacherWorkHour" 	column="teacher_work_hour"/>
-		<result property="workDate" 		column="work_date"/>
+	<resultMap type="TeacherSchedule" id="TeacherScheduleResultMap">
+		<result property="scheduleDayCode" 			column="schedule_day_code"/>
+		<result property="scheduleRegisterCode" 	column="schedule_register_code"/>
+		<result property="teacherId2" 				column="teacher_id2"/>
+		<result property="classDayAttendance" 		column="class_day_attendance"/>
+		<result property="classDayDate" 			column="class_day_date"/>
+		<result property="classExpectedStartTime" 	column="class_expected_start_time"/>
+		<result property="classExpectedEndTime" 	column="class_expected_end_time"/>
+		<result property="classRealStartTime" 		column="class_real_start_time"/>
+		<result property="classRealEndTime" 		column="class_real_end_time"/>
+		<result property="classProgressTime" 		column="class_progress_time"/>
 	</resultMap>
+	
+	<resultMap type="teacherSalarySettlement" id="teacherSalarySettlementResultMap">
+		<result property="teacherSalarySettlementCode" 	column="teacher_salary_settlement_code"/>
+		<result property="teacherId" 					column="teacher_id"/>
+		<result property="teacherMonthlyAttendanceCode" column="teacher_monthly_attendance_code"/>
+		<result property="bonus" 						column="bonus"/>
+		<result property="deduction" 					column="deduction"/>
+		<result property="totalSalaryPhp" 				column="total_salary_php"/>
+		<result property="totalSalaryKrw" 				column="total_salary_krw"/>
+		<result property="settlementDate" 				column="settlement_date"/>
+		<result property="settlementVerifierId" 		column="settlement_verifier_id"/>
+		<result property="settlementYearMonth" 			column="settlement_year_month"/>
+	</resultMap>
+	
+	
+	
+	<select id="getTeacherSalaryList" resultMap="teacherSalarySettlementResultMap">
+		SELECT 
+			teacher_salary_settlement_code
+			,teacher_id
+			,bonus
+			,deduction
+			,total_salary_php
+			,total_salary_krw
+			,settlement_date
+			,settlement_verifier_id
+		FROM 
+			teacher_salary_settlement
+			
+	</select>
 	
 	<select id="getTeacherList" resultMap="teacherResultMap">
-		SELECT
-			 teacher_id
-			,teacher_name
-			,contract_type
-			,hourly_rate
-		FROM
-			tb_teacher
+		SELECT 
+			teacher_id
+			,contract_type_code
+			,unit_pay
+		FROM 
+			teacher_detail
 	</select>
 	
 	<select id="getTeacherInfoById" resultMap="teacherResultMap" parameterType="String">
 		SELECT
 			teacher_id
-			,teacher_name
-			,contract_type
-			,hourly_rate
+			,contract_type_code
+			,unit_pay
 		FROM
-			tb_teacher
+			teacher_detail
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
 			teacher_id=#{teacherId}
 		</trim>		
@@ -42,14 +94,42 @@
 	
 	<select id="getTotalWorkHour"  resultType="int" parameterType="String">
 		SELECT 
-			COALESCE(SUM(teacher_work_hour),0)
+			COALESCE(SUM(class_progress_time),0)
 		FROM 
-			teacher_attendance 
+			schedule_day
 		WHERE 
-			teacher_id = #{teacherId} AND
-			work_date BETWEEN DATE(#{dateRange1}) AND DATE(#{dateRange2})
-		
+			teacher_id2 = #{teacherId} AND
+			class_day_date BETWEEN DATE(#{dateRange1}) AND DATE(#{dateRange2})
 	</select>
+	
+	<insert id="addTeacherSalarySettlement" parameterType="teacherSalarySettlement">
+		INSERT INTO teacher_salary_settlement 
+			(
+			 teacher_salary_settlement_code
+			,teacher_id
+			,teacher_monthly_attendance_code
+			,Bonus
+			,deduction
+			,total_salary_php
+			,total_salary_krw
+			,settlement_date
+			,settlement_verifier_id
+			,settlement_year_month
+			)
+		VALUES
+			(
+			  (Select CONCAT('T_salary', '_', (SELECT LPAD(COUNT(*)+1,5,'0') FROM teacher_salary_settlement AS TSS)))
+			 ,#{teacherId}
+			 ,'attendance_code001'
+			 ,#{bonus}
+			 ,#{deduction}
+			 ,#{totalSalaryPhp}
+			 ,#{totalSalaryKrw}
+			 ,CURDATE()
+			 ,'ksk1908'
+			 ,CURDATE()
+			)
+	</insert>
 	
 	
 </mapper>
