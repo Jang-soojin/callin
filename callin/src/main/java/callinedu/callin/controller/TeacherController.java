@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import callinedu.callin.domain.Teacher;
+import callinedu.callin.domain.TeacherSalarySettlement;
 import callinedu.callin.service.TeacherService;
 
 
@@ -25,63 +26,56 @@ public class TeacherController {
 	}
 	
 	@GetMapping("/teacherList")
-	public String teacherList(Model model){ 
+	public String getTeacherList(Model model){ 
 		
 		List<Teacher> teacherList = teacherService.getTeacherList();
 		model.addAttribute("title", "강사 목록");
 		model.addAttribute("teacherList",teacherList); 
-		
+		System.out.println(teacherList);
 		return "teacher/teacherList"; 
 	}
 	@GetMapping("/teacherSalaryList")
 	public String teacherSalaryList(Model model){ 
 		
-		List<Teacher> teacherList = teacherService.getTeacherList();
+		List<TeacherSalarySettlement> teacherSalaryList = teacherService.getTeacherSalaryList();
 		model.addAttribute("title", "강사 급여 정산 목록");
 		model.addAttribute("midTitle", "강사료 정산 리스트");
-		model.addAttribute("teacherList",teacherList); 
+		model.addAttribute("teacherSalaryList",teacherSalaryList); 
+		System.out.println(teacherSalaryList);
 		
 		return "teacher/teacherSalaryList"; 
 	}
 	
 	@GetMapping("/teacherSalary")
-	public String teacherSalary(@RequestParam(name="teacherId", required = false) String teacherId,
-								Model model) {
-		if(teacherId!=null) {
-		Teacher teacher = teacherService.getTeacherInfoById(teacherId);
-		model.addAttribute("teacherId", teacher.getTeacherId());
-		model.addAttribute("teacherName", teacher.getTeacherName());
-		model.addAttribute("ContractType", teacher.getContractType());
-		model.addAttribute("HourlyRate", teacher.getHourlyRate());
-		}
+	public String teacherSalary(Model model) {
 		model.addAttribute("title", "강사 급여 정산");
 		model.addAttribute("midTitle", "강사 급여 정산");
 		model.addAttribute("cardTitle", "강사 상세 정보");
 			
 		return "teacher/teacherSalary";
 		}
+	
 	@PostMapping("/teacherSalary")
-	public String teacherSalaryPost(Teacher teacherInfo, Model model) {
-		Teacher teacher = teacherService.getTeacherInfoById("id001");
-		model.addAttribute("teacherId", teacher.getTeacherId());
-		model.addAttribute("teacherName", teacher.getTeacherName());
-		model.addAttribute("ContractType", teacher.getContractType());
-		model.addAttribute("HourlyRate", teacher.getHourlyRate());
-		return "teacher/teacherSalary";
+	public String teacherSalarySettlement(TeacherSalarySettlement teacherSalarySettlement){ 
+		System.out.println(teacherSalarySettlement);
+		
+		teacherService.addTeacherSalarySettlement(teacherSalarySettlement);
+		
+		return "redirect:/admin/teacher/teacherSalary"; 
 	}
+	
 	
 	@PostMapping(value="/teacherSalaryAjax", produces = "application/json")
 	@ResponseBody
-	public Teacher teacherSalaryAjax(Teacher teacherInfo, Model model) {
-		model.addAttribute("teacherId", teacherInfo.getTeacherId());
-		model.addAttribute("teacherName", teacherInfo.getTeacherName());
-		model.addAttribute("ContractType", teacherInfo.getContractType());
-		model.addAttribute("HourlyRate", teacherInfo.getHourlyRate());
+	public Teacher teacherSalaryAjax(String teacherId) {
+		Teacher teacherInfo = teacherService.getTeacherInfoById(teacherId);
 		return  teacherInfo;
 	}
-	@PostMapping(value="/teacherSalaryAjax2", produces = "application/json")
+	
+	
+	@PostMapping(value="/getTotalWorkHour", produces = "application/json")
 	@ResponseBody
-	public int teacherSalaryAjax2(@RequestParam Map<String, Object> map, Model model) {
+	public int getTotalWorkHour(@RequestParam Map<String, Object> map) {
 		String teacherId = (String)map.get("teacherId");
 		String dateRange1 = (String)map.get("dateRange1");
 		String dateRange2 = (String)map.get("dateRange2");

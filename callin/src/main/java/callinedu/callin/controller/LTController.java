@@ -105,11 +105,16 @@ public class LTController {
 	@RequestMapping(value="LTApplyListBySearch", method= RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<LTApplyCode> getLTApplyListBySearchKey( @RequestParam(value="levelSearchKey", required = false) String levelSearchKey
-													,@RequestParam(value="lTApplySearchValue", required = false) String lTApplySearchValue){
+													,@RequestParam(value="lTApplySearchValue", required = false) String lTApplySearchValue
+													,@RequestParam(value="searchStartDate", required = false) String searchStartDate
+													,@RequestParam(value="searchEndDate", required = false) String searchEndDate){
+		
 		log.info("레벨테스트신청리스트 검색 옵션 : {}", levelSearchKey);
 		log.info("레벨테스트신청리스트 검색 옵션 : {}", lTApplySearchValue);
+		log.info("레벨테스트신청리스트 검색 옵션 : {}", searchStartDate);
+		log.info("레벨테스트신청리스트 검색 옵션 : {}", searchEndDate);
 		
-		List<LTApplyCode> lTApplyCodeList = lTService.getLTApplyListBySearchKey(levelSearchKey, lTApplySearchValue);
+		List<LTApplyCode> lTApplyCodeList = lTService.getLTApplyListBySearchKey(levelSearchKey, lTApplySearchValue, searchStartDate, searchEndDate);
 		
 	    return lTApplyCodeList;
 	}

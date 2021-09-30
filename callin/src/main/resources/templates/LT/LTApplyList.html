@@ -55,40 +55,41 @@
 			                        <!-- select -->
 				                        <div class="form-group">
 				                            <select class="custom-select levelSearchKey">
+				                                <option	value="">전체</option>
 				                                <option value="studentName">이름</option>
 				                                <option value="studentEmail">이메일</option>
 				                                <option value="studentTel">전화번호</option>
 				                            </select>
 				                        </div>
 	                    			</div>
-					                    <div class="col-sm-5">
-					                        <!-- text input -->
-					                        <div class="form-group">
-					                            <input type="text" name="search" class="form-control" placeholder="검색어를 입력하세요." id="lTApplySearch">
-					                        </div>
-					                    </div>
-					                    <div class="col-sm-1">
-					                        <!-- text input -->
-					                        <div class="form-group">
-					                            <button type="button" class="btn btn-block btn-outline-success btn-md" id="LTApplySearchCheck">검색</button>
-					                        </div>
-					                    </div>
-					                    <div class="col-sm-5">
-											<div class="form-group">
-												<label>기간 검색</label>
-												<div class="input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text"> 
-															<i class="far fa-calendar-alt"></i>
-														</span>
-													</div>
-													<input type="text" class="form-control float-right" id="reservation">
+				                    <div class="col-sm-5">
+				                        <!-- text input -->
+				                        <div class="form-group">
+				                            <input type="text" name="search" class="form-control" placeholder="검색어를 입력하세요." id="lTApplySearch">
+				                        </div>
+				                    </div>
+				                    <div class="col-sm-2">
+				                        <!-- text input -->
+				                        <div class="form-group">
+				                            <button type="button" class="btn btn-block btn-outline-success btn-md" id="LTApplySearchCheck">검색</button>
+				                        </div>
+				                    </div>
+				                    <div class="col-sm-5">
+										<div class="form-group">
+											<label>기간 검색</label>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text"> 
+														<i class="far fa-calendar-alt"></i>
+													</span>
 												</div>
-												<!-- /.input group -->
+												<input type="text" class="form-control float-right" id="reservation">
+												<input type="hidden" id="startDate"/>
+												<input type="hidden" id="endDate"/>
 											</div>
+											<!-- /.input group -->
 										</div>
-						               
-						               
+									</div>
 	                			</div>
 	            			</div>
 		              	<!-- /.card-header -->
@@ -106,7 +107,7 @@
 							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="이름: activate to sort column ascending">이름</th>
 							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="이메일: activate to sort column ascending">이메일</th>
 							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="전화번호: activate to sort column ascending">전화번호</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="진행일자/진행상황: activate to sort column ascending">진행일자/진행상황</th>
+							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="상세보기(진행일자/진행상황): activate to sort column ascending">상세보기</th>
 										</tr>
 		                  			</thead>
 									<tbody id="ltList">
@@ -196,22 +197,41 @@
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
 		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
-		
-		<script>
-			$(function () {
-		    //Date range picker
-		    $('#reservation').daterangepicker()})
-  		</script>
+	
   		<script type="text/javascript">
 		$(function(){
-			$("#LTApplySearchCheck").on("click", function(){
+			//Date range picker
+		    var reservationDaterangepicker =  $('#reservation').daterangepicker({
+	    		locale: {
+	    		      		format: 'YYYY-MM-DD'
+	    		    	}
+		    	});
+		    
+			$('#startDate').val(moment().format('YYYY-MM-DD'));
+		    $('#endDate').val(moment().format('YYYY-MM-DD'));
+	    	
+	    	
+		    $('#reservation').on('apply.daterangepicker', function(ev, picker) {
+		    	$('#startDate').val(picker.startDate.format('YYYY-MM-DD'));
+		    	$('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
+			});
+		    
+			$(document).on('click','#LTApplySearchCheck', function(){
 				
 			    var levelSearchKey = $('.levelSearchKey').val();
 			    var lTApplySearchValue = $("#lTApplySearch").val();
+			    var searchStartDate = $('#startDate').val();
+			    var searchEndDate = $('#endDate').val();
+			    
 			    console.log(levelSearchKey)
 			    console.log(lTApplySearchValue)
+			    console.log(searchStartDate)
+			    console.log(searchEndDate)
+			    
 			    var htmltag = "";
-			    var sendData = {"levelSearchKey":levelSearchKey, "lTApplySearchValue":lTApplySearchValue};
+			    			    
+			    var sendData = {"levelSearchKey":levelSearchKey, "lTApplySearchValue":lTApplySearchValue, "searchStartDate":searchStartDate, "searchEndDate":searchEndDate};
+			    
 			    $.ajax({
 			        method : 'POST',
 			        url : '/admin/LT/LTApplyListBySearch',
@@ -220,7 +240,7 @@
 			        success : function(data){
 			        	$('#ltList').html("");
 			        	for(var i=0; i<data.length; i++){
-			        		htmltag += '<tr>';
+			        		htmltag += "<tr>";
 			        		htmltag += '<td class="dtr-control sorting_1" tabindex="0">';
 			        		htmltag += '<div class="form-check">';
 			        		htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
@@ -232,22 +252,21 @@
 			        		htmltag += "<td>";
 			        		htmltag += data[i].lTApplyDate;
 			        		htmltag += "</td>";
-			        		htmltag += '<td><a href="/admin/LT/LTListDetail" class="nav-link">';
+			        		htmltag += '<td>';
 			        		htmltag += data[i].user.userName;
 			        		htmltag += '</a></td>';
 			        		htmltag += "</td>";
-			        		htmltag += '<td><a href="/admin/LT/LTListDetail" class="nav-link">';
+			        		htmltag += '<td>';
 			        		htmltag += data[i].user.userEmail;
 			        		htmltag += "</td>";
-			        		htmltag += '<td><a href="/admin/LT/LTListDetail" class="nav-link">';
+			        		htmltag += '<td>';
 			        		htmltag += data[i].user.userPhone;
 			        		htmltag += "</td>";
-			        		htmltag += "<td>2021-01-30/진행중</td>";
-			        		htmltag += '</tr>';
+			        		htmltag += "<td>";
+			        		htmltag += '<a href="/admin/LT/LTListDetail" class="nav-link"><input type="submit" class="btn btn-secondary" value="상세보기"></a>';
+			        		htmltag += "</td>";
+			        		htmltag += "</tr>";
 			        	}
-			        	
-			        	
-			        	
 			        	/*
 			            if(resp=='fail'){
 			            	$('#available').css('display', 'none');
