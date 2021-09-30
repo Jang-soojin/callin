@@ -1,9 +1,5 @@
 package callinedu.callin.controller;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,19 +7,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import callinedu.callin.domain.ClassPolicy;
-import callinedu.callin.domain.RegularClass;
 import callinedu.callin.service.ClassService;
 
 @Controller
 @RequestMapping("/admin/class/")
 public class ClassController {
-	
-	private static final Logger log = LoggerFactory.getLogger(ClassController.class);
-	
 	private final ClassService classService;
 	
 	public ClassController(ClassService classSercive) {
@@ -64,30 +55,16 @@ public class ClassController {
 	@RequestMapping(value="/classPolicyNameCheck", method= RequestMethod.POST)
 	@ResponseBody
 	public String classPolicyNameCheck(ClassPolicy classPolicy){
+	    //select * from member where userid = #{};
+	    //이 member 객체에는 id만 값이 들어있고, 다른 것은 다 null 값이다.
 	    ClassPolicy c = classService.classPolicyNameCheck(classPolicy);
 	    String message=null;
-	    if(c==null) {
+	    if(c==null) {//사용할 수 있다. db에서 찾았는데없으니까
 	        message = "success";
-	    }else {
+	    }else {//사용할 수 없다.
 	        message = "fail";
 	    }	
 	    return message;
 	}
-	@RequestMapping(value="searchPolicyList", method= RequestMethod.POST, produces = "application/json")
-	@ResponseBody
-	public List<ClassPolicy> searchPolicyList( 
-			@RequestParam(value = "classPeriod",required = false) String classPeriod
-		,	@RequestParam(value = "classDay", required = false) String classDay
-		,	@RequestParam(value = "classTime", required = false) String classTime
-			){
-		
-		log.info("수업기간 검색 옵션 : {}", classPeriod);
-		log.info("수업요일 검색 옵션 : {}", classDay);
-		log.info("수업시간 검색 옵션 : {}", classTime);
-		
-		List<ClassPolicy> classPolicyList = classService.searchPolicyList(classPeriod, classDay, classTime);
-		
-		return classPolicyList;
-	}
-
+	
 }
