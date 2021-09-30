@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+<head th:replace="fragments/head :: headFragment"></head>
+	<!-- daterange picker -->
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<div id="wrapper">
+			<!-- begin topNav -->
+			<div th:replace="fragments/topNav :: topNavFragment"></div>
+			<!-- end topNav -->
+			
+			<!-- Main Sidebar Container -->
+			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
+			<th:block layout:fragment="classPolicy"> 
+				<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 th:text="${midTitle}"></h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a th:href="@{/admin/class/classPolicy}">수업관리</a></li>
+									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+								</ol>
+							</div>
+						</div>
+					</div><!-- /.container-fluid -->
+				</section>
+			
+			    <!-- Main content -->
+				<section class="content">
+					<div class="container-fluid">
+						<form>
+							<div class="row">
+							<!-- left column -->
+								<div class="col-md-5">
+								<!-- general form elements -->
+									<div class="card card-secondary">
+										<div class="card-header">
+											<h3 class="card-title">수업 기본 정책 설정</h3>
+										</div>
+										<!-- /.card-header -->
+										<div class="card-body">
+											<div class="form-group">
+												<label> 정책 이름 </label>
+												<div class="input-group-prepend">
+													<input type="text" id="classPolicyName"> 
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 수업기간 선택 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" id="classPeriod">
+															<option> :: 선택하세요 ::</option>
+															<option value="4"> 4주 </option>
+															<option value="8"> 8주 </option>
+															<option value="12"> 12주 </option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 수업요일 선택 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" id="classDay">
+															<option> :: 선택하세요 ::</option>
+															<option value="weekDay3"> 월, 수, 금 </option>
+															<option value="weekDay2"> 화, 목 </option>
+															<option value="weekDay5"> 월, 화, 수, 목, 금 </option>
+															<option value="weekEnd"> 토, 일 </option>
+															<option value="allDay"> 월, 화, 수, 목, 금, 토, 일 </option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 수업시간 선택 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" id="classTime">
+															<option> :: 선택하세요 ::</option>
+															<option value="10"> 10분 </option>
+															<option value="20"> 20분 </option>
+															<option value="30"> 30분 </option>
+															<option value="40"> 40분 </option>
+															<option value="50"> 50분 </option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								<!-- /.card -->
+								</div>
+								<!--/.col (left) -->
+								<!-- Right column -->
+								<div class="col-md-5">
+									<!-- general form elements -->
+									<div class="card card-secondary">
+										<div class="card-header">
+											<h3 class="card-title"> 수업 연기 정책 설정 </h3>
+										</div>
+										<div class="card-body">
+											<div class="form-group">
+												<label> 연기(일일) 횟수 설정 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" id="classPostponeDay">
+															<option> :: 선택하세요 ::</option>
+															<option value="1"> 1일 </option>
+															<option value="2"> 2일 </option>
+															<option value="3"> 3일 </option>
+															<option value="4"> 4일 </option>
+															<option value="5"> 5일 </option>
+															<option value="6"> 6일 </option>
+														</select>
+													</div>
+												<!-- /btn-group -->
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 연기(장기) 횟수 설정 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" id="classPostponeDays">
+															<option> :: 선택하세요 ::</option>
+															<option value="1"> 1회 </option>
+															<option value="2"> 2회 </option>
+															<option value="3"> 3회 </option>
+															<option value="4"> 4회 </option>
+															<option value="5"> 5회 </option>
+															<option value="6"> 6회 </option>
+														</select>
+													</div>
+												<!-- /btn-group -->
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 연기(장기) 기간 설정 </label>
+												<div class="input-group-prepend">
+													<input type="number" id="classPostponePeriod"> 일
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							<!-- /.card -->
+							</div>
+							<div>
+								<button style="width: 200px; margin-left: 750px"  type="submit" class="form-control"> 정책 등록 </button>
+							</div>
+						</form>
+						<!--/.col (right) --> 
+					</div>
+				</section>
+				<!-- /.row -->
+			</div><!-- /.container-fluid -->
+			<!-- /.content -->
+		</th:block>
+			
+		<div th:replace="fragments/footer :: footerFragment"></div>
+		</div>
+		<!-- jQuery -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<!-- jQuery UI 1.11.4 -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+		  $.widget.bridge('uibutton', $.ui.button)
+		</script>
+		<!-- Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- ChartJS -->
+		<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
+		<!-- Sparkline -->
+		<script th:src="@{/AdminLTE-master/plugins/sparklines/sparkline.js}"></script>
+		<!-- daterangepicker -->
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- date-range-picker -->
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- Tempusdominus Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+		<!-- Summernote -->
+		<script th:src="@{/AdminLTE-master/plugins/summernote/summernote-bs4.min.js}"></script>
+		<!-- overlayScrollbars -->
+		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
+		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		<script>
+			$(function () {
+		    //Date range picker
+		    $('#reservation').daterangepicker()})
+		</script>
+		
+</body>
+</html>

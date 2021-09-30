@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+  <!-- Theme style -->
+  <link rel="stylesheet" th:href="@{/AdminLTE-master/dist/css/adminlte.min.css}">
+ <!-- DataTables -->
+  <link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}">
+  <link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}">
+  <link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
+
+<title th:text="${title}">강사 급여 정산</title>
+</head>
+<body>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">강사 목록</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+							<form id="chooseTeacher" th:action="@{/teacherSalary}" method="post"> 
+								<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
+									<thead>
+										<tr>
+											<th>강사 아이디</th>
+											<th>이름</th>
+											<th>계약 유형</th>
+											<th>단위 급여</th>
+											<td></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="teacher : ${teacherList}">
+											<td class="id">
+												<span class="teacherId">[[${teacher.teacherId}]]</span>
+												<input type="hidden" id="teacherId" name="teacherId" th:value="${teacher.teacherId}">
+											</td>
+											<td th:text="${teacher.teacherName}" class="name"></td>
+											<td th:text="${teacher.contractType}" class="contract"></td>
+											<td th:text="${teacher.hourlyRate}" class="hourlyRate"></td>
+											<td>
+												<a th:href="@{#}" class="pick")>선택</a>
+<!-- 												<a th:href="@{/admin/teacher/teacherSalary(teacherId=${teacher.teacherId})}" class="pick")>선택</a> -->
+											</td>
+										</tr>
+	
+									</tbody>
+									<tfoot>
+										<tr>
+											<th>강사 아이디</th>
+											<th>이름</th>
+											<th>계약 유형</th>
+											<th>단위 급여</th>
+											<th></th>
+										</tr>
+									</tfoot>
+								</table>
+							</form>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+
+</body>
+<!-- jQuery -->
+<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- DataTables  & Plugins -->
+<script th:src="@{/AdminLTE-master/plugins/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/jszip/jszip.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/pdfmake/pdfmake.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/pdfmake/vfs_fonts.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.html5.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.print.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/AdminLTE-master/dist/js/adminlte.min.js}"></script>
+<!-- AdminLTE for demo purposes -->
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+	
+</script>
+
+<script>
+    $(".pick").click(function(){
+    	var id = '';
+    	var name = '';
+    	var contract = '';
+    	var hourlyRate = '';
+    	var length = $(".pick").parents("tr").children(".id").length;
+    	
+    	for(var i=0; i<length ; i++){
+    		var buttonNumber = $(".pick")[i]
+    		if(this==buttonNumber){
+    			id=$($(".pick")[i]).parents("tr").children(".id")[0].innerText;
+    			name=$($(".pick")[i]).parents("tr").children(".name")[0].innerText;
+    			contract=$($(".pick")[i]).parents("tr").children(".contract")[0].innerText;
+    			hourlyRate=$($(".pick")[i]).parents("tr").children(".hourlyRate")[0].innerText;
+    		}
+    	}
+    	
+    	/* ********************************************** */
+    	//$.ajax() 호출시 ajax에 관련된 객체를 반환한다.
+		var request = $.ajax({
+		url: "/admin/teacher/teacherSalaryAjax", //요청 url
+		method: "POST", //요청 방식
+		data: {	 teacherId : id
+				,teacherName : name
+        		,contractType : contract
+        		,hourlyRate : hourlyRate}, //요청하는 곳에 전달될 데이타
+		dataType: "json" //응답되어 받은 데이타를 parsing 시킬 방식
+		});
+		//반환된 객체에는 done메서드가 있으며, 요청과 응답이 정상적으로 
+		//이루어 졌을 경우 해당 메서드가 실행이 된다.
+		request.done(function(data){
+			//강사 정보 부모창으로 가져오기
+			$($(opener.document).find("input")[2]).val(data.teacherId)
+			$($(opener.document).find("input")[3]).val(data.teacherName)
+			$($(opener.document).find("input")[4]).val(data.contractType)
+			$($(opener.document).find("input")[5]).val(data.hourlyRate)
+			
+			//정산 상세 내역 초기화
+			$($(opener.document).find("input")[8]).val('')
+			$($(opener.document).find("input")[9]).val('')
+			$($(opener.document).find("input")[10]).val('')
+			$($(opener.document).find("input")[11]).val('')
+			$($(opener.document).find("input")[12]).val('')
+			window.close();
+    	});
+		//반환된 객체에는 fail메서드가 있으며,
+		//응답 중 에러가 발생하거나, 데이타 parsing에러시 해당 메서드가 실행된다.
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		});
+    });
+</script>
+
+
+</html>
