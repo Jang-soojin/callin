@@ -218,7 +218,6 @@
 				}else{
 					alert("강사를 선택해주세요")
 				}
-
 			})
 		})
 
@@ -240,10 +239,12 @@
 					alert("강사를 선택해주세요")
 				}
 				var sumPHP = sum;
+				if(sumPHP<0){
+					alert('최종 정산액은 음수가 될 수 없습니다.')
+					return;
+				}
 				
-				
-				var request = $
-						.ajax({
+				var request = $.ajax({
 							//환율 open API URL 
 							url : "http://api.exchangeratesapi.io/v1/latest?access_key=1d4ae7f592a21345bdf8b8de12dab34c&base =KRW & symbols = PHP", //요청 url
 							method : "POST", //요청 방식
