@@ -224,13 +224,9 @@
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
 		<!-- AdminLTE for demo purposes -->
-<<<<<<< HEAD
 		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
 		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
-=======
-		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
->>>>>>> refs/heads/soojin
 		<script>
 			$(function () {
 		    //Date range picker
@@ -245,20 +241,11 @@
 					$("input[name=LCheck_List]").prop("checked", $(this).is(":checked"));
 				});
 				
-				/* // 저장
-	 			$("#saveBtn").on("click", function(){
-					var frm = document.chooseMileage;
-					
-					frm.action = "mileageSave";
-					frm.target = "_self";
-					frm.method = "POST";
-					frm.submit();
-				});  */
 				//선택시 옮기기
 				$(document).on('click','.selectStudent',function(){
 					console.log($(this).attr('data-info'));
 					var sHtml = "";
-					
+
 					if($("#moveSlct option").filter(function(){ return this.value == chkVal; }).length == 0){
 						sHtml += "<option value='" + $(this).attr('data-info') + "'>" + $(this).attr('data-info') + "</option>";
 					}
@@ -277,7 +264,7 @@
 					chkVal = $(this).val();
 					
 					if($("#moveSlct option").filter(function(){ return this.value == chkVal; }).length == 0){
-						sHtml += "<option name='option1' value='" + $(this).val() + "'>" + $(this).closest("td").next().text() + "[" + $(this).closest("td").next().next().text() + "]" + "</option>";
+						sHtml += "<option value='" + $(this).val() + "'>" + $(this).closest("td").next().text() + "[" + $(this).closest("td").next().next().text() + "]" + "</option>";
 					}
 				});
 				

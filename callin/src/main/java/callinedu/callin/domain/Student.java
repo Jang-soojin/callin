@@ -6,16 +6,6 @@ public class Student {
 	private String studentDegreeCode;
 	private String studentDegreeName;
 	
-	
-	/*private String mileageUseCode;      	
-	private String mileageUserReaCode;		
-	private String mileagDeduct;			
-	private String mileageUse_group_code;
-	private String mileageUse_group_code_table;
-	private String mileageGroup_code;*/	
-	
-	
-	
 	public  Student() {}
 	
 	public  Student(String studentId, String userName, String studentDegreeCode, String studentDegreeName ) {
@@ -25,9 +15,6 @@ public class Student {
 		this.studentDegreeName = studentDegreeName;
 	
 	}
-	
-	
-
 	public String getStudentId() {
 		return studentId;
 	}
