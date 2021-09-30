@@ -42,21 +42,20 @@
 		);	
 	</insert>
 	
-	<select id ="classPolicyNameCheck" parameterType="ClassPolicy" resultMap="classPolicyResultMap">
-	    SELECT
-	    	class_policy_code
-		   ,class_policy_name
-		   ,class_period
-		   ,class_day
-		   ,class_time
-		   ,class_postpone_day
-		   ,class_postpone_days
-		   ,class_postpone_period
-		   ,modify_date
-		   ,modify_user
-	    FROM
+	<select id="searchPolicyList" parameterType="String" resultMap="classPolicyResultMap">
+		SELECT
+			class_policy_name
+			, class_period
+			, class_day
+			, class_time
+			, class_postpone_day
+			, class_postpone_days
+			, class_postpone_period
+		FROM
 			class_policy
-	    WHERE
-			class_policy_name = #{classPolicyName};
-</select>
+		<where>
+			<if test="classPeriod != null and classPeriod != null">  classPeriod // classDay // classTime
+			</if>
+		</where>
+	</select>
 </mapper>
