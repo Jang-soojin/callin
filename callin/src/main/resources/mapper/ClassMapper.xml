@@ -88,4 +88,17 @@
 			</if>
 		</where>
 	</select>
+	<select id="getClassPolicy" resultType="ClassPolicy">
+		SELECT
+			class_policy_name, 
+			class_period, 
+			class_day, 
+			class_time, 
+			class_postpone_day, 
+			class_postpone_days, 
+			class_postpone_period
+		FROM class_policy
+			order by class_policy_name ASC;
+   </select>
+	
 </mapper>
