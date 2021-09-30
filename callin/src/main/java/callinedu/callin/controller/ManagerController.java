@@ -41,9 +41,9 @@ public class ManagerController {
 		Teacher teacher = teacherService.getTeacherInfoById(teacherId);
 		System.out.println(teacher+"★★★★★★★★★★★★★★★★★");
 		model.addAttribute("teacherId", teacher.getTeacherId());
-		model.addAttribute("teacherName", teacher.getTeacherName());
-		model.addAttribute("ContractType", teacher.getContractType());
-		model.addAttribute("HourlyRate", teacher.getHourlyRate());
+		model.addAttribute("teacherName", teacher.getTeacherId()); // 쿼리 확인용 임시(삭제예정)
+		model.addAttribute("ContractType", teacher.getContractTypeCode());
+		model.addAttribute("HourlyRate", teacher.getUnitPay());
 		}
 		System.out.println("GET으로 실행");
 		model.addAttribute("title", "매니저 급여 정산");
@@ -58,9 +58,9 @@ public class ManagerController {
 		Teacher teacher = teacherService.getTeacherInfoById("id001");
 		System.out.println(teacher+"★★★★★★★★★★★★★★★★★");
 		model.addAttribute("teacherId", teacher.getTeacherId());
-		model.addAttribute("teacherName", teacher.getTeacherName());
-		model.addAttribute("ContractType", teacher.getContractType());
-		model.addAttribute("HourlyRate", teacher.getHourlyRate());
+		model.addAttribute("teacherName", teacher.getTeacherId()); // 쿼리 확인용 임시(삭제예정)
+		model.addAttribute("ContractType", teacher.getContractTypeCode());
+		model.addAttribute("HourlyRate", teacher.getUnitPay());
 		return "manager/managerSalary";
 	}
 
