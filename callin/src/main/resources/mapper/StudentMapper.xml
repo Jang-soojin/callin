@@ -4,9 +4,81 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="callinedu.callin.mapper.StudentMapper">
 	
-	<select id="getTest" resultType="java.lang.String">
+	<resultMap type="student" id="studentResultMap">
+		<result property="studentId" 			column="user_id"/>
+		<result property="userName" 			column="user_name"/>
+		<result property="studentDegreeCode" 	column="student_degree_code"/>
+		<result property="studentDegreeName" 	column="student_degree_name"/>
+	</resultMap>
+	
+	<select id="getMemberListBySearch" parameterType="map" resultMap="studentResultMap">
 		SELECT
-			1 AS AA
-		FROM DUAL
+			 ui.user_id
+			,ui.user_name
+			,sd.student_degree_code
+			,sd.student_degree_name
+		FROM
+			user_info AS ui
+			INNER JOIN 
+			student AS s
+			ON 
+			ui.user_id = s.student_id
+			INNER JOIN
+			student_degree AS sd
+			ON 
+			s.student_degree_code = sd.student_degree_code
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchDegree != null and searchDegree != ''">
+				sd.student_degree_name LIKE CONCAT('%', #{searchDegree}, '%')
+			</if>
+			<if test="searchKey != null and searchKey != ''">
+				AND ${searchKey} LIKE CONCAT('%',#{searchValue}, '%')
+			</if>
+		</trim>
 	</select>
+	<resultMap type="mileage" id="mileageResultMap">
+		<result property="mileageUseCode"            	column="mileage_use_code"/>
+		<result property="studentId"                  	column="student_id"/>
+		<result property="mileageUseReaCode" 			column="mileage_use_rea_code"/>
+		<result property="mileagDeductDate" 			column="mileag_deduct_date"/>
+		<result property="mileagDeduct" 				column="mileag_deduct"/>
+		<result property="mileageAnticipateDelDate" 	column="mileage_anticipate_del_date"/>
+		<result property="mileageUseGroupCode" 			column="mileage_use_group_code"/>
+		<result property="mileageGroupCode" 			column="mileage_group_code"/>
+		<result property="mileageDeductDivision" 				column="mileage_deduct_division"/>
+		<result property="mileageMemo" 					column="mileage_memo"/>
+		<result property="mileageWaitDivision" 			column="mileage_wait_division"/>
+	</resultMap>
+	
+ 			<insert id="addMileage" parameterType="Mileage">
+			    
+					INSERT INTO mileage_use
+					(   mileage_use_code
+
+					   ,mileage_use_rea_code
+					   ,mileag_deduct_date
+					   ,mileag_deduct
+					   ,mileage_anticipate_del_date
+					   ,mileage_use_group_code
+					   ,mileage_group_code
+					   ,mileage_deduct_division
+					   ,mileage_memo
+					   ,mileage_wait_division
+					) VALUES (
+					    CONCAT(NOW(),'id001')
+
+					   ,#{mileageUseReaCode}
+					   ,NOW()
+					   ,#{mileagDeduct}
+					   ,CURDATE()
+					   ,#{mileageUseGroupCode}
+					   ,#{mileageGroupCode}
+					   ,#{mileageDeductDivision}
+					   ,#{mileageMemo}
+					   ,#{mileageWaitDivision}
+					);	
+		</insert>
+
+ 	
+
 </mapper>
