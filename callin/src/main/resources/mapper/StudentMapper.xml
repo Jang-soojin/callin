@@ -45,7 +45,7 @@
 		<result property="mileageAnticipateDelDate" 	column="mileage_anticipate_del_date"/>
 		<result property="mileageUseGroupCode" 			column="mileage_use_group_code"/>
 		<result property="mileageGroupCode" 			column="mileage_group_code"/>
-		<result property="mileageDeductDivision" 				column="mileage_deduct_division"/>
+		<result property="mileageDeductDivision" 		column="mileage_deduct_division"/>
 		<result property="mileageMemo" 					column="mileage_memo"/>
 		<result property="mileageWaitDivision" 			column="mileage_wait_division"/>
 	</resultMap>

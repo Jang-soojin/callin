@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import callinedu.callin.domain.ClassPolicy;
+
 import callinedu.callin.domain.Mileage;
 import callinedu.callin.domain.Student;
 import callinedu.callin.mapper.StudentMapper;
