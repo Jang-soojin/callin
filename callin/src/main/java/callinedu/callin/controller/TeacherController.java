@@ -87,6 +87,14 @@ public class TeacherController {
 		return  totalWorkHour;
 	}
 
+	@PostMapping(value="/searchSalaryList", produces = "application/json")
+	@ResponseBody
+	public List<TeacherSalarySettlement> searchSalaryList(@RequestParam Map<String, Object> map, Model model) {
+		
+		List<TeacherSalarySettlement> searchSalaryList = teacherService.searchSalaryList(map);
+		model.addAttribute("teacherSalaryList", searchSalaryList);
+		return  searchSalaryList;
+	}
 
 }
 

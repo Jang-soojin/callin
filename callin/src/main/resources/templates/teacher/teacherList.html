@@ -23,7 +23,7 @@
 						<!-- /.card-header -->
 						<div class="card-body">
 							<form id="chooseTeacher" th:action="@{/teacherSalary}" method="post"> 
-								<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
+								<table id="teacherList" class="table table-bordered table-hover" style="text-align: center;">
 									<thead>
 										<tr>
 											<th>강사 아이디</th>
@@ -94,7 +94,7 @@
 <!-- Page specific script -->
 <script>
   $(function () {
-    $('#example2').DataTable({
+    $('#teacherList').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,

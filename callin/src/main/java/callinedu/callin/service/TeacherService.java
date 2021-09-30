@@ -1,6 +1,7 @@
 package callinedu.callin.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class TeacherService {
 	
 	public int addTeacherSalarySettlement(TeacherSalarySettlement teacherSalarySettlement){
 		System.out.println("service.addTeacherSalarySettlement 실행");
+		
 		return teacherMapper.addTeacherSalarySettlement(teacherSalarySettlement);
 	}
 	public int getTotalWorkHour(String teacherId,String dateRange1,String dateRange2 ){
@@ -49,6 +51,20 @@ public class TeacherService {
 		int totalWorkHour = teacherMapper.getTotalWorkHour(teacherId, dateRange1, dateRange2);
 		System.out.println(totalWorkHour);
 		return totalWorkHour;
+	}
+	
+	public List<TeacherSalarySettlement> searchSalaryList(Map<String,Object> map){
+		System.out.println("service.getTotalWorkHour 실행");
+			String searchKey = (String)map.get("searchKey");
+			String searchValue = (String)map.get("searchValue");
+			String dateRangeFirst = (String)map.get("dateRangeFirst");
+			String dateRangeLast = (String)map.get("dateRangeLast");
+		
+		List<TeacherSalarySettlement> searchSalaryList = teacherMapper.searchSalaryList(searchKey,searchValue,dateRangeFirst,dateRangeLast);
+		System.out.println(searchSalaryList);
+		
+		
+		return searchSalaryList;
 	}
 		
 }

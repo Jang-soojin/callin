@@ -14,4 +14,5 @@ public interface TeacherMapper {
 	public int getTotalWorkHour(String teacherId, String dateRange1,String dateRange2);
 	public int addTeacherSalarySettlement(TeacherSalarySettlement teacherSalarySettlement);
 	public List<TeacherSalarySettlement> getTeacherSalaryList();
+	public List<TeacherSalarySettlement> searchSalaryList(String searchKey, String searchValue,String dateRangeFirst,String dateRangeLast);
 }
