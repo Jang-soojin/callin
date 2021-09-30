@@ -32,20 +32,36 @@ public class ClassController {
 	
 	@GetMapping("classPolicy")
 	public String classPolicy(Model model) {
-		System.out.println("수업정책 컨트롤러 실행 ");
+		System.out.println("수업정책 등록 컨트롤러 실행 ");
 		model.addAttribute("title", "수업관리");
 		model.addAttribute("midTitle", "수업 정책 등록");
 		
 		return "class/classPolicy";
 	}
+	@GetMapping("classPolicyList")
+	public String classPolicyList(Model model) {
+		System.out.println("수업정책 리스트 컨트롤러 실행 ");
+		model.addAttribute("title", "수업관리");
+		model.addAttribute("midTitle", "수업 정책 리스트");
+		
+		return "class/classPolicyList";
+	}
 	
 	@GetMapping("regularClass")
 	public String regularClass(Model model) {
-		System.out.println("정규수업 컨트롤러 실행");
+		System.out.println("정규수업 등록 컨트롤러 실행");
 		model.addAttribute("title", "정규수업");
 		model.addAttribute("midTitle", "정규수업등록");
 		
 		return "class/regularClass";
+	}
+	@GetMapping("regularClassList")
+	public String regularClassList(Model model) {
+		System.out.println("정규수업 리스트 컨트롤러 실행");
+		model.addAttribute("title", "정규수업");
+		model.addAttribute("midTitle", "정규 수업 리스트");
+		
+		return "class/regularClassList";
 	}
 	
 	@PostMapping("addClassPolicy")
@@ -89,5 +105,14 @@ public class ClassController {
 		
 		return classPolicyList;
 	}
+	@GetMapping("/List")
+	   public String List(Model model) {
+	      model.addAttribute("title", "UPBUS");
+	      model.addAttribute("h1text", "전체 회원 목록");
+	      List<ClassPolicy> classPolicy = classService.getClassPolicy();
+	      
+	      model.addAttribute("classPolicy", classPolicy);
+	      return "admin/class/classPolicyList";
+	   }
 
 }
