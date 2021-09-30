@@ -4,6 +4,7 @@
 	  
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	  	  
@@ -23,9 +24,8 @@
 			<!-- Main Sidebar Container -->
 			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
 			<th:block layout:fragment="LTApply"> 
-			<!-- Content Wrapper. Contains page content -->
+				<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
-			
 			<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<div class="container-fluid">
@@ -43,128 +43,27 @@
 					</div><!-- /.container-fluid -->
 				</section>
 			
-		<!-- Main content -->
+	    <!-- Main content -->
 		<section class="content">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-sm-2">
-			                        <!-- select -->
-				                        <div class="form-group">
-				                            <select class="custom-select levelSearchKey">
-				                                <option	value="">전체</option>
-				                                <option value="studentName">이름</option>
-				                                <option value="studentEmail">이메일</option>
-				                                <option value="studentTel">전화번호</option>
-				                            </select>
-				                        </div>
-	                    			</div>
-				                    <div class="col-sm-5">
-				                        <!-- text input -->
-				                        <div class="form-group">
-				                            <input type="text" name="search" class="form-control" placeholder="검색어를 입력하세요." id="lTApplySearch">
-				                        </div>
-				                    </div>
-				                    <div class="col-sm-2">
-				                        <!-- text input -->
-				                        <div class="form-group">
-				                            <button type="button" class="btn btn-block btn-outline-success btn-md" id="LTApplySearchCheck">검색</button>
-				                        </div>
-				                    </div>
-				                    <div class="col-sm-5">
-										<div class="form-group">
-											<label>기간 검색</label>
-											<div class="input-group">
-												<div class="input-group-prepend">
-													<span class="input-group-text"> 
-														<i class="far fa-calendar-alt"></i>
-													</span>
-												</div>
-												<input type="text" class="form-control float-right" id="reservation">
-												<input type="hidden" id="startDate"/>
-												<input type="hidden" id="endDate"/>
-											</div>
-											<!-- /.input group -->
-										</div>
-									</div>
-	                			</div>
-	            			</div>
-		              	<!-- /.card-header -->
-						<div class="card-body">
-		                	<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-						<div class="row">
-							<div class="col-sm-12">
-								<table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-									<thead>
-										<tr role="row">
-		                  					<th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label=": activate to sort column descending">
-		                  						<input type="checkbox" id="exampleCheck1"></th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="No.: activate to sort column ascending">No.</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="신청일: activate to sort column ascending">신청일</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="이름: activate to sort column ascending">이름</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="이메일: activate to sort column ascending">이메일</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="전화번호: activate to sort column ascending">전화번호</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="상세보기(진행일자/진행상황): activate to sort column ascending">상세보기</th>
-										</tr>
-		                  			</thead>
-									<tbody id="ltList">
-				                  		<!-- <tr role="row" class="odd" >
-						                    <td class="dtr-control sorting_1" tabindex="0">
-							                    <div class="form-check">
-							                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-							                    </div>
-						                    </td>
-						                    <td>0001</td>
-						                    <td>2020-12-07</td>
-						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">이희진</a></td>
-						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">123@123.com</a></td>
-						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">010-1234-1234</a></td>
-						                  	<td>전화영어/카톡</td>
-						                    <td>2021-01-30/취소</td>
-				                  		</tr> -->
-									</tbody>
-								</table>
-							</div>
-						</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-5">
-									<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 16 entries</div>
-								</div>
-			                	<div class="col-sm-12 col-md-7">
-				                	<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-										<ul class="pagination">
-											<li class="paginate_button page-item previous disabled" id="example1_previous">
-												<a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-											</li>
-				                			<li class="paginate_button page-item active">
-				                				<a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-				                			</li>
-				                			<li class="paginate_button page-item next" id="example1_next">
-				                				<a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0" class="page-link">Next</a>
-				                			</li>
-				                		</ul>
-				                	</div>
-			                	</div>
-							</div>
-		                </div>
-					</div>
-	              <!-- /.card-body -->
-	            </div>
-	            <!-- /.card -->
-	          </div>
-	          <!-- /.col -->
-	        </div>
-	        <!-- /.row -->
-	      </div>
-	      <!-- /.container-fluid -->
-	    </section>
-		<!-- /.content -->
+		<div class="con">
+		<form method="get" name="ftest" id="ftest" class="sky-form" action="/admin/LT/LTApplyList" onsubmit="return ck_form();" target="h_frame">
+                 <div class="card card-info">
+                   <table summary="레벨테스트신청리스트" class="table table-bordered">
+                    <tbody>
+					</tbody>
+				</table>
 			</div>
-			<!-- /.content-wrapper -->
-			</th:block>
+			</form>
+			</div>
+		</section>
+		
+		<!-- /.content -->
+		<!-- /.content-wrapper -->
+	
+		</div>
+		<!-- /.container-fluid -->
+		<!-- /.content -->
+		</th:block>
 
 			
 		<div th:replace="fragments/footer :: footerFragment"></div>
@@ -196,99 +95,16 @@
 		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
-		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
-	
-  		<script type="text/javascript">
-		$(function(){
-			//Date range picker
-		    var reservationDaterangepicker =  $('#reservation').daterangepicker({
-	    		locale: {
-	    		      		format: 'YYYY-MM-DD'
-	    		    	}
-		    	});
-		    
-			$('#startDate').val(moment().format('YYYY-MM-DD'));
-		    $('#endDate').val(moment().format('YYYY-MM-DD'));
-	    	
-	    	
-		    $('#reservation').on('apply.daterangepicker', function(ev, picker) {
-		    	$('#startDate').val(picker.startDate.format('YYYY-MM-DD'));
-		    	$('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
-			});
-		    
-			$(document).on('click','#LTApplySearchCheck', function(){
-				
-			    var levelSearchKey = $('.levelSearchKey').val();
-			    var lTApplySearchValue = $("#lTApplySearch").val();
-			    var searchStartDate = $('#startDate').val();
-			    var searchEndDate = $('#endDate').val();
-			    
-			    console.log(levelSearchKey)
-			    console.log(lTApplySearchValue)
-			    console.log(searchStartDate)
-			    console.log(searchEndDate)
-			    
-			    var htmltag = "";
-			    			    
-			    var sendData = {"levelSearchKey":levelSearchKey, "lTApplySearchValue":lTApplySearchValue, "searchStartDate":searchStartDate, "searchEndDate":searchEndDate};
-			    
-			    $.ajax({
-			        method : 'POST',
-			        url : '/admin/LT/LTApplyListBySearch',
-			        data : sendData,
-			        dataType:'json',
-			        success : function(data){
-			        	$('#ltList').html("");
-			        	for(var i=0; i<data.length; i++){
-			        		htmltag += "<tr>";
-			        		htmltag += '<td class="dtr-control sorting_1" tabindex="0">';
-			        		htmltag += '<div class="form-check">';
-			        		htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
-			        		htmltag += '</div>';
-			        		htmltag += "</td>";
-			        		htmltag += "<td>";
-			        		htmltag += (i+1);
-			        		htmltag += "</td>";
-			        		htmltag += "<td>";
-			        		htmltag += data[i].lTApplyDate;
-			        		htmltag += "</td>";
-			        		htmltag += '<td>';
-			        		htmltag += data[i].user.userName;
-			        		htmltag += '</a></td>';
-			        		htmltag += "</td>";
-			        		htmltag += '<td>';
-			        		htmltag += data[i].user.userEmail;
-			        		htmltag += "</td>";
-			        		htmltag += '<td>';
-			        		htmltag += data[i].user.userPhone;
-			        		htmltag += "</td>";
-			        		htmltag += "<td>";
-			        		htmltag += '<a href="/admin/LT/LTListDetail" class="nav-link"><input type="submit" class="btn btn-secondary" value="상세보기"></a>';
-			        		htmltag += "</td>";
-			        		htmltag += "</tr>";
-			        	}
-			        	
-			        	
-			        	
-			        	/*
-			            if(resp=='fail'){
-			            	$('#available').css('display', 'none');
-			            	$('#in_use').css('display', 'inline');
-			                flag=false;
-			  
-			            }else{
-			            	$('#available').css('display', 'inline');
-			            	$('#in_use').css('display', 'none');
-			                flag=true;
-			            }*/
-			    console.log(data[0]);
-			    $("#ltList").html(htmltag);
-			        }
-			    });
-				
-			});
-		})
-		</script>
+		<!-- AdminLTE for demo purposes -->
+		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
+		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		
+		<script>
+			$(function () {
+		    //Date range picker
+		    $('#reservation').daterangepicker()})
+  		</script>
   		
 		
 		

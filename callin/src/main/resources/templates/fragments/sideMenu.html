@@ -3,28 +3,11 @@
 	
 	
 	<nav class="mt-2" th:fragment="sideBarMenu">
+        <!--------------------------------------- 김경수 메뉴 영역 --------------------------------------->
         <ul th:if="${sideMenu eq 'teacher' || sideMenu eq 'manager'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-              
-            </ul>
-          </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
@@ -60,38 +43,8 @@
               </li>
             </ul>
           </li>
-         
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-plus-square"></i>
-              <p>
-                Extras
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item menu-open">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Login & Register v1
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="pages/examples/login.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Login v1</p>
-                    </a>
-                  </li>
-                 
-                </ul>
-              </li>              
-              
-            </ul>
-          </li>
         </ul>
+<!--------------------------------------- 김경수 메뉴 영역 ------------------------------------------>
         <!-- th:if="${sideMenu eq ''}" ''부분에 본인 메뉴 넣어 주시면 됩니다. ul 통째로 복사해서 쓰세요. -->
         <ul th:if="${sideMenu eq 'class'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
@@ -245,7 +198,7 @@
           <li class="nav-item menu-open">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                	마일리지 메뉴 
+                	마일리지 메뉴
                 <i class="right fas fa-angle-left"></i>
               </p>
           </li>
@@ -254,7 +207,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
               <p>
-				마일리지 관리 (이희진)
+				마일리지 관리
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -262,25 +215,25 @@
               <li class="nav-item">
                 <a th:href="@{/admin/mileage/mileageAdd}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p> 마일리지 등록 </p>
+                  <p> 마일리지 추가 </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a th:href="@{/admin/LT/LTApplyList}"  class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p> 전체 마일리지 조회 </p>
+                  <p> 레벨테스트 신청 리스트 </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a th:href="@{/managerSalary}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p> 대기 마일리지 조회</p>
+                  <p>매니저 급여 정산</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a th:href="@{/admin/class/classPolicy2}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p> 마일리지 환경설정</p>
+                  <p>레벨테스트 실험</p>
                 </a>
               </li>
             </ul>

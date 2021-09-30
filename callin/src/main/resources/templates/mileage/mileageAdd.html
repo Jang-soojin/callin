@@ -22,17 +22,7 @@
 			<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<div class="container-fluid">
-						<div class="row mb-2">
-					<div class="col-sm-6">
-						<h1 th:text="${midTitle}"></h1>
-					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-							<li class="breadcrumb-item active" th:text="${midTitle}"></li>
-						</ol>
-					</div>
-				</div>
+						
 					</div><!-- /.container-fluid -->
 				</section>
 			
@@ -61,16 +51,14 @@
 																		<div class="BtnTBlack20" style="margin:0px 0 5px 5px;padding:5px 0 5px 0;">
 																			<select id="schMemGrade" name="schMemGrade" class="NSelect25">
 																				<option value="">전체 등급</option>
-																				<option value="iron">아이언</option>
-																				<option value="bronze">브론즈</option>
-																				<option value="silver">실버</option>
-																				<option value="gold">골드</option>
-																				<option value="diamond">다이아몬드</option>
+																				<option value="T">등급 없음</option>
+																				<option value="SG_33376">1등급</option>
+																				<option value="SG_32207">2등급</option>
 																			</select>
-																			<select id="schUser" name="schGubun" class="NSelect25" onkeypress="if(event.keyCode==13) sch_Go();">
-																				<option value="" selected="selected">검색 항목</option>
+																			<select name="schGubun" class="NSelect25" onkeypress="if(event.keyCode==13) sch_Go();">
+																				<option value="">검색 항목</option>
 																				<option value="schGubun_ID">아이디</option>
-																				<option value="schGubun_Name">이름</option>
+																				<option value="schGubun_Name" selected="selected">이름</option>
 																			</select>
 																			
 																			<input type="text" id="schText" value="" class="ml_2" style="width:140px;" onkeypress="if(event.keyCode==13) sch_Go();">
@@ -100,16 +88,16 @@
 																							</tr>
 																						</thead>
 																						<tbody>
-																							<tr th:each="student : ${searchList}" onmouseover="this.style.backgroundColor=&quot;#F2F6FF&quot;" onmouseout="this.style.backgroundColor=&quot;&quot;" style="">
+																							<tr onmouseover="this.style.backgroundColor=&quot;#F2F6FF&quot;" onmouseout="this.style.backgroundColor=&quot;&quot;" style="">
 																								<td>
 																									<input type="hidden" id="s_MemSKU" name="s_MemSKU" value="ST_IT73931" />
 																									<input value="아이티맵[itmap]|ST_IT73931@@" type="checkbox" name="LCheck_List" />
 																								</td>
-																								<td th:text="${student.userName}"></td>
-																								<td th:text="${student.studentId}"></td>
+																								<td>아이티맵</td>
+																								<td>itmap</td>
 																								<td class="align_c">
 																									<div class="BtnGray15 align_c">
-																										<button th:href="@{/admin/mileage/mileageAdd}" type="button" class="btn btn-secondary" onclick="gorSelect('아이티맵[itmap]|ST_IT73931@@')" title="선택"><span>선택</span></button>
+																										<button type="button" class="btn btn-secondary" onclick="gorSelect('아이티맵[itmap]|ST_IT73931@@')" title="선택"><span>선택</span></button>
 																									</div>
 																								</td>
 																							</tr>
@@ -181,7 +169,7 @@
 										</tbody>
 									</table>
 									<div style="text-align:center; margin-bottom:10px;">
-										<button type="submit" class="btn btn-secondary" id="saveBtn">저장</button>
+										<button type="button" class="btn btn-secondary" id="saveBtn">저장</button>
 									</div>
 								</div><!-- /.container-fluid -->
 							</section>
@@ -226,7 +214,7 @@
 		<!-- AdminLTE for demo purposes -->
 		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
 		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
+		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
 		<script>
 			$(function () {
 		    //Date range picker
@@ -245,26 +233,17 @@
 				$("#saveBtn").on("click", function(){
 					var frm = document.chooseMileage;
 					
+					//window.open("urldfk.fdo", "popupname");
+					
 					frm.action = "mileageSave";
 					frm.target = "_self";
 					frm.method = "POST";
 					frm.submit();
 				});
-				
-				$(document).on('click','.selectStudent',function(){
-					console.log($(this).attr('data-info'));
-					var sHtml = "";
-					
-					if($("#moveSlct option").filter(function(){ return this.value == chkVal; }).length == 0){
-						sHtml += "<option value='" + $(this).attr('data-info') + "'>" + $(this).attr('data-info') + "</option>";
-					}
-					
-					$("#moveSlct").append(sHtml);
-				});
 			});
 			
 			
-			// 체크 시 옮기기
+			// 선택 시 옮기기
 			function gorallSelect(){
 				var sHtml = "";
 				var chkVal = "";
@@ -279,7 +258,20 @@
 				
 				$("#moveSlct").append(sHtml);
 			}
-
+		 	$(document).on("click", function gorSelect(){
+				var sHtml = "";
+				var chkVal = "";
+				
+					
+				
+					
+					if($("#moveSlct option").filter(function(){ return this.value == chkVal; }).length == 0){
+						sHtml += "<option value='" + $(this).val() + "'>" + $(this).closest("td").next().text() + "[" + $(this).closest("td").next().next().text() + "]" + "</option>";
+					}
+				
+				$("#moveSlct").append(sHtml);
+			}); 
+			
 			// 초기화
 			function fnReset(){
 				$("#moveSlct").html("");
@@ -287,47 +279,14 @@
 			
 			// 검색
 			function fnSearch(){
-				var searchDegree = $('#schMemGrade').val();
-				var searchKey = $('#schUser').val();
-				var searchValue = $('#schText').val();
-				var searchDataObj = {};
-				searchDataObj.searchDegree = searchDegree;
-				searchDataObj.searchKey = searchKey;
-				searchDataObj.searchValue = searchValue;
-				
 				$.ajax({
-					  url : "/admin/mileage/mileageSearch"
-					, contentType:'application/json'
+					url : "mileageSearch"
 					, dataType : "json"
-					, data : JSON.stringify(searchDataObj)
 					, type : "post"
-					, success : function(data){
-						console.table(data);
-						
-						var searchListLength = data.length;
+					, async : false
+					, success : function(reText, stText, xhr){
 						var sHtml = "";
 						
-						$(".search_student_table tbody").html("");
-						if(searchListLength > 0){							
-							for(var i = 0;  i < searchListLength; i++){							
-								sHtml += '<tr onmouseover="this.style.backgroundColor=&quot;#F2F6FF&quot;" onmouseout="this.style.backgroundColor=&quot;&quot;" style="">';
-								sHtml += '	<td>';
-								sHtml += '		<input type="hidden" id="s_MemSKU" name="s_MemSKU" value="ST_IT73931" />';
-								sHtml += '		<input value="' + data[i].userName + '[' + data[i].studentId + ']|ST_IT73931@@" type="checkbox" name="LCheck_List" />';
-								sHtml += '	</td>';
-								sHtml += '	<td>' + data[i].userName + '</td>';
-								sHtml += '	<td>' + data[i].studentId + '</td>';
-								sHtml += '	<td class="align_c">';
-								sHtml += '		<div class="BtnGray15 align_c">';
-								sHtml += '			<button type="button" class="btn btn-secondary selectStudent" data-info="'+ data[i].userName + '[' + data[i].studentId + ']' +'" title="선택"><span>선택</span></button>';
-								sHtml += '		</div>';
-								sHtml += '		</td>';
-								sHtml += '</tr>';
-							}
-						}
-						$(".search_student_table tbody").append(sHtml);
-						
-						/*
 						$(".search_student_table tbody").html("");
 						
 						for(var i = 0; i < reText.resultList.length; i++){
@@ -339,14 +298,13 @@
 							sHtml += "</tr>";
 						}
 						
-						$(".search_student_table tbody").append(sHtml);*/
+						$(".search_student_table tbody").append(sHtml);
 					}
-					, error : function(reText, stText, xhr){
+					, error : function(){
 						alert("조회 중 오류가 발생하였습니다.");
 						return false;
 					}
 				});
-				
 			}
 		</script>
 		

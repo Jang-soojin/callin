@@ -3,15 +3,26 @@ package callinedu.callin.domain;
 public class LT {
 	private String classType;
 	private String studentId;
-	private String userEmail;
 	private String krName;
 	private String enName;
 	private String skypeId;
 	private String userPhone;
 	private String tdate;
 	private String requestedTerm;
-
 	
+	public LT() {}
+	
+	public LT(String classType, String userId, String krName, String enName
+					, String skypeId, String userPhone, String tdate, String requestedTerm) {
+		this.classType = classType;
+		this.studentId = studentId;
+		this.krName = krName;
+		this.enName = enName;
+		this.skypeId = skypeId;
+		this.userPhone = userPhone;
+		this.tdate = tdate;
+		this.requestedTerm = requestedTerm;
+	}
 
 	public String getClassType() {
 		return classType;
@@ -21,20 +32,12 @@ public class LT {
 		this.classType = classType;
 	}
 
-	public String getStudentId() {
+	public String getUserId() {
 		return studentId;
 	}
 
-	public void setStudentId(String studentId) {
+	public void setUserId(String studentId) {
 		this.studentId = studentId;
-	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
 	}
 
 	public String getKrName() {
@@ -85,27 +88,13 @@ public class LT {
 		this.requestedTerm = requestedTerm;
 	}
 
-	public LT(String classType, String studentId, String userEmail,String krName, String enName
-			, String skypeId, String userPhone, String tdate, String requestedTerm) {
-		this.classType = classType;
-		this.studentId = studentId;
-		this.userEmail = userEmail;
-		this.krName = krName;
-		this.enName = enName;
-		this.skypeId = skypeId;
-		this.userPhone = userPhone;
-		this.tdate = tdate;
-		this.requestedTerm = requestedTerm;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("LT [classType=");
 		builder.append(classType);
-		builder.append(", studentId=");
+		builder.append(", userId=");
 		builder.append(studentId);
-		builder.append(", userEmail=");
-		builder.append(userEmail);
 		builder.append(", krName=");
 		builder.append(krName);
 		builder.append(", enName=");
@@ -121,10 +110,6 @@ public class LT {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-
-
-	
 	
 	
 	

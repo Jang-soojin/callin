@@ -2,72 +2,46 @@ package callinedu.callin.domain;
 
 public class Student {
 	private String studentId;
-	private String userName;
-	private String studentDegreeCode;
-	private String studentDegreeName;
-	
-	
-	/*private String mileageUseCode;      	
-	private String mileageUserReaCode;		
-	private String mileagDeduct;			
-	private String mileageUse_group_code;
-	private String mileageUse_group_code_table;
-	private String mileageGroup_code;*/	
-	
-	
-	
+	private String studentName;
+	private String degreeName;
 	public  Student() {}
 	
-	public  Student(String studentId, String userName, String studentDegreeCode, String studentDegreeName ) {
+	public  Student(String studentId, String studentName, String degreeName ) {
 		this.studentId = studentId;
-		this.userName = userName;
-		this.studentDegreeCode = studentDegreeCode;
-		this.studentDegreeName = studentDegreeName;
+		this.studentName = studentName;
+		this.degreeName = degreeName;
 	
 	}
-	
-	
-
 	public String getStudentId() {
 		return studentId;
 	}
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
-	public String getUserName() {
-		return userName;
+	public String getStudentName() {
+		return studentName;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
-	public String getStudentDegreeCode() {
-		return studentDegreeCode;
+	public String getDegreeName() {
+		return degreeName;
 	}
-	public void setStudentDegreeCode(String studentDegreeCode) {
-		this.studentDegreeCode = studentDegreeCode;
-	}
-	public String getStudentDegreeName() {
-		return studentDegreeName;
-	}
-	public void setStudentDegreeName(String studentDegreeName) {
-		this.studentDegreeName = studentDegreeName;
+	public void setDegreeName(String degreeName) {
+		this.degreeName = degreeName;
 	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Student [studentId=");
+		builder.append("student [studentId=");
 		builder.append(studentId);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", studentDegreeCode=");
-		builder.append(studentDegreeCode);
-		builder.append(", studentDegreeName=");
-		builder.append(studentDegreeName);
+		builder.append(", studentName=");
+		builder.append(studentName);
+		builder.append(", degreeName=");
+		builder.append(degreeName);
 		builder.append("]");
 		return builder.toString();
 	}
-
-
 	
 	
 	

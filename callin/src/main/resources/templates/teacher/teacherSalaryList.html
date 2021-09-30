@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="@{layout/default}">
-	  
-	  
-	<th:block layout:fragment="customContents"> 
-		<div class="content-wrapper">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+
+
+<th:block layout:fragment="customContents">
+	<div class="content-wrapper">
 		<section class="content-header">
 			<div class="container-fluid">
 				<div class="row mb-2">
@@ -15,7 +15,8 @@
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
 							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-							<li class="breadcrumb-item active" th:text="${midTitle}">급여 정산</li>
+							<li class="breadcrumb-item active" th:text="${midTitle}">급여
+								정산</li>
 						</ol>
 					</div>
 				</div>
@@ -84,20 +85,20 @@
 										</tr>
 									</table>
 									<div class="row">
-									<div class="col-md-4">
-											
-									</div>
-									<div class="col-md-3" style="align-items: center;">
-										<div>
-											<button type="button" class="btn btn-block btn-dark btn-md float-right" style="width:30%; margin-left: 20px;">검색</button>
+										<div class="col-md-4"></div>
+										<div class="col-md-3" style="align-items: center;">
+											<div>
+												<button type="button"
+													class="btn btn-block btn-dark btn-md float-right"
+													style="width: 30%; margin-left: 20px;">검색</button>
+											</div>
+											<div>
+												<button type="button"
+													class="btn btn-block btn-default btn-md float-right"
+													style="width: 44%; border-color: #68736a">초기화</button>
+											</div>
 										</div>
-										<div>
-											<button type="button" class="btn btn-block btn-default btn-md disabled float-right" style="width:33%; border-color:#68736a" >초기화</button>
-										</div>
-									</div>
-									<div class="col-md-5">
-									
-									</div>
+										<div class="col-md-5"></div>
 									</div>
 								</form>
 							</div>
@@ -117,29 +118,28 @@
 										<thead>
 											<tr>
 												<th><input type="checkbox"></th>
-												<th>No.</th>
-												<th>강사명</th>
+<!-- 												<th>No.</th> -->
+												<th>등록코드</th>
 												<th>강사ID</th>
-												<th>정산일자 </th>
-												<th>금액</th>
-												<td>메모</td>
-												<td>지급여부</td>
+												<th>보너스</th>
+												<th>공제액</th>
+												<th>총액(페소)</th>
+												<td>총액(페소)</td>
 												<td>지급일자</td>
+												<td>지급자 아이디</td>
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="teacher : ${teacherList}">
+											<tr th:each="salaryList : ${teacherSalaryList}">
 												<th><input type="checkbox"></th>
-												<td class="ID">
-													<span class="teacherId">[[${teacher.teacherId}]]</span>
-													<input type="hidden" id="teacherId" name="teacherId" th:value="${teacher.teacherId}"></td>
-												<td th:text="${teacher.teacherName}"></td>
-												<td th:text="${teacher.contractType}"></td>
-												<td th:text="${teacher.hourlyRate}"></td>
-												<th>금액</th>
-												<td>메모</td>
-												<td>지급여부</td>
-												<td>지급일자</td>
+												<td th:text="${salaryList.teacherSalarySettlementCode}"></td>
+												<td th:text="${salaryList.teacherId}"></td>
+												<td th:text="${salaryList.bonus}"></td>
+												<td th:text="${salaryList.deduction}"></td>
+												<td th:text="${salaryList.totalSalaryPhp}"></td>
+												<td th:text="${salaryList.totalSalaryKrw}"></td>
+												<td th:text="${salaryList.settlementDate}"></td>
+												<td th:text="${salaryList.settlementVerifierId}"></td>
 											</tr>
 
 										</tbody>
@@ -158,39 +158,24 @@
 		</section>
 	</div>
 	<!-- jQuery -->
-<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
-<!-- Bootstrap 4 -->
-<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<!-- DataTables  & Plugins -->
-<script th:src="@{/AdminLTE-master/plugins/datatables/jquery.dataTables.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/jszip/jszip.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/pdfmake/pdfmake.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/pdfmake/vfs_fonts.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.html5.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.print.min.js}"></script>
-<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>
-<!-- AdminLTE App -->
-<script th:src="@{/AdminLTE-master/dist/js/adminlte.min.js}"></script>
-<!-- AdminLTE for demo purposes -->
-<!-- Page specific script -->
-<script>
-  $(function () {
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
+	<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+	<!-- Bootstrap 4 -->
 	
-</script>
-	</th:block>
+	<script>
+	  $(function () {
+	    $('#example2').DataTable({
+	    
+	      "paging": true,
+	      "lengthChange": false,
+	      "searching": false,
+	      "ordering": true,
+	      "info": true,
+	      "autoWidth": false,
+	      "responsive": true
+	      
+	    });
+	    $("ul.pagination").css({"justify-content": "flex-end"})
+	  });
+	</script>
+</th:block>
 </html>
