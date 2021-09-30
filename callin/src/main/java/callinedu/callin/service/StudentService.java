@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import callinedu.callin.domain.ClassPolicy;
+
 import callinedu.callin.domain.Mileage;
 import callinedu.callin.domain.Student;
 import callinedu.callin.mapper.StudentMapper;
@@ -25,6 +25,8 @@ public class StudentService {
 		String searchKey = (String) paramMap.get("searchKey");
 		String searchDegree = (String) paramMap.get("searchDegree");
 		
+		System.out.println("강인천서치ㅋ키-----------"+searchKey);
+		System.out.println("강인천-디그리----------"+searchDegree);
 		if(searchDegree != null && !searchDegree.equals("")) {
 			if("iron".equals(searchDegree)) 		paramMap.put("searchDegree", "아이언");
 			if("bronze".equals(searchDegree)) 		paramMap.put("searchDegree", "브론즈");
