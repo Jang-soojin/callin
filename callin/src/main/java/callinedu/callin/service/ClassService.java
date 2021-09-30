@@ -37,4 +37,8 @@ public class ClassService {
 		
 		return classPolicyList;
 	}
+	public List<ClassPolicy> getClassPolicy(){
+	      List<ClassPolicy> classPolicy = classMapper.getClassPolicy();
+	      return classPolicy;
+	   }
 }
