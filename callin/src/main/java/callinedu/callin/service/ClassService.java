@@ -29,9 +29,9 @@ public class ClassService {
 	    return c;
 	}
 	
-	public List<ClassPolicy> searchPolicyList(String classPeriod, String classDay, String classTime) {
+	public List<ClassPolicy> searchPolicyList(String classPeriod, String classDay, String classTime, String className) {
 		
-		List<ClassPolicy> classPolicyList = classMapper.searchPolicyList(classPeriod, classDay, classTime);
+		List<ClassPolicy> classPolicyList = classMapper.searchPolicyList(classPeriod, classDay, classTime, className);
 		
 		log.info("searchPolicyList 검색해서 나온 리스트 : {}", classPolicyList);
 		
