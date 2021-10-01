@@ -11,7 +11,7 @@ import callinedu.callin.domain.TeacherSalarySettlement;
 public interface TeacherMapper {
 	public List<Teacher> getTeacherList();
 	public Teacher getTeacherInfoById(String teacherId);
-	public int getTotalWorkHour(String teacherId, String dateRange1,String dateRange2);
+	public int getTotalWorkHour(String teacherId, String dateRangeFirst,String dateRangeLast);
 	public int addTeacherSalarySettlement(TeacherSalarySettlement teacherSalarySettlement);
 	public List<TeacherSalarySettlement> getTeacherSalaryList();
 	public List<TeacherSalarySettlement> searchSalaryList(String searchKey, String searchValue,String dateRangeFirst,String dateRangeLast);

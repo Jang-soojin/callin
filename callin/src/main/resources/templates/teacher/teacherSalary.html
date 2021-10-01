@@ -62,9 +62,9 @@
 											readonly="readonly">
 									</div>
 									<div class="form-group">
-										<label for="teacherHourlyRate">단위 급여</label> <input
-											type="number" class="form-control" id="teacherHourlyRate"
-											placeholder="Hourly-Rate" th:value="${HourlyRate}"
+										<label for="teacherUnitPay">단위 급여</label> <input
+											type="number" class="form-control" id="teacherUnitPay"
+											placeholder="Unit-Pay" th:value="${UnitPay}"
 											readonly="readonly">
 									</div>
 									<!-- Date range -->
@@ -142,7 +142,7 @@
 								</div>
 								<!-- /.card-body -->
 								<div class="card-footer">
-									<button type="submit" class="btn btn-block btn-secondary btn-s">저장</button>
+									<button id="save" type="button" class="btn btn-block btn-secondary btn-s">저장</button>
 								</div>
 							</div>
 							<!-- /.card -->
@@ -176,34 +176,32 @@
 			$('#reservation').daterangepicker()
 		})
 
-		// Ajax를 통해 선택한 강사 정보와 급여 산정기간 data를 통해 총 근무 시간(분) 조회 및 입력.
+// 총 근무시간 조회 이벤트 : Ajax를 통해 선택한 강사 정보와 급여 산정기간 data를 통해 총 근무 시간(분) 조회 및 입력.
 		$(function() {
 			$("#checkWorkHour").click(function() {
-				if($($("input")[4]).val()!=''){
+				if($('#teacherContractType').val()!=''){
 					var teacherId = $("#teacherId").val()
-					var dateRange1 = $("#reservation")[0].value.substring(0, 10);
-					var dateRange2 = $("#reservation")[0].value.substring(13, 23);
+					var dateRangeFirst = $("#reservation")[0].value.substring(0, 10);
+					var dateRangeLast = $("#reservation")[0].value.substring(13, 23);
 	
-					var MM1 = dateRange1.substring(0, 2)
-					var DD1 = dateRange1.substring(3, 5)
-					var YYYY1 = dateRange1.substring(6, 10)
-					var newDateFormat1 = YYYY1 + "-" + MM1 + "-" + DD1;
+					var MM1 = dateRangeFirst.substring(0, 2)
+					var DD1 = dateRangeFirst.substring(3, 5)
+					var YYYY1 = dateRangeFirst.substring(6, 10)
+					var newDateRangeFirst = YYYY1 + "-" + MM1 + "-" + DD1;
 	
-					var MM2 = dateRange2.substring(0, 2)
-					var DD2 = dateRange2.substring(3, 5)
-					var YYYY2 = dateRange2.substring(6, 10)
-					var newDateFormat2 = YYYY2 + "-" + MM2 + "-" + DD2
+					var MM2 = dateRangeLast.substring(0, 2)
+					var DD2 = dateRangeLast.substring(3, 5)
+					var YYYY2 = dateRangeLast.substring(6, 10)
+					var newDateRangeLast = YYYY2 + "-" + MM2 + "-" + DD2
 	
-					/* ********************************************** */
-					//$.ajax() 호출시 ajax에 관련된 객체를 반환한다.
 					var request = $.ajax({
 						url : "/admin/teacher/getTotalWorkHour", //요청 url
 						method : "POST", //요청 방식
 						data : {
 							teacherId : teacherId,
-							dateRange1 : newDateFormat1,
-							dateRange2 : newDateFormat2
-						}, //요청하는 곳에 전달될 데이타
+							dateRangeFirst : newDateRangeFirst,
+							dateRangeLast : newDateRangeLast
+						},
 						dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
 					});
 					request.done(function(data) {
@@ -211,38 +209,63 @@
 					});
 	
 					request.fail(function(jqXHR, textStatus) {
-	
 						alert("요청 실패: " + textStatus);
-	
 					});
 				}else{
 					alert("강사를 선택해주세요")
+					
+					return;
 				}
 			})
 		})
 
-		
+// 급여 정산 버튼 이벤트 : 입력된 값과 API를 통해 받아온 최신 환율을 이용해 급여 계산.
 		$(function() {
 			$("#calc").click(function() {
 				var twh = $("#TWH").val();
-				var hr = $("#teacherHourlyRate").val();
+				var unitPay = $("#teacherUnitPay").val();
 				var bonus = $("#bonus").val();
-				var deduction =$("#deduction").val();
+				var deduction = $("#deduction").val();
+				var contractType = $('#teacherContractType').val()
 				
-				if($($("input")[4]).val()!=''){
-					if($($("input")[4]).val()=='시급'){
-						var sum = Math.ceil(twh * (hr / 60)	+ (bonus - deduction));
-					}else if($($("input")[4]).val()=='월급'){
-						var sum = parseInt($($("input")[5]).val())+ (bonus - deduction);
+				//1.계약 조건 항목이 공백이 아닌 경우(=강사를 선택한 경우)
+				if(contractType!=''){
+					//1-1.계약 조건이 시급인 경우
+					if(contractType=='시급'){
+						var sum = Math.ceil(twh * (unitPay/ 60)	+ (bonus - deduction));
 					}
+					//1-2.계약 조건이 월급인 경우	
+					else if(contractType=='월급'){
+						var sum = parseInt(unitPay)+ (bonus - deduction);
+					}
+					
+					var sumPHP = sum;
+					//최종 정산액이 음수인 경우
+					if(sumPHP<0){
+						alert('최종 정산액은 음수가 될 수 없습니다.')
+						return;
+					}
+				//2.계약 조건 항목이 공백인 경우(=강사를 선택하지 않은경우)
 				}else{
 					alert("강사를 선택해주세요")
-				}
-				var sumPHP = sum;
-				if(sumPHP<0){
-					alert('최종 정산액은 음수가 될 수 없습니다.')
 					return;
 				}
+				// 총 근무시간이 공백인 경우 정산버튼 클릭시 0으로 반영
+				if($("#TWH").val()==''){
+					$("#TWH").val(0)
+				}
+				// 보너스가 공백인 경우 정산버튼 클릭시 0으로 반영
+				if($("#bonus").val()==''){
+					$("#bonus").val(0)
+				}
+				// 기타 공제가 공백인 경우 정산버튼 클릭시 0으로 반영
+				if($("#deduction").val()==''){
+					$("#deduction").val(0)
+				}
+				//정산 성공시 입력 가능 항목들 수정 불가능하도록 모두 readonly 처리
+				$("#reservation").prop('readonly', true);
+				$("#bonus").prop('readonly', true);
+				$("#deduction").prop('readonly', true);
 				
 				var request = $.ajax({
 							//환율 open API URL 
@@ -250,7 +273,7 @@
 							method : "POST", //요청 방식
 							data : {}, //요청하는 곳에 전달될 데이타
 							dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
-						});
+							});
 				request.done(function(data) {
 					//data.rate.PHP = 필리핀 페소-유로 환율
 					//data.rate.KRW = 한국 원-유로 환율
@@ -266,13 +289,34 @@
 				});
 
 				request.fail(function(jqXHR, textStatus) {
-
 					alert("요청 실패: " + textStatus);
-
 				});
 			})
 		})
-
+		
+// 저장버튼 유효성 검사 : 
+		$(function() {
+			$('#save').click(function() {
+				if($('#bonus').val()==''){
+					alert('상여금(bonus)는 숫자값만 입력할 수 있습니다.')
+					$('#bonus').focus();
+					return;
+				}
+				else if($("#deduction").val()==''){
+					alert('기타 공제(deduction)는 숫자값만 입력할 수 있습니다.')
+					$('#deduction').focus();
+					return;
+				}
+				else if($("#appliedExchangeRate").val()=='' || $("#totalSalaryPHP").val()=='' || $("#totalSalaryKRW").val()==''){
+					alert('정산 버튼을 눌러주세요')
+					$('#calc').focus();
+					return;
+				}else{ 
+					$('#salarySettlement').submit()					
+				}
+				
+			})
+		})
 	</script>
 </th:block>
 </html>
