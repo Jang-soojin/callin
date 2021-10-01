@@ -85,7 +85,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<th:block th:if="${#lists.size(classPolicy) > 0}" >         
+										<th:block th:if="${!#lists.isEmpty(classPolicy)}" >         
 											<tr th:each="l : ${classPolicy}">
 												<td th:text="${l.classPolicyName}"></td>
 												<td th:text="${l.classPeriod}"></td>
@@ -94,19 +94,17 @@
 												<td th:text="${l.classPostponeDay}"></td>
 												<td th:text="${l.classPostponeDays}"></td>
 												<td th:text="${l.classPostponePeriod}"></td>
-												<td>
-												<!-- /medifyMember?memberId=id001 -->
+												<!-- <td>
 												<a th:href="@{/#}">수정</a>
 												</td>
 												<td>
-												<!-- /removeMember?memberId=id001 -->
 												<a th:href="@{/#}">삭제</a>
-												</td>
+												</td> -->
 											</tr>
 										</th:block>
-											<tr   th:unless="${#lists.size(memberList) > 0}">
-												<td colspan="16">조회된 데이터가 없습니다</td>
-											</tr>
+										<tr th:unless="${!#lists.isEmpty(classPolicy)}">
+											<td colspan="16">조회된 데이터가 없습니다</td>
+										</tr>
 									</tbody>
 								</table>
 							</div>

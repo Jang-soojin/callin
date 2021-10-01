@@ -74,8 +74,8 @@
 	
 	<select id="searchPolicyList" parameterType="String" resultMap="classPolicyResultMap">
 		SELECT
-			class_policy_name
-			, class_period
+			class_policy_name			
+			, class_period				
 			, class_day
 			, class_time
 			, class_postpone_day
@@ -88,7 +88,8 @@
 			</if>
 		</where>
 	</select>
-	<select id="getClassPolicy" resultType="ClassPolicy">
+	
+	<select id="getClassPolicy" parameterType="ClassPolicy" resultMap="classPolicyResultMap">
 		SELECT
 			class_policy_name, 
 			class_period, 
@@ -98,7 +99,7 @@
 			class_postpone_days, 
 			class_postpone_period
 		FROM class_policy
-			order by class_policy_name ASC;
+			order by class_policy_name ASC
    </select>
 	
 </mapper>

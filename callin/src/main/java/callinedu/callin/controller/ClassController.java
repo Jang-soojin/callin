@@ -43,6 +43,9 @@ public class ClassController {
 		System.out.println("수업정책 리스트 컨트롤러 실행 ");
 		model.addAttribute("title", "수업관리");
 		model.addAttribute("midTitle", "수업 정책 리스트");
+		List<ClassPolicy> classPolicy = classService.getClassPolicy();
+	      
+		model.addAttribute("classPolicy", classPolicy);
 		
 		return "class/classPolicyList";
 	}
