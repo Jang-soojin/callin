@@ -77,10 +77,10 @@ public class TeacherController {
 	@ResponseBody
 	public int getTotalWorkHour(@RequestParam Map<String, Object> map) {
 		String teacherId = (String)map.get("teacherId");
-		String dateRange1 = (String)map.get("dateRange1");
-		String dateRange2 = (String)map.get("dateRange2");
+		String dateRangeFirst = (String)map.get("dateRangeFirst");
+		String dateRangeLast = (String)map.get("dateRangeLast");
 		
-		int totalWorkHour = teacherService.getTotalWorkHour(teacherId, dateRange1, dateRange2);
+		int totalWorkHour = teacherService.getTotalWorkHour(teacherId, dateRangeFirst, dateRangeLast);
 		
 		System.out.println(totalWorkHour+"totalWorkHour");
 		

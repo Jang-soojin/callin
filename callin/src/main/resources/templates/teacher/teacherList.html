@@ -41,7 +41,7 @@
 											</td>
 											<td th:text="${teacher.teacherId}" class="name"></td>
 											<td th:text="${teacher.contractTypeCode}" class="contract"></td>
-											<td th:text="${teacher.unitPay}" class="hourlyRate"></td>
+											<td th:text="${teacher.unitPay}" class="teacherUnitPay"></td>
 											<td>
 												<a th:href="@{#}" class="pick")>선택</a>
 											</td>
@@ -112,7 +112,7 @@
     	var id = '';
     	var name = '';
     	var contract = '';
-    	var hourlyRate = '';
+    	var teacherUnitPay = '';
     	var length = $(".pick").parents("tr").children(".id").length;
     	
     	for(var i=0; i<length ; i++){
@@ -149,9 +149,9 @@
 			$($(opener.document).find("input")[5]).val(data.unitPay)
 			
 			//정산 상세 내역 초기화
-			$($(opener.document).find("input")[8]).val('')
+			$($(opener.document).find("input")[8]).val(0)
 			$($(opener.document).find("input")[9]).val(0)
-			$($(opener.document).find("input")[10]).val(0)
+			$($(opener.document).find("input")[10]).val('')
 			$($(opener.document).find("input")[11]).val('')
 			$($(opener.document).find("input")[12]).val('')
 			window.close();
