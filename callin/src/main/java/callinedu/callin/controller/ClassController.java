@@ -58,6 +58,15 @@ public class ClassController {
 		
 		return "class/regularClass";
 	}
+	
+	@GetMapping("classMain")
+	public String classMain(Model model) {
+		System.out.println("수업 카테고리 메인화면 보기 실행");
+		model.addAttribute("title", "수업 메인");
+		model.addAttribute("midTitle", "메인");
+		
+		return "class/classMain";
+	}
 	@GetMapping("regularClassList")
 	public String regularClassList(Model model) {
 		System.out.println("정규수업 리스트 컨트롤러 실행");
@@ -97,14 +106,16 @@ public class ClassController {
 	public List<ClassPolicy> searchPolicyList( 
 			@RequestParam(value = "classPeriod",required = false) String classPeriod
 		,	@RequestParam(value = "classDay", required = false) String classDay
+		,	@RequestParam(value = "className", required = false) String className
 		,	@RequestParam(value = "classTime", required = false) String classTime
 			){
 		
 		log.info("수업기간 검색 옵션 : {}", classPeriod);
 		log.info("수업요일 검색 옵션 : {}", classDay);
 		log.info("수업시간 검색 옵션 : {}", classTime);
+		log.info("수업시간 검색 옵션 : {}", className);
 		
-		List<ClassPolicy> classPolicyList = classService.searchPolicyList(classPeriod, classDay, classTime);
+		List<ClassPolicy> classPolicyList = classService.searchPolicyList(classPeriod, classDay, classTime, className);
 		
 		return classPolicyList;
 	}

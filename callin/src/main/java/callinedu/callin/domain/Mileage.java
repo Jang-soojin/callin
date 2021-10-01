@@ -12,6 +12,10 @@ public class Mileage {
 	private String mileageDeductDivision;
 	private String mileageMemo;
 	private String mileageWaitDivision;
+	private String moveSlct;
+	private String mileageReason;
+	private String mileageDivision;
+	
 	public String getMileageUseCode() {
 		return mileageUseCode;
 	}
@@ -77,6 +81,24 @@ public class Mileage {
 	}
 	public void setMileageWaitDivision(String mileageWaitDivision) {
 		this.mileageWaitDivision = mileageWaitDivision;
+	}
+	public String getMoveSlct() {
+		return moveSlct;
+	}
+	public void setMoveSlct(String moveSlct) {
+		this.moveSlct = moveSlct;
+	}
+	public String getMileageReason() {
+		return mileageReason;
+	}
+	public void setMileageReason(String mileageReason) {
+		this.mileageReason = mileageReason;
+	}
+	public String getMileageDivision() {
+		return mileageDivision;
+	}
+	public void setMileageDivision(String mileageDivision) {
+		this.mileageDivision = mileageDivision;
 	}
 	@Override
 	public String toString() {

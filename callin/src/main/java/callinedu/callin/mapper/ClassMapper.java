@@ -12,7 +12,7 @@ public interface ClassMapper {
 	
 	public ClassPolicy classPolicyNameCheck(ClassPolicy classPolicy);
 	
-	public List<ClassPolicy> searchPolicyList(String classPeriod, String classDay, String classTime);
+	public List<ClassPolicy> searchPolicyList(String classPeriod, String classDay, String classTime, String className);
 	
 	public List<ClassPolicy> getClassPolicy();
 }
