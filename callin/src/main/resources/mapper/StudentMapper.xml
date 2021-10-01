@@ -45,39 +45,63 @@
 		<result property="mileageAnticipateDelDate" 	column="mileage_anticipate_del_date"/>
 		<result property="mileageUseGroupCode" 			column="mileage_use_group_code"/>
 		<result property="mileageGroupCode" 			column="mileage_group_code"/>
-		<result property="mileageDeductDivision" 		column="mileage_deduct_division"/>
 		<result property="mileageMemo" 					column="mileage_memo"/>
 		<result property="mileageWaitDivision" 			column="mileage_wait_division"/>
 	</resultMap>
 	
  			<insert id="addMileage" parameterType="Mileage">
-			    
+			    <selectKey keyProperty="mileageUseCode" resultType="java.lang.String" order="BEFORE">
+			    	SELECT
+			    		CONCAT('mileage_use_', LPAD(IFNULL(MAX(SUBSTR(mileage_use_code, 13)), 0) + 1, 2, '0'))
+			    	FROM mileage_use
+			    </selectKey>
 					INSERT INTO mileage_use
 					(   mileage_use_code
-
+					   ,student_id
 					   ,mileage_use_rea_code
 					   ,mileag_deduct_date
 					   ,mileag_deduct
 					   ,mileage_anticipate_del_date
 					   ,mileage_use_group_code
 					   ,mileage_group_code
-					   ,mileage_deduct_division
 					   ,mileage_memo
 					   ,mileage_wait_division
 					) VALUES (
-					    CONCAT(NOW(),'id001')
-
+						#{mileageUseCode}
+					   ,#{studentId}
 					   ,#{mileageUseReaCode}
-					   ,NOW()
+					   ,CASE
+					   		WHEN #{mileageWaitDivision} = 'A'
+					   		THEN NOW()
+					   		ELSE NULL
+					   	END
 					   ,#{mileagDeduct}
-					   ,CURDATE()
+					   ,CASE
+					   		WHEN #{mileageWaitDivision} = 'A'
+					   		THEN DATE_ADD(NOW(), INTERVAL 3 YEAR)
+					   		ELSE NULL
+					   	END
 					   ,#{mileageUseGroupCode}
 					   ,#{mileageGroupCode}
-					   ,#{mileageDeductDivision}
 					   ,#{mileageMemo}
 					   ,#{mileageWaitDivision}
 					);	
 		</insert>
+		
+		<resultMap type="Mileage" id="mileageResnResultMap">
+			<result property="mileageUseReaCode"            	column="mileage_use_rea_code"/>
+			<result property="mileageReason"            		column="mileage_reason"/>
+			<result property="mileageDivision"            		column="mileage_division"/>
+			
+		</resultMap>
+		
+		<select id="selectMileageResnList" resultMap="mileageResnResultMap">
+			SELECT
+				mileage_use_rea_code
+				, mileage_reason
+				, mileage_division
+			FROM mileage_use_rea
+		</select>
 
  	
 
