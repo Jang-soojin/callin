@@ -48,12 +48,32 @@
 								<div class="float-right">
 									<form class="form-inline">
 										<div class="form-group"> 
-											<select class="form-control">
-												<option>정책명</option>
-												<option>수업기간(주)</option>
-												<option>수업시간(분)</option>
+											<select class="form-control levelSearchKey">
+												<option value="policyName">정책명</option>
+												<option value="classPeriod">수업기간(주)</option>
+												<option value="classTime">수업시간(분)</option>
 											</select>
-											<input type="text" class="form-control">
+											<div id="searchByName" style="display: block;">
+												<input type="text" class="form-control">
+											</div>
+											<div id="searchByPeriod" style="display: none;">
+												<select class="form-control" id="classPeriod">
+													<option> :: 선택하세요 ::</option>
+													<option value="4"> 4주 </option>
+													<option value="8"> 8주 </option>
+													<option value="12"> 12주 </option>
+												</select>
+											</div>
+											<div id="searchByTime" style="display: none;">
+												<select class="form-control" id="classTime">
+													<option> :: 선택하세요 ::</option>
+													<option value="10"> 10분 </option>
+													<option value="20"> 20분 </option>
+													<option value="30"> 30분 </option>
+													<option value="40"> 40분 </option>
+													<option value="50"> 50분 </option>
+												</select>
+											</div>
 											<button class="btn btn-default "> 검색 </button> 
 										</div>
 									</form>
@@ -155,6 +175,25 @@
 		</script>
 		<!-- 정책 이름 중복확인 에이잭스 부분 -->
 		<script type="text/javascript">
+		$(function(){
+			$(".levelSearchKey").change(function(){
+				if($(".levelSearchKey").val() == "classTime"){
+					$("#searchByName").css('display', 'none');
+					$("#searchByTime").css('display', 'block');
+					$("#searchByPeriod").css('display', 'none');
+				}
+				else if($(".levelSearchKey").val() == "classPeriod"){
+					$("#searchByName").css('display', 'none');
+					$("#searchByTime").css('display', 'none');
+					$("#searchByPeriod").css('display', 'block');
+				}
+				else{
+					$("#searchByName").css('display', 'block');
+					$("#searchByTime").css('display', 'none');
+					$("#searchByPeriod").css('display', 'none');
+				}													
+			});
+		})
 		$(function(){
 			$("#policyCheck").on("click", function(){
 				var classPolicyName = $("#classPolicyName").val();
