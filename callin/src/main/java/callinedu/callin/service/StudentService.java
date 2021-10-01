@@ -61,8 +61,19 @@ public class StudentService {
 		return student;
 	}
 	
-	public int addMileage(Mileage mileage) {
-		return studentMapper.addMileage(mileage);
+	public int addMileage(Mileage mileage, String[] moveSlct) {
+		int resultCnt = 0;
+		
+		for(int i = 0; i < moveSlct.length; i++) {
+			mileage.setStudentId(moveSlct[i].substring(moveSlct[i].indexOf("[") + 1, moveSlct[i].lastIndexOf("]")));
+			
+			resultCnt += studentMapper.addMileage(mileage);
+		}
+		return resultCnt;
+	}
+	
+	public List<Mileage> selectMileageResnList(){
+		return studentMapper.selectMileageResnList();
 	}
 	
 

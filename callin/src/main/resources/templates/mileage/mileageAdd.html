@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	  
 <th:block layout:fragment="customTitle">
 	<title th:text="${title}"></title>
 </th:block>
@@ -39,7 +38,7 @@
 			    <!-- Main content -->
 				<section class="content">
 					<div class="container-fluid">
-						<form id="chooseMileage" name="chooseMileage" th:action="@{/admin/mileage/addMileage}" method="post"> 
+						<form id="chooseMileage" name="chooseMileage" th:action="@{/admin/mileage/addMileage}" method="post" onsubmit="javascript:fnSelect();"> 
 							<section class="content">
 								<div class="card card-info">
 									<table class="table table-bordered">
@@ -140,34 +139,30 @@
 															
 															<select id="moveSlct" name="moveSlct" class="select2bs4" multiple="multiple" data-placeholder="Select a State" style="width: 100%;height:402px;">
 															</select>
+															<i class="fa fa-arrow-right"></i>  다중선택시 shift를 눌러 선택하세요.
 														</div>
 													</div>
 												</td>
 											</tr>	
 											<tr>							
 												<th width="180"> 적립금 유형</th>
-												<td width="*.*" colspan="3">관리자 직접등록</td>
+												<td width="*.*" colspan="3">
+													<select id="p_PointType" name="mileageUseReaCode" class="NSelect25">
+														<option th:each="list : ${resnList}" th:value="${list.mileageUseReaCode}" th:text="${list.mileageReason}"></option>
+													</select>
+												</td>
 											</tr>						
 											<tr>
 												<th> 적립 시점</th>
 												<td>
 													<select id="p_PointStepCode" name="mileageWaitDivision" class="NSelect25">
-														<option value="즉시적립">즉시 적립</option>
-														<option value="적립대기">적립 대기</option>									
+														<option value="A">즉시 적립</option>
+														<option value="B">적립 대기</option>									
 													</select>
 												</td>
 											</tr>						
 											<tr>							
-												<th> 적립/차감</th>
-												<td colspan="3">
-													<select id="p_PointType" name="mileageDivision" class="NSelect25">
-														<option value="A">적립(+)</option>
-														<option value="S">차감(-)</option>
-													</select>
-												</td>
-											</tr>
-											<tr>							
-												<th> 적립금</th>
+												<th> 적립/차감 금액</th>
 												<td colspan="3">
 													<input type="text" id="p_AccPoint" name="mileagDeduct" value="" class="amount" onkeyup="toCurrency(this)" onblur="toCurrency(this)" style="width:80px;">[P]							
 												</td>
@@ -243,6 +238,7 @@
 				$(document).on('click','.selectStudent',function(){
 					console.log($(this).attr('data-info'));
 					var sHtml = "";
+					var chkVal = $(this).closest("tr").find("input[type=checkbox]").val();
 
 					if($("#moveSlct option").filter(function(){ return this.value == chkVal; }).length == 0){
 						sHtml += "<option value='" + $(this).attr('data-info') + "'>" + $(this).attr('data-info') + "</option>";
@@ -302,7 +298,7 @@
 								sHtml += '<tr onmouseover="this.style.backgroundColor=&quot;#F2F6FF&quot;" onmouseout="this.style.backgroundColor=&quot;&quot;" style="">';
 								sHtml += '	<td>';
 								sHtml += '		<input type="hidden" id="s_MemSKU" name="s_MemSKU" value="ST_IT73931" />';
-								sHtml += '		<input value="' + data[i].userName + '[' + data[i].studentId + ']|ST_IT73931@@" type="checkbox" name="LCheck_List" />';
+								sHtml += '		<input value="' + data[i].userName + '[' + data[i].studentId + ']" type="checkbox" name="LCheck_List" />';
 								sHtml += '	</td>';
 								sHtml += '	<td>' + data[i].userName + '</td>';
 								sHtml += '	<td>' + data[i].studentId + '</td>';
@@ -322,6 +318,10 @@
 					}
 				});
 				
+			}
+			
+			function fnSelect(){
+				$("#moveSlct option").prop("selected", true);
 			}
 		</script>
 		

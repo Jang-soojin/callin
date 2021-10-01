@@ -5,24 +5,17 @@ package callinedu.callin.controller;
 import java.util.List;
 import java.util.Map;
 
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-
 
 import callinedu.callin.domain.Mileage;
 import callinedu.callin.domain.Student;
-
 import callinedu.callin.service.StudentService;
 
 
@@ -42,6 +35,9 @@ public class MileageController {
 		  Student student = new Student();
 		  //student student = studentService.getStudentInfoById("id001"); 
 		  System.out.println(student+"");
+		  
+		  model.addAttribute("resnList", studentService.selectMileageResnList());
+		  
 		  model.addAttribute("studentId", student.getStudentId()); 
 		  model.addAttribute("userName", student.getUserName()); 
 		  model.addAttribute("studentDegreeCode",  student.getStudentDegreeCode());
@@ -61,14 +57,15 @@ public class MileageController {
 		List<Student> searchList = studentService.getMemberListBySearch(paramMap);
 		return  searchList;
 	}
+	
 	//저장
 	@PostMapping("addMileage")
-	public String addMileage(Model model, @ModelAttribute Mileage Mileage) {
+	public String addMileage(Model model, @ModelAttribute Mileage Mileage, @RequestParam(value="moveSlct", required=false) String[] moveSlcts) {
 		System.out.println("마일리지등록 컨트롤러 실행" + "---" + Mileage.toString());
 		model.addAttribute("title", "마일리지");
 		model.addAttribute("midTitle", "마일리지등록");		
 		
-		int result = studentService.addMileage(Mileage);
+		int result = studentService.addMileage(Mileage, moveSlcts);
 		
 		System.out.println(result);
 		return "redirect:/admin/mileage/mileageAdd";

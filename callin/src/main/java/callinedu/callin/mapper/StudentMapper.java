@@ -15,4 +15,5 @@ public interface StudentMapper {
 	public String getTest();
 	public List<Student> getMemberListBySearch(Map<String, Object> paramMap);
 	public int addMileage(Mileage mileage);
+	public List<Mileage> selectMileageResnList();
 }
