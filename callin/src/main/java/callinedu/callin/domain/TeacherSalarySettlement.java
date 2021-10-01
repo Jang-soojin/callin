@@ -6,8 +6,9 @@ public class TeacherSalarySettlement {
 	private String teacherMonthlyAttendanceCode;
 	private String bonus;
 	private String deduction;
-	private String totalSalaryPhp;
-	private String totalSalaryKrw;
+	private String appliedExchangeRate;
+	private int totalSalaryPhp;
+	private int totalSalaryKrw;
 	private String settlementDate;
 	private String settlementVerifierId;
 	private String settlementYearMonth;
@@ -42,16 +43,16 @@ public class TeacherSalarySettlement {
 	public void setDeduction(String deduction) {
 		this.deduction = deduction;
 	}
-	public String getTotalSalaryPhp() {
+	public int getTotalSalaryPhp() {
 		return totalSalaryPhp;
 	}
-	public void setTotalSalaryPhp(String totalSalaryPhp) {
+	public void setTotalSalaryPhp(int totalSalaryPhp) {
 		this.totalSalaryPhp = totalSalaryPhp;
 	}
-	public String getTotalSalaryKrw() {
+	public int getTotalSalaryKrw() {
 		return totalSalaryKrw;
 	}
-	public void setTotalSalaryKrw(String totalSalaryKrw) {
+	public void setTotalSalaryKrw(int totalSalaryKrw) {
 		this.totalSalaryKrw = totalSalaryKrw;
 	}
 	public String getSettlementDate() {
@@ -72,6 +73,12 @@ public class TeacherSalarySettlement {
 	public void setSettlementYearMonth(String settlementYearMonth) {
 		this.settlementYearMonth = settlementYearMonth;
 	}
+	public String getAppliedExchangeRate() {
+		return appliedExchangeRate;
+	}
+	public void setAppliedExchangeRate(String appliedExchangeRate) {
+		this.appliedExchangeRate = appliedExchangeRate;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -85,6 +92,8 @@ public class TeacherSalarySettlement {
 		builder.append(bonus);
 		builder.append(", deduction=");
 		builder.append(deduction);
+		builder.append(", appliedExchangeRate=");
+		builder.append(appliedExchangeRate);
 		builder.append(", totalSalaryPhp=");
 		builder.append(totalSalaryPhp);
 		builder.append(", totalSalaryKrw=");
@@ -95,7 +104,6 @@ public class TeacherSalarySettlement {
 		builder.append(settlementVerifierId);
 		builder.append(", settlementYearMonth=");
 		builder.append(settlementYearMonth);
-		builder.append(", salarySettlementGroup=");
 		builder.append("]");
 		return builder.toString();
 	}

@@ -52,13 +52,14 @@
 		<result property="settlementDate" 				column="settlement_date"/>
 		<result property="settlementVerifierId" 		column="settlement_verifier_id"/>
 		<result property="settlementYearMonth" 			column="settlement_year_month"/>
+		<result property="appliedExchangeRate" 			column="applied_exchange_rate"/>
 	</resultMap>
 	
 	
 	
-	<select id="getTeacherSalaryList" resultMap="teacherSalarySettlementResultMap">
+	<select id="getTeacherSalaryList" resultMap="teacherSalarySettlementResultMap" parameterType="String">
 		SELECT 
-			teacher_salary_settlement_code
+			 teacher_salary_settlement_code
 			,teacher_id
 			,bonus
 			,deduction
@@ -66,14 +67,34 @@
 			,total_salary_krw
 			,settlement_date
 			,settlement_verifier_id
+			,applied_exchange_rate
 		FROM 
 			teacher_salary_settlement
-			
+	</select>
+	<select id="searchSalaryList" resultMap="teacherSalarySettlementResultMap" parameterType="String">
+		SELECT 
+			 teacher_salary_settlement_code
+			,teacher_id
+			,bonus
+			,deduction
+			,total_salary_php
+			,total_salary_krw
+			,settlement_date
+			,settlement_verifier_id
+			,applied_exchange_rate
+		FROM 
+			teacher_salary_settlement
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchKey != null and searchKey != ''.toString() and searchValue != null">
+				${searchKey} LIKE CONCAT('%', #{searchValue},'%')
+				AND settlement_date BETWEEN DATE(#{dateRangeFirst}) AND DATE(#{dateRangeLast})
+			</if>			
+		</trim>	
 	</select>
 	
 	<select id="getTeacherList" resultMap="teacherResultMap">
 		SELECT 
-			teacher_id
+			 teacher_id
 			,contract_type_code
 			,unit_pay
 		FROM 
@@ -82,7 +103,7 @@
 	
 	<select id="getTeacherInfoById" resultMap="teacherResultMap" parameterType="String">
 		SELECT
-			teacher_id
+			 teacher_id
 			,contract_type_code
 			,unit_pay
 		FROM
@@ -115,6 +136,7 @@
 			,settlement_date
 			,settlement_verifier_id
 			,settlement_year_month
+			,applied_exchange_rate
 			)
 		VALUES
 			(
@@ -128,6 +150,7 @@
 			 ,CURDATE()
 			 ,'ksk1908'
 			 ,CURDATE()
+			 ,#{appliedExchangeRate}
 			)
 	</insert>
 	
