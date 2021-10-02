@@ -23,7 +23,7 @@ public class Teacher {
 	private String workingDayOfWeek;
 	private String managerId;
 	private String managerInChargeGroup;
-	
+	private User user;
 	
 	public String getTeacherId() {
 		return teacherId;
@@ -256,6 +256,12 @@ public class Teacher {
 		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 

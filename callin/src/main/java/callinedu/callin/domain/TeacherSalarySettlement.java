@@ -12,6 +12,7 @@ public class TeacherSalarySettlement {
 	private String settlementDate;
 	private String settlementVerifierId;
 	private String settlementYearMonth;
+	private User user;
 	
 	public String getTeacherSalarySettlementCode() {
 		return teacherSalarySettlementCode;
@@ -106,6 +107,12 @@ public class TeacherSalarySettlement {
 		builder.append(settlementYearMonth);
 		builder.append("]");
 		return builder.toString();
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

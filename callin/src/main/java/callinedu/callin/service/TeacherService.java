@@ -47,9 +47,7 @@ public class TeacherService {
 		return teacherMapper.addTeacherSalarySettlement(teacherSalarySettlement);
 	}
 	public int getTotalWorkHour(String teacherId,String dateRangeFirst,String dateRangeLast ){
-		System.out.println("service.getTotalWorkHour 실행");
 		int totalWorkHour = teacherMapper.getTotalWorkHour(teacherId, dateRangeFirst, dateRangeLast);
-		System.out.println(totalWorkHour);
 		return totalWorkHour;
 	}
 	
