@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	  	  
+	  
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+<head th:replace="fragments/head :: headFragment"></head>
+	<!-- daterange picker -->
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<div id="wrapper">
+			<!-- begin topNav -->
+			<div th:replace="fragments/topNav :: topNavFragment"></div>
+			<!-- end topNav -->
+			
+			<!-- Main Sidebar Container -->
+			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
+			<th:block layout:fragment="LTApply"> 
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+			
+			<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 th:text="${midTitle}"></h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a th:href="@{/admin/LT/LTApply}"> 레벨테스트 관리 </a></li>
+									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+								</ol>
+							</div>
+						</div>
+					</div><!-- /.container-fluid -->
+				</section>
+			
+		<!-- Main content -->
+		<section class="content login-page">
+			<div class="register-box">
+			    <div class="register-logo">
+			        <a href="#">회원가입화면</a>
+			    </div>
+			    <div class="card">
+			        <div class="card-body register-card-body">
+			            
+			            <form action="#" th:action="@{/register}" method="post">
+							<!-- 아이디 -->
+							<div class="form-group">
+								<label for="user_id">아이디</label>
+									<input type="text" class="form-control" id="user_id" name="user_id" placeholder="ID" required>
+		                           	<button class="form-control" style="background-color: gray; width: 100px; color: white" type="button" id="id_Check1"> 중복확인 </button>
+									<div class="check_font" id="id_check2"></div>
+							</div>
+							<!-- 비밀번호 -->
+							<div class="form-group">
+								<label for="user_pw">비밀번호</label>
+									<input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="Password" required>
+								<div class="check_font" id="pw_check"></div>
+							</div>
+							<!-- 비밀번호 재확인 -->
+							<div class="form-group">
+								<label for="user_pw2">비밀번호 확인</label>
+									<input type="password" class="form-control" id="user_pw2" name="user_pw2" placeholder="Confirm Password" required>
+								<div class="check_font" id="pw2_check"></div>
+							</div>
+							<!-- 이름 -->
+							<div class="form-group">
+								<label for="user_name">이름</label>
+									<input type="text" class="form-control" id="user_name" name="user_name" placeholder="Name" required>
+								<div class="check_font" id="name_check"></div>
+							</div>
+							<!-- 생년월일 -->
+							<div class="form-group required">
+								<label for="user_birth">생년월일</label>
+									<input type="text" class="form-control" id="user_birth" name="user_birth" placeholder="ex) 19990415" required>
+								<div class="check_font" id="birth_check"></div>
+							</div>
+							<!-- 성별 -->
+							<div class="form-group">
+								<label for="user_gender">성별</label>
+		                        <div class="ps_box gender_code">
+		                            <select id="gender" name="gender" class="sel" aria-label="성별">
+		                                <option value="" selected="">성별</option>
+			                                <option value="M">남자</option>
+			                                <option value="F">여자</option>
+			                                <option value="U">선택 안함</option>
+		                            </select>
+		                        </div>
+		                    </div>
+							<!-- 본인확인 이메일 -->
+							<div class="form-group">
+								<label for="user_email">이메일</label>
+									<input type="text" class="form-control" name="user_email" id="user_email" placeholder="E-mail" required>
+									<div class="check_font" id="email_check"></div>
+							</div>
+							<!-- 휴대전화 -->
+							
+							<div class="form-group">
+								<label for="user_phone">휴대전화 ('-' 없이 번호만 입력해주세요)</label>
+									<input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Phone Number" required>
+			                        <button class="form-control" style="background-color: gray;  width: 150px;  color: white" type="button" id="phone_check1"> 인증번호 받기 </button>
+									<div class="check_font" id="phone_check"></div>
+		                        </a>
+                   			 </div>
+							<div class="reg_button" style="text-align: center;">
+								<a class="btn btn-danger px-3" href="${}">
+									<i aria-hidden="true"></i>취소하기
+								</a>
+								<button class="btn btn-primary px-3" id="reg_submit">
+									<i aria-hidden="true"></i>가입하기
+								</button>
+							</div>
+						</form>
+
+			
+			            <a href="login" class="text-center">이미 아이디가 있습니다.</a>
+			        </div>
+			        <!-- /.form-box -->
+			    </div><!-- /.card -->
+			</div>
+			<!-- /.register-box -->
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+</th:block>
+
+			
+		<div th:replace="fragments/footer :: footerFragment"></div>
+		</div>
+		<!-- jQuery -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<!-- jQuery UI 1.11.4 -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+		  $.widget.bridge('uibutton', $.ui.button)
+		</script>
+		<!-- Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- ChartJS -->
+		<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
+		<!-- Sparkline -->
+		<script th:src="@{/AdminLTE-master/plugins/sparklines/sparkline.js}"></script>
+		<!-- daterangepicker -->
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- date-range-picker -->
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- Tempusdominus Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+		<!-- Summernote -->
+		<script th:src="@{/AdminLTE-master/plugins/summernote/summernote-bs4.min.js}"></script>
+		<!-- overlayScrollbars -->
+		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
+
+		
+		
+		
+</body>
+</html>

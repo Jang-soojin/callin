@@ -19,6 +19,13 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	@GetMapping("/register")
+	public String register(){
+		return "register/register"; 
+	}
+	
+	
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
