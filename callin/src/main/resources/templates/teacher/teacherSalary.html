@@ -181,8 +181,8 @@
 			$("#checkWorkHour").click(function() {
 				if($('#teacherContractType').val()!=''){
 					var teacherId = $("#teacherId").val()
-					var dateRangeFirst = $("#reservation")[0].value.substring(0, 10);
-					var dateRangeLast = $("#reservation")[0].value.substring(13, 23);
+					var dateRangeFirst = $("#reservation").val().substring(0, 10);
+					var dateRangeLast = $("#reservation").val().substring(13, 23);
 	
 					var MM1 = dateRangeFirst.substring(0, 2)
 					var DD1 = dateRangeFirst.substring(3, 5)
@@ -213,7 +213,6 @@
 					});
 				}else{
 					alert("강사를 선택해주세요")
-					
 					return;
 				}
 			})

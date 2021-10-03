@@ -15,8 +15,7 @@
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
 							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-							<li class="breadcrumb-item active" th:text="${midTitle}">급여
-								정산</li>
+							<li class="breadcrumb-item active" th:text="${midTitle}">급여	정산</li>
 						</ol>
 					</div>
 				</div>
@@ -42,7 +41,7 @@
 											<td colspan="3">
 												<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 100px; display: inline;">
 													<option value="teacher_id">아이디</option>
-													<option value="teacher_name">이름</option>
+													<option value="user_name">이름</option>
 											</select> 
 											<input id="searchValue"class="form-control" type="text" style="width: 400px; display: inline; virtical-"></td>
 										</tr>
@@ -97,6 +96,7 @@
 												<th><input type="checkbox"></th>
 												<th>등록코드</th>
 												<th>강사ID</th>
+												<th>강사명</th>
 												<th>보너스</th>
 												<th>공제액</th>
 												<th>적용 환율</th>
@@ -111,6 +111,7 @@
 												<th><input type="checkbox"></th>
 												<td th:text="${salaryList.teacherSalarySettlementCode}"></td>
 												<td th:text="${salaryList.teacherId}"></td>
+												<td th:text="${salaryList.user.userName}"></td>
 												<td th:text="${salaryList.bonus}"></td>
 												<td th:text="${salaryList.deduction}"></td>
 												<td th:text="${salaryList.appliedExchangeRate}"></td>
@@ -161,8 +162,8 @@
 			$('#searchButton').click(function() {
 				var searchKey = $('#searchKey').val();
 				var searchValue = $('#searchValue').val();
-				var dateRangeFirst = $("#reservation")[0].value.substring(0, 10);
-				var dateRangeLast = $("#reservation")[0].value.substring(13, 23);
+				var dateRangeFirst = $("#reservation").val().substring(0, 10);
+				var dateRangeLast = $("#reservation").val().substring(13, 23);
 
 				var MM1 = dateRangeFirst.substring(0, 2)
 				var DD1 = dateRangeFirst.substring(3, 5)
@@ -207,6 +208,8 @@
 								+ data[i].teacherSalarySettlementCode 
 								+ '</td><td>' 
 								+ data[i].teacherId 
+								+ '</td><td>' 
+								+ data[i].user.userName
 								+ '</td><td>' 
 								+ data[i].bonus 
 								+ '</td><td>' 

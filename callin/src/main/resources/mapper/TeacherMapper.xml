@@ -26,6 +26,12 @@
 		<result property="workingDayOfWeek" 	column="working_day_of_week"/>
 		<result property="managerId" 			column="manager_id"/>
 		<result property="managerInChargeGroup" column="manager_in_charge_group"/>
+		<association property="user" javaType="User">
+			<id property="userId" column="user_id"/>
+			<result property="userName" column="user_name"/>
+			<result property="userEmail" column="user_email"/>
+			<result property="userPhone" column="user_phone"/>
+		</association>
 	</resultMap>
 	
 	<resultMap type="TeacherSchedule" id="TeacherScheduleResultMap">
@@ -53,52 +59,75 @@
 		<result property="settlementVerifierId" 		column="settlement_verifier_id"/>
 		<result property="settlementYearMonth" 			column="settlement_year_month"/>
 		<result property="appliedExchangeRate" 			column="applied_exchange_rate"/>
+		<association property="user" javaType="User">
+			<id property="userId" column="user_id"/>
+			<result property="userName" column="user_name"/>
+			<result property="userEmail" column="user_email"/>
+			<result property="userPhone" column="user_phone"/>
+		</association>
 	</resultMap>
 	
 	
 	
 	<select id="getTeacherSalaryList" resultMap="teacherSalarySettlementResultMap" parameterType="String">
 		SELECT 
-			 teacher_salary_settlement_code
-			,teacher_id
-			,bonus
-			,deduction
-			,total_salary_php
-			,total_salary_krw
-			,settlement_date
-			,settlement_verifier_id
-			,applied_exchange_rate
+			 ts.teacher_salary_settlement_code
+			,ts.teacher_id
+			,u.user_name
+			,ts.bonus
+			,ts.deduction
+			,ts.total_salary_php
+			,ts.total_salary_krw
+			,ts.settlement_date
+			,ts.settlement_verifier_id
+			,ts.applied_exchange_rate
 		FROM 
-			teacher_salary_settlement
+			teacher_salary_settlement AS ts
+			LEFT JOIN 
+			user_info AS u 
+			ON 
+			ts.teacher_id = u.user_id 
 	</select>
 	<select id="searchSalaryList" resultMap="teacherSalarySettlementResultMap" parameterType="String">
 		SELECT 
-			 teacher_salary_settlement_code
-			,teacher_id
-			,bonus
-			,deduction
-			,total_salary_php
-			,total_salary_krw
-			,settlement_date
-			,settlement_verifier_id
-			,applied_exchange_rate
+			 ts.teacher_salary_settlement_code
+			,ts.teacher_id
+			,u.user_name
+			,ts.bonus
+			,ts.deduction
+			,ts.total_salary_php
+			,ts.total_salary_krw
+			,ts.settlement_date
+			,ts.settlement_verifier_id
+			,ts.applied_exchange_rate
 		FROM 
-			teacher_salary_settlement
+			teacher_salary_settlement AS ts
+			LEFT JOIN 
+			user_info AS u 
+			ON 
+			ts.teacher_id = u.user_id 
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			<if test="searchKey != null and searchKey != ''.toString() and searchValue != null">
+			<if test="searchKey != null and searchKey != ''.toString()">
 				${searchKey} LIKE CONCAT('%', #{searchValue},'%')
-				AND settlement_date BETWEEN DATE(#{dateRangeFirst}) AND DATE(#{dateRangeLast})
+			</if>
+			<if test="dateRangeFirst != null and dateRangeFirst != ''">
+				AND ts.settlement_date BETWEEN DATE(#{dateRangeFirst}) AND DATE(#{dateRangeLast})
 			</if>			
 		</trim>	
 	</select>
 	
 	<select id="getTeacherList" resultMap="teacherResultMap">
 		SELECT 
-			 teacher_id
-			,contract_type_code
-			,unit_pay
+			 t.teacher_id
+			,u.user_name
+			,t.contract_type_code
+			,t.unit_pay
 		FROM 
-			teacher_detail
+			teacher_detail AS t
+			LEFT JOIN
+			user_info AS u 
+			ON 
+			t.teacher_id = u.user_id
 	</select>
 	
 	<select id="getTeacherInfoById" resultMap="teacherResultMap" parameterType="String">
@@ -120,7 +149,7 @@
 			schedule_day
 		WHERE 
 			teacher_id2 = #{teacherId} AND
-			class_day_date BETWEEN DATE(#{dateRange1}) AND DATE(#{dateRange2})
+			class_day_date BETWEEN DATE(#{dateRangeFirst}) AND DATE(#{dateRangeLast})
 	</select>
 	
 	<insert id="addTeacherSalarySettlement" parameterType="teacherSalarySettlement">
