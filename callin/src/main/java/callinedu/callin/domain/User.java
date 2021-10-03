@@ -12,8 +12,10 @@ public class User {
 	private String userGender;
 	private String userEmail;
 	private String userPhone;
-	private String userWithdrawStatus;
+	private String userStatus;
 	private String userJoinDate;
+	
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -74,11 +76,11 @@ public class User {
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
-	public String getUserWithdrawStatus() {
-		return userWithdrawStatus;
+	public String getUserStatus() {
+		return userStatus;
 	}
-	public void setUserWithdrawStatus(String userWithdrawStatus) {
-		this.userWithdrawStatus = userWithdrawStatus;
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 	public String getUserJoinDate() {
 		return userJoinDate;
@@ -109,8 +111,8 @@ public class User {
 		builder.append(userEmail);
 		builder.append(", userPhone=");
 		builder.append(userPhone);
-		builder.append(", userWithdrawStatus=");
-		builder.append(userWithdrawStatus);
+		builder.append(", userStatus=");
+		builder.append(userStatus);
 		builder.append(", userJoinDate=");
 		builder.append(userJoinDate);
 		builder.append("]");
