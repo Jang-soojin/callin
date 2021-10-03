@@ -33,6 +33,14 @@ public class LTController {
 		this.lTService =lTService;
 	}
 	
+	@GetMapping("/login")
+	public String login(){
+		
+		System.out.println("constroller 실행");
+		
+		return "LT/login"; 
+	}
+	
 	@GetMapping("/LTApply")
 	public String LTApply(Model model){ 
 		System.out.println("constroller 실행");
