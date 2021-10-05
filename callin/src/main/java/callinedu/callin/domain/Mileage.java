@@ -3,7 +3,7 @@ package callinedu.callin.domain;
 public class Mileage {
 	private String mileageUseCode;
 	private String studentId;
-	private String mileageUseReaCode;      	
+	private String mileageUseReasonCode;      	
 	private String mileagDeductDate;		
 	private String mileagDeduct;			
 	private String mileageAnticipateDelDate;
@@ -28,11 +28,11 @@ public class Mileage {
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
-	public String getMileageUseReaCode() {
-		return mileageUseReaCode;
+	public String getMileageUseReasonCode() {
+		return mileageUseReasonCode;
 	}
-	public void setMileageUseReaCode(String mileageUseReaCode) {
-		this.mileageUseReaCode = mileageUseReaCode;
+	public void setMileageUseReasonCode(String mileageUseReaCode) {
+		this.mileageUseReasonCode = mileageUseReaCode;
 	}
 	public String getMileagDeductDate() {
 		return mileagDeductDate;
@@ -107,8 +107,8 @@ public class Mileage {
 		builder.append(mileageUseCode);
 		builder.append(", studentId=");
 		builder.append(studentId);
-		builder.append(", mileageUseReaCode=");
-		builder.append(mileageUseReaCode);
+		builder.append(", mileageUseReasonCode=");
+		builder.append(mileageUseReasonCode);
 		builder.append(", mileagDeductDate=");
 		builder.append(mileagDeductDate);
 		builder.append(", mileagDeduct=");
