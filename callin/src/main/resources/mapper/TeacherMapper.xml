@@ -50,7 +50,6 @@
 	<resultMap type="teacherSalarySettlement" id="teacherSalarySettlementResultMap">
 		<result property="teacherSalarySettlementCode" 	column="teacher_salary_settlement_code"/>
 		<result property="teacherId" 					column="teacher_id"/>
-		<result property="teacherMonthlyAttendanceCode" column="teacher_monthly_attendance_code"/>
 		<result property="bonus" 						column="bonus"/>
 		<result property="deduction" 					column="deduction"/>
 		<result property="totalSalaryPhp" 				column="total_salary_php"/>
@@ -132,11 +131,16 @@
 	
 	<select id="getTeacherInfoById" resultMap="teacherResultMap" parameterType="String">
 		SELECT
-			 teacher_id
-			,contract_type_code
-			,unit_pay
+			 t.teacher_id
+			,u.user_name 
+			,t.contract_type_code
+			,t.unit_pay
 		FROM
-			teacher_detail
+			teacher_detail AS t
+			LEFT JOIN
+			user_info AS u 
+			ON 
+			t.teacher_id = u.user_id
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
 			teacher_id=#{teacherId}
 		</trim>		
@@ -157,7 +161,6 @@
 			(
 			 teacher_salary_settlement_code
 			,teacher_id
-			,teacher_monthly_attendance_code
 			,Bonus
 			,deduction
 			,total_salary_php
@@ -171,7 +174,6 @@
 			(
 			  (Select CONCAT('T_salary', '_', (SELECT LPAD(COUNT(*)+1,5,'0') FROM teacher_salary_settlement AS TSS)))
 			 ,#{teacherId}
-			 ,'attendance_code001'
 			 ,#{bonus}
 			 ,#{deduction}
 			 ,#{totalSalaryPhp}

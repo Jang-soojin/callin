@@ -37,7 +37,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam(name="userId", required = false) String userId
+	public String loginProcess(@RequestParam(name="userId", required = false) String userId
 			           ,@RequestParam(name="userPassword", required = false) String userPassword
 			           ,HttpSession session
 			           ,RedirectAttributes redirectAttr) {
@@ -52,6 +52,7 @@ public class UserController {
 					session.setAttribute("SID"		, userId);
 					session.setAttribute("SLEVEL"	, user.getUserLevel());
 					session.setAttribute("SNAME"	, user.getUserName());
+					
 					// 메인 화면으로 이동
 					return "redirect:/";
 				//1-2. 입력한 패스워드와 조회된 회원 정보의 패스워드가 일치하지 않는다면,	

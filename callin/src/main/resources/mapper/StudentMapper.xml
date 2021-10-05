@@ -100,7 +100,7 @@
 				mileage_use_rea_code
 				, mileage_reason
 				, mileage_division
-			FROM mileage_use_rea
+			FROM mileage_use_reason
 		</select>
 
  	
