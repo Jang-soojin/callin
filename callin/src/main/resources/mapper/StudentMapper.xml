@@ -39,7 +39,7 @@
 	<resultMap type="mileage" id="mileageResultMap">
 		<result property="mileageUseCode"            	column="mileage_use_code"/>
 		<result property="studentId"                  	column="student_id"/>
-		<result property="mileageUseReaCode" 			column="mileage_use_rea_code"/>
+		<result property="mileageUseReasonCode" 			column="mileage_use_reason_code"/>
 		<result property="mileagDeductDate" 			column="mileag_deduct_date"/>
 		<result property="mileagDeduct" 				column="mileag_deduct"/>
 		<result property="mileageAnticipateDelDate" 	column="mileage_anticipate_del_date"/>
@@ -58,7 +58,7 @@
 					INSERT INTO mileage_use
 					(   mileage_use_code
 					   ,student_id
-					   ,mileage_use_rea_code
+					   ,mileage_use_reason_code
 					   ,mileag_deduct_date
 					   ,mileag_deduct
 					   ,mileage_anticipate_del_date
@@ -69,7 +69,7 @@
 					) VALUES (
 						#{mileageUseCode}
 					   ,#{studentId}
-					   ,#{mileageUseReaCode}
+					   ,#{mileageUseReasonCode}
 					   ,CASE
 					   		WHEN #{mileageWaitDivision} = 'A'
 					   		THEN NOW()
@@ -89,7 +89,7 @@
 		</insert>
 		
 		<resultMap type="Mileage" id="mileageResnResultMap">
-			<result property="mileageUseReaCode"            	column="mileage_use_rea_code"/>
+			<result property="mileageUseReasonCode"            	column="mileage_use_reason_code"/>
 			<result property="mileageReason"            		column="mileage_reason"/>
 			<result property="mileageDivision"            		column="mileage_division"/>
 			
@@ -97,10 +97,10 @@
 		
 		<select id="selectMileageResnList" resultMap="mileageResnResultMap">
 			SELECT
-				mileage_use_rea_code
+				mileage_use_reason_code
 				, mileage_reason
 				, mileage_division
-			FROM mileage_use_rea
+			FROM mileage_use_reason
 		</select>
 
  	
