@@ -46,6 +46,13 @@ public class TeacherController {
 		return "teacher/teacherSalaryList"; 
 	}
 	
+	@PostMapping(value="/searchSalaryList", produces = "application/json")
+	@ResponseBody
+	public List<TeacherSalarySettlement> searchSalaryList(@RequestParam Map<String, Object> map, Model model) {
+		List<TeacherSalarySettlement> searchSalaryList = teacherService.searchSalaryList(map);
+		return  searchSalaryList;
+	}
+	
 	@GetMapping("/teacherSalary")
 	public String teacherSalary(Model model) {
 		model.addAttribute("title", "강사 급여 정산");
@@ -76,6 +83,7 @@ public class TeacherController {
 	@PostMapping(value="/getTotalWorkHour", produces = "application/json")
 	@ResponseBody
 	public int getTotalWorkHour(@RequestParam Map<String, Object> map) {
+		System.out.println("파라미터 맵"+map);
 		String teacherId = (String)map.get("teacherId");
 		String dateRangeFirst = (String)map.get("dateRangeFirst");
 		String dateRangeLast = (String)map.get("dateRangeLast");
@@ -87,14 +95,7 @@ public class TeacherController {
 		return  totalWorkHour;
 	}
 
-	@PostMapping(value="/searchSalaryList", produces = "application/json")
-	@ResponseBody
-	public List<TeacherSalarySettlement> searchSalaryList(@RequestParam Map<String, Object> map, Model model) {
-		
-		List<TeacherSalarySettlement> searchSalaryList = teacherService.searchSalaryList(map);
-		model.addAttribute("teacherSalaryList", searchSalaryList);
-		return  searchSalaryList;
-	}
+	
 
 }
 

@@ -39,11 +39,11 @@
 												<span class="teacherId">[[${teacher.teacherId}]]</span>
 												<input type="hidden" id="teacherId" name="teacherId" th:value="${teacher.teacherId}">
 											</td>
-											<td th:text="${teacher.teacherId}" class="name"></td>
+											<td th:text="${teacher.user.userName}" class="name"></td>
 											<td th:text="${teacher.contractTypeCode}" class="contract"></td>
 											<td th:text="${teacher.unitPay}" class="teacherUnitPay"></td>
 											<td>
-												<a th:href="@{#}" class="pick")>선택</a>
+												<a th:href="@{#}" class="pick">선택</a>
 											</td>
 										</tr>
 	

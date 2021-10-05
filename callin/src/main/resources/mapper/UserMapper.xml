@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="callinedu.callin.mapper.UserMapper">
+	<resultMap type="User" id="userResultMap">
+			<result property="userId" 				column="user_id"/>
+			<result property="userPw" 				column="user_pw"/>
+			<result property="userName" 			column="user_name"/>
+			<result property="userLevel" 			column="user_level"/>
+			<result property="skypeId" 				column="skype_id"/>
+			<result property="userNickname" 		column="user_nickname"/>
+			<result property="userBirth" 			column="user_birth"/>
+			<result property="userGender" 			column="user_gender"/>
+			<result property="userEmail" 			column="user_email"/>
+			<result property="userPhone" 			column="user_phone"/>
+			<result property="userStatus" 			column="user_status"/>
+			<result property="userJoinDate" 		column="user_join_date"/>
+	</resultMap>
+	
+	<select id="getUserInfoById" parameterType="String" resultMap="userResultMap">
+		SELECT
+			 user_id
+			,user_pw
+			,user_name
+			,user_level
+			,skype_id
+			,user_nickname
+			,user_birth
+			,user_gender
+			,user_email
+			,user_phone
+			,user_status
+			,user_join_date
+		FROM 
+			user_info
+		WHERE
+			user_id = #{userId}		
+	</select>
+	
+</mapper>
