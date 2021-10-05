@@ -17,13 +17,12 @@ import callinedu.callin.service.TeacherService;
 @RequestMapping("/admin/manager")
 public class ManagerController {
 	private final TeacherService teacherService;
-		
 	public ManagerController(TeacherService teacherService) {
 		this.teacherService = teacherService;
 	}
 	
 	@GetMapping("/managerList")
-	public String teacherList(Model model){ 
+	public String managerList(Model model){ 
 		System.out.println("constroller 실행");
 		
 		List<Teacher> teacherList = teacherService.getTeacherList();
@@ -35,7 +34,7 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/managerSalary")
-	public String teacherSalary(@RequestParam(name="teacherId", required = false) String teacherId,
+	public String managerSalary(@RequestParam(name="teacherId", required = false) String teacherId,
 								Model model) {
 		if(teacherId!=null) {
 		Teacher teacher = teacherService.getTeacherInfoById(teacherId);
@@ -53,7 +52,7 @@ public class ManagerController {
 		return "manager/managerSalary";
 		}
 	@PostMapping("/managerSalary")
-	public String teacherSalaryPost(Teacher teacherInfo, Model model) {
+	public String managerSalary(Teacher teacherInfo, Model model) {
 		System.out.println("★★★★★★★★★★★★★★★★★"+teacherInfo);
 		Teacher teacher = teacherService.getTeacherInfoById("id001");
 		System.out.println(teacher+"★★★★★★★★★★★★★★★★★");
