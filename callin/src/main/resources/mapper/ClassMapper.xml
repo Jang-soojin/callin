@@ -99,7 +99,7 @@
 			class_postpone_days, 
 			class_postpone_period
 		FROM class_policy
-			order by class_policy_name ASC
+			order by class_policy_name ASC limit 1,10;
    </select>
 	
 </mapper>
