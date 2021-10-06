@@ -20,5 +20,15 @@ public class UserService {
 		User userInfo = userMapper.getUserInfoById(userId);
 		return userInfo;
 	}
+	public User idDuplicateCheck(String userId) {
+		User duplicateCheck = userMapper.idDuplicateCheck(userId);
+		if(duplicateCheck==null) {
+			User user = new User();
+			user.setUserId("사용가능");
+			return user;
+		}else {
+			return duplicateCheck;
+		}
+	}
 
 }

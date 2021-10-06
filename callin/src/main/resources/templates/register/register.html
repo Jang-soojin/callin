@@ -52,36 +52,49 @@
 			    <div class="card">
 			        <div class="card-body register-card-body">
 			            
-			            <form action="#" th:action="@{/register}" method="post">
+			            <form th:action="@{/register}" method="post">
 							<!-- 아이디 -->
 							<div class="form-group">
-								<label for="user_id">아이디</label>
-									<input type="text" class="form-control" id="user_id" name="user_id" placeholder="ID" required>
-		                           	<button class="form-control" style="background-color: gray; width: 100px; color: white" type="button" id="id_Check1"> 중복확인 </button>
+								<label for="user_id"  style="display: block;">아이디</label>
+									<input type="text" class="form-control" id="user_id" name="user_id" placeholder="ID"  style="display: inline; width: 69%;">
+		                           	<button class="form-control" style="background-color: gray; width: 29%; display: inline; color: white" type="button" id="id_Check1"> 중복확인 </button>
 									<div class="check_font" id="id_check2"></div>
 							</div>
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label for="user_pw">비밀번호</label>
-									<input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="Password" required>
+									<input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="Password" >
 								<div class="check_font" id="pw_check"></div>
 							</div>
 							<!-- 비밀번호 재확인 -->
 							<div class="form-group">
 								<label for="user_pw2">비밀번호 확인</label>
-									<input type="password" class="form-control" id="user_pw2" name="user_pw2" placeholder="Confirm Password" required>
+									<input type="password" class="form-control" id="user_pw2" name="user_pw_check" placeholder="Confirm Password" >
 								<div class="check_font" id="pw2_check"></div>
 							</div>
 							<!-- 이름 -->
 							<div class="form-group">
 								<label for="user_name">이름</label>
-									<input type="text" class="form-control" id="user_name" name="user_name" placeholder="Name" required>
+									<input type="text" class="form-control" id="user_name" name="user_name" placeholder="Name" >
 								<div class="check_font" id="name_check"></div>
 							</div>
+							<!-- 영어 이름 (Nickname) -->
+							<div class="form-group">
+								<label for="user_nickname">영어 닉네임 (Nickname)</label>
+									<input type="text" class="form-control" id="user_nickname" name="user_nickname" placeholder="English Nickname" >
+								<div class="check_font" id="Nickname_check"></div>
+							</div>
+							<div class="form-group">
+								<label for="skype_id">Skype 아이디</label>
+									<input type="text" class="form-control" id="skype_id" name="skype_id" placeholder="스카이프 아이디를 입력해주세요" >
+								<div class="check_font" id="skype_id_check"></div>
+							</div>
 							<!-- 생년월일 -->
-							<div class="form-group required">
-								<label for="user_birth">생년월일</label>
-									<input type="text" class="form-control" id="user_birth" name="user_birth" placeholder="ex) 19990415" required>
+							<div class="form-group ">
+								<label for="user_birth" style="display: block;">생년월일</label>
+								<select name="yy" id="year" class="user_birth"></select>년
+								<select name="mm" id="month" class="user_birth"></select>월
+								<select name="dd" id="day" class="user_birth"></select>일
 								<div class="check_font" id="birth_check"></div>
 							</div>
 							<!-- 성별 -->
@@ -99,43 +112,37 @@
 							<!-- 본인확인 이메일 -->
 							<div class="form-group">
 								<label for="user_email">이메일</label>
-									<input type="text" class="form-control" name="user_email" id="user_email" placeholder="E-mail" required>
+									<input type="text" class="form-control" name="user_email" id="user_email" placeholder="E-mail" >
 									<div class="check_font" id="email_check"></div>
 							</div>
 							<!-- 휴대전화 -->
 							
 							<div class="form-group">
 								<label for="user_phone">휴대전화 ('-' 없이 번호만 입력해주세요)</label>
-									<input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Phone Number" required>
-			                        <button class="form-control" style="background-color: gray;  width: 150px;  color: white" type="button" id="phone_check1"> 인증번호 받기 </button>
+									<input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Phone Number" >
+								<!-- <button class="form-control" style="background-color: gray;  width: 150px;  color: white" type="button" id="phone_check1"> 인증번호 받기 </button> -->
 									<div class="check_font" id="phone_check"></div>
-		                        </a>
                    			 </div>
 							<div class="reg_button" style="text-align: center;">
 								<a class="btn btn-danger px-3" href="${}">
 									<i aria-hidden="true"></i>취소하기
 								</a>
-								<button class="btn btn-primary px-3" id="reg_submit">
+								<button type="button" class="btn btn-primary px-3" id="reg_submit">
 									<i aria-hidden="true"></i>가입하기
 								</button>
 							</div>
 						</form>
-
-			
-			            <a href="login" class="text-center">이미 아이디가 있습니다.</a>
+			            <a href="login" class="text-center">회원 로그인 하기</a>
 			        </div>
 			        <!-- /.form-box -->
 			    </div><!-- /.card -->
 			</div>
 			<!-- /.register-box -->
-
 </section>
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 </th:block>
-
-			
 		<div th:replace="fragments/footer :: footerFragment"></div>
 		</div>
 		<!-- jQuery -->
@@ -165,8 +172,209 @@
 		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script> 
 
+<!-- 	아이디 중복 검사 및 유효성 검사-->
+		<script type="text/javascript">
+$(function(){ //페이지 읽기 후 스크립트 읽기(시작) 
+			var idChecked = false;
+			var pwChecked = false;
+			$('#id_Check1').click(function(){
+				var userId = $('#user_id').val()
+				
+				/* 아이디 유효성 검사(공백 검사) 시작*/
+			 	var blank = false;
+				for(var i=0; i<userId.length; i++){
+					var cha = userId.slice(i,i+1)
+					if(cha==' '){
+					    blank = true;
+					    alert('아이디에는 공백을 사용할 수 없습니다.');
+					    return false;
+					}
+				}/* 아이디 유효성 검사(공백 검사) 끝*/
+				
+				if(userId != ''){
+					var request = $.ajax({
+						url : "/register/idDuplicateCheck", //요청 url
+						method : "POST", //요청 방식
+						data : {userId : userId	},
+						dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
+					});
+					
+					request.done(function(data) {
+						if(data.userId=="사용가능"){
+							if(blank == false){
+								alert("사용 가능한 아이디입니다.")
+								idChecked = true;
+							}
+						}else{
+							alert("사용할 수 없는 아이디입니다")
+							$('#user_id').val('')
+							$('#user_id').focus()
+							idChecked = false;
+						}
+						
+					});
+	
+					request.fail(function(jqXHR, textStatus) {
+						alert("요청 실패: " + textStatus);
+					});
+					
+				}else{
+					alert('아이디를 입력해주세요')
+				}
+			})
+				
+			
+<!--패스워드 일치 확인-->
+			
+			//1. 패스워드 항목 변경시 패스워드 일치 여부 확인
+			$('#user_pw').on("keyup",function(){
+				if($('#user_pw').val() != $('#user_pw2').val()){
+					$('#pw2_check').css({ 'color':'red'})
+					$('#pw2_check').text('비밀번호 불일치')
+					pwChecked = false;
+				}else if($('#user_pw2').val() == $('#user_pw').val() && $('#user_pw').val()!=''){
+					$('#pw2_check').css({ 'color':'#00ff3a'})
+					$('#pw2_check').text('비밀번호 일치합니다')
+					pwChecked = true;
+				}else{
+					$('#pw2_check').text('')
+				}
+			})
+			//2. 패스워드 확인 항목 변경시 패스워드 일치 여부 확인
+			$('#user_pw2').on("keyup",function(){
+				if($('#user_pw2').val() != $('#user_pw').val()){
+					$('#pw2_check').css({ 'color':'red'})
+					$('#pw2_check').text('비밀번호 불일치')
+					pwChecked = false;
+				}else if($('#user_pw2').val() == $('#user_pw').val() && $('#user_pw').val()!=''){
+					$('#pw2_check').css({ 'color':'#00ff3a'})
+					$('#pw2_check').text('비밀번호가 일치합니다.')
+					pwChecked = true;
+				}else{
+					$('#pw2_check').text('')
+				}
+			})
+	
+			
+<!--회원 가입 양식 입력 여부 유효성 검사-->
+			
+			$('#reg_submit').click(function(){
+				
+				if($('#user_id').val()=='' ){ //아이디 입력 여부 체크
+					alert('아이디를 입력해주세요')
+					return false;
+				}
+				if(idChecked == false){ // 아이디 중복 확인 체크
+					alert('아이디 중복 확인을 해주세요')
+					return false;
+				}
+				if($('#user_pw').val()=='' || $('#user_pw2').val()==''){ //패스워드/패스워드 확인 입력 여부 체크
+					alert('패스워드를 입력해주세요')
+					return false;
+				}
+				if(pwChecked == false){ // 패스워드 일치 여부 체크
+					alert('입력한 패스워드가 일치하지 않습니다.')
+					return false;
+				}
+				if($('#user_name').val()==''){//사용자 이름 입력 여부 체크
+					alert('사용자 이름을 입력해주세요.')
+					return false;
+				}
+				if($('#user_nickname').val()==''){//영어 닉네임 입력 여부 체크
+					alert('영어 닉네임을 입력해주세요.')
+					return false;
+				}
+				if($('#skype_id').val()==''){//스카이프 아이디 입력 여부 체크
+					alert('스카이프 아이디를 입력해주세요.')
+					return false;
+				}
+				
+				//1. 날짜 유효성 검사 체크 (현재일<생년월일 불가능)
+				var now = new Date(); 
+				var year = now.getFullYear(); 
+				var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
+				var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate()); 
+				const nowDate = year+'-'+mon+'-'+day;
+				
+				var yearSelect = $('#year').val()
+				var monthSelect = $('#month').val()
+				var daySelect = $('#day').val()
+				const selectedDate =  yearSelect +'-'+monthSelect +'-'+daySelect ;
+				if(nowDate<selectedDate){
+					alert('현재일 이후 날짜는 선택할 수 없습니다.')
+					return false;
+				}
+				
+				if($('#gender').val()==''){//성별 입력 여부 체크
+					alert('성별을 선택해주세요.')
+					return false;
+				}
+				if($('#user_email').val()=='' || $('#user_email').val()==' '){//이메일 입력 여부 체크
+					alert('이메일을 입력해주세요')
+					return false;
+				}
+				
+				
+				if($('#user_phone').val()==''){//연락처 입력 여부 체크
+					alert('연락처를 선택해주세요.')
+					return false;
+				}else if($('#user_phone').val().length > 11){
+					alert('유효한 연락처를 선택해주세요.')
+					return false;
+				}else if(isNaN($('#user_phone').val())==true){
+					alert('연락처는 숫자만 입력할 수 있습니다..')
+					return false;
+				}
+				
+				// 전체 입력항목 공백 포함 검사 시작
+				for(var i=2; i<$('.form-control').length; i++){
+				    for(var j=0; j<$($('.form-control')[i]).val().length; j++){
+				        var cha = $($('.form-control')[i]).val().slice(j,j+1)
+				        if(cha==' '){
+				            var target = $($('.form-control')[i]).siblings('label').text()
+				           	$($('.form-control')[i]).siblings('.check_font').css({ 'color':'red'})
+							$($('.form-control')[i]).siblings('.check_font').text(target+'에는 공백이 들어갈 수 없습니다')
+							return false;
+				        }else{
+				        	$($('.form-control')[i]).siblings('.check_font').text('')
+				        }
+				    } 
+				}// 전체 입력항목 공백 포함 검사 끝
+
+			})//클릭 이벤트 종료
+})//페이지 읽기 후 스크립트 읽기(끝) 	
+		</script>
 		
+		
+<!-- 생년월일 Select박스 만들기 -->	
+		<script type="text/javascript">
+			
+			$(document).ready(function(){ 
+				var now = new Date(); 
+				var year = now.getFullYear(); 
+				var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
+				var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate()); //년도 selectbox만들기 
+				
+				for(var i = year ; i >= 1900 ; i--) { 
+					$('#year').append('<option value="' + i + '">' + i + '</option>'); 
+				} // 월별 selectbox 만들기 
+				
+				for(var i=1; i <= 12; i++) { 
+					var mm = i > 9 ? i : "0"+i ; 
+					$('#month').append('<option value="' + mm + '">' + mm + '</option>'); } // 일별 selectbox 만들기 
+				
+					for(var i=1; i <= 31; i++) { 
+						var dd = i > 9 ? i : "0"+i ; 
+					$('#day').append('<option value="' + dd + '">' + dd+ '</option>'); 
+				};
+					$("#year > option[value="+year+"]").attr("selected", "true"); 
+					$("#month > option[value="+mon+"]").attr("selected", "true");
+					$("#day > option[value="+day+"]").attr("selected", "true"); 
+			})
+
+		</script>
 		
 		
 </body>

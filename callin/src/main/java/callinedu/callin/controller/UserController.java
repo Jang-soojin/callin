@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import callinedu.callin.domain.User;
@@ -24,6 +25,15 @@ public class UserController {
 		return "register/register"; 
 	}
 	
+	@PostMapping("/register/idDuplicateCheck")
+	@ResponseBody
+	public User idDuplicateCheck(String userId) {
+		System.out.println(userId);
+		User duplicateCheck = userService.idDuplicateCheck(userId);
+		System.out.println(duplicateCheck);
+		
+		return duplicateCheck;
+	}
 	
 	
 	@GetMapping("/logout")
