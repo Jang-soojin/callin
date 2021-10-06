@@ -9,4 +9,5 @@ public interface UserMapper {
 
 	public User getUserInfoById(String userId);
 
+	public User idDuplicateCheck(String userId);
 }
