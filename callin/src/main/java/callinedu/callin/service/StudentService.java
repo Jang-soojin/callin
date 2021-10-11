@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import callinedu.callin.domain.LT;
 import callinedu.callin.domain.Mileage;
 import callinedu.callin.domain.Student;
 import callinedu.callin.mapper.StudentMapper;
@@ -76,6 +76,9 @@ public class StudentService {
 		return studentMapper.selectMileageResnList();
 	}
 	
-
+	public List<Mileage> getallMileageGet() {
+		
+		return null;
+	}
 		
 }

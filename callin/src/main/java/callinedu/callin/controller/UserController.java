@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import callinedu.callin.domain.User;
@@ -19,11 +20,39 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@GetMapping("/register")
-	public String register(){
+	@PostMapping("/register")
+	public String addUser(@RequestParam(name="user_id") String id,
+			@RequestParam(name="user_pw") String pw,
+			@RequestParam(name="user_name") String name,
+			@RequestParam(name="user_nickname", required = false) String nickname,
+			@RequestParam(name="skype_id", required = false) String skypeId,
+			@RequestParam(name="birth_year") String birthYear,
+			@RequestParam(name="birth_month") String birthMonth,
+			@RequestParam(name="birth_day") String birthDay,
+			@RequestParam(name="gender") String gender,
+			@RequestParam(name="user_email") String email,
+			@RequestParam(name="user_phone", required = false) String phoneNumber){
+		String birth = birthYear +'-'+birthMonth +'-'+birthDay;
+		System.out.println("생년월일 결합 : "+birth);
+		userService.addUser(id, pw, name, nickname, skypeId, birth, gender, email, phoneNumber);
+		
 		return "register/register"; 
 	}
 	
+	@GetMapping("/register")
+	public String registerPage(	){
+		return "register/register"; 
+	}
+	
+	@PostMapping("/register/idDuplicateCheck")
+	@ResponseBody
+	public User idDuplicateCheck(String userId) {
+		System.out.println(userId);
+		User duplicateCheck = userService.idDuplicateCheck(userId);
+		System.out.println(duplicateCheck);
+		
+		return duplicateCheck;
+	}
 	
 	
 	@GetMapping("/logout")
