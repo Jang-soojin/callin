@@ -193,7 +193,7 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 					    return false;
 					}
 				}/* 아이디 유효성 검사(공백 검사) 끝*/
-				var idFormat = /^[a-z0-9_-]{4,20}$/;
+				var idFormat = /^[a-z0-9_-]{4,20}$/i;
 				if(userId.match(idFormat) ==null){
 					alert('5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.');
 					return false;
@@ -251,7 +251,7 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 				}
 				
 				var pwVal = $('#user_pw').val();
-				var pwFormat = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+				var pwFormat = /^(?=.*[a-zA-ZS])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
 				if (pwVal.match(pwFormat)==null){
 					$('#pw_check').css({ 'color':'red'});
 					$('#pw_check').text('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
@@ -261,7 +261,6 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 					$('#pw_check').text('사용 가능한 패스워드입니다.');
 					pwChecked = true;
 				}
-				
 			})
 			//2. 패스워드 확인 항목 변경시 패스워드 일치 여부 확인
 			$('#user_pw2').on("keyup",function(){
@@ -337,7 +336,7 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 				}
 				//2. 이메일 유효성 검사
 				var emailVal = $('#user_email').val();
-				var emailFormat = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //이메일 형식 유효성 검사 정규식
+				var emailFormat = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/; //이메일 형식 유효성 검사 정규식
 
 				if(emailVal =='' || emailVal ==' '){//이메일 입력 여부 체크
 					alert('이메일을 입력해주세요')
