@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="callinedu.callin.mapper.ManagerMapper">
+	<resultMap type="Manager" id="ManagerResultMap">
+		<result property="managerId" 			column="manager_id"/>
+		<result property="managerPosition" 		column="manager_position"/>
+		<result property="contractTypeCode" 	column="contract_type_code"/>
+		<result property="adress" 				column="adress"/>
+		<result property="bankCode" 			column="bank_code"/>
+		<result property="accountNumber" 		column="account_number"/>
+		<result property="nameOfDepositor" 		column="name_of_depositor"/>
+		<result property="dateOfEmployment" 	column="date_of_employment"/>
+		<result property="dateOfResignation" 	column="date_of_resignation"/>
+		<result property="workingStatus" 		column="working_status"/>
+		<result property="dependants" 			column="dependants"/>
+		<result property="minorChildren" 		column="minor_children"/>
+		<result property="unitPay" 				column="unit_pay"/>
+		<association property="user" javaType="User">
+			<id property="userId" 				column="user_id"/>
+			<result property="userName" 		column="user_name"/>
+			<result property="userEmail" 		column="user_email"/>
+			<result property="userPhone" 		column="user_phone"/>
+		</association>
+	</resultMap>
+	<resultMap type="ManagerSalarySettlement" id="ManagerSalarySettlementMap">
+		<result property="managerSalarySettlementCode"	column="manager_salary_settlement_code"/>
+		<result property="managerId" 					column="manager_id"/>
+		<result property="baseSalary" 					column="base_salary"/>
+		<result property="bonus" 						column="bonus"/>
+		<result property="mealAllowance" 				column="meal_allowance"/>
+		<result property="vehicleExpenses" 				column="vehicle_expenses"/>
+		<result property="otherAllowance" 				column="other_allowance"/>
+		<result property="otherDeduction" 				column="other_deduction"/>
+		<result property="totalSalaryPreTax" 			column="total_salary_pre_tax"/>
+		<result property="totalSalaryTaxFree" 			column="total_salary_tax_free"/>
+		<result property="incomeTax" 					column="income_tax"/>
+		<result property="localIncomeTax" 				column="local_income_tax"/>
+		<result property="nationalPension" 				column="national_pension"/>
+		<result property="healthInsurance" 				column="health_insurance"/>
+		<result property="longTermCareInsurance" 		column="long_term_care_insurance"/>
+		<result property="employmentInsurance" 			column="employment_insurance"/>
+		<result property="totalDeduction" 				column="total_deduction"/>
+		<result property="totalSalaryAfterTax" 			column="total_salary_after_tax"/>
+		<result property="settlementDate" 				column="settlement_date"/>
+		<result property="settlementVerifierId" 		column="settlement_verifier_id"/>
+		<result property="settlementYearMonth" 			column="settlement_year_month"/>
+	</resultMap>
+	
+	<select id="getManagerList" resultMap="ManagerResultMap">
+		SELECT 
+			 m.manager_id
+			 ,u.user_name
+			 ,m.manager_position
+			 ,m.contract_type_code
+			 ,m.unit_pay
+		FROM 
+			 user_info AS u
+			 INNER JOIN 
+			 manager_detail AS m
+			 ON 
+			 u.user_id=m.manager_id
+		WHERE 
+			u.user_level = '매니저'
+	</select>
+	
+	<select id="getManagerInfoById"  parameterType="String"  resultMap="ManagerResultMap">
+		SELECT 
+			 m.manager_id
+			 ,u.user_name
+			 ,m.manager_position
+			 ,m.contract_type_code
+			 ,m.dependants
+			 ,m.minor_children
+			 ,m.unit_pay
+		FROM 
+			 user_info AS u
+			 INNER JOIN 
+			 manager_detail AS m
+			 ON 
+			 u.user_id=m.manager_id
+		WHERE 
+			 m.manager_id = #{managerId}
+	</select>
+	<select id="getManangerAbsent" resultType="int" parameterType="String">
+		SELECT 
+			COUNT(manager_id)
+		FROM
+			manager_daily_attendance
+		WHERE 
+			manager_id = #{managerId}
+			AND (attendance_code = 'attendance_002' or attendance_code = 'attendance_004') 
+			AND date_of_attendance BETWEEN DATE(#{dateRangeFirst}) AND DATE(#{dateRangeLast})
+		
+	</select>
+	<select id="getIncomeTax" resultType="int" parameterType="String">
+		<![CDATA[
+		SELECT 
+			${dependantsNum}
+		FROM
+			tax_income_tax
+		WHERE
+			over<= #{milliTaxFreeTotal} AND under>#{milliTaxFreeTotal};
+		]]>
+	</select>
+	<insert id="saveManagerSalary" parameterType="ManagerSalarySettlement">
+		INSERT INTO manager_salary_settlement (
+			manager_id
+			,base_salary
+			,bonus
+			,meal_allowance
+			,vehicle_expenses
+			,other_allowance
+			,other_deduction
+			,total_salary_pre_tax
+			,total_salary_tax_free
+			,income_tax
+			,local_income_tax
+			,national_pension
+			,health_insurance
+			,long_term_care_insurance
+			,employment_insurance
+			,total_deduction
+			,total_salary_after_tax
+			,settlement_date
+			,settlement_verifier_id
+			,settlement_year_month) 
+		VALUES (
+			#{managerId}
+			,#{baseSalary}
+			,#{bonus}
+			,#{mealAllowance}
+			,#{vehicleExpenses}
+			,#{otherAllowance}
+			,#{otherDeduction}
+			,#{totalSalaryPreTax}
+			,#{totalSalaryTaxFree}
+			,#{incomeTax}
+			,#{localIncomeTax}
+			,#{nationalPension}
+			,#{healthInsurance}
+			,#{longTermCareInsurance}
+			,#{employmentInsurance}
+			,#{totalDeduction}
+			,#{totalSalaryAfterTax}
+			,CURDATE()
+			,'1'
+			,CURDATE());
+	</insert>
+</mapper>
