@@ -16,35 +16,117 @@
 			
 			<!-- Main Sidebar Container -->
 			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
-			<th:block layout:fragment="mileageAdd"> 
+			<th:block layout:fragment="waitingMileageGet"> 
 				<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<div class="container-fluid">
 						<div class="row mb-2">
-					<div class="col-sm-6">
-						<h1 th:text="${midTitle}"></h1>
+							<div class="col-sm-6">
+								<h1 th:text="${midTitle}"></h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+								</ol>
+							</div>
+						</div>
 					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-							<li class="breadcrumb-item active" th:text="${midTitle}"></li>
-						</ol>
-					</div>
-				</div>
-					</div><!-- /.container-fluid -->
 				</section>
 			
 			    <!-- Main content -->
-				
-				
-				<!-- /.row -->
-			</div><!-- /.container-fluid -->
-			<!-- /.content -->
+			    <section class="content">
+					<div class="container-fluid">
+						<div class="card card card-secondary">
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="chooseMileage" name="chooseMileage" th:action="@{/admin/mileage/waitingMileageGet}" method="post">
+									<table class="table table-bordered table-hover" border="1"
+										style="width: 100%; vertical-align: inherit;">
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center; background-color:#ebebeb;"><span>키워드 검색</span></td>
+											<td colspan="3">
+												<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 120px; display: inline;">
+													<option value="teacher_id" selected="selected">검색 항목</option>
+													<option value="student_id">아이디</option>
+													<option value="user_name">이름</option>
+											</select> 
+											<input id="searchValue"class="form-control" type="text" style="width: 400px; display: inline; virtical-"></td>
+										</tr>
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center; background-color:#ebebeb;"><span>날짜 검색 </span></td>
+											<td colspan="3">
+												<div>
+													<div class="input-group">
+														<div class="input-group-prepend">
+															<span class="input-group-text"> 
+																<i class="far fa-calendar-alt"></i>
+															</span>
+														</div>
+														<input type="text" class="form-control float-right" id="reservation" style="width: 464px; flex: none;">
+													</div>
+													<!-- /.input group -->
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center; background-color:#ebebeb;"><span>적립금 유형</span></td>
+											<td>
+												<select id="searchKey" name="mileageUseReasonCode" class="form-control select2 select2-hidden-accessible" style="width: 300px; display: inline;">
+														<option value="" selected="selected">적립 유형 선택</option>
+														<option th:each="list : ${resnList}" th:value="${list.mileageUseReasonCode}" th:text="${list.mileageReason}"></option>
+												</select>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center; background-color:#ebebeb;"><span>적립/차감</span></td>
+											<td>
+												
+												<label class="radio at-tooltip" data-container="body" style="width: 350px; ">
+												<input type="radio" name="classType" checked="checked">전체
+												<input type="radio" name="classType" >적립(+)
+												<input type="radio" name="classType" >차감(-)
+												</label>
+											</td>
+										</tr>
+									</table>
+									<div class="row">
+										<div class="col-md-5"></div>
+										<div class="col-md-3" style="align-items: center;">
+											<button type="button" id="searchButton" class="btn btn-secondary">검색</button>
+											<button type="button" id="resetButton" class="btn btn-secondary">초기화</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- /.card-body -->
+							<div class="card-body">
+						
+								<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
+									<thead>
+										<tr>
+											<th><input type="checkbox"></th>
+											<th>NO.</th>
+											<th>적립예정날짜</th>
+											<th>소멸날짜</th>
+											<th>학생정보</th>
+											<th>적립금유형</th>
+											<th>ㅡ ㅡ ㅡ ㅡ  메모 ㅡ ㅡ ㅡ ㅡ</th>
+											<th>적립/차감</th>
+											<th>적립금</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+									</tbody>
+								</table>
+						
+							</div>
+						</div>
+					</div>
+				</section>		
+			</div>
 		</th:block>
-		
-		<div th:replace="fragments/footer :: footerFragment"></div>
+			<div th:replace="fragments/footer :: footerFragment"></div>
 		</div>
 		<!-- jQuery -->
 		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
@@ -73,10 +155,7 @@
 		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+	
 		<script>
 			$(function () {
 		    //Date range picker

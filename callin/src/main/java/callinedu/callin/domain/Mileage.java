@@ -3,6 +3,7 @@ package callinedu.callin.domain;
 public class Mileage {
 	private String mileageUseCode;
 	private String studentId;
+	private String userName;
 	private String mileageUseReasonCode;      	
 	private String mileagDeductDate;		
 	private String mileagDeduct;			
@@ -15,7 +16,15 @@ public class Mileage {
 	private String moveSlct;
 	private String mileageReason;
 	private String mileageDivision;
+	private String rn;
+
 	
+	public String getuserName() {
+		return userName;
+	}
+	public void userName(String userName) {
+		this.userName = userName;
+	}
 	public String getMileageUseCode() {
 		return mileageUseCode;
 	}
@@ -100,6 +109,12 @@ public class Mileage {
 	public void setMileageDivision(String mileageDivision) {
 		this.mileageDivision = mileageDivision;
 	}
+	public String getRn() {
+		return rn;
+	}
+	public void setRn(String rn) {
+		this.rn = rn;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -107,6 +122,8 @@ public class Mileage {
 		builder.append(mileageUseCode);
 		builder.append(", studentId=");
 		builder.append(studentId);
+		builder.append(", userName=");
+		builder.append(userName);		
 		builder.append(", mileageUseReasonCode=");
 		builder.append(mileageUseReasonCode);
 		builder.append(", mileagDeductDate=");
@@ -125,6 +142,8 @@ public class Mileage {
 		builder.append(mileageMemo);
 		builder.append(", mileageWaitDivision=");
 		builder.append(mileageWaitDivision);
+		builder.append(", rn=");
+		builder.append(rn);
 		builder.append("]");
 		return builder.toString();
 	}

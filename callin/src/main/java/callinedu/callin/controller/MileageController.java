@@ -2,6 +2,7 @@ package callinedu.callin.controller;
 
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import callinedu.callin.domain.LT;
 import callinedu.callin.domain.Mileage;
 import callinedu.callin.domain.Student;
-import callinedu.callin.domain.TeacherSalarySettlement;
 import callinedu.callin.service.StudentService;
 
 
@@ -79,12 +78,40 @@ public class MileageController {
 	public String allMileageGet(Model model){ 
 		System.out.println("constroller 실행");
 		
-		List<Mileage> allMileageGet = studentService.getallMileageGet();
+		List<Mileage> allMileageGet = studentService.getallMileageGet(); 
 		System.out.println(allMileageGet);
+		model.addAttribute("resnList", studentService.selectMileageResnList());
 		model.addAttribute("title", "전체 마일리지 검색");
 		model.addAttribute("midTitle", "전체 마일리지 검색"); 
 		
 		return "mileage/allMileageGet"; 
+	}
+	
+	//mileage 검색
+	@PostMapping(value="/allMileageSearch", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> allMileageSearch(@RequestBody Map<String, Object> paramMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		System.out.println(paramMap);
+		List<Mileage> allMileageSearch = studentService.getAllMileageListBySearch(paramMap);
+		
+		resultMap.put("miList", allMileageSearch);
+		
+		return  resultMap;
+	}
+	
+	@GetMapping("/waitingMileageGet")
+	public String waitingMileageGet(Model model){ 
+		System.out.println("constroller 실행");
+		
+		List<Mileage> waitingMileageGet = studentService.getwaitingMileageGet();
+		System.out.println(waitingMileageGet);
+		
+		model.addAttribute("resnList", studentService.selectMileageResnList());
+		model.addAttribute("title", "대기 마일리지 검색");
+		model.addAttribute("midTitle", "대기 마일리지 검색"); 
+		
+		return "mileage/waitingMileageGet"; 
 	}
 
 
