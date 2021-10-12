@@ -51,7 +51,7 @@
 			    <div class="card">
 			        <div class="card-body register-card-body">
 			            
-			            <form th:action="@{/register}" method="post">
+			            <form id="reg_form" th:action="@{/register}" method="post">
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label for="user_id"  style="display: block;">아이디</label>
@@ -91,9 +91,9 @@
 							<!-- 생년월일 -->
 							<div class="form-group ">
 								<label for="user_birth" style="display: block;">생년월일</label>
-								<select name="yy" id="year" class="user_birth"></select>년
-								<select name="mm" id="month" class="user_birth"></select>월
-								<select name="dd" id="day" class="user_birth"></select>일
+								<select name="birth_year" id="year" class="user_birth"></select>년
+								<select name="birth_month" id="month" class="user_birth"></select>월
+								<select name="birth_day" id="day" class="user_birth"></select>일
 								<div class="check_font" id="birth_check"></div>
 							</div>
 							<!-- 성별 -->
@@ -181,20 +181,27 @@
 $(function(){ //페이지 읽기 후 스크립트 읽기(시작) 
 			var idChecked = false;
 			var pwChecked = false;
+			
 			$('#id_Check1').click(function(){
 				var userId = $('#user_id').val()
 				
 				/* 아이디 유효성 검사(공백 검사) 시작*/
 			 	var blank = false;
 				for(var i=0; i<userId.length; i++){
-					var cha = userId.slice(i,i+1)
-					if(cha==' '){
+					var piece = userId.slice(i,i+1)
+					if(piece==' '){
 					    blank = true;
 					    alert('아이디에는 공백을 사용할 수 없습니다.');
 					    return false;
 					}
 				}/* 아이디 유효성 검사(공백 검사) 끝*/
+				var idFormat = /^[a-z0-9_-]{4,20}$/i;
+				if(userId.match(idFormat) ==null){
+					alert('5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.');
+					return false;
+				}
 				
+				// 아이디 중복 검사
 				if(userId != ''){
 					var request = $.ajax({
 						url : "/register/idDuplicateCheck", //요청 url
@@ -206,13 +213,13 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 					request.done(function(data) {
 						if(data.userId=="사용가능"){
 							if(blank == false){
-								alert("사용 가능한 아이디입니다.")
+								alert("사용 가능한 아이디입니다.");
 								idChecked = true;
 							}
 						}else{
-							alert("사용할 수 없는 아이디입니다")
-							$('#user_id').val('')
-							$('#user_id').focus()
+							alert("사용할 수 없는 아이디입니다");
+							$('#user_id').val('');
+							$('#user_id').focus();
 							idChecked = false;
 						}
 						
@@ -223,7 +230,7 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 					});
 					
 				}else{
-					alert('아이디를 입력해주세요')
+					alert('아이디를 입력해주세요');
 				}
 			})
 				
@@ -232,30 +239,43 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 			
 			//1. 패스워드 항목 변경시 패스워드 일치 여부 확인
 			$('#user_pw').on("keyup",function(){
+				
 				if($('#user_pw').val() != $('#user_pw2').val()){
-					$('#pw2_check').css({ 'color':'red'})
-					$('#pw2_check').text('비밀번호 불일치')
+					$('#pw2_check').css({ 'color':'red'});
+					$('#pw2_check').text('비밀번호 불일치');
 					pwChecked = false;
 				}else if($('#user_pw2').val() == $('#user_pw').val() && $('#user_pw').val()!=''){
-					$('#pw2_check').css({ 'color':'#00ff3a'})
-					$('#pw2_check').text('비밀번호 일치합니다')
+					$('#pw2_check').css({ 'color':'#00ff3a'});
+					$('#pw2_check').text('비밀번호 일치합니다');
 					pwChecked = true;
 				}else{
-					$('#pw2_check').text('')
+					$('#pw2_check').text('');
+				}
+				
+				var pwVal = $('#user_pw').val();
+				var pwFormat = /^(?=.*[a-zA-ZS])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+				if (pwVal.match(pwFormat)==null){
+					$('#pw_check').css({ 'color':'red'});
+					$('#pw_check').text('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
+					pwChecked = false;
+				}else if(pwVal.match(pwFormat)!=null) {
+					$('#pw_check').css({ 'color':'#00ff3a'});
+					$('#pw_check').text('사용 가능한 패스워드입니다.');
+					pwChecked = true;
 				}
 			})
 			//2. 패스워드 확인 항목 변경시 패스워드 일치 여부 확인
 			$('#user_pw2').on("keyup",function(){
 				if($('#user_pw2').val() != $('#user_pw').val()){
-					$('#pw2_check').css({ 'color':'red'})
-					$('#pw2_check').text('비밀번호 불일치')
+					$('#pw2_check').css({ 'color':'red'});
+					$('#pw2_check').text('비밀번호 불일치');
 					pwChecked = false;
 				}else if($('#user_pw2').val() == $('#user_pw').val() && $('#user_pw').val()!=''){
-					$('#pw2_check').css({ 'color':'#00ff3a'})
-					$('#pw2_check').text('비밀번호가 일치합니다.')
+					$('#pw2_check').css({ 'color':'#00ff3a'});
+					$('#pw2_check').text('비밀번호가 일치합니다.');
 					pwChecked = true;
 				}else{
-					$('#pw2_check').text('')
+					$('#pw2_check').text('');
 				}
 			})
 	
@@ -265,31 +285,34 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 			$('#reg_submit').click(function(){
 				
 				if($('#user_id').val()=='' ){ //아이디 입력 여부 체크
-					alert('아이디를 입력해주세요')
+					alert('아이디를 입력해주세요');
 					return false;
 				}
 				if(idChecked == false){ // 아이디 중복 확인 체크
-					alert('아이디 중복 확인을 해주세요')
+					alert('아이디 중복 확인을 해주세요');
 					return false;
 				}
-				if($('#user_pw').val()=='' || $('#user_pw2').val()==''){ //패스워드/패스워드 확인 입력 여부 체크
-					alert('패스워드를 입력해주세요')
+				
+				var pwVal = $('#user_pw').val();
+				if(pwVal =='' || pwVal==''){ //패스워드/패스워드 확인 입력 여부 체크
+					alert('패스워드를 입력해주세요');
 					return false;
 				}
-				if(pwChecked == false){ // 패스워드 일치 여부 체크
-					alert('입력한 패스워드가 일치하지 않습니다.')
+				
+				if(pwChecked == false){ // 패스워드 일치 여부 체크 + 패스워드 형식 유효성 체크
+					alert('입력한 패스워드가 일치하지 않습니다.');
 					return false;
 				}
 				if($('#user_name').val()==''){//사용자 이름 입력 여부 체크
-					alert('사용자 이름을 입력해주세요.')
+					alert('사용자 이름을 입력해주세요.');
 					return false;
 				}
 				if($('#user_nickname').val()==''){//영어 닉네임 입력 여부 체크
-					alert('영어 닉네임을 입력해주세요.')
+					alert('영어 닉네임을 입력해주세요.');
 					return false;
 				}
 				if($('#skype_id').val()==''){//스카이프 아이디 입력 여부 체크
-					alert('스카이프 아이디를 입력해주세요.')
+					alert('스카이프 아이디를 입력해주세요.');
 					return false;
 				}
 				
@@ -313,38 +336,47 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 					alert('성별을 선택해주세요.')
 					return false;
 				}
-				if($('#user_email').val()=='' || $('#user_email').val()==' '){//이메일 입력 여부 체크
+				//2. 이메일 유효성 검사
+				var emailVal = $('#user_email').val();
+				var emailFormat = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/; //이메일 형식 유효성 검사 정규식
+
+				if(emailVal =='' || emailVal ==' '){//이메일 입력 여부 체크
 					alert('이메일을 입력해주세요')
 					return false;
 				}
+				if (emailVal.match(emailFormat) == null){
+					alert('올바른 이메일 형식을 입력해 주세요.');
+					return false;
+				}
+
 				
 				
 				if($('#user_phone').val()==''){//연락처 입력 여부 체크
-					alert('연락처를 선택해주세요.')
+					alert('연락처를 선택해주세요.');
 					return false;
-				}else if($('#user_phone').val().length > 11){
-					alert('유효한 연락처를 선택해주세요.')
+				}else if($('#user_phone').val().length > 11){ // 11자리 이상 숫자라면 알림
+					alert('유효한 연락처를 선택해주세요.');
 					return false;
-				}else if(isNaN($('#user_phone').val())==true){
-					alert('연락처는 숫자만 입력할 수 있습니다..')
+				}else if(isNaN($('#user_phone').val())==true){ // 숫자가 아니라면 알림
+					alert('연락처는 숫자만 입력할 수 있습니다..');
 					return false;
 				}
 				
 				// 전체 입력항목 공백 포함 검사 시작
 				for(var i=2; i<$('.form-control').length; i++){
 				    for(var j=0; j<$($('.form-control')[i]).val().length; j++){
-				        var cha = $($('.form-control')[i]).val().slice(j,j+1)
+				        var cha = $($('.form-control')[i]).val().slice(j,j+1);
 				        if(cha==' '){
-				            var target = $($('.form-control')[i]).siblings('label').text()
-				           	$($('.form-control')[i]).siblings('.check_font').css({ 'color':'red'})
-							$($('.form-control')[i]).siblings('.check_font').text(target+'에는 공백이 들어갈 수 없습니다')
+				            var target = $($('.form-control')[i]).siblings('label').text();
+				           	$($('.form-control')[i]).siblings('.check_font').css({ 'color':'red'});
+							$($('.form-control')[i]).siblings('.check_font').text(target+'에는 공백이 들어갈 수 없습니다');
 							return false;
 				        }else{
-				        	$($('.form-control')[i]).siblings('.check_font').text('')
+				        	$($('.form-control')[i]).siblings('.check_font').text('');
+				        	$('#reg_form').submit();  // 이상이 없는 경우 Submit
 				        }
 				    } 
 				}// 전체 입력항목 공백 포함 검사 끝
-
 			})//클릭 이벤트 종료
 })//페이지 읽기 후 스크립트 읽기(끝) 	
 		</script>

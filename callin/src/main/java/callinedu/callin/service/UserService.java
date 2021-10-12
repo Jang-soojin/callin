@@ -31,4 +31,8 @@ public class UserService {
 		}
 	}
 
+	public void addUser(String id, String pw, String name, String nickname, String skypeId, String birth, String gender, String email, String phoneNumber) {
+		userMapper.addUser(id, pw, name, nickname, skypeId, birth, gender, email, phoneNumber);
+	}
+
 }
