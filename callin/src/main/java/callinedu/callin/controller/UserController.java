@@ -65,6 +65,11 @@ public class UserController {
 		return "login/login"; 
 	}
 	
+	@GetMapping("/callback")
+	public String callback(){
+		return "login/callback"; 
+	}
+	
 	@PostMapping("/login")
 	public String loginProcess(@RequestParam(name="userId", required = false) String userId
 			           ,@RequestParam(name="userPassword", required = false) String userPassword

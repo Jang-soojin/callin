@@ -51,12 +51,12 @@
 			<input type="hidden" name="shop_id" value="nilenglish">
 			<div class="title">
 					<ul>
-						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i>  레벨테스트는 월~금 9~22시 사이에 신청가능하며, 10분 진행됩니다.</li>
-						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i>  주말과 공휴일에는 레벨테스트를 진행하지 않습니다.</li>
-						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i>  평가결과는 홈페이지 &gt; 마이페이지에서 확인하실 수 있습니다.</li>
-						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i><font color="red">  선생님과의 시간조정으로 최대 앞뒤 30분정도 시간이 변경될수도 있습니다.</font></li>
+						<li style="list-style: none;"><i class="fa fa-arrow-right"></i>  레벨테스트는 월~금 9~22시 사이에 신청가능하며, 10분 진행됩니다.</li>
+						<li style="list-style: none;"><i class="fa fa-arrow-right"></i>  주말과 공휴일에는 레벨테스트를 진행하지 않습니다.</li>
+						<li style="list-style: none;"><i class="fa fa-arrow-right"></i>  평가결과는 홈페이지 &gt; 마이페이지에서 확인하실 수 있습니다.</li>
+						<li style="list-style: none;"><i class="fa fa-arrow-right"></i><font color="red">  선생님과의 시간조정으로 최대 앞뒤 30분정도 시간이 변경될수도 있습니다.</font></li>
 						<!--<li class="text-info"><i class="fa fa-arrow-right"></i>  로그인을 먼저 해주세요.</li>-->
-						<li class="text-info" style="list-style: none;"><i class="fa fa-arrow-right"></i><font color="orange">  당일 레벨테스트 진행을 원하시면 고객지원센터 (000-0000)로 연락주세요!</font></li>
+						<li style="list-style: none;"><i class="fa fa-arrow-right"></i><font color="orange">  당일 레벨테스트 진행을 원하시면 고객지원센터 (000-0000)로 연락주세요!</font></li>
 					</ul>
 			</div>
                  <div class="card card-info">
@@ -317,25 +317,15 @@
 		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
-<<<<<<< HEAD
-		
-=======
-		<!-- AdminLTE for demo purposes -->
->>>>>>> refs/heads/soojin
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
-		
-		<script>
-			$(function () {
-		    //Date range picker
-		    $('#reservation').daterangepicker()})
-		    
-			$( function() {
-			$( "#datepicker" ).datepicker();});
-  		</script>
+
 		
 		<script type="text/javascript">
-	
+					$(function () {
+				    //Date range picker
+				    $('#reservation').daterangepicker()})
+				    
+					$( function() {
+					$( "#datepicker" ).datepicker();});
 			
 			//=== 레벨테스트 유효성검사
 			function ck_form() { 
