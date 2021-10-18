@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+
+
+<th:block layout:fragment="customContents">
+	<div class="content-wrapper">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 th:text="${midTitle}">급여 정산</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+							<li class="breadcrumb-item active" th:text="${midTitle}">급여	정산</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card card-secondary">
+							<div class="card-header">
+								<h3 class="card-title">검색</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="searchSalaryList" th:action="@{/admin/teacher/searchSalaryList}"
+									method="post">
+									<table class="table table-bordered table-hover" border="1"
+										style="width: 100%; vertical-align: inherit;">
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center;"><span>키워드 검색</span></td>
+											<td colspan="3">
+												<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 100px; display: inline;">
+													<option value="teacher_id">아이디</option>
+													<option value="user_name">이름</option>
+											</select> 
+											<input id="searchValue"class="form-control" type="text" style="width: 400px; display: inline; virtical-"></td>
+										</tr>
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center;"><span>날짜 검색 </span></td>
+											<td colspan="3">
+												<div>
+													<div class="input-group">
+														<div class="input-group-prepend">
+															<span class="input-group-text"> 
+																<i class="far fa-calendar-alt"></i>
+															</span>
+														</div>
+														<input type="text" class="form-control float-right" id="reservation" style="width: 464px; flex: none;">
+													</div>
+													<!-- /.input group -->
+												</div>
+											</td>
+										</tr>
+									</table>
+									<div class="row">
+										<div class="col-md-4"></div>
+										<div class="col-md-3" style="align-items: center;">
+											<div>
+												<button type="button" id="searchButton"
+													class="btn btn-block btn-dark btn-md float-right"
+													style="width: 30%; margin-left: 20px;">검색</button>
+											</div>
+											<div>
+												<button type="button" id="resetButton"
+													class="btn btn-block btn-default btn-md float-right"
+													style="width: 44%; border-color: #68736a">초기화</button>
+											</div>
+										</div>
+										<div class="col-md-5"></div>
+									</div>
+								</form>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card1 -->
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">강사료 정산 리스트</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="chooseTeacher" th:action="@{/teacherSalary}" method="post">
+									<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
+										<thead>
+											<tr>
+												<th rowspan="2" style="vertical-align: inherit;">매니저ID</th>
+												<th>기본급</th>
+												<th>보너스</th>
+												<th>식대</th>
+												<th>차량지원비</th>
+												<th>기타수당</th>
+												<th>기타공제</th>
+												<th>세전합계</th>
+												<th>비과세 제외합계</th>
+												<th rowspan="2" style="vertical-align: inherit;">정산일자</th>
+											</tr>
+											<tr>
+												<th>소득세</th>
+												<th>지방소득세</th>
+												<th>국민연금</th>
+												<th>건강보험</th>
+												<th>장기요양보험</th>
+												<th>고용보험</th>
+												<th>공제총액</th>
+												<th>실지급액</th>
+											</tr>
+										</thead>
+										<tbody th:each="salaryList: ${managerSalaryList}">
+												<tr>
+													<td rowspan="2" th:text="${salaryList.managerId}" style="vertical-align: inherit; font-weight: bold;"></td>
+													<td th:text="${salaryList.baseSalary}"></td>
+													<td th:text="${salaryList.bonus}"></td>
+													<td th:text="${salaryList.mealAllowance}"></td>
+													<td th:text="${salaryList.vehicleExpenses}"></td>
+													<td th:text="${salaryList.otherAllowance}"></td>
+													<td th:text="${salaryList.otherDeduction}"></td>
+													<td th:text="${salaryList.totalSalaryPreTax}"></td>
+													<td th:text="${salaryList.totalSalaryTaxFree}"></td>
+													<td rowspan="2" th:text="${salaryList.settlementDate}" style="vertical-align: inherit;"></td>
+												</tr>
+												<tr>
+													<td th:text="${salaryList.incomeTax}"></td>
+													<td th:text="${salaryList.localIncomeTax}"></td>
+													<td th:text="${salaryList.nationalPension}"></td>
+													<td th:text="${salaryList.healthInsurance}"></td>
+													<td th:text="${salaryList.longTermCareInsurance}"></td>
+													<td th:text="${salaryList.employmentInsurance}"></td>
+													<td th:text="${salaryList.totalDeduction}"></td>
+													<td th:text="${salaryList.totalSalaryAfterTax}"></td>
+												</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card2 -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+	</div>
+	<!-- jQuery -->
+	<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+	<!-- Bootstrap 4 -->
+<!-- pagination 스크립트 ↓ -->
+	<script>
+	</script>
+	
+	<script>
+	
+	$(function() {
+			$('#searchButton').click(function() {
+				var searchKey = $('#searchKey').val();
+				var searchValue = $('#searchValue').val();
+				var dateRangeFirst = $("#reservation").val().substring(0, 10);
+				var dateRangeLast = $("#reservation").val().substring(13, 23);
+
+				var MM1 = dateRangeFirst.substring(0, 2)
+				var DD1 = dateRangeFirst.substring(3, 5)
+				var YYYY1 = dateRangeFirst.substring(6, 10)
+				var newDateRangeFirst = YYYY1 + "-" + MM1 + "-" + DD1;
+
+				var MM2 = dateRangeLast.substring(0, 2)
+				var DD2 = dateRangeLast.substring(3, 5)
+				var YYYY2 = dateRangeLast.substring(6, 10)
+				var newDateRangeLast = YYYY2 + "-" + MM2 + "-" + DD2
+
+				/* ********************************************** */
+				//$.ajax() 호출시 ajax에 관련된 객체를 반환한다.
+				var request = $.ajax({
+					url : "/admin/teacher/searchSalaryList", //요청 url
+					method : "POST", //요청 방식
+					data : {
+						searchKey : searchKey,
+						searchValue : searchValue,
+						dateRangeFirst : newDateRangeFirst,
+						dateRangeLast : newDateRangeLast
+					}, //요청하는 곳에 전달될 데이타
+					dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
+				});
+				request.done(function(data){ 
+							$('#example2').text('')
+							var tr = '<thead>'+ '<tr>' 
+									+ '<th>등록코드</th>'
+									+ '<th>강사ID </th>'
+									+ '<th>보너스 </th>'
+									+ '<th>공제액 </th>'
+									+ '<th>적용 환율 </th>'
+									+ '<th>총액(페소)</th>'
+									+ '<th>총액(원) </th>'
+									+ '<th>지급일자</th>'
+									+ '<th>지급자 아이디</th>'
+									+ '</tr>'
+									+ '</thead>'; 
+							
+							$.each(data , function(i){ 
+								tr += '<td>'
+								+ data[i].teacherSalarySettlementCode 
+								+ '</td><td>' 
+								+ data[i].teacherId 
+								+ '</td><td>' 
+								+ data[i].user.userName
+								+ '</td><td>' 
+								+ data[i].bonus 
+								+ '</td><td>' 
+								+ data[i].deduction 
+								+ '</td><td>' 
+								+ data[i].appliedExchangeRate 
+								+ '</td><td>' 
+								+ data[i].totalSalaryPhp 
+								+ '</td><td>' 
+								+ data[i].totalSalaryKrw 
+								+ '</td><td>' 
+								+ data[i].settlementDate 
+								+ '</td><td>' 
+								+ data[i].settlementVerifierId 
+								+ '</td></tr>'; 
+							});
+							$('#example2').append(tr)
+					})
+				request.fail(function(jqXHR, textStatus) {
+					alert("요청 실패: " + textStatus);
+				});
+			})
+		})
+		
+		$(function() {
+			$('#resetButton').click(function() {
+				// daterangepicker 초기화 시작
+				var today = new Date()
+				var date = today.getDate()
+				var month = today.getMonth()+1
+				var year = today.getFullYear()
+				
+				if(month<10){
+					if(date<10){
+						$('#reservation').val('0'+month+'/'+'0'+date+'/'+year+' - '+'0'+month+'/'+'0'+date+'/'+year)
+					}else{
+						$('#reservation').val('0'+month+'/'+date+'/'+year+' - '+'0'+month+'/'+date+'/'+year)
+					}
+				}else(
+						$('#reservation').val(month+'/'+date+'/'+year+' - '+month+'/'+date+'/'+year)
+				);
+				// daterangepicker 초기화 끝
+				$('#searchKey').val('teacher_id'); // 검색조건 초기화 (초기값은 아이디 검색)
+				$('#searchValue').val(''); //검색어 초기화
+			})
+		});
+			
+		
+	</script>
+	
+	
+</th:block>
+</html>
