@@ -15,6 +15,7 @@ public interface StudentMapper {
 	public Student getStudentInfoById(String studentId);
 	public List<Student> getMemberListBySearch(Map<String, Object> paramMap);
 	public List<Mileage> getAllMileageListBySearch(Map<String, Object> paramMap);
+	public List<Mileage> getwaitingMileageListBySearch(Map<String, Object> paramMap);
 	public int addMileage(Mileage mileage);
 	public List<Mileage> selectMileageResnList();
 	public List<Mileage> getallMileageGet();

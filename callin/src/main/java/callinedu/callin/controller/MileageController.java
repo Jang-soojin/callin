@@ -87,7 +87,7 @@ public class MileageController {
 		return "mileage/allMileageGet"; 
 	}
 	
-	//mileage 검색
+	//전체mileage 검색
 	@PostMapping(value="/allMileageSearch", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> allMileageSearch(@RequestBody Map<String, Object> paramMap) {
@@ -112,6 +112,18 @@ public class MileageController {
 		model.addAttribute("midTitle", "대기 마일리지 검색"); 
 		
 		return "mileage/waitingMileageGet"; 
+	}
+	//대기mileage 검색
+	@PostMapping(value="/waitingMileageSearch", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> waitingMileageSearch(@RequestBody Map<String, Object> paramMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		System.out.println(paramMap);
+		List<Mileage> waitingMileageSearch = studentService.getwaitingMileageListBySearch(paramMap);
+		
+		resultMap.put("miList", waitingMileageSearch);
+		
+		return  resultMap;
 	}
 
 
