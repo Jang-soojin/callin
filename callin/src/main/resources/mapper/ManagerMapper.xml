@@ -95,6 +95,7 @@
 			AND date_of_attendance BETWEEN DATE(#{dateRangeFirst}) AND DATE(#{dateRangeLast})
 		
 	</select>
+	
 	<select id="getIncomeTax" resultType="int" parameterType="String">
 		<![CDATA[
 		SELECT 
@@ -105,6 +106,7 @@
 			over<= #{milliTaxFreeTotal} AND under>#{milliTaxFreeTotal};
 		]]>
 	</select>
+	
 	<insert id="saveManagerSalary" parameterType="ManagerSalarySettlement">
 		INSERT INTO manager_salary_settlement (
 			manager_id
@@ -149,4 +151,12 @@
 			,'1'
 			,CURDATE());
 	</insert>
+	
+	
+	<select id="managerSalaryList" resultMap="ManagerSalarySettlementMap">
+		SELECT
+		*
+		FROM
+		manager_salary_settlement
+	</select>
 </mapper>

@@ -44,5 +44,10 @@ public class ManagerService {
 	public void saveManagerSalary(ManagerSalarySettlement managerSalarySettlement) {
 		managerMapper.saveManagerSalary(managerSalarySettlement);
 	}
+
+	public List<ManagerSalarySettlement> managerSalaryList() {
+		List<ManagerSalarySettlement> managerSalaryList = managerMapper.managerSalaryList();
+		return managerSalaryList;
+	}
 	
 }

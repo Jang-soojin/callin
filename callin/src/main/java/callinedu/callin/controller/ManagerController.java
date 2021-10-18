@@ -1,7 +1,6 @@
 package callinedu.callin.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,6 +62,18 @@ public class ManagerController {
 		System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆"+managerSalarySettlement);
 		managerService.saveManagerSalary(managerSalarySettlement);
 		return "redirect:/admin/manager/managerSalary"; 
+	}
+	
+	@GetMapping("/managerSalaryList")
+	public String managerSalaryList(Model model){ 
+		
+		List<ManagerSalarySettlement> managerSalaryList = managerService.managerSalaryList();
+		model.addAttribute("title", "매니저 급여 정산 목록");
+		model.addAttribute("midTitle", "매니저 급여 정산 리스트");
+		model.addAttribute("managerSalaryList",managerSalaryList); 
+		System.out.println(managerSalaryList);
+		
+		return "manager/managerSalaryList"; 
 	}
 }
 
