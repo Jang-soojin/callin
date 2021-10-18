@@ -21,23 +21,18 @@ public class TeacherService {
 	}
 
 	public List<Teacher> getTeacherList(){
-		System.out.println("service.getTeacherList 실행");
-		
 		List<Teacher> teacherList = teacherMapper.getTeacherList();
 		return teacherList;
 	}
+	
 	public List<TeacherSalarySettlement> getTeacherSalaryList(){
 		System.out.println("service.getTeacherList 실행");
-		
 		List<TeacherSalarySettlement> teacherSalaryList = teacherMapper.getTeacherSalaryList();
-		
 		return teacherSalaryList;
 	}
 	public Teacher getTeacherInfoById(String teacherId){
 		System.out.println("service.getTeacherInfoById 실행");
-		
 		Teacher teacher = teacherMapper.getTeacherInfoById(teacherId);
-		
 		return teacher;
 	}
 	
@@ -60,7 +55,6 @@ public class TeacherService {
 		
 		List<TeacherSalarySettlement> searchSalaryList = teacherMapper.searchSalaryList(searchKey,searchValue,dateRangeFirst,dateRangeLast);
 		System.out.println(searchSalaryList);
-		
 		
 		return searchSalaryList;
 	}

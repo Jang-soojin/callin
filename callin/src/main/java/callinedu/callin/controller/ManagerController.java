@@ -1,68 +1,69 @@
 package callinedu.callin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import callinedu.callin.domain.Teacher;
-import callinedu.callin.service.TeacherService;
+import callinedu.callin.domain.Manager;
+import callinedu.callin.domain.ManagerSalarySettlement;
+import callinedu.callin.service.ManagerService;
 
 
 @Controller
 @RequestMapping("/admin/manager")
 public class ManagerController {
-	private final TeacherService teacherService;
-	public ManagerController(TeacherService teacherService) {
-		this.teacherService = teacherService;
-	}
-	
-	@GetMapping("/managerList")
-	public String managerList(Model model){ 
-		System.out.println("constroller 실행");
-		
-		List<Teacher> teacherList = teacherService.getTeacherList();
-		System.out.println(teacherList);
-		model.addAttribute("title", "매니저 목록");
-		model.addAttribute("teacherList",teacherList); 
-		
-		return "manager/managerList"; 
+	private final ManagerService managerService;
+	public ManagerController(ManagerService managerService) {
+		this.managerService = managerService;
 	}
 	
 	@GetMapping("/managerSalary")
-	public String managerSalary(@RequestParam(name="teacherId", required = false) String teacherId,
-								Model model) {
-		if(teacherId!=null) {
-		Teacher teacher = teacherService.getTeacherInfoById(teacherId);
-		System.out.println(teacher+"★★★★★★★★★★★★★★★★★");
-		model.addAttribute("teacherId", teacher.getTeacherId());
-		model.addAttribute("teacherName", teacher.getTeacherId()); // 쿼리 확인용 임시(삭제예정)
-		model.addAttribute("ContractType", teacher.getContractTypeCode());
-		model.addAttribute("HourlyRate", teacher.getUnitPay());
-		}
-		System.out.println("GET으로 실행");
-		model.addAttribute("title", "매니저 급여 정산");
-		model.addAttribute("midTitle", "매니저 급여 정산");
-		model.addAttribute("cardTitle", "매니저 상세 정보");
-			
-		return "manager/managerSalary";
-		}
-	@PostMapping("/managerSalary")
-	public String managerSalary(Teacher teacherInfo, Model model) {
-		System.out.println("★★★★★★★★★★★★★★★★★"+teacherInfo);
-		Teacher teacher = teacherService.getTeacherInfoById("id001");
-		System.out.println(teacher+"★★★★★★★★★★★★★★★★★");
-		model.addAttribute("teacherId", teacher.getTeacherId());
-		model.addAttribute("teacherName", teacher.getTeacherId()); // 쿼리 확인용 임시(삭제예정)
-		model.addAttribute("ContractType", teacher.getContractTypeCode());
-		model.addAttribute("HourlyRate", teacher.getUnitPay());
+	public String ManagerSalary() {
 		return "manager/managerSalary";
 	}
-
-
+	
+	@GetMapping("/managerList")
+	public String getManagerList(Model model) {
+		List<Manager> managerList = managerService.getManagerList();
+		model.addAttribute("title", "매니저 목록");
+		model.addAttribute("managerList", managerList);
+		return "manager/managerList";
+	}
+	
+	
+	@PostMapping(value="/getManagerInfoById", produces = "application/json")
+	@ResponseBody
+	public Manager getManagerInfoById(String managerId) {
+		Manager managerInfo = managerService.getManagerInfoById(managerId);
+		return  managerInfo;
+	}
+	
+	@PostMapping(value="/manangerAbsent", produces = "application/json")
+	@ResponseBody
+	public int getManangerAbsent(String managerId, String dateRangeFirst, String dateRangeLast) {
+		int getManangerAbsent = managerService.getManangerAbsent(managerId, dateRangeFirst, dateRangeLast);
+		return  getManangerAbsent;
+	}
+	
+	@PostMapping(value="/incomeTax", produces = "application/json")
+	@ResponseBody
+	public int getIncomeTax(String dependantsNum, String milliTaxFreeTotal) {
+		int incomeTax = managerService.getIncomeTax(dependantsNum, milliTaxFreeTotal);
+		return  incomeTax;
+	}
+	
+	@PostMapping("/save")
+	public String saveManagerSalary(ManagerSalarySettlement managerSalarySettlement) {
+		System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆"+managerSalarySettlement);
+		managerService.saveManagerSalary(managerSalarySettlement);
+		return "redirect:/admin/manager/managerSalary"; 
+	}
 }
+
 

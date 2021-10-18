@@ -1,11 +1,11 @@
 package callinedu.callin.service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import callinedu.callin.domain.Mileage;
 import callinedu.callin.domain.Student;
@@ -76,6 +76,43 @@ public class StudentService {
 		return studentMapper.selectMileageResnList();
 	}
 	
-
+	public List<Mileage> getallMileageGet() {
+		
+		return null;
+	}
+	
+	  public List<Mileage> getwaitingMileageGet() {
+	  
+	  return null; 
+	}
+	  
+	  
+	  
+	public List<Mileage> getAllMileageListBySearch(Map<String, Object> paramMap){
+		String searchKey = (String) paramMap.get("searchKey");	
+		
+		if(searchKey != null && !searchKey.equals("")) {
+			if("student_id".equals(searchKey)) 	paramMap.put("searchKey", "student_id");
+			if("user_name".equals(searchKey)) 	paramMap.put("searchKey", "user_name");
+		}
+		paramMap.put("dateRangeFirst", paramMap.get("reservation").toString().split(" - ")[0]);
+		paramMap.put("dateRangeLast", paramMap.get("reservation").toString().split(" - ")[1]);
+		
+		return studentMapper.getAllMileageListBySearch(paramMap);
+	}
+	public List<Mileage> getwaitingMileageListBySearch(Map<String, Object> paramMap){
+		String searchKey = (String) paramMap.get("searchKey");	
+		
+		if(searchKey != null && !searchKey.equals("")) {
+			if("student_id".equals(searchKey)) 	paramMap.put("searchKey", "student_id");
+			if("user_name".equals(searchKey)) 	paramMap.put("searchKey", "user_name");
+		}
+		paramMap.put("dateRangeFirst", paramMap.get("reservation").toString().split(" - ")[0]);
+		paramMap.put("dateRangeLast", paramMap.get("reservation").toString().split(" - ")[1]);
+		
+		return studentMapper.getwaitingMileageListBySearch(paramMap);
+	}  
+	  
+	 
 		
 }

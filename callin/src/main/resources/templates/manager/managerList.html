@@ -9,7 +9,7 @@
   <link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}">
   <link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
 
-<title th:text="${title}">강사 급여 정산</title>
+<title th:text="${title}">매니저 목록</title>
 </head>
 <body>
 	<section class="content">
@@ -18,42 +18,42 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">강사 목록</h3>
+							<h3 class="card-title">매니저 목록</h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
-							<form id="chooseTeacher" th:action="@{/teacherSalary}" method="post"> </form>
+							<form id="chooseManager" th:action="@{/managerSalary}" method="post"> </form>
 							<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
 								<thead>
 									<tr>
-										<th>강사 아이디</th>
+										<th>매니저 아이디</th>
 										<th>이름</th>
+										<th>매니저 직급</th>
 										<th>계약 유형</th>
-										<th>단위 급여</th>
 										<td></td>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="teacher : ${teacherList}">
-										<td th:text="${teacher.teacherId}" class="ID">
-											<input type="hidden" name="teacherId" th:value="${teacher.teacherId}">
+									<tr th:each="manager : ${managerList}">
+										<td th:text="${manager.managerId}" class="ID">
+											<input type="hidden" name="managerId" th:value="${manager.managerId}">
 										</td>
-										<td th:text="${teacher.teacherName}"></td>
-										<td th:text="${teacher.contractType}"></td>
-										<td th:text="${teacher.hourlyRate}"></td>
+										<td th:text="${manager.user.userName}"></td>
+										<td th:text="${manager.managerPosition}"></td>
+										<td th:text="${manager.contractTypeCode}"></td>
 										<td>
-											<button type="button" name="teacher" class="choose">선택</button>
+											<button type="button" class="choose">선택</button>
 										</td>
 									</tr>
 
 								</tbody>
 								<tfoot>
 									<tr>
-										<th>강사 아이디</th>
+										<th>매니저 아이디</th>
 										<th>이름</th>
+										<th>매니저 직급</th>
 										<th>계약 유형</th>
-										<th>단위 급여</th>
-										<th></th>
+										<td></td>
 									</tr>
 								</tfoot>
 							</table>
@@ -110,22 +110,22 @@
 			console.log('아이디 넘기기')
 			for(var i=0;i<$('.choose').length;i++){
 				if($('.choose')[i] == this){
-					var teacherId = $('.ID')[i].innerText;
+					var managerId = $('.ID')[i].innerText;
 					console.log(teacherId)
 				}
 			}
 			var request = $.ajax({
-				url : "/teacherSalary", // 요청할 url 경로
+				url : "/managerSalary", // 요청할 url 경로
 				method : "POST",
 				data : {
-					teacherId : teacherId // 전달할 파라미터
+					managerId : managerId // 전달할 파라미터
 				},
 				dataType : "html" // 받아올 포맷 방식
 			});
 			//응답이 완료되었을 경우 실행되는 부분
 			request.done(function(data) {
-				console.log(teacherId+"받아짐");
-				$('#chooseTeacher').submit();
+				console.log(managerId+"받아짐");
+				$('#chooseManager').submit();
 			});
 			//응답에 실패 혹은 오류 발생시 실행되는 부분
 			request.fail(function(jqXHR, textStatus) {
@@ -133,6 +133,63 @@
 			});
 		})
 	})
+	
+	
+	  $(".choose").click(function(){
+    	var id = '';
+    	var name = '';
+    	var contract = '';
+    	var teacherUnitPay = '';
+    	var length = $(".choose").parents("tr").children(".ID").length;
+    	
+    	for(var i=0; i<length ; i++){
+    		var buttonNumber = $(".choose")[i]
+    		if(this==buttonNumber){
+    			id = $($(".choose")[i]).parents("tr").children(".ID")[0].innerText;
+    		}
+    	}
+    	
+    	/* ********************************************** */
+    	//$.ajax() 호출시 ajax에 관련된 객체를 반환한다.
+		var request = $.ajax({
+		url: "/admin/manager/getManagerInfoById", //요청 url
+		method: "POST", //요청 방식
+		data: {	 managerId : id}, //요청하는 곳에 전달될 데이타
+		dataType: "json" //응답되어 받은 데이타를 parsing 시킬 방식
+		});
+		//반환된 객체에는 done메서드가 있으며, 요청과 응답이 정상적으로 
+		//이루어 졌을 경우 해당 메서드가 실행이 된다.
+		request.done(function(data){
+			console.log(data)
+			 switch (data.contractTypeCode){
+			    case 'contract_type001': 
+			      contractType = "시급";
+			      break; 
+			    case 'contract_type002': 
+			      contractType = "월급";
+			      break; 
+			  }
+			//매니저 정보 부모창으로 가져오기
+			$($(opener.document).find("#managerId")).val(data.managerId)
+			$($(opener.document).find("#managerName")).val(data.user.userName)
+			$($(opener.document).find("#managerContractType")).val(contractType)
+			$($(opener.document).find("#managerPosition")).val(data.managerPosition)
+			$($(opener.document).find("#dependants")).val(data.dependants)
+			$($(opener.document).find("#minorChildren")).val(data.minorChildren)
+			$($(opener.document).find("#baseSalary")).val(data.unitPay)
+			
+			//정산 상세 내역 초기화
+			window.close();
+    	});
+		//반환된 객체에는 fail메서드가 있으며,
+		//응답 중 에러가 발생하거나, 데이타 parsing에러시 해당 메서드가 실행된다.
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		});
+    });
 </script>
+
+
+
 
 </html>
