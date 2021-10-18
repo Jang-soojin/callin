@@ -74,11 +74,7 @@
 						#{mileageUseCode}
 					   ,#{studentId}
 					   ,#{mileageUseReasonCode}
-					   ,CASE
-					   		WHEN #{mileageWaitDivision} = 'A'
-					   		THEN NOW()
-					   		ELSE NULL
-					   	END
+					   ,NOW()
 					   ,#{mileagDeduct}
 					   ,CASE
 					   		WHEN #{mileageWaitDivision} = 'A'
@@ -105,6 +101,48 @@
 			FROM (
 				SELECT mileag_deduct_date
 						,mileage_anticipate_del_date
+						,student_id
+						,(SELECT user_name FROM user_info A WHERE A.user_id = T.student_id) AS user_name
+						,(SELECT mileage_reason FROM mileage_use_reason A WHERE A.mileage_use_reason_code = T.mileage_use_reason_code) AS mileage_reason
+						,mileage_memo 
+						,(SELECT mileage_division FROM mileage_use_reason A WHERE A.mileage_use_reason_code = T.mileage_use_reason_code) AS mileage_division
+						,mileag_deduct
+				FROM mileage_use T
+				WHERE 1=1
+				<if test="searchValue != null and searchValue != ''">
+					<if test="searchKey.equals('student_id')">
+						AND STUDENT_ID LIKE CONCAT('%',#{searchValue}, '%')
+					</if>
+					<if test="searchKey.equals('user_name')">
+						AND (SELECT user_name FROM user_info A WHERE A.user_id = T.student_id) LIKE CONCAT('%',#{searchValue}, '%')
+					</if>
+				</if>
+				
+				<if test="dateRangeFirst != null or dateRangeLast != null">
+					<if test="dateRangeFirst != null and !''.equals(dateRangeFirst)">
+						AND DATE_FORMAT(mileag_deduct_date, '%Y%m%d') >= REPLACE(#{dateRangeFirst},'-','')
+					</if>
+					<if test="dateRangeLast!= null and !''.equals(dateRangeLast)">
+						<![CDATA[ AND DATE_FORMAT(mileag_deduct_date, '%Y%m%d') <= REPLACE(#{dateRangeLast},'-','') ]]>
+					</if>
+				</if>
+				<if test="mileageUseReasonCode != null and !''.equals(mileageUseReasonCode)">
+					AND T.mileage_use_reason_code = #{mileageUseReasonCode}
+				</if>
+				ORDER BY mileag_deduct_date DESC
+				) TT
+		</select>
+		<select id="getwaitingMileageListBySearch" parameterType="map" resultMap="mileageResultMap">
+			SELECT
+				mileag_deduct_date
+				,student_id
+				,user_name
+				,mileage_reason
+				,mileage_memo 
+				,mileage_division
+				,mileag_deduct
+			FROM (
+				SELECT mileag_deduct_date
 						,student_id
 						,(SELECT user_name FROM user_info A WHERE A.user_id = T.student_id) AS user_name
 						,(SELECT mileage_reason FROM mileage_use_reason A WHERE A.mileage_use_reason_code = T.mileage_use_reason_code) AS mileage_reason

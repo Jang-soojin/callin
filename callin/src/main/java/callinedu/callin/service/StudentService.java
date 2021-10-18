@@ -100,7 +100,18 @@ public class StudentService {
 		
 		return studentMapper.getAllMileageListBySearch(paramMap);
 	}
-	  
+	public List<Mileage> getwaitingMileageListBySearch(Map<String, Object> paramMap){
+		String searchKey = (String) paramMap.get("searchKey");	
+		
+		if(searchKey != null && !searchKey.equals("")) {
+			if("student_id".equals(searchKey)) 	paramMap.put("searchKey", "student_id");
+			if("user_name".equals(searchKey)) 	paramMap.put("searchKey", "user_name");
+		}
+		paramMap.put("dateRangeFirst", paramMap.get("reservation").toString().split(" - ")[0]);
+		paramMap.put("dateRangeLast", paramMap.get("reservation").toString().split(" - ")[1]);
+		
+		return studentMapper.getwaitingMileageListBySearch(paramMap);
+	}  
 	  
 	 
 		
