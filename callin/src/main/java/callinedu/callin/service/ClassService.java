@@ -38,7 +38,12 @@ public class ClassService {
 		return classPolicyList;
 	}
 	public List<ClassPolicy> getClassPolicy(){
-	      List<ClassPolicy> classPolicy = classMapper.getClassPolicy();
-	      return classPolicy;
-	   }
+      List<ClassPolicy> classPolicy = classMapper.getClassPolicy();
+      return classPolicy;
+   }
+
+	public String deleteClassPolicy(String classPolicyCode) {
+		
+		return classMapper.deleteClassPolicy(classPolicyCode);
+	}
 }

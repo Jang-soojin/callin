@@ -89,6 +89,18 @@ public class ClassController {
 		
 		
 	}
+	@GetMapping("/deleteClassPolicy")
+	public String removeMember(@RequestParam(name="classPolicyCode", required = false) String classPolicyCode
+							  ,Model model){
+		
+		System.out.println("(removeMember)화면에서 입력받은 값 : " + classPolicyCode);
+		
+		model.addAttribute("title", "정책 삭제");
+		model.addAttribute("classPolicyCode", classPolicyCode);
+		String result = classService.deleteClassPolicy(classPolicyCode);
+		if(classPolicyCode != null) model.addAttribute("classPolicyCode", classPolicyCode);
+		return "redirect:/classPolicyList";
+	}
 	@RequestMapping(value="/classPolicyNameCheck", method= RequestMethod.POST)
 	@ResponseBody
 	public String classPolicyNameCheck(ClassPolicy classPolicy){

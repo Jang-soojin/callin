@@ -74,7 +74,8 @@
 	
 	<select id="searchPolicyList" parameterType="String" resultMap="classPolicyResultMap">
 		SELECT
-			class_policy_name			
+			  class_policy_code
+			, class_policy_name			
 			, class_period				
 			, class_day
 			, class_time
@@ -100,6 +101,13 @@
 			class_postpone_period
 		FROM class_policy
 			order by class_policy_name ASC limit 1,10;
-   </select>
+	</select>
+	<delete id="removeMember" parameterType="String">
+		DELETE
+		FROM 
+			class_policy
+		WHERE
+			class_policy_code = #{classPolicyCode};
+	</delete>
 	
 </mapper>

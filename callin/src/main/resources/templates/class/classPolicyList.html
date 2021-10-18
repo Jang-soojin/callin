@@ -114,12 +114,12 @@
 												<td th:text="${l.classPostponeDay}"></td>
 												<td th:text="${l.classPostponeDays}"></td>
 												<td th:text="${l.classPostponePeriod}"></td>
-												<!-- <td>
-												<a th:href="@{/#}">수정</a>
+												<td>
+													<a th:href="@{/#}">수정</a>
 												</td>
 												<td>
-												<a th:href="@{/#}">삭제</a>
-												</td> -->
+													<a th:href="@{/admin/class/deleteClassPolicy(policyCode=${l.classPolicyCode})}">삭제</a>
+												</td>
 											</tr>
 										</th:block>
 										<tr th:unless="${!#lists.isEmpty(classPolicy)}">

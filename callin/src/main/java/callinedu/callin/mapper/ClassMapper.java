@@ -10,6 +10,8 @@ import callinedu.callin.domain.ClassPolicy;
 public interface ClassMapper {
 	public int addClassPolicy(ClassPolicy classPolicy);
 	
+	public String deleteClassPolicy(String classPolicyCode);
+	
 	public ClassPolicy classPolicyNameCheck(ClassPolicy classPolicy);
 	
 	public List<ClassPolicy> searchPolicyList(String classPeriod, String classDay, String classTime, String className);
