@@ -115,10 +115,10 @@
 												<th>실지급액</th>
 											</tr>
 										</thead>
-										<tbody th:each="salaryList: ${managerSalaryList}">
+										<tbody th:each="salaryList: ${managerSalaryList}"  >
 												<tr>
 													<td rowspan="2" th:text="${salaryList.managerId}" style="vertical-align: inherit; font-weight: bold;"></td>
-													<td th:text="${salaryList.baseSalary}"></td>
+													<td th:text="${salaryList.baseSalary}" ></td>
 													<td th:text="${salaryList.bonus}"></td>
 													<td th:text="${salaryList.mealAllowance}"></td>
 													<td th:text="${salaryList.vehicleExpenses}"></td>
@@ -261,7 +261,6 @@
 			})
 		});
 			
-		
 	</script>
 	
 	

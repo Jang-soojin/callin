@@ -13,39 +13,14 @@
 	<title th:text="${title}"></title>
 </th:block>
 <head th:replace="fragments/head :: headFragment"></head>
-	<!-- daterange picker -->
-	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
 	<body class="hold-transition sidebar-mini layout-fixed">
 		<div id="wrapper">
-			<!-- begin topNav -->
-			<div th:replace="fragments/topNav :: topNavFragment"></div>
-			<!-- end topNav -->
 			
-			<!-- Main Sidebar Container -->
-			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
-			<!-- Content Wrapper. Contains page content -->
-			<div class="content-wrapper">
 			
-			<!-- Content Header (Page header) -->
-				<section class="content-header">
-					<div class="container-fluid">
-						<div class="row mb-2">
-							<div class="col-sm-6">
-								<h1 th:text="${midTitle}"></h1>
-							</div>
-							<div class="col-sm-6">
-								<ol class="breadcrumb float-sm-right">
-									<li class="breadcrumb-item"><a th:href="@{/admin/LT/LTApply}"> 레벨테스트 관리 </a></li>
-									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
-								</ol>
-							</div>
-						</div>
-					</div><!-- /.container-fluid -->
-				</section>
 			
 		<!-- Main content -->
 		<section class="content login-page">
-			<div class="login-box">
+			<div class="login-box" style="width:550px">
 			  <div class="login-logo">
 			    <a href="#"> 로 그 인  화 면  </a>  </div>
 			  		<!-- /.login-logo -->
@@ -118,14 +93,17 @@
 					
 					      <div class="social-auth-links text-center mb-3">
 					        <p>-------------- OR --------------</p>
-					        <!-- 네이버아이디로로그인 버튼 노출 영역 -->
-								<div id="naverIdLogin"></div>
-							<!-- //네이버아이디로로그인 버튼 노출 영역 -->
+					        <!-- 네이버아이디로 로그인 버튼 노출 영역 -->
+<!-- 							<div id="naverIdLogin" style="width:400px"></div> 잠시 보류-->
+							<!-- //네이버아이디로 로그인 버튼 노출 영역 -->
+					        <a href="#" class="btn btn-block btn-primary" style="background-color: #03c75a;">
+					        	<i class=" "></i> Sign in using Naver
+					        </a>
 					        <a href="#" class="btn btn-block btn-primary">
 					        	<i class=" "></i> Sign in using Google+
 					        </a>
 					        <a href="#" class="btn btn-block btn-warning">
-					        	<i class=" "></i> Sign in using kakao
+					        	<i class=" "></i> Sign in using Kakao
 					        </a>
 					      </div>
 					      <!-- /.social-auth-links -->
@@ -144,13 +122,10 @@
 <!-- /.login-box -->
 
 </section>
-</div>
 <!-- /.content -->
 <!-- /.content-wrapper -->
+</div>
 
-			
-		<div th:replace="fragments/footer :: footerFragment"></div>
-		</div>
 		<!-- jQuery -->
 		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
 		<!-- jQuery UI 1.11.4 -->
