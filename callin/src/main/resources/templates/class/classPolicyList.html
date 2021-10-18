@@ -74,7 +74,7 @@
 													<option value="50"> 50분 </option>
 												</select>
 											</div>
-											<button class="btn btn-default "> 검색 </button> 
+											<button class="btn btn-default" type="submit"> 검색 </button> 
 										</div>
 									</form>
 								</div>
@@ -114,12 +114,12 @@
 												<td th:text="${l.classPostponeDay}"></td>
 												<td th:text="${l.classPostponeDays}"></td>
 												<td th:text="${l.classPostponePeriod}"></td>
-												<!-- <td>
-												<a th:href="@{/#}">수정</a>
+												<td>
+													<a th:href="@{/#}">수정</a>
 												</td>
 												<td>
-												<a th:href="@{/#}">삭제</a>
-												</td> -->
+													<a th:href="@{/admin/class/deleteClassPolicy(classPolicyCode=${l.classPolicyCode})}">삭제</a>
+												</td>
 											</tr>
 										</th:block>
 										<tr th:unless="${!#lists.isEmpty(classPolicy)}">
@@ -195,62 +195,64 @@
 			});
 		})
 		$(function(){
-			$("#policyCheck").on("click", function(){
-				var classPolicyName = $("#classPolicyName").val();
-				var sendData = {"classPolicyName":classPolicyName}
+			$(document).on('click','#LTApplySearchCheck', function(){
+				
+				var levelSearchKey = $('.levelSearchKey').val();
+				var lTApplySearchValue = $("#lTApplySearch").val();
+				var searchStartDate = $('#startDate').val();
+				var searchEndDate = $('#endDate').val();
+				
+				console.log(levelSearchKey)
+				console.log(lTApplySearchValue)
+				console.log(searchStartDate)
+				console.log(searchEndDate)
+				
+				var htmltag = "";
+							    
+				var sendData = {"levelSearchKey":levelSearchKey, "lTApplySearchValue":lTApplySearchValue, "searchStartDate":searchStartDate, "searchEndDate":searchEndDate};
+				
 				$.ajax({
-					method : 'POST',
-					url : 'classPolicyNameCheck',
-					data : sendData,
-					success : function(resp){
-						if(classPolicyName == null || classPolicyName == '') {
-							$('#available').css('display', 'none');
-							$('#in_use').css('display', 'none');
-							$('#no_name').css('display', 'inline');
-							flag=false;
-						}
-						else if(resp=='fail'){
-							$('#available').css('display', 'none');
-							$('#in_use').css('display', 'inline');
-							$('#no_name').css('display', 'none');
-							flag=false;
-						}else{
-							$('#available').css('display', 'inline');
-							$('#in_use').css('display', 'none');
-							$('#no_name').css('display', 'none');
-							flag=true;
-						}
-					}
-			    })	
+					method : 'POST', //요청방식
+					url : '/admin/LT/LTApplyListBySearch', //요청주소
+					data : sendData,	//전달 할 파라미터
+					dataType:'json',	//받아 올 포맷 방식
+					  // 응답이 완료 되었을 경우 실행
+					success : function(data){
+						$('#ltList').html("");
+						for(var i=0; i<data.length; i++){
+							htmltag += "<tr>";
+							htmltag += '<td class="dtr-control sorting_1" tabindex="0">';
+							htmltag += '<div class="form-check">';
+							htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
+							htmltag += '</div>';
+							htmltag += "</td>";
+							htmltag += "<td>";
+							htmltag += (i+1);
+							htmltag += "</td>";
+							htmltag += "<td>";
+							htmltag += data[i].lTApplyDate;
+							htmltag += "</td>";
+							htmltag += '<td>';
+							htmltag += data[i].user.userName;
+							htmltag += '</a></td>';
+							htmltag += "</td>";
+							htmltag += '<td>';
+							htmltag += data[i].user.userEmail;
+							htmltag += "</td>";
+							htmltag += '<td>';
+							htmltag += data[i].user.userPhone;
+							htmltag += "</td>";
+							htmltag += "<td>";
+							htmltag += '<a href="/admin/LT/LTListDetail" class="nav-link"><input type="submit" class="btn btn-secondary" value="상세보기"></a>';
+							htmltag += "</td>";
+							htmltag += "</tr>";
+							}
+						console.log(data[0]);
+						$("#ltList").html(htmltag);
+		    		}
+				});
 			});
 		})
-		function checkAll() {
-			if (document.getElementById('classPolicyName').value == '') {
-				alert('정책명을 입력해 주세요.');
-				return false;
-			}else if (document.getElementById('classPeriod').value == ':: 선택하세요 ::') {
-				alert('기간을 입력해 주세요.');
-				return false;
-			}else if (document.getElementById('classDay').value == ':: 선택하세요 ::') {
-				alert('요일을 입력해 주세요.');
-				return false;
-			}else if (document.getElementById('classTime').value == ':: 선택하세요 ::') {
-				alert('수업 시간을 입력해 주세요.');
-				return false;
-			}else if (document.getElementById('classPostponeDay').value == ':: 선택하세요 ::') {
-				alert('연기(일일)횟수를 입력해 주세요.');
-				return false;
-			}else if (document.getElementById('classPostponeDays').value == ':: 선택하세요 ::') {
-				alert('연기(장기)횟수를 입력해 주세요.');
-				return false;
-			}else if (document.getElementById('classPostponePeriod').value == '') {
-				alert('연기 기간을 입력해 주세요.');
-				return false;
-			}
-			alert('정책 등록이 완료되었습니다!'); 
-			document.getElementById('submitAll').submit();
-			return true;
-		}
 
 
 		</script>

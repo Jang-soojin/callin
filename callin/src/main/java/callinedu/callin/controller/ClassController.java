@@ -89,6 +89,19 @@ public class ClassController {
 		
 		
 	}
+	@GetMapping("/deleteClassPolicy")
+	public String deleteClassPolicy(@RequestParam(name="classPolicyCode", required = false) String classPolicyCode
+							  ,Model model){
+		
+		System.out.println("(deleteClassPolicy)화면에서 입력받은 값 : " + classPolicyCode);
+		
+		model.addAttribute("title", "정책 삭제");
+		model.addAttribute("classPolicyCode", classPolicyCode);
+		classService.deleteClassPolicy(classPolicyCode);
+		if(classPolicyCode != null) model.addAttribute("classPolicyCode", classPolicyCode);
+		return "redirect:/admin/class/classPolicyList";
+	}
+	
 	@RequestMapping(value="/classPolicyNameCheck", method= RequestMethod.POST)
 	@ResponseBody
 	public String classPolicyNameCheck(ClassPolicy classPolicy){
@@ -119,14 +132,4 @@ public class ClassController {
 		
 		return classPolicyList;
 	}
-	@GetMapping("/List")
-	   public String List(Model model) {
-	      model.addAttribute("title", "UPBUS");
-	      model.addAttribute("h1text", "전체 회원 목록");
-	      List<ClassPolicy> classPolicy = classService.getClassPolicy();
-	      
-	      model.addAttribute("classPolicy", classPolicy);
-	      return "admin/class/classPolicyList";
-	   }
-
 }

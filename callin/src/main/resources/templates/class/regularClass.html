@@ -39,17 +39,17 @@
 			    <!-- Main content -->
 				<section class="content">
 					<div class="container-fluid">
-						<form>
-							<div class="row">
-							<!-- left column -->
-								<div class="col-md-3">
-								<!-- general form elements -->
-									<div class="card card-secondary">
-										<div class="card-header">
-											<h3 class="card-title"> 정규 수업 개설 </h3>
-										</div>
-										<!-- /.card-header -->
-										<div class="card-body">
+						<div class="row">
+						<!-- left column -->
+							<div class="col-md-3">
+							<!-- general form elements -->
+								<div class="card card-secondary">
+									<div class="card-header">
+										<h3 class="card-title"> 정규 수업 개설 </h3>
+									</div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<form>
 											<div class="form-group">
 												<label> 수업명 </label>
 												<div class="input-group-prepend">
@@ -74,108 +74,110 @@
 													<input type="text" id="managerId" value="id001" readonly="readonly"> 
 												</div>
 											</div>
-										</div>
+										</form>
 									</div>
-								<!-- /.card -->
 								</div>
+								<!-- /.card -->
+							</div>
 								<!--/.col (left) -->
 								<!-- Right column -->
-								<div class="col-md-9">
-									<!-- general form elements -->
-									<div class="card card-secondary">
-										<div class="card-header">
-											<h3 class="card-title"> 수업 정책 선택 </h3>
-										</div>
-										<div class="card-body row">
-											<form class="form-inline">
-												<div class="form-group col-md-10">
-													<div class="form-group"> 
-														<select class="form-control levelSearchKey">
-															<option value="policyName">정책명</option>
-															<option value="classPeriod">수업기간(주)</option>
-															<option value="classTime">수업시간(분)</option>
-														</select>
-														<div id="searchByName" style="display: block;">
-															<input type="text" class="form-control">
-														</div>
-														<div id="searchByPeriod" style="display: none;">
-															<select class="form-control" id="classPeriod">
-																<option> :: 선택하세요 ::</option>
-																<option value="4"> 4주 </option>
-																<option value="8"> 8주 </option>
-																<option value="12"> 12주 </option>
-															</select>
-														</div>
-														<div id="searchByTime" style="display: none;">
-															<select class="form-control" id="classTime">
-																<option> :: 선택하세요 ::</option>
-																<option value="10"> 10분 </option>
-																<option value="20"> 20분 </option>
-																<option value="30"> 30분 </option>
-																<option value="40"> 40분 </option>
-																<option value="50"> 50분 </option>
-															</select>
-														</div>
-														<button class="btn btn-default "> 검색 </button> 
+							<div class="col-md-9">
+								<!-- general form elements -->
+								<div class="card card-secondary">
+									<div class="card-header">
+										<h3 class="card-title"> 수업 정책 선택 </h3>
+									</div>
+									<div class="card-body form-group">
+										<div class="float-right">
+											<form>
+												<div class="form-inline form-group"> 
+													<select class="form-control levelSearchKey">
+														<option value="policyName">정책명</option>
+														<option value="classPeriod">수업기간(주)</option>
+														<option value="classTime">수업시간(분)</option>
+													</select>
+													<div id="searchByName" style="display: block;">
+														<input type="text" class="form-control">
 													</div>
-												</div>
-												<div class="form-group col-md-2">
-													<label> 정책 찾기 </label>
-													<button type="button" class="btn btn-primary" style="font-size: 12px; height: 38px; display: block;" id="searchPolicy"> 찾기</button>
+													<div id="searchByPeriod" style="display: none;">
+														<select class="form-control" id="classPeriod">
+															<option> :: 선택하세요 ::</option>
+															<option value="4"> 4주 </option>
+															<option value="8"> 8주 </option>
+															<option value="12"> 12주 </option>
+														</select>
+													</div>
+													<div id="searchByTime" style="display: none;">
+														<select class="form-control" id="classTime">
+															<option> :: 선택하세요 ::</option>
+															<option value="10"> 10분 </option>
+															<option value="20"> 20분 </option>
+															<option value="30"> 30분 </option>
+															<option value="40"> 40분 </option>
+															<option value="50"> 50분 </option>
+														</select>
+													</div>
+													<button class="btn btn-default "> 검색 </button> 
 												</div>
 											</form>
 										</div>
-									</div>
-									<div class="card card-secondary">
-										<div class="card-header">
-											<h3 class="card-title"> 정책 목록 </h3>
-										</div>
-										<div class="card-body">
-											<table class="form-group table">
-												<thead>
-													<tr>
-														<th> 정책명</th>
-														<th> 수업 기간 </th>
-														<th> 수업요일 </th>
-														<th> 수업 시간 </th>
-														<th> 연기(일) </th>
-														<th> 연기(장기) </th>
-														<th> 연기(일수) </th>
-														<th> 선택버튼 </th>
-													</tr>
-												</thead>
-												<tbody>
-													<th:block th:if="${!#lists.isEmpty(classPolicy)}" >         
-														<tr th:each="l : ${classPolicy}">
-															<td th:text="${l.classPolicyName}"></td>
-															<td th:text="${l.classPeriod}"></td>
-															<td th:text="${l.classDay}"></td>
-															<td th:text="${l.classTime}"></td>
-															<td th:text="${l.classPostponeDay}"></td>
-															<td th:text="${l.classPostponeDays}"></td>
-															<td th:text="${l.classPostponePeriod}"></td>
-															<!-- <td>
+										<table class="table table-striped" >
+											<thead>
+												<tr>
+													<th>
+														정책명
+													</th>
+													<th>
+														수업기간
+													</th>
+													<th>
+														수업요일
+													</th>
+													<th>
+														수업시간
+													</th>
+													<th>
+														연기(일일)횟수
+													</th>
+													<th>
+														연기(장기)횟수
+													</th>
+													<th>
+														연기(장기)기간
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												<th:block th:if="${!#lists.isEmpty(classPolicy)}" >         
+													<tr th:each="l : ${classPolicy}">
+														<td th:text="${l.classPolicyName}"></td>
+														<td th:text="${l.classPeriod}"></td>
+														<td th:text="${l.classDay}"></td>
+														<td th:text="${l.classTime}"></td>
+														<td th:text="${l.classPostponeDay}"></td>
+														<td th:text="${l.classPostponeDays}"></td>
+														<td th:text="${l.classPostponePeriod}"></td>
+														<td>
 															<a th:href="@{/#}">수정</a>
-															</td>
-															<td>
-															<a th:href="@{/#}">삭제</a>
-															</td> -->
-														</tr>
-													</th:block>
-													<tr th:unless="${!#lists.isEmpty(classPolicy)}">
-														<td colspan="16">조회된 데이터가 없습니다</td>
+														</td>
+														<td>
+															<a th:href="@{/admin/class/deleteClassPolicy(classPolicyCode=${l.classPolicyCode})}">삭제</a>
+														</td>
 													</tr>
-												</tbody>
-											</table>
-										</div>
+												</th:block>
+												<tr th:unless="${!#lists.isEmpty(classPolicy)}">
+													<td colspan="16">조회된 데이터가 없습니다</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
+							</div>
 							<!-- /.card -->
 							</div>
 							<div>
 								<button style="width: 200px; margin-left: 750px"  type="submit" class="form-control"> 정규 수업 등록 </button>
 							</div>
-						</form>
 						<!--/.col (right) --> 
 					</div>
 				</section>
@@ -239,6 +241,25 @@
 					}
 			    })	
 				
+			});
+		})
+		$(function(){
+			$(".levelSearchKey").change(function(){
+				if($(".levelSearchKey").val() == "classTime"){
+					$("#searchByName").css('display', 'none');
+					$("#searchByTime").css('display', 'block');
+					$("#searchByPeriod").css('display', 'none');
+				}
+				else if($(".levelSearchKey").val() == "classPeriod"){
+					$("#searchByName").css('display', 'none');
+					$("#searchByTime").css('display', 'none');
+					$("#searchByPeriod").css('display', 'block');
+				}
+				else{
+					$("#searchByName").css('display', 'block');
+					$("#searchByTime").css('display', 'none');
+					$("#searchByPeriod").css('display', 'none');
+				}													
 			});
 		})
 		</script>

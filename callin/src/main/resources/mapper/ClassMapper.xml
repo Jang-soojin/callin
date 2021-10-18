@@ -74,7 +74,8 @@
 	
 	<select id="searchPolicyList" parameterType="String" resultMap="classPolicyResultMap">
 		SELECT
-			class_policy_name			
+			  class_policy_code
+			, class_policy_name			
 			, class_period				
 			, class_day
 			, class_time
@@ -84,13 +85,14 @@
 		FROM
 			class_policy
 		<where>
-			<if test="classPeriod != null and classPeriod != null">  classPeriod // classDay // classTime
+			<if test="classPeriod != null and classPeriod != null"> <!-- 정책명 기간 분 -->
 			</if>
 		</where>
 	</select>
 	
 	<select id="getClassPolicy" parameterType="ClassPolicy" resultMap="classPolicyResultMap">
 		SELECT
+			class_policy_code,
 			class_policy_name, 
 			class_period, 
 			class_day, 
@@ -99,7 +101,14 @@
 			class_postpone_days, 
 			class_postpone_period
 		FROM class_policy
-			order by class_policy_name ASC limit 1,10;
-   </select>
+			order by class_policy_name ASC limit 0,10;
+	</select>
+	<delete id="deleteClassPolicy" parameterType="String">
+		DELETE
+		FROM 
+			class_policy
+		WHERE
+			class_policy_code = #{classPolicyCode};
+	</delete>
 	
 </mapper>

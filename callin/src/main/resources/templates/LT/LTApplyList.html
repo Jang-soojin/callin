@@ -196,78 +196,77 @@
   		<script type="text/javascript">
 		$(function(){
 			//Date range picker
-		    var reservationDaterangepicker =  $('#reservation').daterangepicker({
+			var reservationDaterangepicker =  $('#reservation').daterangepicker({
 	    		locale: {
-	    		      		format: 'YYYY-MM-DD' // 날짜 표시 형식 설정
+	    					format: 'YYYY-MM-DD' // 날짜 표시 형식 설정
 	    		    	}
-		    	});
+				});
 			//초깃값 설정
 			$('#startDate').val(moment().format('YYYY-MM-DD'));
-		    $('#endDate').val(moment().format('YYYY-MM-DD'));
+			$('#endDate').val(moment().format('YYYY-MM-DD'));
 	    	
 	    	//선택 항목이 변경되지 않은 경우에도 검색 버튼을 클릭할 때마다 작업을 수행
-		    $('#reservation').on('apply.daterangepicker', function(ev, picker) {
-		    	$('#startDate').val(picker.startDate.format('YYYY-MM-DD'));
-		    	$('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
+			$('#reservation').on('apply.daterangepicker', function(ev, picker) {
+				$('#startDate').val(picker.startDate.format('YYYY-MM-DD'));
+				$('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
 			});
 		    //1.검색버튼 누를 때 조건에 맞는 리스트 출력
 			$(document).on('click','#LTApplySearchCheck', function(){
 				
-			    var levelSearchKey = $('.levelSearchKey').val();
-			    var lTApplySearchValue = $("#lTApplySearch").val();
-			    var searchStartDate = $('#startDate').val();
-			    var searchEndDate = $('#endDate').val();
-			    
-			    console.log(levelSearchKey)
-			    console.log(lTApplySearchValue)
-			    console.log(searchStartDate)
-			    console.log(searchEndDate)
-			    
-			    var htmltag = "";
-			    			    
-			    var sendData = {"levelSearchKey":levelSearchKey, "lTApplySearchValue":lTApplySearchValue, "searchStartDate":searchStartDate, "searchEndDate":searchEndDate};
-			    
-			    $.ajax({
-			        method : 'POST', //요청방식
-			        url : '/admin/LT/LTApplyListBySearch', //요청주소
-			        data : sendData,	//전달 할 파라미터
-			        dataType:'json',	//받아 올 포맷 방식
-			        // 응답이 완료 되었을 경우 실행
-			        success : function(data){
-			        	$('#ltList').html("");
-			        	for(var i=0; i<data.length; i++){
-			        		htmltag += "<tr>";
-			        		htmltag += '<td class="dtr-control sorting_1" tabindex="0">';
-			        		htmltag += '<div class="form-check">';
-			        		htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
-			        		htmltag += '</div>';
-			        		htmltag += "</td>";
-			        		htmltag += "<td>";
-			        		htmltag += (i+1);
-			        		htmltag += "</td>";
-			        		htmltag += "<td>";
-			        		htmltag += data[i].lTApplyDate;
-			        		htmltag += "</td>";
-			        		htmltag += '<td>';
-			        		htmltag += data[i].user.userName;
-			        		htmltag += '</a></td>';
-			        		htmltag += "</td>";
-			        		htmltag += '<td>';
-			        		htmltag += data[i].user.userEmail;
-			        		htmltag += "</td>";
-			        		htmltag += '<td>';
-			        		htmltag += data[i].user.userPhone;
-			        		htmltag += "</td>";
-			        		htmltag += "<td>";
-			        		htmltag += '<a href="/admin/LT/LTListDetail" class="nav-link"><input type="submit" class="btn btn-secondary" value="상세보기"></a>';
-			        		htmltag += "</td>";
-			        		htmltag += "</tr>";
-			        	}
-					    console.log(data[0]);
-					    $("#ltList").html(htmltag);
-			        }
-			    });
+				var levelSearchKey = $('.levelSearchKey').val();
+				var lTApplySearchValue = $("#lTApplySearch").val();
+				var searchStartDate = $('#startDate').val();
+				var searchEndDate = $('#endDate').val();
 				
+				console.log(levelSearchKey)
+				console.log(lTApplySearchValue)
+				console.log(searchStartDate)
+				console.log(searchEndDate)
+				
+				var htmltag = "";
+							    
+				var sendData = {"levelSearchKey":levelSearchKey, "lTApplySearchValue":lTApplySearchValue, "searchStartDate":searchStartDate, "searchEndDate":searchEndDate};
+				
+				$.ajax({
+					method : 'POST', //요청방식
+					url : '/admin/LT/LTApplyListBySearch', //요청주소
+					data : sendData,	//전달 할 파라미터
+					dataType:'json',	//받아 올 포맷 방식
+					  // 응답이 완료 되었을 경우 실행
+					success : function(data){
+						$('#ltList').html("");
+						for(var i=0; i<data.length; i++){
+							htmltag += "<tr>";
+							htmltag += '<td class="dtr-control sorting_1" tabindex="0">';
+							htmltag += '<div class="form-check">';
+							htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
+							htmltag += '</div>';
+							htmltag += "</td>";
+							htmltag += "<td>";
+							htmltag += (i+1);
+							htmltag += "</td>";
+							htmltag += "<td>";
+							htmltag += data[i].lTApplyDate;
+							htmltag += "</td>";
+							htmltag += '<td>';
+							htmltag += data[i].user.userName;
+							htmltag += '</a></td>';
+							htmltag += "</td>";
+							htmltag += '<td>';
+							htmltag += data[i].user.userEmail;
+							htmltag += "</td>";
+							htmltag += '<td>';
+							htmltag += data[i].user.userPhone;
+							htmltag += "</td>";
+							htmltag += "<td>";
+							htmltag += '<a href="/admin/LT/LTListDetail" class="nav-link"><input type="submit" class="btn btn-secondary" value="상세보기"></a>';
+							htmltag += "</td>";
+							htmltag += "</tr>";
+							}
+						console.log(data[0]);
+						$("#ltList").html(htmltag);
+		    		}
+				});
 			});
 		})
 		</script>
