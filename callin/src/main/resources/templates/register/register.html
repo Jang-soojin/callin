@@ -22,7 +22,6 @@
 			
 			<!-- Main Sidebar Container -->
 			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
-			<th:block layout:fragment="LTApply"> 
 			<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
 			
@@ -44,7 +43,7 @@
 				</section>
 			
 		<!-- Main content -->
-		<section class="content login-page">
+		<section class="register-page">
 			<div class="register-box">
 			    <div class="register-logo">
 			        <a href="#">회원가입화면</a>
@@ -138,11 +137,14 @@
 			    </div><!-- /.card -->
 			</div>
 			<!-- /.register-box -->
-</section>
 <!-- /.content -->
+</section>
 </div>
 <!-- /.content-wrapper -->
-</th:block>
+
+
+
+
 		<div th:replace="fragments/footer :: footerFragment"></div>
 		</div>
 		<!-- jQuery -->

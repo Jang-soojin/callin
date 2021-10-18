@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 	  	  
 	  
 <th:block layout:fragment="customTitle">
@@ -22,7 +23,6 @@
 			
 			<!-- Main Sidebar Container -->
 			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
-			<th:block layout:fragment="LTApply"> 
 			<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
 			
@@ -118,9 +118,9 @@
 					
 					      <div class="social-auth-links text-center mb-3">
 					        <p>-------------- OR --------------</p>
-					        <a href="#" class="btn btn-block btn-success">
-					        	<i class=" "></i> Sign in using Naver
-					        </a>
+					        <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+								<div id="naverIdLogin"></div>
+							<!-- //네이버아이디로로그인 버튼 노출 영역 -->
 					        <a href="#" class="btn btn-block btn-primary">
 					        	<i class=" "></i> Sign in using Google+
 					        </a>
@@ -144,10 +144,9 @@
 <!-- /.login-box -->
 
 </section>
-<!-- /.content -->
 </div>
+<!-- /.content -->
 <!-- /.content-wrapper -->
-</th:block>
 
 			
 		<div th:replace="fragments/footer :: footerFragment"></div>
@@ -215,7 +214,20 @@
 		    }
 		})
 
-		
+		<!-- 네이버아디디로로그인 초기화 Script -->
+			var naverLogin = new naver.LoginWithNaverId(
+				{
+				clientId: "UVZuP0EFBL0XHV10voEA",
+				callbackUrl: "https://localhost/callback.html",
+				isPopup: false, /* 팝업을 통한 연동처리 여부 */
+				loginButton: {color: "green", type: 3, height: 55} /* 로그인 버튼의 타입을 지정 */
+				}
+			);
+	
+			/* 설정정보를 초기화하고 연동을 준비 */
+			naverLogin.init();
+	
+		<!-- // 네이버아이디로로그인 초기화 Script -->
 	</script>
   		
 		

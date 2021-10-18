@@ -21,17 +21,17 @@ public class UserController {
 	}
 	
 	@PostMapping("/register")
-	public String addUser(@RequestParam(name="user_id") String id,
-			@RequestParam(name="user_pw") String pw,
-			@RequestParam(name="user_name") String name,
-			@RequestParam(name="user_nickname", required = false) String nickname,
-			@RequestParam(name="skype_id", required = false) String skypeId,
-			@RequestParam(name="birth_year") String birthYear,
-			@RequestParam(name="birth_month") String birthMonth,
-			@RequestParam(name="birth_day") String birthDay,
-			@RequestParam(name="gender") String gender,
-			@RequestParam(name="user_email") String email,
-			@RequestParam(name="user_phone", required = false) String phoneNumber){
+	public String addUser(	@RequestParam(name="user_id") String id,
+							@RequestParam(name="user_pw") String pw,
+							@RequestParam(name="user_name") String name,
+							@RequestParam(name="user_nickname", required = false) String nickname,
+							@RequestParam(name="skype_id", required = false) String skypeId,
+							@RequestParam(name="birth_year") String birthYear,
+							@RequestParam(name="birth_month") String birthMonth,
+							@RequestParam(name="birth_day") String birthDay,
+							@RequestParam(name="gender") String gender,
+							@RequestParam(name="user_email") String email,
+							@RequestParam(name="user_phone", required = false) String phoneNumber){
 		String birth = birthYear +'-'+birthMonth +'-'+birthDay;
 		System.out.println("생년월일 결합 : "+birth);
 		userService.addUser(id, pw, name, nickname, skypeId, birth, gender, email, phoneNumber);
@@ -63,6 +63,11 @@ public class UserController {
 	@GetMapping("/login")
 	public String login(){
 		return "login/login"; 
+	}
+	
+	@GetMapping("/callback")
+	public String callback(){
+		return "login/callback"; 
 	}
 	
 	@PostMapping("/login")
