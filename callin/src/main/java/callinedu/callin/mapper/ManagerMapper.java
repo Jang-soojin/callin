@@ -19,4 +19,6 @@ public interface ManagerMapper {
 	public int getIncomeTax(String dependantsNum, String milliTaxFreeTotal);
 
 	public int saveManagerSalary(ManagerSalarySettlement managerSalarySettlement);
+
+	public List<ManagerSalarySettlement> managerSalaryList();
 }
