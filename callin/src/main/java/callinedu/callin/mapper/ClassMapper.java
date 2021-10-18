@@ -10,7 +10,7 @@ import callinedu.callin.domain.ClassPolicy;
 public interface ClassMapper {
 	public int addClassPolicy(ClassPolicy classPolicy);
 	
-	public String deleteClassPolicy(String classPolicyCode);
+	public int deleteClassPolicy(String classPolicyCode);
 	
 	public ClassPolicy classPolicyNameCheck(ClassPolicy classPolicy);
 	

@@ -42,7 +42,7 @@ public class ClassService {
       return classPolicy;
    }
 
-	public String deleteClassPolicy(String classPolicyCode) {
+	public int deleteClassPolicy(String classPolicyCode) {
 		
 		return classMapper.deleteClassPolicy(classPolicyCode);
 	}
