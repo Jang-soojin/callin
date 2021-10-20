@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import callinedu.callin.domain.LT;
 import callinedu.callin.domain.Mileage;
 import callinedu.callin.domain.Student;
 import callinedu.callin.domain.TeacherSalarySettlement;

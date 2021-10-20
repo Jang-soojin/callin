@@ -45,7 +45,8 @@
 		<!-- Main content -->
 		<section class="content">
 		<div class="con">
-		<form method="get" name="ftest" id="ftest" class="sky-form" action="/admin/LT/LTApply" onsubmit="return ck_form();" target="h_frame">
+		<!-- action 속성이 너무많아요 -->
+		<form method="post" name="ftest" id="ftest" class="sky-form" action="/admin/LT/LTApply" target="h_frame">
 			<!-- <input type="hidden" name="ckd_email" class="ckd_email" value="1">
 			<input type="hidden" name="userid" value="3765">
 			<input type="hidden" name="shop_id" value="nilenglish"> -->
@@ -61,7 +62,7 @@
                  <div class="card card-info">
                    <table summary="레벨테스트신청" class="table table-bordered">
                     <tbody>
-						 <tr>
+						 <!-- <tr>
 							<th style="width:24%;">수업방식</th>
 								<td class="linetop2px">
 									<div class="inline-group">
@@ -73,14 +74,14 @@
                         				</label>
 									</div>
 								</td>
-						  </tr>
+						  </tr> -->
 						  <tr>
 							<th class="linetop1px">아이디</th>
 								<td>
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="studentId" value="" style="background:#fff">
+											<input type="text" name="userId" value="" style="background:#fff">
 											<b id="studentname_msg" class="tooltip tooltip-top-right">아이디를 입력해 주세요.</b>
 										</label>
 									</div>
@@ -92,7 +93,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="krName" value="" style="background:#fff">
+											<input type="text" name="userName" value="" style="background:#fff">
 											<b id="kname_msg" class="tooltip tooltip-top-right">한글이름을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -104,7 +105,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="enName" value="" style="background:#fff">
+											<input type="text" name="userNickname" value="" style="background:#fff">
 											<b id="ename_msg" class="tooltip tooltip-top-right">영어닉네임을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -169,7 +170,7 @@
 				</table>
 			<!-- /.container-fluid -->
 				<div style="text-align:center;">
-				  <input type="submit" class="btn btn-secondary" value="레벨테스트신청">
+				  <input type="button" class="btn btn-secondary" id="levelTestApplyBtn" value="레벨테스트신청">
 				</div>
 			</div>
 		</form>
@@ -324,60 +325,58 @@
 
 		
 		<script type="text/javascript">
+		
 			//=== 레벨테스트 유효성검사
-			function ck_form() { 
-				var form = document.getElementById('ftest');
-				//=== 아이디 체크
-				if(form.studentId.value=="") {	
-					alert("아이디를 입력하세요");
-					form.studentId.focus(); 
-					return false;
-				}
-				//=== 한글이름 체크
-				else if(form.krName.value=="") {	
-					alert("한글이름을 입력하세요");
-					form.krName.focus(); 
-					return false;
-				}
-				//=== 영문이름 체크
-				if(form.enName.value=="") {	
-					alert("영문닉네임을 입력하세요");
-					form.enName.focus(); 
-					return false;
-				}
-				//=== 이메일 체크
-				else if(form.userEmail.value=="") {	
-					alert("이메일을 입력하세요");
-					form.userEmail.focus(); 
-					return false;
-				}
-				//=== 전화번호 체크
-				else if(form.userPhone.value=="") {
-					alert("연락처를 입력하세요");
-					form.userPhone.focus();
-					return false;
-				}
-				//=== 스카이프선택시 스카이프 아이디 체크
-				/* if($('input[name=level_type_skype]:checked').val()==3 && form.skypeId.value=="") {	
-					if(confirm("스카이프로 신청하실 경우 스카이프 아이디가 필요합니다. 지금 입력하시겠습니까?")) {
+			$(function(){
+				$('#levelTestApplyBtn').click(function(){
+					var form = document.getElementById('ftest');
+					//=== 아이디 체크
+					if(form.userId.value=="") {	
+						alert("아이디를 입력하세요");
+						form.userId.focus(); 
+						return false;
+					}
+					//=== 한글이름 체크
+					if(form.userName.value=="") {	
+						alert("한글이름을 입력하세요");
+						form.userName.focus(); 
+						return false;
+					}
+					//=== 영문이름 체크
+					if(form.userNickname.value=="") {	
+						alert("영문닉네임을 입력하세요");
+						form.userNickname.focus(); 
+						return false;
+					}
+					//=== 스카이프선택시 스카이프 아이디 체크
+					if(form.skypeId.value=="") {	
+						alert("스카이프아이디를 입력하세요");
 						form.skypeId.focus(); 
 						return false;
 					}
-				} */
-				//=== 테스트날짜 체크
-				else if(form.tdate.value=="") {	
-					alert("테스트 가능한 날짜를 입력하세요");
-					form.tdate.focus();
-					return false;
+					//=== 이메일 체크
+					if(form.userEmail.value=="") {	
+						alert("이메일을 입력하세요");
+						form.userEmail.focus(); 
+						return false;
 					}
-				
-				alert('신청이 완료되었습니다!'); 
-				document.getElementById('submitAll').submit();
-				return true;
-			}
-				
-			
-			
+					//=== 전화번호 체크
+					if(form.userPhone.value=="") {
+						alert("연락처를 입력하세요");
+						form.userPhone.focus();
+						return false;
+					}
+					//=== 테스트날짜 체크
+					if(form.tdate.value=="") {	
+						alert("테스트 가능한 날짜를 입력하세요");
+						form.tdate.focus();
+						return false;
+						}
+					
+					alert('신청이 완료되었습니다!'); 
+					document.getElementById('ftest').submit();
+				});
+			});
 			
 				//=== 레벨테스트 모달 시간선택
 				function selTime(){

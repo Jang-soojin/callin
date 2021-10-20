@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import callinedu.callin.domain.LT;
 import callinedu.callin.domain.Mileage;
 import callinedu.callin.domain.Student;
 
