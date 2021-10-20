@@ -79,4 +79,16 @@
 		);
 	</insert>
 	
+	<update id="modifyUser" parameterType="String">
+		Update user_info
+		SET 
+			 user_name = #{name}
+			,user_nickname = #{nickname}
+			,skype_id = #{skypeId}
+			,user_email = #{email}
+			,user_phone = #{phoneNumber}
+		WHERE
+			user_id = #{id}
+	</update>
+	
 </mapper>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 	layout:decorate="@{layout/default}">
+	<th:block layout:fragment="customContents">
+		<div class="content-wrapper">
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 th:text="${midTitle}">급여 정산</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${midTitle}">급여	정산</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card card card-secondary">
+								<div class="card-header">
+									<h3 class="card-title">검색</h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<form id="searchSalaryList" th:action="@{/admin/teacher/searchSalaryList}"
+										method="post">
+										<table class="table table-bordered table-hover" border="1"
+											style="width: 100%; vertical-align: inherit;">
+											<tr>
+												<td class="searchInfo" style=" vertical-align: middle; text-align: center;"><span>키워드 검색</span></td>
+												<td colspan="3">
+													<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 100px; display: inline;">
+														<option value="teacher_id">아이디</option>
+														<option value="user_name">이름</option>
+												</select> 
+												<input id="searchValue"class="form-control" type="text" style="width: 400px; display: inline; virtical-"></td>
+											</tr>
+											<tr>
+												<td class="searchInfo" style=" vertical-align: middle; text-align: center;"><span>날짜 검색 </span></td>
+												<td colspan="3">
+													<div>
+														<div class="input-group">
+															<div class="input-group-prepend">
+																<span class="input-group-text"> 
+																	<i class="far fa-calendar-alt"></i>
+																</span>
+															</div>
+															<input type="text" class="form-control float-right" id="reservation" style="width: 464px; flex: none;">
+														</div>
+														<!-- /.input group -->
+													</div>
+												</td>
+											</tr>
+										</table>
+										<div class="row">
+											<div class="col-md-4"></div>
+											<div class="col-md-3" style="align-items: center;">
+												<div>
+													<button type="button" id="searchButton"
+														class="btn btn-block btn-dark btn-md float-right"
+														style="width: 30%; margin-left: 20px;">검색</button>
+												</div>
+												<div>
+													<button type="button" id="resetButton"
+														class="btn btn-block btn-default btn-md float-right"
+														style="width: 44%; border-color: #68736a">초기화</button>
+												</div>
+											</div>
+											<div class="col-md-5"></div>
+										</div>
+									</form>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card1 -->
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">강사료 정산 리스트</h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<form id="chooseTeacher" th:action="@{/teacherSalary}" method="post">
+										<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
+											<thead>
+												<tr>
+													<th><input type="checkbox"></th>
+													<th>강사ID</th>
+													<th>강사명</th>
+													<th>전화번호</th>
+													<th>SKYPE ID</th>
+													<th>E-mail</th>
+													<th>입사일</th>
+													<th>스케줄 시작</th>
+													<th>스케줄 종료</th>
+													<th>Status</th>
+													<th>기준 급여</th>
+													<th>수정</th>
+													<th>강사 평가서</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="teacherList : ${teacherList}">
+													<th><input type="checkbox"></th>
+													<td th:text="${teacherList.teacherId}" class="id"></td>
+													<td th:text="${teacherList.user.userName}"></td>
+													<td th:text="${teacherList.user.userPhone}"></td>
+													<td th:text="${teacherList.skypeId}"></td>
+													<td th:text="${teacherList.user.userEmail}"></td>
+													<td th:text="${teacherList.user.userJoinDate}"></td>
+													<td th:text="${teacherList.classStartTime}"></td>
+													<td th:text="${teacherList.classEndTime}"></td>
+													<td th:text="${teacherList.employmentStatus}"></td>
+													<td th:text="${teacherList.unitPay}"></td>
+													<td><a  class="pick" href="#">수정</a></td>
+													<td><a href="#">조회</a></td>
+												</tr>
+											</tbody>
+										</table>
+									</form>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card2 -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+		</div>
+		<!-- jQuery -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<!-- Bootstrap 4 -->
+	<!-- pagination 스크립트 ↓ -->
+		<script>
+		  $(function () {
+		    $('#example2').DataTable({
+		      "paging": true,
+		      "lengthChange": false,
+		      "searching": false,
+		      "ordering": true,
+		      "info": true,
+		      "autoWidth": false,
+		      "responsive": true
+		    });
+		    $("ul.pagination").css({"justify-content": "flex-end"})
+		  });
+		</script>
+		
+		<script>
+		    $(".pick").click(function(){
+		    	var id = '';
+		    	var length = $(".pick").parents("tr").children(".id").length;
+		    	
+		    	for(var i=0; i<length ; i++){
+		    		var buttonNumber = $(".pick")[i]
+		    		if(this==buttonNumber){
+		    			id = $($(".pick")[i]).parents("tr").children(".id")[0].innerText;
+		    		}
+		    	}
+		    	console.log(id);
+		    	location.href="/admin/teacher/teacherModify?id="+id;
+		    });
+		</script>
+	</th:block>
+</html>

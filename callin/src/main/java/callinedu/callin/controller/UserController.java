@@ -36,7 +36,7 @@ public class UserController {
 		System.out.println("생년월일 결합 : "+birth);
 		userService.addUser(id, pw, name, nickname, skypeId, birth, gender, email, phoneNumber);
 		
-		return "register/register"; 
+		return "login/login"; 
 	}
 	
 	@GetMapping("/register")
