@@ -49,7 +49,7 @@ public class LTController {
 		System.out.println("커맨드 객체 : LTApplyCode : " + lTApplyCode);
 		System.out.println("===================");
 		
-		if(lTApplyCode != null) lTService.LTApply(lTApplyCode);
+		//if(lTApplyCode != null) lTService.LTApply(lTApplyCode);
 		
 		
 		return "redirect:/admin/LT/LTApply";

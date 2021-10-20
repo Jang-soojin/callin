@@ -46,7 +46,7 @@
 		<section class="content">
 		<div class="con">
 		<!-- action 속성이 너무많아요 -->
-		<form method="post" name="ftest" id="ftest" class="sky-form" action="/admin/LT/LTApply" target="h_frame">
+		<form method="post" name="ftest" id="ftest" class="sky-form" action="/admin/LT/LTApply">
 			<!-- <input type="hidden" name="ckd_email" class="ckd_email" value="1">
 			<input type="hidden" name="userid" value="3765">
 			<input type="hidden" name="shop_id" value="nilenglish"> -->
@@ -81,7 +81,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="userId" value="" style="background:#fff">
+											<input type="text" name="studentId" value="" style="background:#fff">
 											<b id="studentname_msg" class="tooltip tooltip-top-right">아이디를 입력해 주세요.</b>
 										</label>
 									</div>
@@ -93,7 +93,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="userName" value="" style="background:#fff">
+											<input type="text" name="user.userName" value="" style="background:#fff">
 											<b id="kname_msg" class="tooltip tooltip-top-right">한글이름을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -105,7 +105,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="userNickname" value="" style="background:#fff">
+											<input type="text" name="user.userNickname" value="" style="background:#fff">
 											<b id="ename_msg" class="tooltip tooltip-top-right">영어닉네임을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -118,7 +118,7 @@
 								<div class="form-group">
 									<label class="input">
 										<i class="icon-append fa fa-user"></i>
-										<input type="text" name="skypeId" value="" style="background:#fff">
+										<input type="text" name="user.skypeId" value="" style="background:#fff">
 										<b id="skype_msg" class="tooltip tooltip-top-right">스카이프 아이디를 입력해 주세요.</b>
 									</label>
 								</div>
@@ -130,7 +130,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-envelope"></i>
-											<input type="tel" name="userEmail" value="" style="background:#fff">
+											<input type="tel" name="user.userEmail" value="" style="background:#fff">
 											<b class="tooltip tooltip-top-right">이메일을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -142,7 +142,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-phone"></i>
-											<input type="tel" name="userPhone" value="" style="background:#fff">
+											<input type="tel" name="user.userPhone" value="" style="background:#fff">
 											<b class="tooltip tooltip-top-right">핸드폰 번호를 입력해 주세요.</b>
 										</label>
 									</div>
@@ -331,39 +331,39 @@
 				$('#levelTestApplyBtn').click(function(){
 					var form = document.getElementById('ftest');
 					//=== 아이디 체크
-					if(form.userId.value=="") {	
+					if(form.studentId.value=="") {	
 						alert("아이디를 입력하세요");
-						form.userId.focus(); 
+						form.studentId.focus(); 
 						return false;
 					}
 					//=== 한글이름 체크
-					if(form.userName.value=="") {	
+					if(form.user.userName.value=="") {	
 						alert("한글이름을 입력하세요");
-						form.userName.focus(); 
+						form.user.userName.focus(); 
 						return false;
 					}
 					//=== 영문이름 체크
-					if(form.userNickname.value=="") {	
+					if(form.user.userNickname.value=="") {	
 						alert("영문닉네임을 입력하세요");
-						form.userNickname.focus(); 
+						form.user.userNickname.focus(); 
 						return false;
 					}
 					//=== 스카이프선택시 스카이프 아이디 체크
-					if(form.skypeId.value=="") {	
+					if(form.user.skypeId.value=="") {	
 						alert("스카이프아이디를 입력하세요");
-						form.skypeId.focus(); 
+						form.user.skypeId.focus(); 
 						return false;
 					}
 					//=== 이메일 체크
-					if(form.userEmail.value=="") {	
+					if(form.user.userEmail.value=="") {	
 						alert("이메일을 입력하세요");
-						form.userEmail.focus(); 
+						form.user.userEmail.focus(); 
 						return false;
 					}
 					//=== 전화번호 체크
-					if(form.userPhone.value=="") {
+					if(form.user.userPhone.value=="") {
 						alert("연락처를 입력하세요");
-						form.userPhone.focus();
+						form.user.userPhone.focus();
 						return false;
 					}
 					//=== 테스트날짜 체크
