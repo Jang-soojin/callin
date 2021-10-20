@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import callinedu.callin.domain.LT;
 import callinedu.callin.domain.LTApplyCode;
 import callinedu.callin.mapper.LTMapper;
 
@@ -25,6 +24,15 @@ public class LTService {
 	public LTService(LTMapper ltMapper) {
 		this.ltMapper = ltMapper;
 	}
+
+	public int LTApply(LTApplyCode lTApplyCode) {
+		return ltMapper.LTApply(lTApplyCode);
+	}
+	
+
+	public List<LTApplyCode> getLTApplyList() {
+		return null;
+	}
 	
 	public List<LTApplyCode> getLTApplyListBySearchKey(String levelSearchKey, String lTApplySearchValue, String searchStartDate, String searchEndDate){
 
@@ -38,27 +46,25 @@ public class LTService {
 		
 		return lTApplyCodeList;
 	}
+	
 
-	public List<LT> getLTList() {
-		
-		return null;
-	}
-	public List<LT> getLTApplyList() {
-		
-		return null;
-	}
-
-	public List<LT> getLTListDetail() {
+	public List<LTApplyCode> LTListDetail() {
 		
 		return null;
 	}
 
 
-	public List<LT> getLTListMynote() {
+	public List<LTApplyCode> LTListMynote() {
 		
 		return null;
 	}
 
+
+
+
+
+
+	
 
 
 

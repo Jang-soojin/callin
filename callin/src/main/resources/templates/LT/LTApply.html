@@ -45,16 +45,16 @@
 		<!-- Main content -->
 		<section class="content">
 		<div class="con">
-		<form method="get" name="ftest" id="ftest" class="sky-form" action="/admin/LT/LTApply" onsubmit="return ck_form();" target="h_frame">
-			<input type="hidden" name="ckd_email" class="ckd_email" value="1">
+		<!-- action 속성이 너무많아요 -->
+		<form method="post" name="ftest" id="ftest" class="sky-form" action="/admin/LT/LTApply" target="h_frame">
+			<!-- <input type="hidden" name="ckd_email" class="ckd_email" value="1">
 			<input type="hidden" name="userid" value="3765">
-			<input type="hidden" name="shop_id" value="nilenglish">
+			<input type="hidden" name="shop_id" value="nilenglish"> -->
 			<div class="title">
 					<ul>
 						<li style="list-style: none;"><i class="fa fa-arrow-right"></i>  레벨테스트는 월~금 9~22시 사이에 신청가능하며, 10분 진행됩니다.</li>
 						<li style="list-style: none;"><i class="fa fa-arrow-right"></i>  주말과 공휴일에는 레벨테스트를 진행하지 않습니다.</li>
 						<li style="list-style: none;"><i class="fa fa-arrow-right"></i>  평가결과는 홈페이지 &gt; 마이페이지에서 확인하실 수 있습니다.</li>
-						<li style="list-style: none;"><i class="fa fa-arrow-right"></i><font color="red">  선생님과의 시간조정으로 최대 앞뒤 30분정도 시간이 변경될수도 있습니다.</font></li>
 						<!--<li class="text-info"><i class="fa fa-arrow-right"></i>  로그인을 먼저 해주세요.</li>-->
 						<li style="list-style: none;"><i class="fa fa-arrow-right"></i><font color="orange">  당일 레벨테스트 진행을 원하시면 고객지원센터 (000-0000)로 연락주세요!</font></li>
 					</ul>
@@ -62,23 +62,26 @@
                  <div class="card card-info">
                    <table summary="레벨테스트신청" class="table table-bordered">
                     <tbody>
-						 <tr>
-							<th style="width:24%;">수업구분</th>
+						 <!-- <tr>
+							<th style="width:24%;">수업방식</th>
 								<td class="linetop2px">
 									<div class="inline-group">
-										
-										<label class="radio at-tooltip" data-container="body" title="레벨테스트를 신청합니다"><input type="radio" name="classType" value="1"  checked ><i></i>레벨테스트</label>
-									<!--<label class="radio at-tooltip" data-container="body" title="무료 체험학습을 신청합니다"><input type="radio" name="class_type" value="2" checked=""><i></i>체험수업</label>	 -->	
+										<label>
+                            				<input type="radio" name="levelTypeSkype" value="S" checked=""> 전화영어(스카이프)
+                        				</label>
+										<label>
+                            				<input type="radio" name="levelTypeSkype" value="p"> 전화영어(보이스톡:카톡)
+                        				</label>
 									</div>
 								</td>
-						  </tr>
+						  </tr> -->
 						  <tr>
 							<th class="linetop1px">아이디</th>
 								<td>
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="studentId" value="" style="background:#fff">
+											<input type="text" name="userId" value="" style="background:#fff">
 											<b id="studentname_msg" class="tooltip tooltip-top-right">아이디를 입력해 주세요.</b>
 										</label>
 									</div>
@@ -90,7 +93,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="krName" value="" style="background:#fff">
+											<input type="text" name="userName" value="" style="background:#fff">
 											<b id="kname_msg" class="tooltip tooltip-top-right">한글이름을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -102,25 +105,25 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="enName" value="" style="background:#fff">
+											<input type="text" name="userNickname" value="" style="background:#fff">
 											<b id="ename_msg" class="tooltip tooltip-top-right">영어닉네임을 입력해 주세요.</b>
 										</label>
 									</div>
 									
 								</td>
 						  </tr>
-						  <!-- <tr>
+						  <tr>
 							<th class="linetop1px">스카이프</th>
 							<td>
 								<div class="form-group">
 									<label class="input">
-										<i class="icon-append fa fa-skype"></i>
+										<i class="icon-append fa fa-user"></i>
 										<input type="text" name="skypeId" value="" style="background:#fff">
 										<b id="skype_msg" class="tooltip tooltip-top-right">스카이프 아이디를 입력해 주세요.</b>
 									</label>
 								</div>
 							</td>
-						  </tr> -->
+						  </tr>
 						  <tr>
 							<th class="linetop1px">이메일</th>
 								<td>
@@ -167,7 +170,7 @@
 				</table>
 			<!-- /.container-fluid -->
 				<div style="text-align:center;">
-				  <input type="submit" class="btn btn-secondary" value="레벨테스트신청">
+				  <input type="button" class="btn btn-secondary" id="levelTestApplyBtn" value="레벨테스트신청">
 				</div>
 			</div>
 		</form>
@@ -197,12 +200,14 @@
 							<p><font class="fc18"><strong>파란색</strong> : 예약가능</font> / <font class="fc20"><strong>빨강색</strong> : 예약불가</font></p>
 							<form method="get" name="selDay" id="selDay" class="sky-form">
 								<div class="input-group">
-									<span class="input-group-btn">
+									<div class="input-group-prepend">
+									<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+									</div>
 										<input type="text" name="datepicker" id="datepicker" maxlength="10" readonly="" style="position:none;" >
-										<button type="button" id="sDate" class="btn btn-info"> 수업날짜 조회</button>
-									</span>
+										<!-- <button type="button" id="sDate" class="btn btn-secondary" style=text-align: ; > 수업날짜 조회</button> -->
 								</div>
 							</form>
+						
 							<table class="table table-bordered">
 								<tbody>
 									<tr class="td_16 linetop1px" th:each="num : ${#numbers.sequence(9,21)}">
@@ -320,61 +325,58 @@
 
 		
 		<script type="text/javascript">
-					$(function () {
-				    //Date range picker
-				    $('#reservation').daterangepicker()})
-				    
-					$( function() {
-					$( "#datepicker" ).datepicker();});
-			
+		
 			//=== 레벨테스트 유효성검사
-			function ck_form() { 
-				var form = document.getElementById('ftest');
-			
-				if(form.studentId.value=="") {	
-					alert("아이디를 입력하세요");
-					form.studentId.focus(); 
-					return false;
-				}
-				
-				if(form.krName.value=="") {	
-					alert("한글이름을 입력하세요");
-					form.krName.focus(); 
-					return false;
-				}
-			
-				if(form.enName.value=="") {	
-					alert("영문닉네임을 입력하세요");
-					form.enName.focus(); 
-					return false;
-				}
-				//=== 이메일 체크
-				if(form.userEmail.value=="") {	
-					alert("이메일을 입력하세요");
-					form.userEmail.focus(); 
-					return false;
-				}
-				
-				//=== 전화번호 체크
-				if(form.userPhone.value=="") {
-					alert("연락처를 입력하세요");
-					form.userPhone.focus();
-					return false;
-				}
-			
-				/* if($('input[name=cway]:checked').val()==3 && form.skype.value=="") {	
-					if(confirm("스카이프로 신청하실 경우 스카이프 아이디가 필요합니다. 지금 입력하시겠습니까?")) {
-						form.skype.focus(); 
+			$(function(){
+				$('#levelTestApplyBtn').click(function(){
+					var form = document.getElementById('ftest');
+					//=== 아이디 체크
+					if(form.userId.value=="") {	
+						alert("아이디를 입력하세요");
+						form.userId.focus(); 
 						return false;
 					}
-				} */
-				
-				if(form.tdate.value=="") {	
-					alert("테스트 가능한 날짜를 입력하세요");
-					form.tdate.focus();
-					return false;
+					//=== 한글이름 체크
+					if(form.userName.value=="") {	
+						alert("한글이름을 입력하세요");
+						form.userName.focus(); 
+						return false;
 					}
-				}
+					//=== 영문이름 체크
+					if(form.userNickname.value=="") {	
+						alert("영문닉네임을 입력하세요");
+						form.userNickname.focus(); 
+						return false;
+					}
+					//=== 스카이프선택시 스카이프 아이디 체크
+					if(form.skypeId.value=="") {	
+						alert("스카이프아이디를 입력하세요");
+						form.skypeId.focus(); 
+						return false;
+					}
+					//=== 이메일 체크
+					if(form.userEmail.value=="") {	
+						alert("이메일을 입력하세요");
+						form.userEmail.focus(); 
+						return false;
+					}
+					//=== 전화번호 체크
+					if(form.userPhone.value=="") {
+						alert("연락처를 입력하세요");
+						form.userPhone.focus();
+						return false;
+					}
+					//=== 테스트날짜 체크
+					if(form.tdate.value=="") {	
+						alert("테스트 가능한 날짜를 입력하세요");
+						form.tdate.focus();
+						return false;
+						}
+					
+					alert('신청이 완료되었습니다!'); 
+					document.getElementById('ftest').submit();
+				});
+			});
 			
 				//=== 레벨테스트 모달 시간선택
 				function selTime(){
@@ -386,7 +388,6 @@
 						backdrop:false
 					}).find(".modal-body").load("/registration/free_time.exe.php");
 				}
-				
 				function setDateTime(d) {
 					$("#bf-modal").modal('hide');
 					$("#bf-modal").removeData('modal');
@@ -396,10 +397,7 @@
 						document.getElementById('tdate').value = d ; }
 					,300);
 				}
-				
-		
 				$('.choice-part').click(function(){
-					
 					var getTd = $(this);
 					var time = Number($(this).attr('data-time'));
 					var part = Number($(this).attr('data-part'));
@@ -409,20 +407,15 @@
 						alert('날짜를 선택해주세요.')
 						return false;
 					}
-					
-					
 					var request = $.ajax({
 					  url: "/admin/LT/LTApplyListAjax",
 					  method: "POST",
 					  data: { time:time, part:part, nday:nday.value},
 					  dataType: "json"
 					});
-					 
 					request.done(function( data ) {
 					 	console.log(data)
-					 	
 					 	if(data.result == 1){
-					 		
 					 		var cDay = nday.value.split("-");
 							cDate = new Date(cDay[0], cDay[1]-1, cDay[2]);
 							if(cDate.getDay()==6 || cDate.getDay()==0){
@@ -436,7 +429,7 @@
 							}
 							
 							if(time < 10) time = "0" + time;
-							if(part < 10) part = "0" + part;
+							if(part < 10) part = part*10;
 							
 							setDateTime(nday.value+" " + time + "시 " + part + "분");
 							//getTd.addClass('fc20').removeClass('fc18');
@@ -447,14 +440,11 @@
 					 	}
 					 	
 					});
-					 
 					request.fail(function( jqXHR, textStatus ) {
 					  alert( "Request failed: " + textStatus );
 					});
-						
-					
 				});
-					
+				
 				$("#datepicker").datepicker({
 						dateFormat:"yy-mm-dd",
 						showOtherMonths:true,
@@ -465,10 +455,15 @@
 						$("#bf-modal").removeData('modal');
 						$("#bf-modal").find(".modal-body").load("/registration/free_time.exe.php?nday="+document.getElementById('datepicker').value);
 					});
-				
 				$('#sDate').click(function(){
 				    $('#nday').css('position','static').datepicker("show");
 				});
+				
+				//== 레벨테스트 신청
+				
+				
+				
+			
 		</script>
 		
 </body>

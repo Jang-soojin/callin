@@ -17,12 +17,41 @@
 			<result property="userName" column="user_name"/>
 			<result property="userEmail" column="user_email"/>
 			<result property="userPhone" column="user_phone"/>
+			<result property="userId" column="user_id"/>
+			<result property="userNickname" column="user_nickname"/>
+			<result property="skypeId" column="skype_id"/>
 		</association>
 	</resultMap>
 	
+	<insert id="LTApply" parameterType="LTApplyCode">
+		INSERT INTO lt_apply_code
+		(	lt_code
+			, user_id
+			, lt_apply_date
+			, lt_hope_date
+			, lt_hope_time
+			, requested_term
+			, approval
+			, approval_date
+			, manager_id
+		) VALUES (
+			lTCode
+			,#{studentId}
+			,#{ltApplyDate}
+			,#{ltHopeDate}
+			,#{ltHopeTime}
+			,#{requestedTerm}
+			,#{approval}
+			,#{approvalDate}
+			,#{managerId}
+			);
+	</insert>
+	
+	
 	<select id="getLTApplyListBySearchKey" parameterType="String" resultMap="lTApplyCodeResultMap">
 		SELECT
-			l.lt_apply_date
+			l.lt_code
+			,l.lt_apply_date
 			, u.user_name
 			, u.user_email
 			, u.user_phone

@@ -2,25 +2,19 @@ package callinedu.callin.domain;
 
 public class LTApplyCode {
 	private String lTCode;
-	private String managerId;
 	private String studentId;
 	private String lTApplyDate;
 	private String lTHopeTime;
 	private String requestedTerm;
 	private String approval;
 	private String approvalDate;
+	private String managerId;
 	private User user;
 	public String getlTCode() {
 		return lTCode;
 	}
 	public void setlTCode(String lTCode) {
 		this.lTCode = lTCode;
-	}
-	public String getManagerId() {
-		return managerId;
-	}
-	public void setManagerId(String managerId) {
-		this.managerId = managerId;
 	}
 	public String getStudentId() {
 		return studentId;
@@ -57,6 +51,12 @@ public class LTApplyCode {
 	}
 	public void setApprovalDate(String approvalDate) {
 		this.approvalDate = approvalDate;
+	}
+	public String getManagerId() {
+		return managerId;
+	}
+	public void setManagerId(String managerId) {
+		this.managerId = managerId;
 	}
 	public User getUser() {
 		return user;
