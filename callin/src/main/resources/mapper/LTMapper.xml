@@ -8,6 +8,7 @@
 		<result property="managerId" 				column="manager_id"/>
 		<result property="studentId" 				column="student_id"/>
 		<result property="lTApplyDate" 				column="lt_apply_date"/>
+		<result property="lTHopeDate" 				column="lt_hope_date"/>
 		<result property="lTHopeTime" 				column="lt_hope_time"/>
 		<result property="requestedTerm" 			column="requested_term"/>
 		<result property="approval" 				column="approval"/>
@@ -26,7 +27,7 @@
 	<insert id="LTApply" parameterType="LTApplyCode">
 		INSERT INTO lt_apply_code
 		(	lt_code
-			, user_id
+			, student_id
 			, lt_apply_date
 			, lt_hope_date
 			, lt_hope_time
@@ -35,11 +36,11 @@
 			, approval_date
 			, manager_id
 		) VALUES (
-			lTCode
+			'1'
 			,#{studentId}
-			,#{ltApplyDate}
-			,#{ltHopeDate}
-			,#{ltHopeTime}
+			,#{lTApplyDate}
+			,#{lTHopeDate}
+			,#{lTHopeTime}
 			,#{requestedTerm}
 			,#{approval}
 			,#{approvalDate}
