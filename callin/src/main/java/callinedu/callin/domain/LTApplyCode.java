@@ -4,6 +4,7 @@ public class LTApplyCode {
 	private String lTCode;
 	private String studentId;
 	private String lTApplyDate;
+	private String lTHopeDate;
 	private String lTHopeTime;
 	private String requestedTerm;
 	private String approval;
@@ -27,6 +28,12 @@ public class LTApplyCode {
 	}
 	public void setlTApplyDate(String lTApplyDate) {
 		this.lTApplyDate = lTApplyDate;
+	}
+	public String getlTHopeDate() {
+		return lTHopeDate;
+	}
+	public void setlTHopeDate(String lTHopeDate) {
+		this.lTHopeDate = lTHopeDate;
 	}
 	public String getlTHopeTime() {
 		return lTHopeTime;
@@ -69,12 +76,12 @@ public class LTApplyCode {
 		StringBuilder builder = new StringBuilder();
 		builder.append("LTApplyCode [lTCode=");
 		builder.append(lTCode);
-		builder.append(", managerId=");
-		builder.append(managerId);
 		builder.append(", studentId=");
 		builder.append(studentId);
 		builder.append(", lTApplyDate=");
 		builder.append(lTApplyDate);
+		builder.append(", lTHopeDate=");
+		builder.append(lTHopeDate);
 		builder.append(", lTHopeTime=");
 		builder.append(lTHopeTime);
 		builder.append(", requestedTerm=");
@@ -83,6 +90,8 @@ public class LTApplyCode {
 		builder.append(approval);
 		builder.append(", approvalDate=");
 		builder.append(approvalDate);
+		builder.append(", managerId=");
+		builder.append(managerId);
 		builder.append(", user=");
 		builder.append(user);
 		builder.append("]");
