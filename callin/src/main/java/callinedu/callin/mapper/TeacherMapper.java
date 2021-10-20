@@ -15,4 +15,6 @@ public interface TeacherMapper {
 	public int addTeacherSalarySettlement(TeacherSalarySettlement teacherSalarySettlement);
 	public List<TeacherSalarySettlement> getTeacherSalaryList();
 	public List<TeacherSalarySettlement> searchSalaryList(String searchKey, String searchValue,String dateRangeFirst,String dateRangeLast);
+	public int addTeacherDetail(String id, String skypeId, String skypePw, String unitPay, String classStartTime,String classEndTime);
+	public int modifyTeacher(String id, String skypeId, String skypePw, String unitPay, String classStartTime,	String classEndTime);
 }

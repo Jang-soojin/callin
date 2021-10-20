@@ -4,6 +4,8 @@ public class Teacher {
 	private String teacherId;
 	private String nationality;
 	private String residence;
+	private String skypeId;
+	private String skypePw;
 	private String language;
 	private String timeZoneCode;
 	private String contractTypeCode;
@@ -157,111 +159,36 @@ public class Teacher {
 	public void setManagerInChargeGroup(String managerInChargeGroup) {
 		this.managerInChargeGroup = managerInChargeGroup;
 	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Teacher [teacherId=");
-		builder.append(teacherId);
-		builder.append(", nationality=");
-		builder.append(nationality);
-		builder.append(", residence=");
-		builder.append(residence);
-		builder.append(", language=");
-		builder.append(language);
-		builder.append(", timeZoneCode=");
-		builder.append(timeZoneCode);
-		builder.append(", contractTypeCode=");
-		builder.append(contractTypeCode);
-		builder.append(", unitPay=");
-		builder.append(unitPay);
-		builder.append(", educationLevel=");
-		builder.append(educationLevel);
-		builder.append(", employmentStatus=");
-		builder.append(employmentStatus);
-		builder.append(", dateOfEmployment=");
-		builder.append(dateOfEmployment);
-		builder.append(", dateOfResignation=");
-		builder.append(dateOfResignation);
-		builder.append(", introductionText=");
-		builder.append(introductionText);
-		builder.append(", introductionVoice=");
-		builder.append(introductionVoice);
-		builder.append(", bankCode=");
-		builder.append(bankCode);
-		builder.append(", accountNumber=");
-		builder.append(accountNumber);
-		builder.append(", nameOfDepositor=");
-		builder.append(nameOfDepositor);
-		builder.append(", classStartTime=");
-		builder.append(classStartTime);
-		builder.append(", classEndTime=");
-		builder.append(classEndTime);
-		builder.append(", subjectInCharge=");
-		builder.append(subjectInCharge);
-		builder.append(", workingDayOfWeek=");
-		builder.append(workingDayOfWeek);
-		builder.append(", managerId=");
-		builder.append(managerId);
-		builder.append(", managerInChargeGroup=");
-		builder.append(managerInChargeGroup);
-		builder.append(", getTeacherId()=");
-		builder.append(getTeacherId());
-		builder.append(", getNationality()=");
-		builder.append(getNationality());
-		builder.append(", getResidence()=");
-		builder.append(getResidence());
-		builder.append(", getLanguage()=");
-		builder.append(getLanguage());
-		builder.append(", getTimeZoneCode()=");
-		builder.append(getTimeZoneCode());
-		builder.append(", getContractTypeCode()=");
-		builder.append(getContractTypeCode());
-		builder.append(", getUnitPay()=");
-		builder.append(getUnitPay());
-		builder.append(", getEducationLevel()=");
-		builder.append(getEducationLevel());
-		builder.append(", getEmploymentStatus()=");
-		builder.append(getEmploymentStatus());
-		builder.append(", getDateOfEmployment()=");
-		builder.append(getDateOfEmployment());
-		builder.append(", getDateOfResignation()=");
-		builder.append(getDateOfResignation());
-		builder.append(", getIntroductionText()=");
-		builder.append(getIntroductionText());
-		builder.append(", getIntroductionVoice()=");
-		builder.append(getIntroductionVoice());
-		builder.append(", getBankCode()=");
-		builder.append(getBankCode());
-		builder.append(", getAccountNumber()=");
-		builder.append(getAccountNumber());
-		builder.append(", getNameOfDepositor()=");
-		builder.append(getNameOfDepositor());
-		builder.append(", getClassStartTime()=");
-		builder.append(getClassStartTime());
-		builder.append(", getClassEndTime()=");
-		builder.append(getClassEndTime());
-		builder.append(", getSubjectInCharge()=");
-		builder.append(getSubjectInCharge());
-		builder.append(", getWorkingDayOfWeek()=");
-		builder.append(getWorkingDayOfWeek());
-		builder.append(", getManagerId()=");
-		builder.append(getManagerId());
-		builder.append(", getManagerInChargeGroup()=");
-		builder.append(getManagerInChargeGroup());
-		builder.append(", getClass()=");
-		builder.append(getClass());
-		builder.append(", hashCode()=");
-		builder.append(hashCode());
-		builder.append(", toString()=");
-		builder.append(super.toString());
-		builder.append("]");
-		return builder.toString();
-	}
 	public User getUser() {
 		return user;
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public String getSkypeId() {
+		return skypeId;
+	}
+	public void setSkypeId(String skypeId) {
+		this.skypeId = skypeId;
+	}
+	public String getSkypePw() {
+		return skypePw;
+	}
+	public void setSkypePw(String skypePw) {
+		this.skypePw = skypePw;
+	}
+	@Override
+	public String toString() {
+		return "Teacher [teacherId=" + teacherId + ", nationality=" + nationality + ", residence=" + residence
+				+ ", skypeId=" + skypeId + ", skypePw=" + skypePw + ", language=" + language + ", timeZoneCode="
+				+ timeZoneCode + ", contractTypeCode=" + contractTypeCode + ", unitPay=" + unitPay + ", educationLevel="
+				+ educationLevel + ", employmentStatus=" + employmentStatus + ", dateOfEmployment=" + dateOfEmployment
+				+ ", dateOfResignation=" + dateOfResignation + ", introductionText=" + introductionText
+				+ ", introductionVoice=" + introductionVoice + ", bankCode=" + bankCode + ", accountNumber="
+				+ accountNumber + ", nameOfDepositor=" + nameOfDepositor + ", classStartTime=" + classStartTime
+				+ ", classEndTime=" + classEndTime + ", subjectInCharge=" + subjectInCharge + ", workingDayOfWeek="
+				+ workingDayOfWeek + ", managerId=" + managerId + ", managerInChargeGroup=" + managerInChargeGroup
+				+ ", user=" + user + "]";
 	}
 
 

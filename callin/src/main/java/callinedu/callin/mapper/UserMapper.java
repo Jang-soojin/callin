@@ -12,4 +12,6 @@ public interface UserMapper {
 	public User idDuplicateCheck(String userId);
 
 	public int addUser(String id, String pw, String name, String nickname, String skypeId, String birth, String gender, String email, String phoneNumber);
+
+	public int modifyUser(String id, String name, String nickname, String skypeId, String email, String phoneNumber);
 }
