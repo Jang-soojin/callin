@@ -76,16 +76,7 @@ public class StudentService {
 		return studentMapper.selectMileageResnList();
 	}
 	
-	public List<Mileage> getallMileageGet() {
-		
-		return null;
-	}
-	
-	  public List<Mileage> getwaitingMileageGet() {
-	  
-	  return null; 
-	}
-	  
+
 	  
 	  
 	public List<Mileage> getAllMileageListBySearch(Map<String, Object> paramMap){

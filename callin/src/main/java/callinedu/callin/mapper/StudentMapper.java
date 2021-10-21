@@ -18,6 +18,5 @@ public interface StudentMapper {
 	public List<Mileage> getwaitingMileageListBySearch(Map<String, Object> paramMap);
 	public int addMileage(Mileage mileage);
 	public List<Mileage> selectMileageResnList();
-	public List<Mileage> getallMileageGet();
-	public List<Mileage> getwaitingMileageGet();
+
 }
