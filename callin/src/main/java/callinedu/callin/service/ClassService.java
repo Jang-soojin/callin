@@ -46,4 +46,13 @@ public class ClassService {
 		
 		return classMapper.deleteClassPolicy(classPolicyCode);
 	}
+
+	public List<ClassPolicy> getClassPolicyListBySearchKey(String levelSearchKey, String classPolicySearchValue) {
+		System.out.println(levelSearchKey + "<--------------------------------------입력받은 서치키");
+		System.out.println(classPolicySearchValue + "<--------------------------------------입력받은 값");
+		if("policyName".equals(levelSearchKey)) 	levelSearchKey = "class_policy_name";
+		if("classPeriod".equals(levelSearchKey)) 	levelSearchKey = "class_period";
+		if("classTime".equals(levelSearchKey))		levelSearchKey = "class_time";
+		return classMapper.getClassPolicyListBySearchKey(levelSearchKey, classPolicySearchValue);
+	}
 }

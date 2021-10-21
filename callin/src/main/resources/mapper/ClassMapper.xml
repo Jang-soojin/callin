@@ -17,12 +17,12 @@
 	</resultMap>
 	
 	<resultMap type="RegularClass" id="regularClassResultMap">
-		<result property="regularClassCode" 			column="regular_class_code"/>
+		<result property="regularClassCode" 		column="regular_class_code"/>
 		<result property="classPolicyCode" 			column="class_policy_code"/>
 		<result property="courseName" 				column="course_name"/>
-		<result property="courseLanguage" 				column="course_language"/>
-		<result property="managerId" 		column="manager_id"/>
-		<result property="courseTuition" 		column="course_tuition"/>
+		<result property="courseLanguage" 			column="course_language"/>
+		<result property="managerId" 				column="manager_id"/>
+		<result property="courseTuition" 			column="course_tuition"/>
 	</resultMap>
 	
 	
@@ -72,7 +72,7 @@
 	</select>
 
 	
-	<select id="searchPolicyList" parameterType="String" resultMap="classPolicyResultMap">
+	<select id="getClassPolicyListBySearchKey" parameterType="String" resultMap="classPolicyResultMap">
 		SELECT
 			  class_policy_code
 			, class_policy_name			
@@ -84,10 +84,12 @@
 			, class_postpone_period
 		FROM
 			class_policy
-		<where>
-			<if test="classPeriod != null and classPeriod != null"> <!-- 정책명 기간 분 -->
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="levelSearchKey != null and levelSearchKey != ''">
+				${levelSearchKey} LIKE CONCAT('%', #{classPolicySearchValue} ,'%')
 			</if>
-		</where>
+		</trim>
+		order by class_policy_name ASC limit 0,10;
 	</select>
 	
 	<select id="getClassPolicy" parameterType="ClassPolicy" resultMap="classPolicyResultMap">

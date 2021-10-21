@@ -55,6 +55,8 @@ public class ClassController {
 		System.out.println("정규수업 등록 컨트롤러 실행");
 		model.addAttribute("title", "정규수업");
 		model.addAttribute("midTitle", "정규수업등록");
+		List<ClassPolicy> classPolicy = classService.getClassPolicy();
+		model.addAttribute("classPolicy", classPolicy);
 		
 		return "class/regularClass";
 	}
@@ -114,22 +116,17 @@ public class ClassController {
 	    }	
 	    return message;
 	}
-	@RequestMapping(value="searchPolicyList", method= RequestMethod.POST, produces = "application/json")
+	
+	@RequestMapping(value="classPolicyListBySearch", method= RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<ClassPolicy> searchPolicyList( 
-			@RequestParam(value = "classPeriod",required = false) String classPeriod
-		,	@RequestParam(value = "classDay", required = false) String classDay
-		,	@RequestParam(value = "className", required = false) String className
-		,	@RequestParam(value = "classTime", required = false) String classTime
-			){
+	public List<ClassPolicy> getClassPolicyListBySearchKey( @RequestParam(value="levelSearchKey", required = false) String levelSearchKey
+													,@RequestParam(value="classPolicySearchValue", required = false) String classPolicySearchValue){
 		
-		log.info("수업기간 검색 옵션 : {}", classPeriod);
-		log.info("수업요일 검색 옵션 : {}", classDay);
-		log.info("수업시간 검색 옵션 : {}", classTime);
-		log.info("수업시간 검색 옵션 : {}", className);
+		log.info("정책 리스트 검색 옵션 : {}", levelSearchKey);
+		log.info("정책 리스트 검색 옵션 : {}", classPolicySearchValue);
 		
-		List<ClassPolicy> classPolicyList = classService.searchPolicyList(classPeriod, classDay, classTime, className);
+		List<ClassPolicy> classPolicyList = classService.getClassPolicyListBySearchKey(levelSearchKey, classPolicySearchValue);
 		
-		return classPolicyList;
+	    return classPolicyList;
 	}
 }
