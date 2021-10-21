@@ -17,4 +17,7 @@ public interface ClassMapper {
 	public List<ClassPolicy> searchPolicyList(String classPeriod, String classDay, String classTime, String className);
 	
 	public List<ClassPolicy> getClassPolicy();
+	
+	public List<ClassPolicy> getClassPolicyListBySearchKey(String levelSearchKey, String classPolicySearchValue);
+
 }
