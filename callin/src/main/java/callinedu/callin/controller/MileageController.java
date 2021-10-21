@@ -78,8 +78,8 @@ public class MileageController {
 	public String allMileageGet(Model model){ 
 		System.out.println("constroller 실행");
 		
-		List<Mileage> allMileageGet = studentService.getallMileageGet(); 
-		System.out.println(allMileageGet);
+
+
 		model.addAttribute("resnList", studentService.selectMileageResnList());
 		model.addAttribute("title", "전체 마일리지 검색");
 		model.addAttribute("midTitle", "전체 마일리지 검색"); 
@@ -104,8 +104,8 @@ public class MileageController {
 	public String waitingMileageGet(Model model){ 
 		System.out.println("constroller 실행");
 		
-		List<Mileage> waitingMileageGet = studentService.getwaitingMileageGet();
-		System.out.println(waitingMileageGet);
+
+
 		
 		model.addAttribute("resnList", studentService.selectMileageResnList());
 		model.addAttribute("title", "대기 마일리지 검색");

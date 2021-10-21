@@ -6,10 +6,7 @@
 	<title th:text="${title}"></title>
 </th:block>
 <head th:replace="fragments/head :: headFragment"></head>
-	<!-- daterange picker -->
-	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
-	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}">
-	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}">
+
 	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
 	<body class="hold-transition sidebar-mini layout-fixed">
 		<div id="wrapper">
@@ -103,9 +100,11 @@
 											<th>학생아이디</th>
 											<th>학생이름</th>
 											<th>적립금유형</th>
-											<th>ㅡ ㅡ ㅡ ㅡ  메모 ㅡ ㅡ ㅡ ㅡ</th>
+											<th>ㅡ ㅡ ㅡ  메모 ㅡ ㅡ ㅡ</th>
 											<th>적립/차감</th>
 											<th>적립금</th>
+											<th>적립/차감 등록</th>
+											<th>삭제</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -119,6 +118,8 @@
 											<td th:text="${mileage.mileageMemo}"></td>
 											<td th:text="${mileage.mileageDivision}"></td>
 											<td th:text="${mileage.mileagDeduct}"></td>
+											<td><button type="button" id="addButton" class="btn btn-secondary">등록</button></td>
+											<td><button type="button" id="removeButton" class="btn btn-secondary">삭제</button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -173,35 +174,9 @@
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
 		<!-- 데이터 테이블 -->
 	
-<!-- 		<script th:src="@{/AdminLTE-master/plugins/datatables/jquery.dataTables.min.js}"></script>
- 		<script th:src="@{/AdminLTE-master/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
- 		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/jszip/jszip.min.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/pdfmake/pdfmake.min.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/pdfmake/vfs_fonts.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.html5.min.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.print.min.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>  --> 
+
 		
-		<script>
-					  $(function () {
-			    $('#example2').DataTable({
-			    
-			      "paging": true,
-			      "lengthChange": false,
-			      "searching": false,
-			      "ordering": true,
-			      "info": true,
-			      "autoWidth": false,
-			      "responsive": true
-			      
-			    });
-			    $("ul.pagination").css({"justify-content": "flex-end"})
-			  });
-	  </script>
+
 		
 		<script type="text/javascript">
 			$(function(){
@@ -249,6 +224,12 @@
 								sHtml += "<td>" + data.miList[i].mileageMemo + "</td>";
 								sHtml += "<td>" + data.miList[i].mileageDivision + "</td>";
 								sHtml += "<td>" + data.miList[i].mileagDeduct + "</td>";
+								sHtml += "<td>";
+								sHtml += '<button type="button" id="addButton" class="btn btn-secondary">등록</button>';
+								sHtml += "</td>";
+								sHtml += "<td>";
+								sHtml += '<button type="button" id="removeButton" class="btn btn-secondary">삭제</button>';
+								sHtml += "</td>";
 								sHtml += "</tr>";
 							}
 							$("#example2 tbody").append(sHtml);
