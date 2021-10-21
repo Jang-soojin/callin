@@ -386,7 +386,7 @@
 					$('#bf-modal').modal({
 						show:true,
 						backdrop:false
-					}).find(".modal-body").load("/registration/free_time.exe.php");
+					}).find(".modal-body").load("/LT/LTApplyListAjax");
 				}
 				function setDateTime(d) {
 					$("#bf-modal").modal('hide');
@@ -453,7 +453,7 @@
 						changeYear:true
 					}).change(function() {
 						$("#bf-modal").removeData('modal');
-						$("#bf-modal").find(".modal-body").load("/registration/free_time.exe.php?nday="+document.getElementById('datepicker').value);
+						$("#bf-modal").find(".modal-body").load("/LT/LTApplyListAjax?nday="+document.getElementById('datepicker').value);
 					});
 				$('#sDate').click(function(){
 				    $('#nday').css('position','static').datepicker("show");
