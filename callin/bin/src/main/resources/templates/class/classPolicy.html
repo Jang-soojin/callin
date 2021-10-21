@@ -39,7 +39,7 @@
 			    <!-- Main content -->
 				<section class="content">
 					<div class="container-fluid">
-						<form action="/admin/class/addClassPolicy" method="post">
+						<form id="submitAll" action="/admin/class/addClassPolicy" method="post">
 							<div class="row">
 							<!-- left column -->
 								<div class="col-md-5">
@@ -55,6 +55,7 @@
 												<div class="input-group-prepend">
 													<input type="text" name="classPolicyName" id="classPolicyName">
 													<button class="form-control" style="background-color: gray; width: 100px; color: white" type="button" id="policyCheck"> 중복확인 </button>
+													<span id="no_name" style="color: red; display: none"> 정책명 없음! </span> 
 													<span id="available" style="color: blue; display: none"> 사용 가능! </span> 
 													<span id="in_use" style="color: red; display: none"> 사용중! </span> 
 												</div>
@@ -63,7 +64,7 @@
 												<label> 수업기간 선택 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classPeriod">
+														<select class="form-control" name="classPeriod" id="classPeriod">
 															<option> :: 선택하세요 ::</option>
 															<option value="4"> 4주 </option>
 															<option value="8"> 8주 </option>
@@ -76,13 +77,13 @@
 												<label> 수업요일 선택 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classDay">
+														<select class="form-control" name="classDay" id="classDay">
 															<option> :: 선택하세요 ::</option>
-															<option value="weekDay3"> 월, 수, 금 </option>
-															<option value="weekDay2"> 화, 목 </option>
-															<option value="weekDay5"> 월, 화, 수, 목, 금 </option>
-															<option value="weekEnd"> 토, 일 </option>
-															<option value="allDay"> 월, 화, 수, 목, 금, 토, 일 </option>
+															<option value="월, 수, 금"> 월, 수, 금 </option>
+															<option value="화, 목"> 화, 목 </option>
+															<option value="월, 화, 수, 목, 금"> 월, 화, 수, 목, 금 </option>
+															<option value="토, 일"> 토, 일 </option>
+															<option value="월, 화, 수, 목, 금, 토, 일"> 월, 화, 수, 목, 금, 토, 일 </option>
 														</select>
 													</div>
 												</div>
@@ -91,7 +92,7 @@
 												<label> 수업시간 선택 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classTime">
+														<select class="form-control" name="classTime" id="classTime">
 															<option> :: 선택하세요 ::</option>
 															<option value="10"> 10분 </option>
 															<option value="20"> 20분 </option>
@@ -119,7 +120,7 @@
 												<label> 연기(일일) 횟수 설정 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classPostponeDay">
+														<select class="form-control" name="classPostponeDay" id="classPostponeDay">
 															<option> :: 선택하세요 ::</option>
 															<option value="1"> 1일 </option>
 															<option value="2"> 2일 </option>
@@ -136,7 +137,7 @@
 												<label> 연기(장기) 횟수 설정 </label>
 												<div class="input-group mb-3">
 													<div class="input-group-prepend">
-														<select class="form-control" name="classPostponeDays">
+														<select class="form-control" name="classPostponeDays" id="classPostponeDays">
 															<option> :: 선택하세요 ::</option>
 															<option value="1"> 1회 </option>
 															<option value="2"> 2회 </option>
@@ -152,7 +153,7 @@
 											<div class="form-group">
 												<label> 연기(장기) 기간 설정 </label>
 												<div class="input-group-prepend">
-													<input type="number" name="classPostponePeriod"> 일
+													<input type="number" name="classPostponePeriod" id="classPostponePeriod"> 일
 												</div>
 											</div>
 										</div>
@@ -161,7 +162,7 @@
 							<!-- /.card -->
 							</div>
 							<div>
-								<button style="width: 200px; margin-left: 750px"  type="submit" class="form-control"> 정책 등록 </button>
+								<button style="width: 200px; margin-left: 750px" class="form-control" onclick="checkAll()" type="button"> 정책 등록 </button>
 							</div>
 						</form>
 						<!--/.col (right) --> 
@@ -202,46 +203,73 @@
 		<!-- AdminLTE App -->
 		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
 		<!-- AdminLTE for demo purposes -->
-		<script th:src="@{/AdminLTE-master/dist/js/demo.js}"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script>
+		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
 		<script>
 			$(function () {
 		    //Date range picker
 		    $('#reservation').daterangepicker()})
 		</script>
+		<!-- 정책 이름 중복확인 에이잭스 부분 -->
 		<script type="text/javascript">
 		$(function(){
 			$("#policyCheck").on("click", function(){
-				
-			    var classPolicyName = $("#classPolicyName").val();
-			    var sendData = {"classPolicyName":classPolicyName}
-			    $.ajax({
-			        method : 'POST',
-			        url : 'classPolicyNameCheck',
-			        data : sendData,
-			        success : function(resp){
-			            if(resp=='fail'){
-			            	$('#available').css('display', 'none');
-			            	$('#in_use').css('display', 'inline');
-			                flag=false;
-			  
-			            }else{
-			            	$('#available').css('display', 'inline');
-			            	$('#in_use').css('display', 'none');
-			                flag=true;
-			            }}
+				var classPolicyName = $("#classPolicyName").val();
+				var sendData = {"classPolicyName":classPolicyName}
+				$.ajax({
+					method : 'POST',
+					url : 'classPolicyNameCheck',
+					data : sendData,
+					success : function(resp){
+						if(classPolicyName == null || classPolicyName == '') {
+							$('#available').css('display', 'none');
+							$('#in_use').css('display', 'none');
+							$('#no_name').css('display', 'inline');
+							flag=false;
+						}
+						else if(resp=='fail'){
+							$('#available').css('display', 'none');
+							$('#in_use').css('display', 'inline');
+							$('#no_name').css('display', 'none');
+							flag=false;
+						}else{
+							$('#available').css('display', 'inline');
+							$('#in_use').css('display', 'none');
+							$('#no_name').css('display', 'none');
+							flag=true;
+						}
+					}
 			    })	
-				
 			});
 		})
-		
-		function classPolicyNameCheck(policyName){
+		function checkAll() {
+			if (document.getElementById('classPolicyName').value == '') {
+				alert('정책명을 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classPeriod').value == ':: 선택하세요 ::') {
+				alert('기간을 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classDay').value == ':: 선택하세요 ::') {
+				alert('요일을 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classTime').value == ':: 선택하세요 ::') {
+				alert('수업 시간을 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classPostponeDay').value == ':: 선택하세요 ::') {
+				alert('연기(일일)횟수를 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classPostponeDays').value == ':: 선택하세요 ::') {
+				alert('연기(장기)횟수를 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classPostponePeriod').value == '') {
+				alert('연기 기간을 입력해 주세요.');
+				return false;
+			}
+			alert('정책 등록이 완료되었습니다!'); 
+			document.getElementById('submitAll').submit();
+			return true;
 		}
+
+
 		</script>
-		
-		<!-- $('선택자').css('display', 'none'); -->
-		<!-- $('선택자').css('display', 'inline'); -->
-		
 </body>
 </html>

@@ -43,13 +43,15 @@ public class LTController {
 	}
 	
 	@PostMapping("/LTApply")
-	public String LTApply(LTApplyCode lTApplyCode) {
+	public String LTApply(@RequestParam Map<String, Object> map) {
+		
+		
 		
 		System.out.println("===================");
-		System.out.println("커맨드 객체 : LTApplyCode : " + lTApplyCode);
+		System.out.println("커맨드 객체 : map : " + map);
 		System.out.println("===================");
 		
-		if(lTApplyCode != null) lTService.LTApply(lTApplyCode);
+		lTService.LTApply(map);
 		
 		
 		return "redirect:/admin/LT/LTApply";

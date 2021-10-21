@@ -3,49 +3,62 @@
 	
 	
 	<nav class="mt-2" th:fragment="sideBarMenu">
-        <ul th:if="${sideMenu eq 'teacher' || sideMenu eq 'manager'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!--------------------------------------- 김경수 메뉴 영역 --------------------------------------->
+           <ul th:if="${sideMenu eq 'teacher' || sideMenu eq 'manager' || sideMenu eq 'student'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-              
-            </ul>
-          </li>
+          <!-- ↓ 강사/매니저 관리 -->
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
               <p>
-				급여 정산(김경수)
+				교사진 관리
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a th:href="@{/admin/teacher/teacherRegister}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>강사 등록</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/teacher/teacherTotalList}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>교사진 조회</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{#}"  class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>교사진 보고서</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a th:href="@{/admin/teacher/teacherSalary}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>강사 급여 정산</p>
+                  <p>교사진 급여 정산</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a th:href="@{/admin/teacher/teacherSalaryList}"  class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>강사료 정산 목록</p>
+                  <p>교사진 급여 정산 목록</p>
                 </a>
               </li>
+            </ul>
+          </li>
+          <!-- ↓ 급여 정산 메뉴 -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-envelope"></i>
+              <p>
+				매니저 관리
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a th:href="@{/admin/manager/managerSalary}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -53,45 +66,38 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a th:href="@{/admin/manager/managerList}" class="nav-link">
+                <a th:href="@{/admin/manager/managerSalaryList}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>매니저 급여 정산 목록</p>
                 </a>
               </li>
             </ul>
           </li>
-         
-          <li class="nav-item">
+          <!-- li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-plus-square"></i>
+              <i class="nav-icon far fa-envelope"></i>
               <p>
-                Extras
+				학생 관리
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item menu-open">
-                <a href="#" class="nav-link">
+              <li class="nav-item">
+                <a th:href="@{/admin/manager/managerSalary}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Login & Register v1
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
+                  <p>재학생 목록</p>
                 </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="pages/examples/login.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Login v1</p>
-                    </a>
-                  </li>
-                 
-                </ul>
-              </li>              
-              
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/manager/managerSalaryList}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>수강 종료 목록</p>
+                </a>
+              </li>
             </ul>
-          </li>
+          </li> -->
         </ul>
+<!--------------------------------------- 김경수 메뉴 영역 ------------------------------------------>
         <!-- th:if="${sideMenu eq ''}" ''부분에 본인 메뉴 넣어 주시면 됩니다. ul 통째로 복사해서 쓰세요. -->
         <ul th:if="${sideMenu eq 'class'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
@@ -108,7 +114,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
               <p>
-				수업 관리
+				수업 관리 (장수진)
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -120,21 +126,21 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a th:href="@{/admin/class/classPolicyList}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>수업 정책 리스트 보기</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a th:href="@{/admin/class/regularClass}"  class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>정규 수업 등록</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a th:href="@{/managerSalary}" class="nav-link">
+                <a th:href="@{/admin/class/regularClassList}"  class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>매니저 급여 정산</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a th:href="@{/admin/class/classPolicy2}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>레벨테스트 실험</p>
+                  <p>정규 수업 리스트 보기</p>
                 </a>
               </li>
             </ul>
@@ -186,21 +192,33 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a th:href="@{/admin/LT/LTApply}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p> 레벨테스트 신청 </p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a th:href="@{/admin/LT/LTApplyList}"  class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> 레벨테스트 신청 리스트 </p>
                 </a>
               </li>
               <li class="nav-item">
+                <a th:href="@{/admin/LT/LTApply}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> 레벨테스트 신청 </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a th:href="@{/managerSalary}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> 레벨테스트 결과 리스트</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/LT/LTListDetail}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> 레벨테스트 상세정보</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/LT/LTListMynote}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> 레벨테스트 학습노트</p>
                 </a>
               </li>
             </ul>
@@ -245,7 +263,7 @@
           <li class="nav-item menu-open">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                	마일리지 메뉴
+                	마일리지 메뉴 
                 <i class="right fas fa-angle-left"></i>
               </p>
           </li>
@@ -254,7 +272,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
               <p>
-				마일리지 관리
+				마일리지 관리 (이희진)
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -262,25 +280,19 @@
               <li class="nav-item">
                 <a th:href="@{/admin/mileage/mileageAdd}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p> 마일리지 추가 </p>
+                  <p> 마일리지 등록 </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a th:href="@{/admin/LT/LTApplyList}"  class="nav-link">
+                <a th:href="@{/admin/mileage/allMileageGet}"  class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p> 레벨테스트 신청 리스트 </p>
+                  <p> 전체 마일리지 조회 </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a th:href="@{/managerSalary}" class="nav-link">
+                <a th:href="@{/admin/mileage/waitingMileageGet}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>매니저 급여 정산</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a th:href="@{/admin/class/classPolicy2}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>레벨테스트 실험</p>
+                  <p> 대기 마일리지 조회</p>
                 </a>
               </li>
             </ul>
