@@ -179,7 +179,7 @@
         </ul>
         
         
-        <ul th:if="${sideMenu eq 'LT'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul th:if="${sideMenu eq 'LT' || sideMenu eq 'ebook'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
@@ -221,6 +221,30 @@
                   <p> 레벨테스트 학습노트</p>
                 </a>
               </li>
+            </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-envelope"></i>
+              <p>
+				교재 관리(이진아)
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a th:href="@{/admin/ebook/ebookList}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>교재 리스트</p>
+                </a>
+              </li>
+             <!--  <li class="nav-item">
+                <a th:href="@{/admin/manager/managerSalaryList}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>매니저 급여 정산 목록</p>
+                </a>
+              </li> -->
             </ul>
           </li>
          

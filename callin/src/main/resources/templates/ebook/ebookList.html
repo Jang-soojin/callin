@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+
+
+<th:block layout:fragment="customContents">
+	<div class="content-wrapper">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 th:text="${midTitle}"></h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+							<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card card-secondary">
+							<div class="card-header">
+								<h3 class="card-title">교재 검색</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="searchEbookList" th:action="@{/admin/ebook/ebookList}"
+									method="post">
+									<table class="table table-bordered table-hover" border="1"
+										style="width: 100%; vertical-align: inherit;">
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center;"><span>키워드 검색</span></td>
+											<td colspan="3">
+												<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 150px; display: inline;">
+													<option value="ebook_name">교재명</option>
+													<option value="ebook_level">교재난이도</option>
+											</select> 
+											<input id="searchValue"class="form-control" type="text" style="width: 400px; display: inline; virtical-"></td>
+										</tr>
+									</table>
+									<div class="row">
+										<div class="col-md-4"></div>
+										<div class="col-md-3" style="align-items: center;">
+											<div>
+												<button type="button" id="searchButton"
+													class="btn btn-block btn-dark btn-md float-right"
+													style="width: 30%; margin-left: 20px;">검색</button>
+											</div>
+											<div>
+												<button type="button" id="resetButton"
+													class="btn btn-block btn-default btn-md float-right"
+													style="width: 44%; border-color: #68736a">초기화</button>
+											</div>
+										</div>
+										<div class="col-md-5"></div>
+									</div>
+								</form>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card1 -->
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">교재 검색 목록</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="chooseEbook" th:action="@{/}" method="post">
+									<table id="ebookList" class="table table-bordered table-hover" style="text-align: center;">
+										<thead>
+											<tr>
+												<th>교재코드</th>
+												<th>교재명</th>
+												<th>교재난이도</th>
+												<th>교재파일</th>
+												<th>등록일자</th>
+												<th>작성자아이디</th>
+												<th>수정</th>
+												<th>삭제</th>
+											</tr>											
+										</thead>
+										<tbody th:each="l: ${ebookList}"  >
+												<tr>
+													<td th:text="${l.ebookDataCode}"></td>
+													<td th:text="${l.ebookName}" ></td>
+													<td th:text="${l.ebookLevel}"></td>
+													<td th:text="${l.ebookFile}"></td>
+													<td th:text="${l.registrationDate}"></td>
+													<td th:text="${l.managerId}"></td>
+													<td>수정</td>
+													<td>삭제</td>
+												</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card2 -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+	</div>
+	<!-- jQuery -->
+	<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+	<!-- Bootstrap 4 -->
+<!-- pagination 스크립트 ↓ -->
+	<script>
+	  $(function () {
+		    $('#ebookList').DataTable({
+			      "paging": true,
+			      "lengthChange": false,
+			      "searching": false,
+			      "ordering": true,
+			      "info": true,
+			      "autoWidth": false,
+			      "responsive": true
+		    });
+	    	$("ul.pagination").css({"justify-content": "flex-end"})
+	  });
+	</script>
+ 	<script>
+	
+	$(function() {
+			$('#searchButton').click(function() {
+				var searchKey = $('#searchKey').val();
+				var searchValue = $('#searchValue').val();
+
+				//$.ajax() 호출시 ajax에 관련된 객체를 반환한다.
+				var request = $.ajax({
+					method : "POST",							//요청 방식
+					url : "/admin/ebook/searchEbookList",		//요청주소
+					data : {
+						searchKey : searchKey,
+						searchValue : searchValue,
+					}, 											//전달 할 파라미터
+					dataType : "json" 							//받아 올 포맷 방식
+				});
+				request.done(function(data){ 
+							$('#ebookList').text('')
+							var tr = '<thead>'+ '<tr>' 
+									+ '<th>교재코드</th>'
+									+ '<th>교재명</th>'
+									+ '<th>교재난이도</th>'
+									+ '<th>교재파일</th>'
+									+ '<th>등록일자</th>'
+									+ '<th>작성자아이디</th>'
+									+ '<th>수정</th>'
+									+ '<th>삭제</th>'
+									+ '</tr>'
+									+ '</thead>'; 
+							
+							$.each(data , function(i){ 
+								tr += '<td>'
+								+ data[i].ebookDataCode 
+								+ '</td><td>' 
+								+ data[i].ebookName
+								+ '</td><td>' 
+								+ data[i].ebookLevel
+								+ '</td><td>' 
+								+ data[i].ebookFile
+								+ '</td><td>' 
+								+ data[i].registrationDate
+								+ '</td><td>' 
+								+ data[i].manager.managerId
+								+ '</td></tr>'; 
+							});
+							$('#ebookList').append(tr)
+					})
+				request.fail(function(jqXHR, textStatus) {
+					alert("요청 실패: " + textStatus);
+				});
+			})
+		})
+		
+		$(function() {
+			$('#resetButton').click(function() {
+				
+				$('#searchKey').val('ebook_name'); 	 // 검색조건 초기화 (초기값은 교재명 검색)
+				$('#searchValue').val('');			 //검색어 초기화
+			})
+		});
+			
+	</script>
+
+</th:block>
+</html>
