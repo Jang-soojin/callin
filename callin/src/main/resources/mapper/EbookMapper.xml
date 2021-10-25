@@ -12,6 +12,19 @@
 		<result property="registrationDate" 		column="registration_date"/>
 		<result property="managerId" 				column="manager_id"/>
 	</resultMap>
+	
+ 	<select id="getEbookList" resultMap="ebookDataResultMap" parameterType="String">
+		SELECT 
+			  ebook_data_code
+			, ebook_name
+			, ebook_level
+			, ebook_file
+			, registration_date
+			, manager_id
+		FROM 
+			ebook_data
+	</select>
+	
  	<select id="getEbookListBySearchKey" resultMap="ebookDataResultMap" parameterType="String">
 		SELECT 
 			  ebook_data_code

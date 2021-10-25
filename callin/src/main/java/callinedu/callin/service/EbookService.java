@@ -19,7 +19,14 @@ public class EbookService {
 		  this.ebookMapper = ebookMapper;
 	  }
 	  
-	  //교재목록조회
+	  //교재조회
+	  public List<EbookData> getEbookList() {
+		  List<EbookData> ebookList = ebookMapper.getEbookList();
+		  return ebookList;
+	  }
+	  
+	  
+	  //교재목록검색
 	  public List<EbookData> getEbookListBySearchKey(Map<String,Object> map){
 		  
 		  String searchKey = (String)map.get("searchKey");
@@ -29,6 +36,10 @@ public class EbookService {
 		  
 	  return searchEbookList;
 	  }
+
+
+
+
 	  
 	 
 }

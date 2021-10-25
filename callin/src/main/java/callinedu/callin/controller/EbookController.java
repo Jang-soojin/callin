@@ -25,10 +25,13 @@ public class EbookController {
 	  }
 	 
 	  //교재리스트화면
-	  @GetMapping("/ebookList") public String getManagerList(Model model) {
+	  @GetMapping("/ebookList")
+	  public String getEbookList(Model model) {
 		  
+		  List<EbookData> ebookList = ebookService.getEbookList();
 		  model.addAttribute("title", "교재 관리");
 		  model.addAttribute("midTitle","교재 리스트");
+		  model.addAttribute("ebookList",ebookList);
 		  
 	  return "ebook/ebookList";
 	  }

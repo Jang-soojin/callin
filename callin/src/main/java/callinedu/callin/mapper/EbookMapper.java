@@ -9,8 +9,11 @@ import callinedu.callin.domain.EbookData;
 @Mapper
 public interface EbookMapper {
 
-	//교재목록조회
-	List<EbookData> getEbookListBySearchKey(String searchKey, String searchValue);
+	//교재조회
+	public List<EbookData> getEbookList();
+	//교재목록검색
+	public List<EbookData> getEbookListBySearchKey(String searchKey, String searchValue);
+	
 
 
 }
