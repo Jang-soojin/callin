@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import callinedu.callin.domain.LTApplyCode;
 import callinedu.callin.mapper.LTMapper;
@@ -15,10 +14,8 @@ import callinedu.callin.mapper.LTMapper;
 @Service
 public class LTService {
 	
-	
 	private static final Logger log = LoggerFactory.getLogger(LTService.class);
 
-	
 	public final LTMapper ltMapper;
 	
 	@Autowired
@@ -51,7 +48,8 @@ public class LTService {
 	
 
 	public List<LTApplyCode> getLTApplyList() {
-		return null;
+		List<LTApplyCode> lTApplyList = ltMapper.getlTApplyList();
+		return lTApplyList;
 	}
 	
 	public List<LTApplyCode> getLTApplyListBySearchKey(String levelSearchKey, String lTApplySearchValue, String searchStartDate, String searchEndDate){

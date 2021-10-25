@@ -34,8 +34,7 @@
 							<div class="card-body">
 								<form id="searchEbookList" th:action="@{/admin/ebook/ebookList}"
 									method="post">
-									<table class="table table-bordered table-hover" border="1"
-										style="width: 100%; vertical-align: inherit;">
+									<table class="table table-bordered table-hover" border="1" style="width: 100%; vertical-align: inherit;">
 										<tr>
 											<td class="searchInfo" style=" vertical-align: middle; text-align: center;"><span>키워드 검색</span></td>
 											<td colspan="3">
@@ -74,9 +73,11 @@
 							<!-- /.card-header -->
 							<div class="card-body">
 								<form id="chooseEbook" th:action="@{/}" method="post">
-									<table id="ebookList" class="table table-bordered table-hover" style="text-align: center;">
+									<table id="exampleEbook" class="table table-bordered table-hover" style="text-align: center;">
 										<thead>
 											<tr>
+												<th><input type="checkbox"></th>
+												<th>No.</th>
 												<th>교재코드</th>
 												<th>교재명</th>
 												<th>교재난이도</th>
@@ -87,16 +88,20 @@
 												<th>삭제</th>
 											</tr>											
 										</thead>
-										<tbody th:each="l: ${ebookList}"  >
-												<tr>
+										<tbody id="ebookList">
+												<tr th:each="l: ${ebookList}">
+													<th><input type="checkbox"></th>
+													<td>1</td>
 													<td th:text="${l.ebookDataCode}"></td>
 													<td th:text="${l.ebookName}" ></td>
 													<td th:text="${l.ebookLevel}"></td>
 													<td th:text="${l.ebookFile}"></td>
 													<td th:text="${l.registrationDate}"></td>
 													<td th:text="${l.managerId}"></td>
-													<td>수정</td>
-													<td>삭제</td>
+													<td><a class="btn btn-info btn-sm" href="#"><i class="fas fa-pencil-alt"></i>Edit</a></td>
+													<td><a th:href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}" class="btn btn-danger btn-sm">
+														<i class="fas fa-trash"></i>Delete</a>
+													</td>
 												</tr>
 										</tbody>
 									</table>
@@ -119,7 +124,7 @@
 <!-- pagination 스크립트 ↓ -->
 	<script>
 	  $(function () {
-		    $('#ebookList').DataTable({
+		    $('#exampleEbook').DataTable({
 			      "paging": true,
 			      "lengthChange": false,
 			      "searching": false,
@@ -137,6 +142,8 @@
 			$('#searchButton').click(function() {
 				var searchKey = $('#searchKey').val();
 				var searchValue = $('#searchValue').val();
+				
+				var htmltag = "";
 
 				//$.ajax() 호출시 ajax에 관련된 객체를 반환한다.
 				var request = $.ajax({
@@ -149,45 +156,52 @@
 					dataType : "json" 							//받아 올 포맷 방식
 				});
 				request.done(function(data){ 
-							$('#ebookList').text('')
-							var tr = '<thead>'+ '<tr>' 
-									+ '<th>교재코드</th>'
-									+ '<th>교재명</th>'
-									+ '<th>교재난이도</th>'
-									+ '<th>교재파일</th>'
-									+ '<th>등록일자</th>'
-									+ '<th>작성자아이디</th>'
-									+ '<th>수정</th>'
-									+ '<th>삭제</th>'
-									+ '</tr>'
-									+ '</thead>'; 
-							
-							$.each(data , function(i){ 
-								tr += '<td>'
-								+ data[i].ebookDataCode 
-								+ '</td><td>' 
-								+ data[i].ebookName
-								+ '</td><td>' 
-								+ data[i].ebookLevel
-								+ '</td><td>' 
-								+ data[i].ebookFile
-								+ '</td><td>' 
-								+ data[i].registrationDate
-								+ '</td><td>' 
-								+ data[i].manager.managerId
-								+ '</td></tr>'; 
-							});
-							$('#ebookList').append(tr)
-					})
-				request.fail(function(jqXHR, textStatus) {
-					alert("요청 실패: " + textStatus);
+							$('#ebookList').html("");
+							for(var i=0; i<data.length; i++){
+								htmltag += "<tr>";
+								htmltag += '<td>';
+								htmltag += '<div class="form-check">';
+								htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
+								htmltag += '</div>';
+								htmltag += "</td>";
+								htmltag += "<td>";
+								htmltag += (i+1);
+								htmltag += "</td>";
+								htmltag += "<td>";
+								htmltag += data[i].ebookDataCode;
+								htmltag += "</td>";
+								htmltag += '<td>';
+								htmltag += data[i].ebookName;
+								htmltag += '</a></td>';
+								htmltag += "</td>";
+								htmltag += '<td>';
+								htmltag += data[i].ebookLevel;
+								htmltag += "</td>";
+								htmltag += '<td>';
+								htmltag += data[i].ebookFile;
+								htmltag += "</td>";
+								htmltag += '<td>';
+								htmltag += data[i].registrationDate;
+								htmltag += "</td>";
+								htmltag += '<td>';
+								htmltag += data[i].managerId;
+								htmltag += "</td>";
+								htmltag += "<td>";
+								htmltag += '<a class="btn btn-info btn-sm" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>';
+								htmltag += "</td>";
+								htmltag += "<td>";
+								htmltag += '<a class="btn btn-danger btn-sm" th:href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}"><i class="fas fa-trash"></i>Delete</a>';
+								htmltag += "</td>";
+								htmltag += "</tr>";
+							}
+							console.log(data[0]);
+							$("#ebookList").html(htmltag);
+					});
 				});
 			})
-		})
 		
 		$(function() {
 			$('#resetButton').click(function() {
-				
 				$('#searchKey').val('ebook_name'); 	 // 검색조건 초기화 (초기값은 교재명 검색)
 				$('#searchValue').val('');			 //검색어 초기화
 			})

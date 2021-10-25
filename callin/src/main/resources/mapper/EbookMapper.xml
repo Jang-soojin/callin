@@ -41,4 +41,13 @@
 			</if>
 		</trim>	
 	</select>
+	
+	<delete id="deleteEbookList" parameterType="String">
+		DELETE
+		FROM 
+			ebook_data
+		WHERE
+			ebook_data_code = #{ebookDataCode};
+	</delete>
+	
 </mapper>

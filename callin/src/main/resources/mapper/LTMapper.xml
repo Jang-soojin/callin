@@ -54,6 +54,21 @@
 				 );
 	</insert>
 	
+	<select id="getlTApplyList" parameterType="String" resultMap="lTApplyCodeResultMap">
+		SELECT
+			l.lt_code
+			,l.lt_apply_date
+			, u.user_name
+			, u.user_email
+			, u.user_phone
+		FROM
+			lt_apply_code AS l
+		INNER JOIN
+			user_info AS u
+		ON
+			u.user_id=l.student_id
+	</select>
+	
 	
 	<select id="getLTApplyListBySearchKey" parameterType="String" resultMap="lTApplyCodeResultMap">
 		SELECT

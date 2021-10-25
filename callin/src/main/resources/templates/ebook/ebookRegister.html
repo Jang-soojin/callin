@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+
+
+<th:block layout:fragment="customContents">
+
+<style>
+	.reg-form-th{
+		vertical-align: middle !important;
+		text-align: center;
+		font-weight: bold;
+		background-color: #f6f6f6;
+	}
+	.reg-form-td{
+		vertical-align: middle !important;
+	}
+	.reg-form-td input{
+		width:300px;
+		display: inline;
+	}
+	#ebook_level{
+		width:300px;
+		display: inline;
+	}
+</style>	
+	<div class="content-wrapper">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 th:text="${midTitle}"></h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+							<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card card-secondary">
+							<div class="card-header">
+								<h3 class="card-title">교재 등록</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="ebookRegister" th:action="@{/admin/ebook/ebookRegister}" method="post">
+									<table class="table table-bordered table-hover" style="border:none; vertical-align: inherit;">
+										<tr>
+											<td class="reg-form-th col-md-2">
+												<span>교재코드</span>
+											</td>
+											<td class="reg-form-td" colspan="3">
+												<input type="text" class="form-control" id="ebook_code" name="ebook_code">
+											</td>
+										</tr>
+										<tr>
+											<td class="reg-form-th col-md-2">
+												<span>교재명</span>
+											</td>
+											<td class="reg-form-td" colspan="3">
+												<input type="text" class="form-control" id="ebook_name" name="ebook_name">
+											</td>
+										</tr>
+										<tr>
+											<td class="reg-form-th col-md-2">
+												<span>교재 난이도</span>
+											</td>
+											<td class="reg-form-td">
+												<div class="input-group-prepend">
+													<select class="form-control" name="ebook_level" id="ebook_level">
+														<option> :: 선택하세요 ::</option>
+														<option value="1"> 기초 </option>
+														<option value="2"> 초급 </option>
+														<option value="3"> 중급 </option>
+														<option value="4"> 고급 </option>
+													</select>
+												</div>
+											</td>
+										<tr>
+											<td class="reg-form-th col-md-2">
+												<span>교재 파일</span>
+											</td>
+											<td class="reg-form-td" colspan="3">
+												<div class="custom-file">
+							                      <input type="file" class="custom-file-input" id="customFile">
+							                      <label class="custom-file-label" for="customFile">Choose file</label>
+							                    </div>
+											</td>
+										</tr>
+										<tr>
+											<td class="reg-form-th col-md-2">
+												<span>등록자일자</span>
+											</td>
+											<td class="reg-form-td"colspan="3">
+												<input type="text" class="form-control" id="registration_date" name="registration_date" readonly="readonly">
+											</td>
+										</tr>
+										<tr>
+											<td class="reg-form-th col-md-2">
+												<span>등록자ID</span>
+											</td>
+											<td class="reg-form-td"colspan="3">
+												<input type="text" class="form-control" id="manager_id" name="manager_id"  readonly="readonly">
+											</td>
+										</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="4">
+													<div class="reg_button" style="text-align: center;">
+														<a class="btn btn-danger px-3" href="${}">
+															<i aria-hidden="true"></i>취소하기
+														</a>
+														<button type="button" class="btn btn-primary px-3" id="reg_submit">
+															<i aria-hidden="true"></i>등록하기
+														</button>
+													</div>
+												</td>
+											</tr>
+											</tfoot>
+									</table>
+								</form>
+							</div>
+						<!-- /.card-body -->
+						</div>		
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+	</div>
+	<!-- jQuery -->
+	<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+	<!-- Bootstrap 4 -->
+<!-- pagination 스크립트 ↓ -->
+	<script>
+	
+	</script>
+</th:block>
+</html>

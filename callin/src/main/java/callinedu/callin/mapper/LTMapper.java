@@ -21,6 +21,9 @@ public interface LTMapper {
 			, String lTHopeTime
 			, String requestedTerm
 			);
+
+	//레벨테스트신청목록
+	public List<LTApplyCode> getlTApplyList();
 	
 	//레벨테스트신청목록조회
 	public List<LTApplyCode> getLTApplyListBySearchKey(@Param(value = "levelSearchKey") 	String levelSearchKey
@@ -31,5 +34,6 @@ public interface LTMapper {
 	public List<LTApplyCode> LTListDetail();
 		
 	public List<LTApplyCode> LTListMynote();
+
 
 }
