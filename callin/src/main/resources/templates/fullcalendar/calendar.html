@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+	
+	<th:block layout:fragment="customContents">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Calendar</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Calendar</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="sticky-top mb-3">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Draggable Events</h4>
+                </div>
+                <div class="card-body">
+                  <!-- the events -->
+                  <div id="external-events">
+                    <div class="external-event bg-success">김복남</div>
+                    <div class="external-event bg-warning">김복필</div>
+                    <div class="external-event bg-info">김보리</div>
+                    <div class="external-event bg-primary">김복주</div>
+                    <div class="external-event bg-danger">김복동</div>
+                    <div class="checkbox">
+                      <label for="drop-remove">
+                        <input type="checkbox" id="drop-remove">
+                        remove after drop
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Create Event</h3>
+                </div>
+                <div class="card-body">
+                  <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                    <ul class="fc-color-picker" id="color-chooser">
+                      <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
+                      <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
+                      <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
+                      <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
+                      <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
+                    </ul>
+                  </div>
+                  <!-- /btn-group -->
+                  <div class="input-group">
+                    <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+
+                    <div class="input-group-append">
+                      <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
+                    </div>
+                    <!-- /btn-group -->
+                  </div>
+                  <!-- /input-group -->
+                </div>
+              </div>
+                
+                <div class="card">
+	                 <div class="card-header">
+	                  <h3 class="card-title">Create Event</h3>
+	                </div>
+	                <div class="card-body">
+	                	<button type="button" id="saveSchedule" class="btn btn-primary">저장</button>
+	                </div>
+                </div>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card card-primary">
+              <div class="card-body p-0">
+                <!-- THE CALENDAR -->
+                <div id="calendar"></div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+<!-- jQuery -->
+<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/AdminLTE-master/dist/js/adminlte.min.js}"></script>
+<!-- fullCalendar 2.2.5 -->
+<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+<script th:src="@{/AdminLTE-master/plugins/fullcalendar/main.js}"></script>
+<!-- Page specific script -->
+<script>
+	var Calendar = null;
+
+  $(function () {
+
+    /* initialize the external events
+     -----------------------------------------------------------------*/
+    function ini_events(ele) {
+      ele.each(function () {
+
+        // create an Event Object (https://fullcalendar.io/docs/event-object)
+        // it doesn't need to have a start or end
+        var eventObject = {
+          title: $.trim($(this).text()) // use the element's text as the event title
+        }
+
+        // store the Event Object in the DOM element so we can get to it later
+        $(this).data('eventObject', eventObject)
+
+        // make the event draggable using jQuery UI
+        $(this).draggable({
+          zIndex        : 1070,
+          revert        : true, // will cause the event to go back to its
+          revertDuration: 0  //  original position after the drag
+        })
+
+      })
+    }
+
+    ini_events($('#external-events div.external-event'))
+
+    /* initialize the calendar
+     -----------------------------------------------------------------*/
+    //Date for the calendar events (dummy data)
+    var date = new Date()
+    var d    = date.getDate(),
+        m    = date.getMonth(),
+        y    = date.getFullYear()
+
+    	Calendar = FullCalendar.Calendar;
+    var Draggable = FullCalendar.Draggable;
+
+    var containerEl = document.getElementById('external-events');
+    var checkbox = document.getElementById('drop-remove');
+    var calendarEl = document.getElementById('calendar');
+	var allEvents = null;
+	allEvents = loadEvents();
+// 	console.log("allEvents",allEvents)
+    // initialize the external events
+    // -----------------------------------------------------------------
+
+    new Draggable(containerEl, {
+      itemSelector: '.external-event',
+      eventData: function(eventEl) {
+        return {
+          title: eventEl.innerText,
+          backgroundColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
+          borderColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
+          textColor: window.getComputedStyle( eventEl ,null).getPropertyValue('color'),
+        };
+      }
+    });
+
+    var calendar = new Calendar(calendarEl, {
+    	 initialView : 'timeGridWeek',
+      headerToolbar: {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      themeSystem: 'bootstrap',
+      //Random default events
+      events: allEvents,
+      editable  : true,
+      droppable : true, // this allows things to be dropped onto the calendar !!!
+      drop      : function(info) {
+        // is the "remove after drop" checkbox checked?
+        if (checkbox.checked) {
+          // if so, remove the element from the "Draggable Events" list
+          info.draggedEl.parentNode.removeChild(info.draggedEl);
+        }
+      },
+      eventClick: function(info) {
+    	    alert('Event: ' + info.event.title);
+    	    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+    	    alert('View: ' + info.view.type);
+    	  }
+    });
+    
+    calendar.render();
+	function loadEvents(){
+		var loadedEvents = new Array();
+		var request = $.ajax({
+			type : 'POST',
+			url : '/loadSchedule',
+			contentType: 'application/json',
+			data : {},
+			dataType : 'json',
+			async : false
+		})
+		request.done(function(data){
+			console.log(data);
+			for(var i=0; i<data.length; i++){
+	 		var event = new Object();
+	 		var sy = data[i].startYear;
+	 		var smon = data[i].startMonth;
+	 		var sd = data[i].startDate;
+	 		var sh = data[i].startHour;
+	 		var sm = data[i].startMinute;
+	 		
+	 		var ey = data[i].endYear;
+	 		var emon = data[i].endMonth;
+	 		var ed = data[i].endDate;
+	 		var eh = data[i].endHour;
+	 		var em = data[i].endMinute;
+	 		
+	 		event.title = data[i].title;
+	 		event.allDay = $.parseJSON(data[i].allDay);
+	 		event.start = new Date(sy, smon, sd, sh, sm);
+	 		event.end = new Date(ey, emon, ed, eh, em);
+	 		event.checked = 'y';
+	 		loadedEvents.push(event);
+	 	}
+		console.log("이벤트 배열 출력 : ",loadedEvents)
+		})
+		request.fail(function(jqXHR, textStatus){
+			alert("요청 실패: " + textStatus);
+		})
+		return loadedEvents;
+	}  
+    $('#saveSchedule').click(function(){
+  		var allEvent = calendar.getEvents();
+  		console.log(allEvent);
+  		var eventArray = new Array();
+  		console.log("allEvent : "+allEvent)
+		for(var i=0; i<allEvent.length; i++){
+			console.log(allEvent[i].extendedProps.checked)
+			if(allEvent[i].extendedProps.checked != 'y'){
+			var obj = new Object();
+			obj.title = allEvent[i]._def.title // 이벤트 명칭
+			obj.allDay = allEvent[i]._def.allDay // allDay이벤트인지 여부
+			obj.start = allEvent[i]._instance.range.start // 이벤트 시작 시간
+			obj.end = allEvent[i]._instance.range.end // 이벤트 종료 시간
+			eventArray.push(obj); //배열에 이벤트 하나씩 담아주기
+			}
+		}
+		var jsonData = JSON.stringify(eventArray); //자바스크립트의 값을 JSON 문자열로 변환
+// 		console.log('이벤트배열'+jsonData)
+		saveData(jsonData)
+    })
+    
+    function saveData(jsonData){
+    	var request = $.ajax({
+    		type : 'POST',
+    		url : '/saveSchedule',
+    		contentType: 'application/json',
+    		data : jsonData,
+    		dataType : 'text',
+    		async : false,
+    	})
+    	request.done(function(data){
+    		alert(data);
+    	})
+    	request.fail(function(jqXHR, textStatus){
+    		alert("요청 실패: " + textStatus);
+    	})
+    }
+    
+    /* ADDING EVENTS */
+    var currColor = '#3c8dbc' //Red by default
+    // Color chooser button
+    $('#color-chooser > li > a').click(function (e) {
+      e.preventDefault()
+      // Save color
+      currColor = $(this).css('color')
+      // Add color effect to button
+      $('#add-new-event').css({
+        'background-color': currColor,
+        'border-color'    : currColor
+      })
+    })
+    $('#add-new-event').click(function (e) {
+      e.preventDefault()
+      // Get value and make sure it is not null
+      
+      var val = $('#new-event').val()
+      if (val.length == 0) {
+        return
+      }
+
+      // Create events
+      var event = $('<div />')
+      event.css({
+        'background-color': currColor,
+        'border-color'    : currColor,
+        'color'           : '#fff'
+      }).addClass('external-event')
+      event.text(val)
+      $('#external-events').prepend(event)
+
+      // Add draggable funtionality
+      ini_events(event)
+
+      // Remove event from text input
+      $('#new-event').val('')
+    })
+  })
+  
+</script>
+</th:block>
+</html>

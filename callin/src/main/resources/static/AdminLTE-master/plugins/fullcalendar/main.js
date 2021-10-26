@@ -1682,7 +1682,7 @@ var FullCalendar = (function (exports) {
         eventDisplay: 'auto',
         defaultRangeSeparator: ' - ',
         titleRangeSeparator: ' \u2013 ',
-        defaultTimedEventDuration: '01:00:00',
+        defaultTimedEventDuration: '00:10:00',
         defaultAllDayEventDuration: { day: 1 },
         forceEventDuration: false,
         nextDayThreshold: '00:00:00',
@@ -1700,7 +1700,7 @@ var FullCalendar = (function (exports) {
         editable: false,
         nowIndicator: false,
         scrollTime: '06:00:00',
-        slotMinTime: '00:00:00',
+        slotMinTime: '06:00:00',
         slotMaxTime: '24:00:00',
         showNonCurrentDates: true,
         lazyFetching: true,
@@ -12480,9 +12480,9 @@ var FullCalendar = (function (exports) {
     }(Splitter));
 
     var DEFAULT_SLAT_LABEL_FORMAT = createFormatter({
-        hour: 'numeric',
+        hour: '2-digit', // numeric시 06 -> 6
         minute: '2-digit',
-        omitZeroMinute: true,
+        // omitZeroMinute: true, //true시 6:00AM -> 6 AM
         meridiem: 'short',
     });
     function TimeColsAxisCell(props) {
@@ -13516,11 +13516,7 @@ var FullCalendar = (function (exports) {
     // potential nice values for the slot-duration and interval-duration
     // from largest to smallest
     var STOCK_SUB_DURATIONS = [
-        { hours: 1 },
-        { minutes: 30 },
-        { minutes: 15 },
-        { seconds: 30 },
-        { seconds: 15 },
+        { minutes: 10 }
     ];
     function buildSlatMetas(slotMinTime, slotMaxTime, explicitLabelInterval, slotDuration, dateEnv) {
         var dayStart = new Date(0);
@@ -13604,8 +13600,8 @@ var FullCalendar = (function (exports) {
                 component: DayTimeColsView,
                 usesMinMaxTime: true,
                 allDaySlot: true,
-                slotDuration: '00:30:00',
-                slotEventOverlap: true,
+                slotDuration: '00:10:00', // 시간 단위 행 설정
+                slotEventOverlap: true, // a bad name. confused with overlap/constraint system
             },
             timeGridDay: {
                 type: 'timeGrid',

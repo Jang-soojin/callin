@@ -31,9 +31,10 @@
 	    margin-right: 5px;
 	}
 </style>	 
-<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
 		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
 		<script th:src="@{/AdminLTE-master/plugins/inputmask/jquery.inputmask.min.js}"></script>
+		
 <!-- ㄴ스타일 영역 -->
 	<div class="content-wrapper">
 			<section class="content-header">
@@ -70,8 +71,8 @@
 														<span>강사 ID</span>
 													</td>
 													<td class="reg-form-td" colspan="3">
-														<input type="text" class="form-control" id="user_id" name="user_id">
-															<button class="form-control btn-dark" style=" width: 100px; display: inline; color: white" type="button" id="id_Check1"> 중복확인 </button>
+														<input type="text" class="form-control" id="user_id" name="user_id" placeholder="ID">
+														<button class="form-control btn-dark" style=" width: 100px; display: inline; color: white" type="button" id="id_Check1"> 중복확인 </button>
 													</td>
 												</tr>
 												<tr>
@@ -80,7 +81,7 @@
 													</td>
 													<td class="reg-form-td"colspan="3">
 														<input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="Password" >
-														<div class="check_font" id="pw_check"></div>
+														<span class="check_font" id="pw_check"></span>
 													</td>
 												</tr>
 												<tr>
@@ -89,7 +90,7 @@
 													</td>
 													<td class="reg-form-td"colspan="3">
 														<input type="password" class="form-control" id="user_pw2" name="user_pw_check" placeholder="Confirm Password" >
-														<div class="check_font" id="pw2_check"></div>
+														<span class="check_font" id="pw2_check"></span>
 													</td>
 												</tr>
 												<tr>
@@ -97,13 +98,15 @@
 														<span>이름</span> <!-- 영문 본명 -->
 													</td>
 													<td class="reg-form-td">
-														<input type="text" class="form-control" id="user_name" name="user_name">
+														<input type="text" class="form-control blankCheck" id="user_name" name="user_name" placeholder="Name">
+														<span class="check_font" id="name_check"></span>
 													</td>
 													<td class="reg-form-th col-md-2">
 														<span>닉네임</span>
 													</td>
 													<td class="reg-form-td">
 														<input type="text" class="form-control" id="user_nickname" name="user_nickname" placeholder="English Nickname">
+														<span class="check_font" id="nickname_check"></span>
 													</td>
 												</tr>
 												<tr>
@@ -111,7 +114,8 @@
 														<span>전화번호</span>
 													</td>
 													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Phone Number">
+														<input type="text" class="form-control blankCheck" id="user_phone" name="user_phone" placeholder="Phone Number">
+														<span class="check_font" id="phone_check"></span>
 													</td>
 												</tr>
 												<tr>
@@ -119,7 +123,8 @@
 														<span>E-Mail</span>
 													</td>
 													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="user_email" name="user_email">
+														<input type="text" class="form-control blankCheck" id="user_email" name="user_email" placeholder="E-Mail">
+														<span class="check_font" id="email_check"></span>
 													</td>
 												</tr>
 												<tr>
@@ -150,23 +155,32 @@
 														<span>Skype ID</span>
 													</td>
 													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="skype_id" name="skype_id">
+														<input type="text" class="form-control blankCheck" id="skype_id" name="skype_id" placeholder="Skype ID">
+														<span class="check_font" id="skype_id_check"></span>
 													</td>
 												</tr>
 												<tr>
 													<td class="reg-form-th col-md-2">
 														<span>Skype PW</span>
 													</td>
-													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="skype_pw" name="skype_pw">
+													<td class="reg-form-td">
+														<input type="text" class="form-control blankCheck" id="skype_pw" name="skype_pw" placeholder="Skype PW">
+														<span class="check_font" id="skype_pw_check"></span>
+													</td>
+													<td class="reg-form-th col-md-2" colspan="2">
+														<span id="note_head">특이사항</span>
 													</td>
 												</tr>
 												<tr>
 													<td class="reg-form-th col-md-2">
 														<span>단위 급여</span>
 													</td>
-													<td class="reg-form-td" colspan="3">
-														<input type="text" class="form-control" id="unit_pay" name="unit_pay">
+													<td class="reg-form-td">
+														<input type="text" class="form-control blankCheck" id="unit_pay" name="unit_pay" placeholder="Unit Pay">
+														<span class="check_font" id="unit_pay_check"></span>
+													</td>
+													<td class="reg-form-td" colspan="2" rowspan="4" style="padding: 1px;">
+														<textarea class="form-control" id="note_content" name="note_content" style="height: 250px;"></textarea>
 													</td>
 												</tr>
 												<tr>
@@ -174,7 +188,7 @@
 														<span>근무 시작 시간</span>
 													</td>
 													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="class_start_time" name="class_start_time">
+														<input type="text" class="form-control timepicker" id="class_start_time" name="class_start_time" placeholder="Class Start Time">
 													</td>
 												</tr>
 												<tr>
@@ -182,15 +196,16 @@
 														<span>근무 종료 시간</span>
 													</td>
 													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="class_end_time" name="class_end_time">
-													</td>
+														<input type="text" class="form-control timepicker" id="class_end_time" name="class_end_time" placeholder="Class End Time">
+													</td >
 												</tr>
 												<tr>
 													<td class="reg-form-th col-md-2">
 														<span>브레이크 타임</span>
 													</td>
-													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="class_break_time" name="class_break_time">
+													<td class="reg-form-td">
+														<input type="text" class="form-control timepicker" id="break_time_begin" name="break_time_begin" placeholder="Break Time">~
+														<input type="text" class="form-control timepicker" id="break_time_end" name="break_time_end" placeholder="Break Time">
 													</td>
 												</tr>
 											</tbody>
@@ -205,12 +220,6 @@
 															<i aria-hidden="true"></i>등록하기
 														</button>
 													</div>
-												</td>
-												<td>
-												</td>
-												<td>
-												</td>
-												<td>
 												</td>
 											</tr>
 											</tfoot>
@@ -227,8 +236,10 @@
 				<!-- /.container-fluid -->
 			</section>
 		</div>
-		
-	
+
+
+	<!--제이쿼리 timepicker cdn  -->	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<!-- 생년월일 Select박스 만들기 -->	
 	<script type="text/javascript">
 		
@@ -236,18 +247,20 @@
 			var now = new Date(); 
 			var year = now.getFullYear(); 
 			var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
-			var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate()); //년도 selectbox만들기 
+			var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate()); 
 			
+			//년도 selectbox만들기 
 			for(var i = year ; i >= 1900 ; i--) { 
 				$('#year').append('<option value="' + i + '">' + i + '</option>'); 
-			} // 월별 selectbox 만들기 
-			
+			} 
+			// 월별 selectbox 만들기 
 			for(var i=1; i <= 12; i++) { 
 				var mm = i > 9 ? i : "0"+i ; 
-				$('#month').append('<option value="' + mm + '">' + mm + '</option>'); } // 일별 selectbox 만들기 
-			
-				for(var i=1; i <= 31; i++) { 
-					var dd = i > 9 ? i : "0"+i ; 
+				$('#month').append('<option value="' + mm + '">' + mm + '</option>'); 
+			} 
+			// 일별 selectbox 만들기 
+			for(var i=1; i <= 31; i++) { 
+				var dd = i > 9 ? i : "0"+i ; 
 				$('#day').append('<option value="' + dd + '">' + dd+ '</option>'); 
 			};
 				$("#year > option[value="+year+"]").attr("selected", "true"); 
@@ -255,6 +268,20 @@
 				$("#day > option[value="+day+"]").attr("selected", "true"); 
 		})
 	
+	</script>
+	
+	<script type="text/javascript">
+		$('.timepicker').timepicker({
+		    timeFormat: 'HH:mm',
+		    interval: 10,
+		    minTime: '06:00',
+		    maxTime: '23:50',
+		    defaultTime: '6',
+		    startTime: '06:00',
+		    dynamic: false,
+		    dropdown: true,
+		    scrollbar: true
+		});
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function(){//페이지 읽기 후 스크립트 읽기(시작) 
@@ -332,7 +359,7 @@
 						}
 						
 						var pwVal = $('#user_pw').val();
-						var pwFormat = /^(?=.*[a-zA-ZS])(?=.*[a-zA-ZS])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+						var pwFormat = /^(?=.*[a-zA-ZS])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
 						if (pwVal.match(pwFormat)==null){
 							$('#pw_check').css({ 'color':'red'});
 							$('#pw_check').text('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
@@ -357,8 +384,28 @@
 							$('#pw2_check').text('');
 						}
 					})
-			
 					
+					//3. input 공백 검사
+						var blankCheckTF = true;
+						$('.blankCheck').on('keyup',function(){
+						  var target = $(this).parent().siblings().children().text();
+						  if(this==$('#user_name')[0]){
+							  target='이름';
+						  }
+						  if(this==$('#skype_pw')[0]){
+							  target='Skype 패스워드';
+						  }
+						  if(this.value.indexOf(' ') != -1){
+							  $(this).parent().find('span').css({'color':'red'});
+						      $(this).parent().find('span').text(target+'에는 공백이 들어갈 수 없습니다');
+						      blankCheckTF = false;
+						   }else{
+						      $(this).parent().find('span').text('')
+						      blankCheckTF = true;
+						    }
+						
+						})
+				
 		<!--회원 가입 양식 입력 여부 유효성 검사-->
 					
 					$('#reg_submit').click(function(){
@@ -437,35 +484,39 @@
 							alert('스카이프 아이디를 입력해주세요.');
 							return false;
 						}
-						if($('#skype_pw').val()==''){//스카이프 아이디 입력 여부 체크
+						if($('#skype_pw').val()==''){//스카이프 패스워드 입력 여부 체크
 							alert('스카이프 패스워드를 입력해주세요.');
 							return false;
 						}
-						if($('#class_start_time').val()==''){//스카이프 아이디 입력 여부 체크
+						if(isNaN($('#unit_pay').val())==true){ // 숫자가 아니라면 알림
+							alert('단위 급여는 숫자만 입력할 수 있습니다..');
+							return false;
+						}
+						if($('#class_start_time').val()==''){//근무 시작시간 입력 여부 체크
 							alert('근무 시작 시간을 입력해주세요.');
 							return false;
 						}
-						if($('#class_end_time').val()==''){//스카이프 아이디 입력 여부 체크
+						if($('#class_end_time').val()==''){//근무 종료시간  입력 여부 체크
 							alert('근무 종료 시간을 입력해주세요.');
 							return false;
 						}
 						
 						
-						
-						// 전체 입력항목 공백 포함 검사 시작
-						for(var i=2; i<$('.form-control').length; i++){
-						    for(var j=0; j<$($('.form-control')[i]).val().length; j++){
-						        var cha = $($('.form-control')[i]).val().slice(j,j+1);
+						//전체 입력항목 공백 포함 검사 시작
+						var blankCheck = true; //true:공백 없음 false:공백 있음
+						var inputList = $('.blankCheck') // 아이디/패스워드/확인 제외한 input박스
+						for(var i=0; i<inputList.length; i++){ //각 input 항목 스캔
+						    for(var j=0; j<$(inputList[i]).val().length; j++){ //input 내부 한 글자씩 스캔
+						        var cha = $(inputList[i]).val().slice(j,j+1);
 						        if(cha==' '){
-						            var target = $($('.form-control')[i]).siblings('label').text();
-						           	$($('.form-control')[i]).siblings('.check_font').css({ 'color':'red'});
-									$($('.form-control')[i]).siblings('.check_font').text(target+'에는 공백이 들어갈 수 없습니다');
+									blankCheck = false;
+									alert('공백 발견!')
 									return false;
-						        }else{
-						        	$($('.form-control')[i]).siblings('.check_font').text('');
-						        	$('#teacherRegister').submit();  // 이상이 없는 경우 Submit
 						        }
 						    } 
+						}
+						if(blankCheckTF == true){
+							$('#teacherRegister').submit();
 						}// 전체 입력항목 공백 포함 검사 끝
 					})//클릭 이벤트 종료
 		})//페이지 읽기 후 스크립트 읽기(끝) 	

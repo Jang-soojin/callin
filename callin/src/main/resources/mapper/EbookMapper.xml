@@ -13,6 +13,26 @@
 		<result property="managerId" 				column="manager_id"/>
 	</resultMap>
 	
+	<insert id="LTApply" parameterType="String">
+		INSERT INTO ebook_data
+			(	  ebook_data_code
+				, ebook_name
+				, ebook_level
+				, ebook_file
+				, registration_date
+				, manager_id
+			) VALUES (
+				  #{ebookDataCode}
+				, #{ebookName}
+				, #{ebookLevel}
+				, #{ebookFile}
+				, CURDATE()
+				, #{managerId}
+			 );
+	</insert>
+	
+	
+	
  	<select id="getEbookList" resultMap="ebookDataResultMap" parameterType="String">
 		SELECT 
 			  ebook_data_code

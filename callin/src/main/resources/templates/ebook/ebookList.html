@@ -87,7 +87,7 @@
 											</tr>											
 										</thead>
 										<tbody id="ebookList">
-												<tr th:each="l: ${ebookList}">
+												<tr th:if="${#lists.size(ebookList)> 0}" th:each="l: ${ebookList}">
 													<td th:text="${l.ebookDataCode}"></td>
 													<td th:text="${l.ebookName}" ></td>
 													<td th:text="${l.ebookLevel}"></td>
@@ -95,7 +95,7 @@
 													<td th:text="${l.registrationDate}"></td>
 													<td th:text="${l.managerId}"></td>
 													<td><a class="btn btn-info btn-sm" href="#"><i class="fas fa-pencil-alt"></i>Edit</a></td>
-													<td><a type="button" th:href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}" class="deleteBtn btn btn-danger btn-sm">
+													<td><a th:href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}" class="btn btn-danger btn-sm">
 														<i class="fas fa-trash"></i>Delete</a>
 													</td>
 												</tr>
@@ -178,7 +178,7 @@
 								htmltag += '<a class="btn btn-info btn-sm" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>';
 								htmltag += "</td>";
 								htmltag += "<td>";
-								htmltag += '<a type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>Delete</a>';
+								htmltag += '<a class="btn btn-danger btn-sm" href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}"><i class="fas fa-trash"></i>Delete</a>';
 								htmltag += "</td>";
 								htmltag += "</tr>";
 							}
@@ -193,17 +193,6 @@
 				$('#searchKey').val('ebook_name'); 	 // 검색조건 초기화 (초기값은 교재명 검색)
 				$('#searchValue').val('');			 //검색어 초기화
 			})
-		});
-	
-		$(function(){
-			$('.deleteBtn').on("click", function(){
-				var result = confirm('정말 삭제하시겠습니까?');
-				if(result){
-					alert('삭제되었습니다.');
-					return true;
-				}
-				else return false;
-			});
 		});
 			
 	</script>
