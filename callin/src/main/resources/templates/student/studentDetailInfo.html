@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+	
+ 
+	
+<th:block layout:fragment="customContents">  	  	 
+<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+
+<!-- ㄴ스타일 영역 -->
+	<div class="content-wrapper">
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 th:text="${midTitle}"></h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card card card-secondary">
+								<!-- /.card-header -->
+								<div class="card-body">
+									<form id="studentDetailList" th:action="@{/admin/student/studentDetailInfo}" method="post">
+										<input type="hidden" name="studentId" id="studentId" th:value="${detailInfo.studentId}" />
+										
+										<table class="table table-bordered table-hover" style="border:none; vertical-align: inherit;">
+											<tbody>
+												<tr>
+													<td class="reg-form-th">
+														<span>학생 ID</span>
+													</td>
+													<td class="reg-form-td" colspan="3" >
+														<input type="text" class="form-control" id="user_id" name="user_id" th:value="${detailInfo.studentId}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th">
+														<span>학생 이름</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="user_name" name="user_name" th:value="${detailInfo.userName}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th">
+														<span>닉네임</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="user_nickname" name="user_nickname" th:value="${detailInfo.userNickname}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th">
+														<span>Skype ID</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="skype_id" name="skype_id" th:value="${detailInfo.skypeId}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th">
+														<span>생년월일</span>
+													</td>
+													<td class="reg-form-td">
+													<div class="form-group" >
+														<select name="user_birth_year" id="user_birth_year" class="user_birth form-control"></select>년
+														<select name="user_birth_mon" id="user_birth_mon" class="user_birth form-control"></select>월	
+														<select name="user_birth_day" id="user_birth_day" class="user_birth form-control"></select>일
+														</div>
+													</td>						
+													<td class="reg-form-th col-md-2">
+														<span>성별</span>
+													</td>
+													<td class="reg-form-td">
+														<label for="radio-M">
+															<input type="radio" id="radio-M" name="user_gender"  value="M" th:attr="checked=${detailInfo.userGender == 'M' ? 'true' : 'false'}">남
+														</label>
+														<label for="radio-F">
+															<input type="radio" id="radio-F" name="user_gender" value="F" th:attr="checked=${detailInfo.userGender == 'F' ? 'true' : 'false'}">여
+														</label>
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th">
+														<span>E-mail</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="user_email" name="user_email" th:value="${detailInfo.userEmail}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th">
+														<span>전화번호</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="user_phone" name="user_phone" th:value="${detailInfo.userPhone}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th">
+														<span>보호자 전화번호</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="student_guardian_number" name="student_guardian_number" th:value="${detailInfo.studentGuardianNumber}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th">
+														<span>기타정보</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="student_data" name="student_data" th:value="${detailInfo.studentData}">
+													</td>
+												</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<td colspan="4">
+													<div class="reg_button" style="text-align: center;">
+														<button type="button" id="modifyButton" class="btn btn-secondary">수정하기</button>
+														<button type="button" id="listButton" class="btn btn-secondary" onclick="location.href='studentDetailList'">목록</button>
+														
+													</div>
+												</td>
+											</tr>
+											</tfoot>
+										</table>
+									</form>
+								</div>
+								<!-- /.card-body -->
+							</div>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+		</div>
+		<style>
+			.reg-form-th{
+				vertical-align: middle !important;
+				text-align: center;
+				font-weight: bold;
+				background-color: #f6f6f6;
+			}
+			.reg-form-td{
+				vertical-align: middle !important;
+			}
+			.reg-form-td input{
+				width:250px;
+				display: inline;
+			}
+			#radio-M, #radio-F{
+				width:30px !important;
+			}
+			.user_birth{
+			    margin-left: 15px !important;
+			    width: 95px !important;
+			    display: inline !important;
+			    text-align: center;
+			    margin-right: 5px;
+			}
+		</style>
+	
+	
+			<script type="text/javascript">
+			
+			$(document).ready(function(){
+				var curYear = new Date().getFullYear();
+				var monArray = ["31", "28", "31", "30", "31", "30", "31", "31", "30", "31", "30", "31"];
+				
+				selectInit(1900, curYear, $("#user_birth_year"));
+				selectInit(1, 12, $("#user_birth_mon"));
+				
+				$("#user_birth_year").val("[[${detailInfo.userBirthYear}]]");
+				$("#user_birth_mon").val("[[${detailInfo.userBirthMon}]]");
+				
+				selectInit(1, monArray[parseInt("[[${detailInfo.userBirthMon}]]", 10)], $("#user_birth_day"));
+				$("#user_birth_day").val("[[${detailInfo.userBirthDay}]]");
+				
+				// 수정하기
+				$("#modifyButton").on("click", function(){
+					var searchDataObj = {};
+					
+					searchDataObj.studentId = $("#studentId").val();
+					searchDataObj.userName = $("#user_name").val();
+					searchDataObj.userNickname = $("#user_nickname").val();
+					searchDataObj.skypeId = $("#skype_id").val();
+					searchDataObj.userBirthYear = $("#user_birth_year").val();
+					searchDataObj.userBirthMon = $("#user_birth_mon").val();
+					searchDataObj.userBirthDay = $("#user_birth_day").val();
+					searchDataObj.userGender = $("input:radio[name=user_gender]:checked").val();
+					searchDataObj.userEmail = $("#user_email").val();
+					searchDataObj.userPhone = $("#user_phone").val();
+					searchDataObj.studentGuardianNumber = $("#student_guardian_number").val();
+					searchDataObj.studentData = $("#student_data").val();
+					
+					$.ajax({
+						url : "/admin/student/studentDetailUpdate"
+						, contentType : 'application/json'
+						, dataType : 'json'
+						, data : JSON.stringify(searchDataObj)
+						, type : 'post'
+						, success : function(data){
+						  alert(data.CmmnMsg);
+						}
+					});
+				});
+			});
+			
+			function selectInit(startIdx, endIdx, obj){
+				var sHtml = "";
+				
+				if(obj == "user_birth_day" && $("#user_birth_mon").val() == "02"){
+					if($("#user_birth_year").val() % 400 == 0 || ($("#user_birth_year").val() % 4 == 0 && $("#user_birth_year").val() % 100 != 0)){
+						endIdx = 29;
+					}else{
+						endIdx = 28;
+					}
+				}
+				
+				for(var i = startIdx; i <= endIdx; i++){
+					sHtml += "<option value='" + (i < 10 ? "0" + i : i) + "'>" + (i < 10 ? "0" + i : i) + "</option>";
+				}
+				$(obj).html(sHtml);
+			}
+		</script>
+</th:block>
+</html>

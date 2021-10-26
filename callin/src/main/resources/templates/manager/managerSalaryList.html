@@ -118,7 +118,7 @@
 										<tbody th:each="salaryList: ${managerSalaryList}">
 												<tr>
 													<td rowspan="2" th:text="${salaryList.managerId}" style="vertical-align: inherit; font-weight: bold;"></td>
-													<td th:text="${salaryList.baseSalary}"></td>
+													<td th:text="${salaryList.baseSalary}" ></td>
 													<td th:text="${salaryList.bonus}"></td>
 													<td th:text="${salaryList.mealAllowance}"></td>
 													<td th:text="${salaryList.vehicleExpenses}"></td>
@@ -260,8 +260,6 @@
 				$('#searchValue').val(''); //검색어 초기화
 			})
 		});
-			
-		
 	</script>
 	
 	

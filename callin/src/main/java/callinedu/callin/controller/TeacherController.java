@@ -25,15 +25,37 @@ public class TeacherController {
 		this.teacherService = teacherService;
 	}
 	
-	@GetMapping("/teacherList")
-	public String getTeacherList(Model model){ 
-		
+	@GetMapping("/teacherTotalList")
+	public String getTeacherTotalList(Model model){ 
 		List<Teacher> teacherList = teacherService.getTeacherList();
 		model.addAttribute("title", "강사 목록");
 		model.addAttribute("teacherList",teacherList); 
-		System.out.println(teacherList);
+		return "teacher/teacherTotalList"; 
+	}
+	@GetMapping("/teacherModify")
+	public String modifyTeacher(@RequestParam String id, Model model){ 
+		System.out.println(id);
+		Teacher teacherInfo = teacherService.getTeacherInfoById(id);
+		model.addAttribute("teacher", teacherInfo);
+		return "teacher/teacherModify"; 
+	}
+	
+	@GetMapping("/teacherList")
+	public String getTeacherList(Model model){ 
+		List<Teacher> teacherList = teacherService.getTeacherList();
+		model.addAttribute("title", "강사 목록");
+		model.addAttribute("midTitle", "강사 목록");
+		model.addAttribute("teacherList",teacherList); 
 		return "teacher/teacherList"; 
 	}
+	
+	@GetMapping("/teacherRegister")
+	public String teacherRegister(Model model){ 
+		model.addAttribute("title", "강사 등록");
+		model.addAttribute("midTitle", "강사 등록");
+		return "teacher/teacherRegister"; 
+	}
+	
 	@GetMapping("/teacherSalaryList")
 	public String teacherSalaryList(Model model){ 
 		
@@ -60,14 +82,25 @@ public class TeacherController {
 		model.addAttribute("cardTitle", "강사 상세 정보");
 			
 		return "teacher/teacherSalary";
-		}
+	}
+	
+	@PostMapping("/teacherRegister")
+	public String teacherRegister(@RequestParam Map<String, String> map){ 
+		System.out.println(map);
+		teacherService.registerTeacher(map);
+		return "redirect:/admin/teacher/teacherRegister"; 
+	}
+	@PostMapping("/teacherModify")
+	public String teacherModify(@RequestParam Map<String, String> map){ 
+		System.out.println(map);
+		teacherService.modifyTeacher(map);
+		return "redirect:/admin/teacher/teacherTotalList"; 
+	}
 	
 	@PostMapping("/teacherSalary")
 	public String teacherSalarySettlement(TeacherSalarySettlement teacherSalarySettlement){ 
 		System.out.println(teacherSalarySettlement);
-		
 		teacherService.addTeacherSalarySettlement(teacherSalarySettlement);
-		
 		return "redirect:/admin/teacher/teacherSalary"; 
 	}
 	

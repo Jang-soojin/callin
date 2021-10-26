@@ -17,12 +17,18 @@
 	</resultMap>
 	
 	<resultMap type="RegularClass" id="regularClassResultMap">
-		<result property="regularClassCode" 			column="regular_class_code"/>
+		<result property="regularClassCode" 		column="regular_class_code"/>
 		<result property="classPolicyCode" 			column="class_policy_code"/>
 		<result property="courseName" 				column="course_name"/>
-		<result property="courseLanguage" 				column="course_language"/>
-		<result property="managerId" 		column="manager_id"/>
-		<result property="courseTuition" 		column="course_tuition"/>
+		<result property="courseLanguage" 			column="course_language"/>
+		<result property="managerId" 				column="manager_id"/>
+		<result property="courseTuition" 			column="course_tuition"/>
+		<association property="classPolicy" javaType="ClassPolicy">
+			<id property="classPolicyCode"			column="class_policy_code"/>
+			<result property="classPeriod" 			column="class_period"/>
+			<result property="classDay" 			column="class_day"/>
+			<result property="classTime" 			column="class_time"/>
+		</association>
 	</resultMap>
 	
 	
@@ -72,7 +78,7 @@
 	</select>
 
 	
-	<select id="searchPolicyList" parameterType="String" resultMap="classPolicyResultMap">
+	<select id="getClassPolicyListBySearchKey" parameterType="String" resultMap="classPolicyResultMap">
 		SELECT
 			  class_policy_code
 			, class_policy_name			
@@ -84,10 +90,12 @@
 			, class_postpone_period
 		FROM
 			class_policy
-		<where>
-			<if test="classPeriod != null and classPeriod != null"> <!-- 정책명 기간 분 -->
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="levelSearchKey != null and levelSearchKey != ''">
+				${levelSearchKey} LIKE CONCAT('%', #{classPolicySearchValue} ,'%')
 			</if>
-		</where>
+		</trim>
+		order by class_policy_name ASC limit 0,10;
 	</select>
 	
 	<select id="getClassPolicy" parameterType="ClassPolicy" resultMap="classPolicyResultMap">
@@ -100,9 +108,76 @@
 			class_postpone_day, 
 			class_postpone_days, 
 			class_postpone_period
-		FROM class_policy
-			order by class_policy_name ASC limit 0,10;
+		FROM 
+			class_policy order by class_policy_name ASC limit 0,10;
 	</select>
+	
+	<select id="getRegularClass" parameterType="RegularClass" resultMap="regularClassResultMap">
+		SELECT
+			r.regular_class_code,
+			r.class_policy_code, 
+			r.course_name, 
+			r.course_language, 
+			r.manager_id, 
+			r.course_tuition,
+			p.class_period,
+			p.class_day,
+			p.class_time
+		FROM 
+			regular_class AS r
+		INNER JOIN
+			class_policy AS p
+		ON
+			p.class_policy_code = r.class_policy_code	
+		order by r.course_name ASC limit 0,10;
+	</select>
+	
+	<select id="getPolicyInfoByCode" parameterType="String" resultMap="classPolicyResultMap">
+		SELECT
+			class_policy_code,
+			class_policy_name, 
+			class_period, 
+			class_day, 
+			class_time, 
+			class_postpone_day, 
+			class_postpone_days, 
+			class_postpone_period
+		FROM
+			class_policy
+		WHERE
+			class_policy_code = #{classPolicyCode};
+	</select>
+	<update id="modifyPolicy" parameterType="ClassPolicy">
+		UPDATE class_policy
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="classPolicyCode != null and classPolicyCode != ''.toString()">
+				class_policy_code = #{classPolicyCode},
+			</if>
+			<if test="classPolicyName != null and classPolicyName != ''.toString()">
+				class_policy_name = #{classPolicyName},
+			</if>
+			<if test="classPeriod != null and classPeriod != ''.toString()">
+				class_period = #{classPeriod},
+			</if>
+			<if test="classDay != null and classDay != ''.toString()">
+				class_day = #{classDay},
+			</if>
+			<if test="classTime != null and classTime != ''.toString()">
+				class_time = #{classTime},
+			</if>
+			<if test="classPostponeDay != null and classPostponeDay != ''.toString()">
+				class_postpone_day = #{classPostponeDay},
+			</if>
+			<if test="classPostponeDays != null and classPostponeDays != ''.toString()">
+				class_postpone_days = #{classPostponeDays},
+			</if>
+			<if test="classPostponePeriod != null and classPostponePeriod != ''.toString()">
+				class_postpone_period = #{classPostponePeriod},
+			</if>
+		</trim>
+		WHERE
+			class_policy_code= #{classPolicyCode};
+	</update>
 	<delete id="deleteClassPolicy" parameterType="String">
 		DELETE
 		FROM 
@@ -110,5 +185,23 @@
 		WHERE
 			class_policy_code = #{classPolicyCode};
 	</delete>
+	
+	<insert id="addRegularClass" parameterType="RegularClass">
+		INSERT INTO regular_class
+		(   regular_class_code
+		   ,class_policy_code
+		   ,course_name
+		   ,course_language
+		   ,manager_id
+		   ,course_tuition
+		) VALUES (
+		    CONCAT(NOW(), 'id001')
+		   ,#{classPolicyCode}
+		   ,#{courseName}
+		   ,#{courseLanguage}
+		   ,#{managerId}
+		   ,#{courseTuition}
+		);	
+	</insert>
 	
 </mapper>

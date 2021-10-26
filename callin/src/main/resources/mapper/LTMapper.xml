@@ -5,24 +5,75 @@
 <mapper namespace="callinedu.callin.mapper.LTMapper">
 	<resultMap type="LTApplyCode" id="lTApplyCodeResultMap">
 		<result property="lTCode" 					column="lt_code"/>
-		<result property="managerId" 				column="manager_id"/>
 		<result property="studentId" 				column="student_id"/>
+		<result property="userName" 				column="user_name"/>
+		<result property="userNickname" 			column="user_nickname"/>
+		<result property="skypeId" 					column="skype_id"/>
+		<result property="userEmail" 				column="user_email"/>
+		<result property="userPhone" 				column="user_phone"/>
 		<result property="lTApplyDate" 				column="lt_apply_date"/>
+		<result property="lTHopeDate" 				column="lt_hope_date"/>
 		<result property="lTHopeTime" 				column="lt_hope_time"/>
 		<result property="requestedTerm" 			column="requested_term"/>
-		<result property="approval" 				column="approval"/>
-		<result property="approvalDate" 			column="approval_date"/>
 		<association property="user" javaType="User">
 			<id property="userId" column="user_id"/>
 			<result property="userName" column="user_name"/>
 			<result property="userEmail" column="user_email"/>
 			<result property="userPhone" column="user_phone"/>
+			<result property="userId" column="user_id"/>
+			<result property="userNickname" column="user_nickname"/>
+			<result property="skypeId" column="skype_id"/>
 		</association>
 	</resultMap>
 	
+	<insert id="LTApply" parameterType="String">
+			INSERT INTO lt_apply_code
+				(	  lt_code
+					, student_id
+					, user_name
+					, user_nickname
+					, skype_id
+					, user_email
+					, user_phone
+					, lt_apply_date
+					, lt_hope_date
+					, lt_hope_time
+					, requested_term
+				) VALUES (
+					(Select CONCAT('level_test_code', '_', (SELECT LPAD(COUNT(*)+1,2,'0') FROM lt_apply_code AS LAC)))
+					, #{studentId}
+					, #{userName}
+					, #{userNickname}
+					, #{skypeId}
+					, #{userEmail}
+					, #{userPhone}
+					,CURDATE()
+					, #{lTHopeDate}
+					, #{lTHopeTime}
+					, #{requestedTerm}
+				 );
+	</insert>
+	
+	<select id="getlTApplyList" parameterType="String" resultMap="lTApplyCodeResultMap">
+		SELECT
+			l.lt_code
+			,l.lt_apply_date
+			, u.user_name
+			, u.user_email
+			, u.user_phone
+		FROM
+			lt_apply_code AS l
+		INNER JOIN
+			user_info AS u
+		ON
+			u.user_id=l.student_id
+	</select>
+	
+	
 	<select id="getLTApplyListBySearchKey" parameterType="String" resultMap="lTApplyCodeResultMap">
 		SELECT
-			l.lt_apply_date
+			l.lt_code
+			,l.lt_apply_date
 			, u.user_name
 			, u.user_email
 			, u.user_phone

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import callinedu.callin.domain.ClassPolicy;
+import callinedu.callin.domain.RegularClass;
 import callinedu.callin.mapper.ClassMapper;
 
 @Service
@@ -22,6 +23,20 @@ public class ClassService {
 	
 	public int addClassPolicy(ClassPolicy classPolicy) {
 		return classMapper.addClassPolicy(classPolicy);
+	}
+	
+	public int deleteClassPolicy(String classPolicyCode) {
+		
+		return classMapper.deleteClassPolicy(classPolicyCode);
+	}
+	
+	public int modifyPolicy(ClassPolicy classPolicy) {
+		
+		return classMapper.modifyPolicy(classPolicy);
+	}
+	
+	public ClassPolicy getPolicyInfoByCode(String classPolicyCode) {
+		return classMapper.getPolicyInfoByCode(classPolicyCode);
 	}
 	
 	public ClassPolicy classPolicyNameCheck(ClassPolicy classPolicy) {
@@ -42,8 +57,24 @@ public class ClassService {
       return classPolicy;
    }
 
-	public int deleteClassPolicy(String classPolicyCode) {
-		
-		return classMapper.deleteClassPolicy(classPolicyCode);
+
+	public List<ClassPolicy> getClassPolicyListBySearchKey(String levelSearchKey, String classPolicySearchValue) {
+		System.out.println(levelSearchKey + "<--------------------------------------입력받은 서치키");
+		System.out.println(classPolicySearchValue + "<--------------------------------------입력받은 값");
+		if("policyName".equals(levelSearchKey)) 	levelSearchKey = "class_policy_name";
+		if("classPeriod".equals(levelSearchKey)) 	levelSearchKey = "class_period";
+		if("classTime".equals(levelSearchKey))		levelSearchKey = "class_time";
+		return classMapper.getClassPolicyListBySearchKey(levelSearchKey, classPolicySearchValue);
 	}
+
+	public int addRegularClass(RegularClass regularClass) {
+		// TODO Auto-generated method stub
+		return classMapper.addRegularClass(regularClass);
+	}
+
+	public List<RegularClass> getRegularClass() {
+		List<RegularClass> regularClass = classMapper.getRegularClass();
+		return regularClass;
+	}
+
 }

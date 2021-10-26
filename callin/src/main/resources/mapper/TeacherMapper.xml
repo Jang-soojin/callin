@@ -7,6 +7,8 @@
 		<result property="teacherId" 			column="teacher_id"/>
 		<result property="nationality" 			column="nationality"/>
 		<result property="residence" 			column="residence"/>
+		<result property="skypeId" 				column="skype_id"/>
+		<result property="skypePw" 				column="skype_pw"/>
 		<result property="language" 			column="language"/>
 		<result property="timeZoneCode" 		column="time_zone_code"/>
 		<result property="contractTypeCode" 	column="contract_type_code"/>
@@ -28,9 +30,11 @@
 		<result property="managerInChargeGroup" column="manager_in_charge_group"/>
 		<association property="user" javaType="User">
 			<id property="userId" column="user_id"/>
-			<result property="userName" column="user_name"/>
-			<result property="userEmail" column="user_email"/>
-			<result property="userPhone" column="user_phone"/>
+			<result property="userName" 	column="user_name"/>
+			<result property="userNickname" 	column="user_nickname"/>
+			<result property="userEmail" 	column="user_email"/>
+			<result property="userPhone" 	column="user_phone"/>
+			<result property="userJoinDate" column="user_join_date"/>
 		</association>
 	</resultMap>
 	
@@ -87,6 +91,7 @@
 			ON 
 			ts.teacher_id = u.user_id 
 	</select>
+	
 	<select id="searchSalaryList" resultMap="teacherSalarySettlementResultMap" parameterType="String">
 		SELECT 
 			 ts.teacher_salary_settlement_code
@@ -119,8 +124,16 @@
 		SELECT 
 			 t.teacher_id
 			,u.user_name
+			,t.skype_id
+			,t.skype_pw
+			,u.user_phone
+			,u.user_email
+			,u.user_join_date
 			,t.contract_type_code
 			,t.unit_pay
+			,t.class_start_time
+			,t.class_end_time
+			,t.employment_status
 		FROM 
 			teacher_detail AS t
 			LEFT JOIN
@@ -132,9 +145,18 @@
 	<select id="getTeacherInfoById" resultMap="teacherResultMap" parameterType="String">
 		SELECT
 			 t.teacher_id
-			,u.user_name 
+			,u.user_name
+			,u.user_nickname
+			,t.skype_id
+			,t.skype_pw
+			,u.user_phone
+			,u.user_email
+			,u.user_join_date
 			,t.contract_type_code
 			,t.unit_pay
+			,t.class_start_time
+			,t.class_end_time
+			,t.employment_status
 		FROM
 			teacher_detail AS t
 			LEFT JOIN
@@ -186,4 +208,48 @@
 	</insert>
 	
 	
+	<insert id="addTeacherDetail" parameterType="String">
+		INSERT INTO teacher_detail
+			(
+			 teacher_id
+			,nationality
+			,language
+			,time_zone_code
+			,contract_type_code
+			,skype_id
+			,skype_pw
+			,unit_pay
+			,class_start_time
+			,class_end_time
+			,employment_status
+			,date_of_employment
+			)
+		VALUES
+			(
+			 #{id}
+			,'nationality002'
+			,'language002'
+			,'Timezone002'
+			,'contract_type002'
+			,#{skypeId}
+			,#{skypePw}
+			,#{unitPay}
+			 ,#{classStartTime}
+			,#{classEndTime}
+			,'재직'
+			,CURDATE()
+			)
+	</insert>
+	
+	<update id="modifyTeacher" parameterType="String">
+		Update teacher_detail
+		SET 
+			 skype_id = #{skypeId}
+			,skype_pw = #{skypePw}
+			,unit_pay = #{unitPay}
+			,class_start_time = #{classStartTime}
+			,class_end_time = #{classEndTime}
+		WHERE  
+			teacher_id = #{id}
+	</update>
 </mapper>

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="@{layout/default}">
-	  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+
 <!-- contents layout:fragment 정의 -->
-<th:block layout:fragment="customContents"> 
-				<!-- Content Wrapper. Contains page content -->
+<th:block layout:fragment="customContents">
+	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
@@ -29,78 +29,79 @@
 		<!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
+					<form id="salarySettlement" name="salarySettlement" action="/admin/teacher/teacherSalary" method="post">
 				<div class="row">
-					<!-- left column -->
-					<div class="col-md-6">
-						<!-- general form elements -->
-						<div class="card card-secondary">
-							<div class="card-header">
-								<h3 class="card-title" th:text="${cardTitle}">강사 상세 정보</h3>
-							</div>
-							<!-- /.card-header -->
-							<!-- form start -->
-							<form id="teacherInfo" name="teacherInfo">
+						<!-- left column -->
+						<div class="col-md-6">
+							<!-- general form elements -->
+							<div class="card card-secondary">
+								<div class="card-header">
+									<h3 class="card-title" th:text="${cardTitle}">강사 상세 정보</h3>
+								</div>
+								<!-- /.card-header -->
+								<!-- form start -->
 								<div class="card-body">
 									<p>강사 선택</p>
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
-											<button type="button" onclick="popUp()" class="btn btn-secondary">선택</button>
+											<button type="button" onclick="popUp()"	class="btn btn-secondary">선택</button>
 										</div>
 										<!-- /btn-group -->
-										<input type="text" class="form-control" id="teacherId" placeholder="ID" th:value="${teacherId}" readonly="readonly">
+										<input type="text" class="form-control" id="teacherId" name="teacherId"
+											placeholder="ID" th:value="${teacherId}" readonly="readonly">
 									</div>
 									<div class="form-group">
-										<label for="teacherName">이름</label> 
-										<input type="text" class="form-control" id="teacherName" placeholder="Name"	th:value="${teacherName}" readonly="readonly">
+										<label for="teacherName">이름</label> <input type="text"
+											class="form-control" id="teacherName" placeholder="Name" 
+											th:value="${teacherName}" readonly="readonly">
 									</div>
 									<div class="form-group">
-										<label for="teacherContractType">계약 유형</label> 
-										<input type="text" class="form-control" id="teacherContractType" placeholder="Contract-Type" th:value="${ContractType}"	readonly="readonly">
+										<label for="teacherContractType">계약 유형</label> <input
+											type="text" class="form-control" id="teacherContractType"
+											placeholder="Contract-Type" th:value="${ContractType}"
+											readonly="readonly">
 									</div>
 									<div class="form-group">
-										<label for="teacherHourlyRate">단위 급여</label> 
-										<input type="number" class="form-control" id="teacherHourlyRate" placeholder="Hourly-Rate" th:value="${HourlyRate}" readonly="readonly">
+										<label for="teacherUnitPay">단위 급여</label> <input
+											type="number" class="form-control" id="teacherUnitPay"
+											placeholder="Unit-Pay" th:value="${UnitPay}"
+											readonly="readonly">
 									</div>
 									<!-- Date range -->
 									<div class="form-group">
 										<label>급여 산정 기간</label>
 										<div class="input-group">
 											<div class="input-group-prepend">
-												<span class="input-group-text"> 
-													<i class="far fa-calendar-alt"></i>
+												<span class="input-group-text"> <i
+													class="far fa-calendar-alt"></i>
 												</span>
 											</div>
-											<input type="text" class="form-control float-right"	id="reservation">
+											<input type="text" class="form-control float-right"
+												id="reservation">
 										</div>
 										<!-- /.input group -->
 									</div>
 									<!-- /.form group -->
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input"
-											id="exampleCheck1"> <label class="form-check-label"
-											for="exampleCheck1">Check me out</label>
-									</div>
 								</div>
 								<!-- /.card-body -->
 
 								<div class="card-footer">
-									<button type="button" class="btn btn-secondary" id="checkWorkHour">근무시간 조회</button>
+									<button type="button" class="btn btn-secondary"
+										id="checkWorkHour">근무시간 조회</button>
 								</div>
-							</form>
-						</div>
-						<!-- /.card -->
-					</div>
-					<!--/.col (left) -->
-					<!-- Right column -->
-					<div class="col-md-6">
-						<!-- general form elements -->
-						<div class="card card-secondary">
-							<div class="card-header">
-								<h3 class="card-title">정산 상세 내역</h3>
 							</div>
-							<!-- /.card-header -->
-							<!-- form start -->
-							<form>
+							<!-- /.card -->
+						</div>
+						<!--/.col (left) -->
+						<!-- Right column -->
+						<div class="col-md-6">
+							<!-- general form elements -->
+							<div class="card card-secondary">
+								<div class="card-header">
+									<h3 class="card-title">정산 상세 내역</h3>
+								</div>
+								<!-- /.card-header -->
+								<!-- form start -->
 								<div class="card-body">
 									<div class="form-group">
 										<p>
@@ -110,13 +111,13 @@
 											placeholder="Total Working Hours" readonly="readonly">
 									</div>
 									<div class="form-group">
-										<label for="bonus">상여금(Bonus)</label> <input type="number"
-											id="bonus" class="form-control" placeholder="Bonus">
+										<label for="bonus">상여금(Bonus)</label> <input type="number" name="bonus"
+											id="bonus" class="form-control" placeholder="bonus" value=0>
 									</div>
 									<div class="form-group">
 										<label for="deduction">기타 공제(Deduction)</label> <input
-											type="number" id="deduction" class="form-control"
-											placeholder="Deduction">
+											type="number" name="deduction" id="deduction" class="form-control"
+											placeholder="Deduction" value=0>
 									</div>
 									<div>
 										<button type="button"
@@ -124,43 +125,49 @@
 									</div>
 									<br>
 									<div class="form-group">
-										<label>최종 지급액(PHP)</label> 
-										<input type="number" id="totalSalaryPHP" class="form-control" placeholder="Total Salary(PHP)"	readonly="readonly">
+										<label>적용 환율</label> <input type="number"
+											class="form-control" id="appliedExchangeRate" name="appliedExchangeRate" 
+											placeholder="Applied Exchange Rate" readonly="readonly">
+									</div>
+									<div class="form-group">
+										<label>최종 지급액(PHP)</label> <input type="number"
+											class="form-control" id="totalSalaryPHP" name="totalSalaryPhp" 
+											placeholder="Total Salary(PHP)" readonly="readonly">
 									</div>
 									<div class="form-group">
 										<label>최종 지급액(KRW)</label> <input type="number"
-											class="form-control" id="totalSalaryKRW"placeholder="Total Salary(KRW)"
-											readonly="readonly">
+											class="form-control" id="totalSalaryKRW" name="totalSalaryKrw"
+											placeholder="Total Salary(KRW)" readonly="readonly">
 									</div>
 								</div>
 								<!-- /.card-body -->
 								<div class="card-footer">
-									<button type="button" class="btn btn-block btn-secondary btn-s">저장</button>
+									<button id="save" type="button" class="btn btn-block btn-secondary btn-s">저장</button>
 								</div>
-							</form>
+							</div>
+							<!-- /.card -->
 						</div>
-						<!-- /.card -->
+						<!--/.col (right) -->
 					</div>
-					<!--/.col (right) -->
-				</div>
 				<!-- /.row -->
+				</form>
 			</div>
 			<!-- /.container-fluid -->
 		</section>
 		<!-- /.content -->
 	</div>
 	<!-- /.content-wrapper -->
-				 
-				 <!-- 김경수의 자바스크립트 코드 시작  -->
-<!-- jQuery -->
-<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+
+	<!-- 김경수의 자바스크립트 코드 시작  -->
+	<!-- jQuery -->
+	<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
 
 
 	<script type="text/javascript">
 		function popUp() {
 			var popupOpt = 'width=820px, height=777px, left=100, top=100, scrollbar=no';
 			var popHref = '/admin/teacher/teacherList';
-			open(popHref, "페이지 이름 뭐하지", popupOpt);
+			open(popHref, "팝업 창", popupOpt);
 		}
 	</script>
 	<script>
@@ -168,82 +175,147 @@
 			//Date range picker
 			$('#reservation').daterangepicker()
 		})
+
+// 총 근무시간 조회 이벤트 : Ajax를 통해 선택한 강사 정보와 급여 산정기간 data를 통해 총 근무 시간(분) 조회 및 입력.
+		$(function() {
+			$("#checkWorkHour").click(function() {
+				if($('#teacherContractType').val()!=''){
+					var teacherId = $("#teacherId").val()
+					var dateRangeFirst = $("#reservation").val().substring(0, 10);
+					var dateRangeLast = $("#reservation").val().substring(13, 23);
 	
-		// Ajax를 통해 선택한 강사 정보와 급여 산정기간 data를 통해 총 근무 시간(분) 조회 및 입력.
-		$(function(){
-		   $("#checkWorkHour").click(function(){
-			    var teacherId = $("#teacherId").val() 
-				var dateRange1 = $("#reservation")[0].value.substring(0,10);
-				var dateRange2 = $("#reservation")[0].value.substring(13,23);
+					var MM1 = dateRangeFirst.substring(0, 2)
+					var DD1 = dateRangeFirst.substring(3, 5)
+					var YYYY1 = dateRangeFirst.substring(6, 10)
+					var newDateRangeFirst = YYYY1 + "-" + MM1 + "-" + DD1;
+	
+					var MM2 = dateRangeLast.substring(0, 2)
+					var DD2 = dateRangeLast.substring(3, 5)
+					var YYYY2 = dateRangeLast.substring(6, 10)
+					var newDateRangeLast = YYYY2 + "-" + MM2 + "-" + DD2
+	
+					var request = $.ajax({
+						url : "/admin/teacher/getTotalWorkHour", //요청 url
+						method : "POST", //요청 방식
+						data : {
+							teacherId : teacherId,
+							dateRangeFirst : newDateRangeFirst,
+							dateRangeLast : newDateRangeLast
+						},
+						dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
+					});
+					request.done(function(data) {
+						$("#TWH").val(data) //data는 총 근무시간(분)으로 입력
+					});
+	
+					request.fail(function(jqXHR, textStatus) {
+						alert("요청 실패: " + textStatus);
+					});
+				}else{
+					alert("강사를 선택해주세요")
+					return;
+				}
+			})
+		})
+
+// 급여 정산 버튼 이벤트 : 입력된 값과 API를 통해 받아온 최신 환율을 이용해 급여 계산.
+		$(function() {
+			$("#calc").click(function() {
+				var twh = $("#TWH").val();
+				var unitPay = $("#teacherUnitPay").val();
+				var bonus = $("#bonus").val();
+				var deduction = $("#deduction").val();
+				var contractType = $('#teacherContractType').val()
 				
-				var MM1 = dateRange1.substring(0,2)
-				var DD1 = dateRange1.substring(3,5)
-				var YYYY1 = dateRange1.substring(6,10)
-				var newDateFormat1 = YYYY1+"-"+MM1+"-"+DD1;			
-		    	
-				var MM2 = dateRange2.substring(0,2)
-				var DD2 = dateRange2.substring(3,5)
-				var YYYY2 = dateRange2.substring(6,10)
-				var newDateFormat2 = YYYY2+"-"+MM2+"-"+DD2			
-		    	
-		    	/* ********************************************** */
-		    	//$.ajax() 호출시 ajax에 관련된 객체를 반환한다.
-		    	var request = $.ajax({
-		    		url: "/admin/teacher/teacherSalaryAjax2", //요청 url
-		    		method: "POST", //요청 방식
-		    		data: {	 teacherId : teacherId
-		    				,dateRange1 : newDateFormat1
-		            		,dateRange2 : newDateFormat2
-		            	}, //요청하는 곳에 전달될 데이타
-		    		dataType: "json" //응답되어 받은 데이타를 parsing 시킬 방식
-		    		});
-		    		request.done(function(data){
-		    			$("#TWH").val(data) //data는 총 근무시간(분)으로 입력
-		        	});
-	
-		    		request.fail(function( jqXHR, textStatus ) {
-		    			    			
-		    			alert( "요청 실패: " + textStatus );
-		    			
-		    		});
-		   	
-		   })
-	    })
-	    
-	    $(function(){
-	    	$("#calc").click(function(){
-	    		var twh = $("#TWH").val();
-	    		var hr = $("#teacherHourlyRate").val();
-	    		var bonus = $("#bonus").val();
-	    		var deduction = $("#deduction").val();
-	    		
-	    		var sum = Math.ceil(twh*(hr/60)+(bonus-deduction));
-	    		$("#totalSalaryPHP").val(sum)
-	    		/* -------------------------------------------------------------------------------- */
-	    		var request = $.ajax({
-	    			//환율 open API URL 
-		    		url: "http://api.exchangeratesapi.io/v1/latest?access_key=1d4ae7f592a21345bdf8b8de12dab34c&base =KRW & symbols = PHP", //요청 url
-		    		method: "POST", //요청 방식
-		    		data: {	}, //요청하는 곳에 전달될 데이타
-		    		dataType: "json" //응답되어 받은 데이타를 parsing 시킬 방식
-		    		});
-		    		request.done(function(data){
-		    			//data.rate.PHP = 필리핀 페소-유로 환율
-		    			//data.rate.KRW = 한국 원-유로 환율
-		    			//무료버전 API에서는 유로 기준 환율밖에 적용이 안되므로 더 정확하게 사용하려면 유료버전 사용하자.
-						var sumKRW =Math.ceil((sum/(data.rates.PHP))*(data.rates.KRW)) ;
-						$("#totalSalaryKRW").val(sumKRW);
-		    			});
-	
-		    		request.fail(function( jqXHR, textStatus ) {
-		    			    			
-		    			alert( "요청 실패: " + textStatus );
-		    			
-		    		});
-	    	})
-	    })
-	   
-	    		/* -------------------------------------------------------------------------------- */
+				//1.계약 조건 항목이 공백이 아닌 경우(=강사를 선택한 경우)
+				if(contractType!=''){
+					//1-1.계약 조건이 시급인 경우
+					if(contractType=='시급'){
+						var sum = Math.ceil(twh * (unitPay/ 60)	+ (bonus - deduction));
+					}
+					//1-2.계약 조건이 월급인 경우	
+					else if(contractType=='월급'){
+						var sum = parseInt(unitPay)+ (bonus - deduction);
+					}
+					
+					var sumPHP = sum;
+					//최종 정산액이 음수인 경우
+					if(sumPHP<0){
+						alert('최종 정산액은 음수가 될 수 없습니다.')
+						return;
+					}
+				//2.계약 조건 항목이 공백인 경우(=강사를 선택하지 않은경우)
+				}else{
+					alert("강사를 선택해주세요")
+					return;
+				}
+				// 총 근무시간이 공백인 경우 정산버튼 클릭시 0으로 반영
+				if($("#TWH").val()==''){
+					$("#TWH").val(0)
+				}
+				// 보너스가 공백인 경우 정산버튼 클릭시 0으로 반영
+				if($("#bonus").val()==''){
+					$("#bonus").val(0)
+				}
+				// 기타 공제가 공백인 경우 정산버튼 클릭시 0으로 반영
+				if($("#deduction").val()==''){
+					$("#deduction").val(0)
+				}
+				//정산 성공시 입력 가능 항목들 수정 불가능하도록 모두 readonly 처리
+				$("#reservation").prop('readonly', true);
+				$("#bonus").prop('readonly', true);
+				$("#deduction").prop('readonly', true);
+				
+				var request = $.ajax({
+							//환율 open API URL 
+							url : "http://api.exchangeratesapi.io/v1/latest?access_key=1d4ae7f592a21345bdf8b8de12dab34c&base =KRW & symbols = PHP", //요청 url
+							method : "POST", //요청 방식
+							data : {}, //요청하는 곳에 전달될 데이타
+							dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
+							});
+				request.done(function(data) {
+					//data.rate.PHP = 필리핀 페소-유로 환율
+					//data.rate.KRW = 한국 원-유로 환율
+					//무료버전 API에서는 유로 기준 환율밖에 적용이 안되므로 더 정확하게 사용하려면 유료버전 사용하자.
+					
+					var sumKRW = Math.ceil((sum / (data.rates.PHP))* (data.rates.KRW));
+					var exchangeRate = Math.round((data.rates.KRW)/(data.rates.PHP)*100)/100
+					
+					// 최종 지급액에 입력
+					$("#appliedExchangeRate").val(exchangeRate)
+					$("#totalSalaryPHP").val(sumPHP)
+					$("#totalSalaryKRW").val(sumKRW);
+				});
+
+				request.fail(function(jqXHR, textStatus) {
+					alert("요청 실패: " + textStatus);
+				});
+			})
+		})
+		
+// 저장버튼 유효성 검사 : 
+		$(function() {
+			$('#save').click(function() {
+				if($('#bonus').val()==''){
+					alert('상여금(bonus)는 숫자값만 입력할 수 있습니다.')
+					$('#bonus').focus();
+					return;
+				}
+				else if($("#deduction").val()==''){
+					alert('기타 공제(deduction)는 숫자값만 입력할 수 있습니다.')
+					$('#deduction').focus();
+					return;
+				}
+				else if($("#appliedExchangeRate").val()=='' || $("#totalSalaryPHP").val()=='' || $("#totalSalaryKRW").val()==''){
+					alert('정산 버튼을 눌러주세요')
+					$('#calc').focus();
+					return;
+				}else{ 
+					$('#salarySettlement').submit()					
+				}
+				
+			})
+		})
 	</script>
 </th:block>
 </html>

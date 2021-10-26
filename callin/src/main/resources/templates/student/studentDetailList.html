@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+<head th:replace="fragments/head :: headFragment"></head>
+
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<div id="wrapper">
+			<!-- begin topNav -->
+			<div th:replace="fragments/topNav :: topNavFragment"></div>
+			<!-- end topNav -->
+			
+			<!-- Main Sidebar Container -->
+			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
+			<th:block layout:fragment="studentDetailList"> 
+				<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 th:text="${midTitle}"></h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</section>
+			
+			    <!-- Main content -->
+			    <section class="content">
+					<div class="container-fluid">
+						<div class="card card card-secondary">
+							<!-- /.card-header -->
+							<form id="chooseStudent" name="chooseStudent" th:action="@{/admin/studnet/studentDetailSearch}" method="post">
+								<div class="card-body">
+									<input type="hidden" name="studentId" id="studentId" value="" />
+									
+									<table class="table table-bordered table-hover" border="1" style="width: 100%; vertical-align: inherit;">
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center; background-color:#ebebeb;"><span>학생 검색</span></td>
+											<td colspan="3">
+												<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 120px; display: inline;">
+													<option value="" selected="selected">검색 항목</option>
+													<option value="user_id">아이디</option>
+													<option value="user_name">이름</option>
+													<option value="user_email">이메일</option>
+												</select> 
+												<input id="searchValue"class="form-control" type="text" style="width: 400px; display: inline; virtical-">
+												<button type="button" id="searchButton" class="btn btn-secondary">검색</button>
+											</td>
+										</tr>
+									</table>
+								</div>
+								<!-- /.card-body -->
+								<div class="card-body">
+							
+									<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
+										<thead>
+											<tr>
+												<th><input type="checkbox"></th>
+												<th>NO.</th>
+												<th>학생이름</th>
+												<th>학생아이디</th>
+												<th>학생이메일</th>
+												<th>상세정보</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="studentDetail : ${studentDetailSearch}">
+												<td><input type="checkbox"></td>
+												<td>1</td>
+												<td th:text="${studentDetail.userName}"></td>
+												<td th:text="${studentDetail.userId}"></td>
+												<td th:text="${studentDetail.userEmail}"></td>
+												<td><a href="/admin/student/studentDetailInfo" class="nav-link"><input type="submit" class="btn btn-secondary" value="상세보기"></a></td>
+											</tr>
+										</tbody>
+									</table>		
+								</div>
+							</form>
+						</div>
+					</div>
+				</section>		
+			</div>
+		</th:block>
+			<div th:replace="fragments/footer :: footerFragment"></div>
+		</div>
+		<!-- jQuery -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<!-- jQuery UI 1.11.4 -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+		  $.widget.bridge('uibutton', $.ui.button)
+		</script>
+		<!-- Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- ChartJS -->
+		<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
+		<!-- Sparkline -->
+		<script th:src="@{/AdminLTE-master/plugins/sparklines/sparkline.js}"></script>
+		<!-- daterangepicker -->
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- date-range-picker -->
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- Tempusdominus Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+		<!-- Summernote -->
+		<script th:src="@{/AdminLTE-master/plugins/summernote/summernote-bs4.min.js}"></script>
+		<!-- overlayScrollbars -->
+		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
+		<!-- 데이터 테이블 -->
+	
+		<script type="text/javascript">
+			$(function(){
+				$(document).on('click', '#searchButton',function(){
+					var searchKey = $('#searchKey').val();
+					var searchValue = $('#searchValue').val();
+					var searchDataObj = {};
+					searchDataObj.searchKey = searchKey;
+					searchDataObj.searchValue = searchValue;
+					$.ajax({
+						url : "/admin/student/studentDetailSearch"
+					  , contentType : 'application/json'
+					  , dataType : 'json'
+					  , data : JSON.stringify(searchDataObj)
+					  , type : 'post'
+					  , success : function(data){
+						  var sHtml = "";
+						  $("#example2 tbody").empty();
+						  for(var i = 0; i < data.studentList.length; i++){
+							  sHtml += "<tr>";
+							  sHtml += "<td>";
+							  sHtml += "<input type='checkbox'>";
+							  sHtml += "</td>";
+							  sHtml += "<td>";
+							  sHtml += (i+1);
+							  sHtml += "</td>";
+							  sHtml += "<td>" + data.studentList[i].userName + "</td>";
+							  sHtml += "<td>" + data.studentList[i].userId + "</td>";
+							  sHtml += "<td>" + data.studentList[i].userEmail + "</td>";
+							  sHtml += "<td>";
+							  sHtml += "<input type='hidden' name='dUserId' value='" + data.studentList[i].userId + "' />";
+							  sHtml += "<a href='javascript:void(0)' class='btn btn-secondary' onclick='javascript:fnDtl(this); return false;'>상세보기</a>";
+							  sHtml += "</td>";
+							  sHtml += "</tr>";
+						  }
+						  $("#example2 tbody").append(sHtml);
+					  }
+					});
+				});
+			});
+			
+			function fnDtl(obj){
+				$("#studentId").val($(obj).closest("td").find("input[name=dUserId]").val());
+				
+				var frm = document.chooseStudent;
+				
+				frm.action = "/admin/student/studentDetailInfo";
+				frm.target = "_self";
+ 				frm.method = "post";
+				frm.submit();
+			}
+		</script>
+		
+</body>
+</html>

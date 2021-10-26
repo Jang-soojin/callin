@@ -35,7 +35,7 @@
 							</div>
 							<div class="col-sm-6">
 								<ol class="breadcrumb float-sm-right">
-									<li class="breadcrumb-item"><a th:href="@{/admin/LT/LTApply}"> 레벨테스트 관리 </a></li>
+									<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
 									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
 								</ol>
 							</div>
@@ -98,36 +98,36 @@
 		                	<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
 						<div class="row">
 							<div class="col-sm-12">
-								<table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+								<form id="chooseLT" th:action="@{/admin/LT/LTListDetail}" method="get">
+								<table id="example1" class="table table-bordered table-hover" style="text-align: center;">
 									<thead>
 										<tr role="row">
-		                  					<th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label=": activate to sort column descending">
+		                  					  <th>
 		                  						<input type="checkbox" id="exampleCheck1"></th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="No.: activate to sort column ascending">No.</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="신청일: activate to sort column ascending">신청일</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="이름: activate to sort column ascending">이름</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="이메일: activate to sort column ascending">이메일</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="전화번호: activate to sort column ascending">전화번호</th>
-							                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="상세보기(진행일자/진행상황): activate to sort column ascending">상세보기</th>
+							                  <th>No.</th>
+							                  <th>신청일</th>
+							                  <th>이름</th>
+							                  <th>이메일</th>
+							                  <th>전화번호</th>
+							                  <th>상세보기</th>
+							                  <th>삭제</th>
 										</tr>
 		                  			</thead>
 									<tbody id="ltList">
-				                  		<!-- <tr role="row" class="odd" >
-						                    <td class="dtr-control sorting_1" tabindex="0">
-							                    <div class="form-check">
-							                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-							                    </div>
-						                    </td>
-						                    <td>0001</td>
-						                    <td>2020-12-07</td>
-						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">이희진</a></td>
-						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">123@123.com</a></td>
-						                    <td><a href="/admin/LT/LTListDetail" class="nav-link">010-1234-1234</a></td>
-						                  	<td>전화영어/카톡</td>
-						                    <td>2021-01-30/취소</td>
-				                  		</tr> -->
+											<tr th:each="l : ${LTApplyList}">
+									 			<th><input type="checkbox"></th>
+												<td>1</td>
+												<td th:text="${l.lTApplyDate}"></td>
+												<td th:text="${l.user.userName}"></td>
+												<td th:text="${l.user.userEmail}"></td>
+												<td th:text="${l.user.userPhone}"></td>
+												<td><a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail"><i class="fas fa-folder"></i>View</a></td>
+												<td><a class="btn btn-danger btn-sm" href="#"><i class="fas fa-trash"></i>Delete</a></td>
+											</tr>
+										</th:block>
 									</tbody>
 								</table>
+								</form>
 							</div>
 						</div>
 							<div class="row">
@@ -237,7 +237,7 @@
 						$('#ltList').html("");
 						for(var i=0; i<data.length; i++){
 							htmltag += "<tr>";
-							htmltag += '<td class="dtr-control sorting_1" tabindex="0">';
+							htmltag += '<td>';
 							htmltag += '<div class="form-check">';
 							htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
 							htmltag += '</div>';
@@ -259,7 +259,10 @@
 							htmltag += data[i].user.userPhone;
 							htmltag += "</td>";
 							htmltag += "<td>";
-							htmltag += '<a href="/admin/LT/LTListDetail" class="nav-link"><input type="submit" class="btn btn-secondary" value="상세보기"></a>';
+							htmltag += '<a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail"><i class="fas fa-folder"></i>View</a>';
+							htmltag += "</td>";
+							htmltag += "<td>";
+							htmltag += '<a class="btn btn-danger btn-sm" href="#"><i class="fas fa-trash"></i>Delete</a>';
 							htmltag += "</td>";
 							htmltag += "</tr>";
 							}

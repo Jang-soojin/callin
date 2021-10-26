@@ -7,6 +7,7 @@ public class RegularClass {
 	private String courseLanguage;
 	private String managerId;
 	private String courseTuition;
+	private ClassPolicy classPolicy;
 	public String getRegularClassCode() {
 		return regularClassCode;
 	}
@@ -43,10 +44,30 @@ public class RegularClass {
 	public void setCourseTuition(String courseTuition) {
 		this.courseTuition = courseTuition;
 	}
+	public ClassPolicy getClassPolicy() {
+		return classPolicy;
+	}
+	public void setClassPolicy(ClassPolicy classPolicy) {
+		this.classPolicy = classPolicy;
+	}
 	@Override
 	public String toString() {
-		return "RegularClass [regularClassCode=" + regularClassCode + ", classPolicyCode=" + classPolicyCode
-				+ ", courseName=" + courseName + ", courseLanguage=" + courseLanguage + ", managerId=" + managerId
-				+ ", courseTuition=" + courseTuition + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("RegularClass [regularClassCode=");
+		builder.append(regularClassCode);
+		builder.append(", classPolicyCode=");
+		builder.append(classPolicyCode);
+		builder.append(", courseName=");
+		builder.append(courseName);
+		builder.append(", courseLanguage=");
+		builder.append(courseLanguage);
+		builder.append(", managerId=");
+		builder.append(managerId);
+		builder.append(", courseTuition=");
+		builder.append(courseTuition);
+		builder.append(", classPolicy=");
+		builder.append(classPolicy);
+		builder.append("]");
+		return builder.toString();
 	}
 }

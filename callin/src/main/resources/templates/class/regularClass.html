@@ -6,6 +6,16 @@
 	<title th:text="${title}"></title>
 </th:block>
 <head th:replace="fragments/head :: headFragment"></head>
+<style>
+.table td, .table th {
+    padding: 12px 6px;
+    text-align: center;
+}
+.table td .btn{
+    padding: 0px;
+    text-align: center;
+}
+</style>
 	<!-- daterange picker -->
 	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
 	<body class="hold-transition sidebar-mini layout-fixed">
@@ -49,29 +59,36 @@
 									</div>
 									<!-- /.card-header -->
 									<div class="card-body">
-										<form>
+										<form id="submitAll" action="/admin/class/addRegularClass" method="post">
 											<div class="form-group">
 												<label> 수업명 </label>
 												<div class="input-group-prepend">
-													<input type="text" id="courseName"> 
+													<input type="text" id="courseName" name="courseName">
 												</div>
 											</div>
 											<div class="form-group">
 												<label> 수업 정책 </label>
 												<div class="input-group-prepend">
-													<input type="text" id="classPolicyName" readonly="readonly"> 
+													<input type="text" id="classPolicyName" class="classPolicyName" readonly="readonly"> 
 												</div>
 											</div>
+											<input type="hidden" id="classPolicyCode" name="classPolicyCode" readonly="readonly"> 
 											<div class="form-group">
 												<label> 과정 수강료 </label>
 												<div class="input-group-prepend">
-													<input type="text" id="courseTuition"> 
+													<input type="text" id="courseTuition" name="courseTuition"> 
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 수업 언어 </label>
+												<div class="input-group-prepend">
+													<input type="text" id="courseLanguage" name="courseLanguage"> 
 												</div>
 											</div>
 											<div class="form-group">
 												<label> 등록자 </label>
 												<div class="input-group-prepend">
-													<input type="text" id="managerId" value="id001" readonly="readonly"> 
+													<input type="text" id="managerId" name="managerId" value="id001" readonly="readonly"> 
 												</div>
 											</div>
 										</form>
@@ -87,41 +104,39 @@
 									<div class="card-header">
 										<h3 class="card-title"> 수업 정책 선택 </h3>
 									</div>
-									<div class="card-body form-group">
+									<div class="card-body form-group" style="padding: 8px;">
 										<div class="float-right">
-											<form>
-												<div class="form-inline form-group"> 
-													<select class="form-control levelSearchKey">
-														<option value="policyName">정책명</option>
-														<option value="classPeriod">수업기간(주)</option>
-														<option value="classTime">수업시간(분)</option>
-													</select>
-													<div id="searchByName" style="display: block;">
-														<input type="text" class="form-control">
-													</div>
-													<div id="searchByPeriod" style="display: none;">
-														<select class="form-control" id="classPeriod">
-															<option> :: 선택하세요 ::</option>
-															<option value="4"> 4주 </option>
-															<option value="8"> 8주 </option>
-															<option value="12"> 12주 </option>
-														</select>
-													</div>
-													<div id="searchByTime" style="display: none;">
-														<select class="form-control" id="classTime">
-															<option> :: 선택하세요 ::</option>
-															<option value="10"> 10분 </option>
-															<option value="20"> 20분 </option>
-															<option value="30"> 30분 </option>
-															<option value="40"> 40분 </option>
-															<option value="50"> 50분 </option>
-														</select>
-													</div>
-													<button class="btn btn-default "> 검색 </button> 
-												</div>
-											</form>
+											<div class="form-inline form-group"> 
+												<select class="form-control levelSearchKey">
+											<option value="policyName">정책명</option>
+											<option value="classPeriod">수업기간(주)</option>
+											<option value="classTime">수업시간(분)</option>
+										</select>
+										<div id="className" style="display: block;">
+											<input type="text" class="form-control" id="searchByName">
 										</div>
-										<table class="table table-striped" >
+										<div id="classPeriod" style="display: none;">
+											<select class="form-control" id="searchByPeriod">
+												<option> :: 선택하세요 ::</option>
+												<option value="4"> 4주 </option>
+												<option value="8"> 8주 </option>
+												<option value="12"> 12주 </option>
+											</select>
+										</div>
+										<div id="classTime" style="display: none;">
+											<select class="form-control" id="searchByTime">
+												<option> :: 선택하세요 ::</option>
+												<option value="10"> 10분 </option>
+												<option value="20"> 20분 </option>
+												<option value="30"> 30분 </option>
+												<option value="40"> 40분 </option>
+												<option value="50"> 50분 </option>
+											</select>
+										</div>
+										<button class="btn btn-default" id="policyListSearchCheck"> 검색 </button> 
+											</div>
+										</div>
+										<table class="table table-striped" style="font-size: 12px;">
 											<thead>
 												<tr>
 													<th>
@@ -147,21 +162,18 @@
 													</th>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody id="classPolicyList">
 												<th:block th:if="${!#lists.isEmpty(classPolicy)}" >         
 													<tr th:each="l : ${classPolicy}">
-														<td th:text="${l.classPolicyName}"></td>
-														<td th:text="${l.classPeriod}"></td>
+														<td th:text="${l.classPolicyName}" th:data-classPolicyCode = "${l.classPolicyCode}"></td>
+														<td th:text="${l.classPeriod} + 주"></td>
 														<td th:text="${l.classDay}"></td>
 														<td th:text="${l.classTime}"></td>
 														<td th:text="${l.classPostponeDay}"></td>
 														<td th:text="${l.classPostponeDays}"></td>
 														<td th:text="${l.classPostponePeriod}"></td>
 														<td>
-															<a th:href="@{/#}">수정</a>
-														</td>
-														<td>
-															<a th:href="@{/admin/class/deleteClassPolicy(classPolicyCode=${l.classPolicyCode})}">삭제</a>
+															<button class="btn policySelectBtn" type="button" style="font-size: 12px;"> 선택</button>
 														</td>
 													</tr>
 												</th:block>
@@ -176,7 +188,7 @@
 							<!-- /.card -->
 							</div>
 							<div>
-								<button style="width: 200px; margin-left: 750px"  type="submit" class="form-control"> 정규 수업 등록 </button>
+								<button style="width: 200px; margin-left: 750px" class="form-control" onclick="checkAll()" type="button"> 정규 수업 등록 </button>
 							</div>
 						<!--/.col (right) --> 
 					</div>
@@ -223,46 +235,105 @@
 		</script>
 		<script type="text/javascript">
 		$(function(){
-			$("#searchPolicy").on("click", function(){
-				
-				var classPeriod = $("#classPeriod").val();
-				var classDay = $("#classDay").val();
-				var classTime = $("#classTime").val();
-				var html = "";
-				var sendData = {	"classPeriod":classPeriod
-								,	"classDay":classDay
-								,	"classTime":classTime}
-				$.ajax({
-					method : 'POST',
-					url : '/admin/class/searchPolicyList',
-					data : sendData,
-					success : function(resp){
-						console.log(resp[0])
-					}
-			    })	
-				
-			});
-		})
-		$(function(){
 			$(".levelSearchKey").change(function(){
 				if($(".levelSearchKey").val() == "classTime"){
-					$("#searchByName").css('display', 'none');
-					$("#searchByTime").css('display', 'block');
-					$("#searchByPeriod").css('display', 'none');
+					$("#className").css('display', 'none');
+					$("#classTime").css('display', 'block');
+					$("#classPeriod").css('display', 'none');
 				}
 				else if($(".levelSearchKey").val() == "classPeriod"){
-					$("#searchByName").css('display', 'none');
-					$("#searchByTime").css('display', 'none');
-					$("#searchByPeriod").css('display', 'block');
+					$("#className").css('display', 'none');
+					$("#classTime").css('display', 'none');
+					$("#classPeriod").css('display', 'block');
 				}
 				else{
-					$("#searchByName").css('display', 'block');
-					$("#searchByTime").css('display', 'none');
-					$("#searchByPeriod").css('display', 'none');
+					$("#className").css('display', 'block');
+					$("#classTime").css('display', 'none');
+					$("#classPeriod").css('display', 'none');
 				}													
 			});
 		})
+		$(function(){
+			$(document).on('click', '.policySelectBtn', function(){
+				document.getElementById("classPolicyName").value =  $(this).parent().parent().children().first().text();
+				document.getElementById("classPolicyCode").value =  $(this).parent().parent().children().first().attr('data-classPolicyCode');
+				//parent로 접근 1stchild
+			});
+		})
+		function checkAll() {courseLanguage
+			if (document.getElementById('courseName').value == '') {
+				alert('수업명을 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classPolicyName').value == '') {
+				alert('수업 정책을 선택해 주세요.');
+				return false;
+			}else if (document.getElementById('courseTuition').value == '') {
+				alert('수강료를 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('courseLanguage').value == '') {
+				alert('수업 언어를 입력해 주세요.');
+				return false;
+			}
+			alert('정책 등록이 완료되었습니다!'); 
+			document.getElementById('submitAll').submit();
+			return true;
+		}
+		$(function(){
+			$(document).on('click','#policyListSearchCheck', function(){
+				
+				var levelSearchKey = $('.levelSearchKey').val();
+				var classPolicySearchValue;
+				if(levelSearchKey == "policyName") classPolicySearchValue = $('#searchByName').val();
+				else if(levelSearchKey == "classPeriod") classPolicySearchValue = $('#searchByPeriod').val();
+				else if(levelSearchKey == "classTime") classPolicySearchValue = $('#searchByTime').val();
+
+				var htmlTag = "";
+				var sendData = {"levelSearchKey":levelSearchKey, "classPolicySearchValue":classPolicySearchValue};
+				
+				$.ajax({
+					method : 'POST', //요청방식
+					url : '/admin/class/classPolicyListBySearch', //요청주소
+					data : sendData,	//전달 할 파라미터
+					dataType:'json',	//받아 올 포맷 방식
+					// 응답이 완료 되었을 경우 실행
+
+					success : function(data){
+						$('#classPolicyList').html("");
+						for(var i=0; i<data.length; i++){
+							htmlTag += '<tr>';
+							htmlTag += '<td data-classPolicyCode="';
+							htmlTag += data[i].classPolicyCode;
+							htmlTag += '">';
+							htmlTag += data[i].classPolicyName;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classPeriod;
+							htmlTag += '주</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classDay;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classTime;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classPostponeDay;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classPostponeDays;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classPostponePeriod;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += '<button class="btn policySelectBtn" type="button" style="font-size: 12px;"> 선택</button>';							
+							htmlTag += '</td>';
+						}
+						$("#classPolicyList").html(htmlTag);
+					}
+						
+				});
+			});
+		})
 		</script>
-		
-</body>
+	</body>
 </html>

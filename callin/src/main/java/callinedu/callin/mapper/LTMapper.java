@@ -5,21 +5,35 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import callinedu.callin.domain.LT;
 import callinedu.callin.domain.LTApplyCode;
 
 @Mapper
 public interface LTMapper {
 	
-	public List<LT> getLTList();
+	//레벨테스트 신청
+	public int LTApply(String studentId
+			, String userName
+			, String userNickname
+			, String skypeId
+			, String userEmail
+			, String userPhone
+			, String lTHopeDate
+			, String lTHopeTime
+			, String requestedTerm
+			);
+
+	//레벨테스트신청목록
+	public List<LTApplyCode> getlTApplyList();
 	
+	//레벨테스트신청목록조회
 	public List<LTApplyCode> getLTApplyListBySearchKey(@Param(value = "levelSearchKey") 	String levelSearchKey
 													  ,@Param(value = "lTApplySearchValue") String lTApplySearchValue
 													  ,@Param(value = "searchStartDate") 	String searchStartDate
 													  ,@Param(value = "searchEndDate") 		String searchEndDate);
 	
-	public List<LT> getLTListDetail();
+	public List<LTApplyCode> LTListDetail();
 		
-	public List<LT> LTListMynote();
-	
+	public List<LTApplyCode> LTListMynote();
+
+
 }

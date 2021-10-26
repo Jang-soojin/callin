@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="callinedu.callin.mapper.EbookMapper">
+  	<resultMap type="EbookData" id="ebookDataResultMap">
+		<result property="ebookDataCode" 			column="ebook_data_code"/>
+		<result property="ebookName" 				column="ebook_name"/>
+		<result property="ebookLevel" 				column="ebook_level"/>
+		<result property="ebookFile" 				column="ebook_file"/>
+		<result property="registrationDate" 		column="registration_date"/>
+		<result property="managerId" 				column="manager_id"/>
+	</resultMap>
+	
+ 	<select id="getEbookList" resultMap="ebookDataResultMap" parameterType="String">
+		SELECT 
+			  ebook_data_code
+			, ebook_name
+			, ebook_level
+			, ebook_file
+			, registration_date
+			, manager_id
+		FROM 
+			ebook_data
+	</select>
+	
+ 	<select id="getEbookListBySearchKey" resultMap="ebookDataResultMap" parameterType="String">
+		SELECT 
+			  ebook_data_code
+			, ebook_name
+			, ebook_level
+			, ebook_file
+			, registration_date
+			, manager_id
+		FROM 
+			ebook_data
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchKey != null and searchKey != ''.toString()">
+				${searchKey} LIKE CONCAT('%', #{searchValue},'%')
+			</if>
+		</trim>	
+	</select>
+	
+	<delete id="deleteEbookList" parameterType="String">
+		DELETE
+		FROM 
+			ebook_data
+		WHERE
+			ebook_data_code = #{ebookDataCode};
+	</delete>
+	
+</mapper>

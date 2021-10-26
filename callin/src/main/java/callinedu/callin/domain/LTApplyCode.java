@@ -2,13 +2,16 @@ package callinedu.callin.domain;
 
 public class LTApplyCode {
 	private String lTCode;
-	private String managerId;
 	private String studentId;
+	private String userName;
+	private String userNickname;
+	private String skypeId;
+	private String userEmail;
+	private String userPhone;
 	private String lTApplyDate;
+	private String lTHopeDate;
 	private String lTHopeTime;
 	private String requestedTerm;
-	private String approval;
-	private String approvalDate;
 	private User user;
 	public String getlTCode() {
 		return lTCode;
@@ -16,23 +19,53 @@ public class LTApplyCode {
 	public void setlTCode(String lTCode) {
 		this.lTCode = lTCode;
 	}
-	public String getManagerId() {
-		return managerId;
-	}
-	public void setManagerId(String managerId) {
-		this.managerId = managerId;
-	}
 	public String getStudentId() {
 		return studentId;
 	}
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserNickname() {
+		return userNickname;
+	}
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
+	public String getSkypeId() {
+		return skypeId;
+	}
+	public void setSkypeId(String skypeId) {
+		this.skypeId = skypeId;
+	}
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+	public String getUserPhone() {
+		return userPhone;
+	}
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
 	public String getlTApplyDate() {
 		return lTApplyDate;
 	}
 	public void setlTApplyDate(String lTApplyDate) {
 		this.lTApplyDate = lTApplyDate;
+	}
+	public String getlTHopeDate() {
+		return lTHopeDate;
+	}
+	public void setlTHopeDate(String lTHopeDate) {
+		this.lTHopeDate = lTHopeDate;
 	}
 	public String getlTHopeTime() {
 		return lTHopeTime;
@@ -46,18 +79,6 @@ public class LTApplyCode {
 	public void setRequestedTerm(String requestedTerm) {
 		this.requestedTerm = requestedTerm;
 	}
-	public String getApproval() {
-		return approval;
-	}
-	public void setApproval(String approval) {
-		this.approval = approval;
-	}
-	public String getApprovalDate() {
-		return approvalDate;
-	}
-	public void setApprovalDate(String approvalDate) {
-		this.approvalDate = approvalDate;
-	}
 	public User getUser() {
 		return user;
 	}
@@ -69,25 +90,32 @@ public class LTApplyCode {
 		StringBuilder builder = new StringBuilder();
 		builder.append("LTApplyCode [lTCode=");
 		builder.append(lTCode);
-		builder.append(", managerId=");
-		builder.append(managerId);
 		builder.append(", studentId=");
 		builder.append(studentId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userNickname=");
+		builder.append(userNickname);
+		builder.append(", skypeId=");
+		builder.append(skypeId);
+		builder.append(", userEmail=");
+		builder.append(userEmail);
+		builder.append(", userPhone=");
+		builder.append(userPhone);
 		builder.append(", lTApplyDate=");
 		builder.append(lTApplyDate);
+		builder.append(", lTHopeDate=");
+		builder.append(lTHopeDate);
 		builder.append(", lTHopeTime=");
 		builder.append(lTHopeTime);
 		builder.append(", requestedTerm=");
 		builder.append(requestedTerm);
-		builder.append(", approval=");
-		builder.append(approval);
-		builder.append(", approvalDate=");
-		builder.append(approvalDate);
 		builder.append(", user=");
 		builder.append(user);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 }

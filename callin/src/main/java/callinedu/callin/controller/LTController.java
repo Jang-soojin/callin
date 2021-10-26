@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import callinedu.callin.domain.LT;
 import callinedu.callin.domain.LTApplyCode;
 import callinedu.callin.service.LTService;
 
@@ -33,34 +32,41 @@ public class LTController {
 		this.lTService =lTService;
 	}
 	
-	@GetMapping("/login")
-	public String login(){
-		
-		System.out.println("constroller 실행");
-		
-		return "LT/login"; 
-	}
-	
 	@GetMapping("/LTApply")
 	public String LTApply(Model model){ 
 		System.out.println("constroller 실행");
 		
-		List<LT> lTApply = lTService.getLTList();
-		System.out.println(lTApply);
 		model.addAttribute("title", "레벨테스트신청");
 		model.addAttribute("midTitle", "레벨테스트신청"); 
 		
 		return "LT/LTApply"; 
 	}
 	
-	@GetMapping("/LTApplyList")
+	@PostMapping("/LTApply")
+	public String LTApply(@RequestParam Map<String, Object> map) {
+		
+		
+		
+		System.out.println("===================");
+		System.out.println("커맨드 객체 : map : " + map);
+		System.out.println("===================");
+		
+		lTService.LTApply(map);
+		
+		
+		return "redirect:/admin/LT/LTApply";
+		
+	}
+	
+	
+	@RequestMapping(value = "/LTApplyList", method = RequestMethod.GET)
 	public String LTApplyList(Model model){ 
 		System.out.println("constroller 실행");
 		
-		List<LT> LTApplyList = lTService.getLTApplyList();
-		System.out.println(LTApplyList);
+		List<LTApplyCode> LTApplyList = lTService.getLTApplyList();
 		model.addAttribute("title", "레벨테스트신청리스트");
 		model.addAttribute("midTitle", "레벨테스트신청리스트"); 
+		model.addAttribute("LTApplyList", LTApplyList); 
 		
 		return "LT/LTApplyList"; 
 	}
@@ -83,6 +89,7 @@ public class LTController {
 		
 		map.put("result", result);
 		
+		
 		return map; 
 	}
 	
@@ -90,7 +97,7 @@ public class LTController {
 	public String LTListDetail(Model model){ 
 		System.out.println("constroller 실행");
 		
-		List<LT> lTListDetail = lTService.getLTListDetail();
+		List<LTApplyCode> lTListDetail = lTService.LTListDetail();
 		System.out.println(lTListDetail);
 		model.addAttribute("title", "레벨테스트 상세정보");
 		model.addAttribute("midTitle", "레벨테스트 상세정보"); 
@@ -102,7 +109,7 @@ public class LTController {
 	public String LTListMynote(Model model){ 
 		System.out.println("constroller 실행");
 		
-		List<LT> lTListMynote = lTService.getLTListMynote();
+		List<LTApplyCode> lTListMynote = lTService.LTListMynote();
 		System.out.println(lTListMynote);
 		model.addAttribute("title", "레벨테스트신청리스트");
 		model.addAttribute("midTitle", "레벨테스트신청리스트"); 

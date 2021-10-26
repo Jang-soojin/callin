@@ -27,191 +27,193 @@
 		<!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-4">
-						<!-- general form elements -->
-						<div class="card card-secondary">
-							<div class="card-header">
-								<h3 class="card-title" th:text="${cardTitle}">매니저 상세 정보</h3>
-							</div>
-							<!-- /.card-header -->
-							<!-- form start -->
-							<form id="managerInfo" name="managerInfo">
-								<div class="card-body">
-									<p>매니저 선택</p>
-									<div class="input-group mb-3">
-										<div class="input-group-prepend">
-											<button type="button" onclick="popUp()" class="btn btn-secondary">선택</button>
-										</div>
-										<!-- /btn-group -->
-										<input type="text" class="form-control" id="managerId" placeholder="ID" th:value="${managerId}" readonly="readonly">
-									</div>
-									<div class="form-group">
-										<label for="managerName">이름</label> 
-										<input type="text" class="form-control" id="managerName" placeholder="Name"	th:value="${managerName}" readonly="readonly">
-									</div>
-									<div class="form-group">
-										<label for="managerContractType">계약 유형</label> 
-										<input type="text" class="form-control" id="managerContractType" placeholder="Contract-Type" th:value="${ContractType}"	readonly="readonly">
-									</div>
-									<div class="form-group">
-										<label for="managerHourlyRate">단위 급여</label> 
-										<input type="number" class="form-control" id="managerHourlyRate" placeholder="Hourly-Rate" th:value="${HourlyRate}" readonly="readonly">
-									</div>
-									<!-- Date range -->
-									<div class="form-group">
-										<label>급여 산정 기간</label>
-										<div class="input-group">
+				<form id="salarySettlement" name="salarySettlement" action="/admin/manager/save" method="post">
+					<div class="row">
+						<!-- left column -->
+						<div class="col-md-4">
+							<!-- general form elements -->
+							<div class="card card-secondary" style="height: 98%;">
+								<div class="card-header">
+									<h3 class="card-title" >매니저 상세 정보</h3>
+								</div>
+								<!-- /.card-header -->
+									<div class="card-body">
+										<label for="managerId">매니저 선택</label>
+												
+										<div class="input-group mb-3">
 											<div class="input-group-prepend">
-												<span class="input-group-text"> 
-													<i class="far fa-calendar-alt"></i>
-												</span>
+												<button type="button" onclick="popUp()"	class="btn btn-secondary">선택</button>
 											</div>
-											<input type="text" class="form-control float-right"	id="reservation">
+											<input type="text" class="form-control" id="managerId" name="managerId" placeholder="ID" th:value="${managerId}" readonly="readonly">
 										</div>
-										<!-- /.input group -->
+										<div class="form-group">
+											<label for="managerName">이름</label> 
+											<input type="text" class="form-control" id="managerName"  name="managerName" placeholder="Name"	th:value="${managerName}" readonly="readonly">
+										</div>
+											<div class="form-group">
+											<label for="managerPostion">매니저 직급</label> 
+											<input type="text" class="form-control" id="managerPosition"  name="managerPosition" placeholder="Manager Position" th:value="${managerPostion}" readonly="readonly">
+										</div>
+										<div class="form-group">
+											<label for="managerContractType">계약 유형</label> 
+											<input type="text" class="form-control" id="managerContractType" placeholder="Contract-Type" th:value="${ContractType}"	readonly="readonly">
+										</div>
+										<div class="form-group">
+												<label for="baseSalary">기본급</label>
+											<input type="number" id="baseSalary" name="baseSalary" class="form-control"
+												placeholder="Base Salary" readonly="readonly">
+										</div>
+										<div class="row">
+											<div class="form-group col-md-6">
+												<label for="dependants" style="display: block;">부양 가족 수</label> 
+												<input type="text" class="form-control" id="dependants"  name="dependants" placeholder="dependants" th:value="${dependants}" readonly="readonly" style="width: 100%;">
+											</div>
+											<div class="form-group col-md-6">
+												<label for="minorChildren" >7~20세 자녀 수</label> 
+												<input type="text" class="form-control" id="minorChildren"  name="minorChildren"  placeholder="Minor Children" th:value="${minorChildren}" readonly="readonly" style="width: 100%;">
+											</div>
+										</div>
+										<!-- Date range -->
+										<div class="form-group">
+											<label>급여 산정 기간</label>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text"> 
+														<i class="far fa-calendar-alt"></i>
+													</span>
+												</div>
+												<input type="text" class="form-control float-right"	id="reservation">
+											</div>
+											<!-- /.input group -->
+										</div>
+										<!-- /.form group -->
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">Check me out</label>
+										</div>
 									</div>
-									<!-- /.form group -->
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input"
-											id="exampleCheck1"> <label class="form-check-label"
-											for="exampleCheck1">Check me out</label>
+									<!-- /.card-body -->
+	
+									<div class="card-footer" style="bottom: 0px;position: absolute;width: -webkit-fill-available">
+										<button type="button" class="btn btn-block btn-secondary" id="lookUp">조회</button>
 									</div>
-								</div>
-								<!-- /.card-body -->
-
-								<div class="card-footer">
-									<button type="button" class="btn btn-secondary" id="checkWorkHour">근무시간 조회</button>
-								</div>
-							</form>
-						</div>
-						<!-- /.card -->
-					</div>
-					<!--/.col (left) -->
-					<div class="col-md-4">
-						<!-- general form elements -->
-
-						<div class="card card-secondary">
-							<div class="card-header">
-								<h3 class="card-title">정산 상세 내역</h3>
 							</div>
-							<!-- /.card-header -->
-							<!-- form start -->
-							<form>
-								<div class="card-body">
-									<div class="form-group">
-										<p>
-											<label for="TWH">기본급</label>
-										</p>
-										<input type="number" id="TWH" class="form-control"
-											placeholder="Total Working Hours" readonly="readonly">
-									</div>
-									<div class="form-group">
-										<label for="bonus">상여금(Bonus)</label> <input type="number"
-											id="bonus" class="form-control" placeholder="Bonus">
-									</div>
-									<div class="form-group">
-										<label for="deduction">식대</label> <input type="number"
-											id="deduction" class="form-control" placeholder="Deduction">
-									</div>
-									<div class="form-group">
-										<label for="deduction">차량지원비</label> <input type="number"
-											id="deduction" class="form-control" placeholder="Deduction">
-									</div>
-									<div class="form-group">
-										<label for="deduction">기타 수당</label> <input type="number"
-											id="deduction" class="form-control" placeholder="Deduction">
-									</div>
-									<div>
-										<button type="button"
-											class="btn btn-block btn-secondary btn-s">정산</button>
-									</div>
-									<br>
-									<div class="form-group">
-										<label>비과세 제외 합계</label> <input type="number"
-											class="form-control" placeholder="Total Wage(PHP)"
-											readonly="readonly">
-									</div>
-									<div class="form-group">
-										<label>최종 지급액(KRW)</label> <input type="number"
-											class="form-control" placeholder="Total Wage(KRW)"
-											readonly="readonly">
-									</div>
-								</div>
-								<!-- /.card-body -->
-							</form>
+							<!-- /.card -->
 						</div>
-
-						<!--/.col (right) -->
-
-					</div>
-					<!-- Right column -->
-					<div class="col-md-4">
-						<!-- general form elements -->
-
-						<div class="card card-secondary">
-							<div class="card-header">
-								<h3 class="card-title">공제 내역</h3>
+						<!--/.col (left) -->
+						<div class="col-md-4">
+							<!-- general form elements -->
+	
+							<div class="card card-secondary" style="height: 98%;">
+								<div class="card-header">
+									<h3 class="card-title">정산 상세 내역</h3>
+								</div>
+								<!-- /.card-header -->
+								<!-- form start -->
+									<div class="card-body">
+										<div class="form-group">
+												<label for="SBA">근태 반영 급여</label>
+											<input type="number" id="SBA" class="form-control"	placeholder="Salary based on attendance." readonly="readonly">
+										</div>
+										<div class="form-group">
+											<label for="bonus">상여금</label> <input type="number"
+												id="bonus" name="bonus" class="form-control" placeholder="Bonus">
+										</div>
+										<div class="form-group">
+											<label for="mealAllowance">식대</label> <input type="number"
+												id="mealAllowance" name="mealAllowance" class="form-control" placeholder="Meal Allowance">
+										</div>
+										<div class="form-group">
+											<label for="vehicleExpenses">차량지원비</label> <input type="number"
+												id="vehicleExpenses" name="vehicleExpenses" class="form-control" placeholder="Vehicle Expenses">
+										</div>
+										<div class="form-group">
+											<label for="otherAllowance">기타 수당</label> <input type="number"
+												id="otherAllowance" name="otherAllowance" class="form-control" placeholder="Other Allowance">
+										</div>
+										<div class="form-group">
+											<label for="otherDeduction">기타공제(-)</label> <input type="number"
+												id="otherDeduction" name="otherDeduction" class="form-control" placeholder="Other Deduction">
+										</div>
+										<div>
+											<button type="button" class="btn btn-block btn-secondary btn-s" id="calc">정산</button>
+										</div>
+										<br>
+										<div class="form-group">
+											<label>세전합계</label> 
+											<input type="number" class="form-control" id="totalSalaryPreTax" name="totalSalaryPreTax" placeholder="Total" readonly="readonly">
+										</div>
+										<div class="form-group">
+											<label>비과세 제외 합계</label> 
+											<input type="number" class="form-control" id="totalSalaryTaxFree" name="totalSalaryTaxFree" placeholder="Total(Pre-tax)" readonly="readonly">
+										</div>
+									</div>
+									<!-- /.card-body -->
 							</div>
-							<!-- /.card-header -->
-							<!-- form start -->
-							<form>
-								<div class="card-body">
-									<div class="form-group">
-										<p>
-											<label for="TWH">소득세</label>
-										</p>
-										<input type="number" id="TWH" class="form-control"
-											placeholder="Total Working Hours" readonly="readonly">
-									</div>
-									<div class="form-group">
-										<label for="bonus">지방세</label> <input type="number" id="bonus"
-											class="form-control" placeholder="Bonus">
-									</div>
-									<div class="form-group">
-										<label for="deduction">국민연금</label> <input type="number"
-											id="deduction" class="form-control" placeholder="Deduction">
-									</div>
-									<div class="form-group">
-										<label for="deduction">건강보험</label> <input type="number"
-											id="deduction" class="form-control" placeholder="Deduction">
-									</div>
-									<div class="form-group">
-										<label for="deduction">장기요양보험</label> <input type="number"
-											id="deduction" class="form-control" placeholder="Deduction">
-									</div>
-									<div class="form-group">
-										<label for="deduction">고용보험</label> <input type="number"
-											id="deduction" class="form-control" placeholder="Deduction">
-									</div>
-									<div>
-										<button type="button"
-											class="btn btn-block btn-secondary btn-s">정산</button>
-									</div>
-									<br>
-									<div class="form-group">
-										<label>기타 공제 합계</label> <input type="number"
-											class="form-control" placeholder="Total Wage(PHP)"
-											readonly="readonly">
-									</div>
-									<div class="form-group">
-										<label>최종 지급액(KRW)</label> <input type="number"
-											class="form-control" placeholder="Total Wage(KRW)"
-											readonly="readonly">
-									</div>
-								</div>
-								<!-- /.card-body -->
-								<div class="card-footer">
-									<button type="button" class="btn btn-block btn-secondary btn-s">저장</button>
-								</div>
-							</form>
+							<!--/.col (right) -->
 						</div>
-						<!--/.col (right) -->
+						<!-- Right column -->
+						<div class="col-md-4">
+							<!-- general form elements -->
+	
+							<div class="card card-secondary">
+								<div class="card-header">
+									<h3 class="card-title">공제 내역</h3>
+								</div>
+								<!-- /.card-header -->
+									<div class="card-body">
+										<div class="form-group">
+											<p>
+												<label for="incomeTax">소득세</label>
+											</p>
+											<input type="number" id="incomeTax" name="incomeTax" class="form-control"
+												placeholder="Income Tax" readonly="readonly">
+										</div>
+										<div class="form-group">
+											<label for="localIncomeTax">지방세</label> 
+											<input type="number" id="localIncomeTax" name="localIncomeTax"
+												class="form-control" placeholder="Local Income Tax">
+										</div>
+										<div class="form-group">
+											<label for="nationalPension">국민연금</label> <input type="number"
+												id="nationalPension"  name="nationalPension"class="form-control" placeholder="National pension">
+										</div>
+										<div class="form-group">
+											<label for="healthInsurance">건강보험</label> <input type="number"
+												id="healthInsurance" name="healthInsurance" class="form-control" placeholder="Health Insurance">
+										</div>
+										<div class="form-group">
+											<label for="longTermCareInsurance">장기요양보험</label> <input type="number"
+												id="longTermCareInsurance" name="longTermCareInsurance" class="form-control" placeholder="Long-Term Care Insurance">
+										</div>
+										<div class="form-group">
+											<label for="employmentIinsurance">고용보험</label> <input type="number"
+												id="employmentInsurance" name="employmentIinsurance" class="form-control" placeholder="Employment Insurance">
+										</div>
+										<div class="form-group">
+											<label>공제액 합계</label> <input type="number"
+												class="form-control" id="totalDeduction" name="totalDeduction" placeholder="Total Deduction"
+												readonly="readonly">
+										</div>
+										<div class="form-group">
+											<label>실 지급액</label> <input type="number"
+												class="form-control" id="TotalSalaryAfterTax" name="totalSalaryAfterTax" placeholder="Net Amount"
+												readonly="readonly">
+										</div>
+									</div>
+									<!-- /.card-body -->
+									<div class="card-footer">
+										<button type="submit" class="btn btn-block btn-secondary btn-s">저장</button>
+									</div>
+							</div>
+							<!--/.col (right) -->
+						</div>
+						<!-- /.row -->
 					</div>
-					<!-- /.row -->
-				</div>
-				<!-- /.container-fluid -->
+				</form>
+			</div>	<!-- /.container-fluid -->
+		
 		</section>
 		<!-- /.content -->
 	</div>
@@ -222,7 +224,7 @@
 	<script type="text/javascript">
 		function popUp() {
 			var popupOpt = 'width=820px, height=777px, left=100, top=100, scrollbar=no';
-			var popHref = '/admin/teacher/teacherList';
+			var popHref = '/admin/manager/managerList';
 			open(popHref, "페이지 이름 뭐하지", popupOpt);
 		}
 	</script>
@@ -238,35 +240,43 @@
 		// Ajax를 통해 선택한 강사 정보와 급여 산정기간 data를 통해 총 근무 시간(분) 조회 및 입력.
 
 		$(function() {
-			$("#checkWorkHour").click(function() {
+			$("#lookUp").click(function() {
 				var managerId = $("#managerId").val()
-				var dateRange1 = $("#reservation")[0].value.substring(0, 10);
-				var dateRange2 = $("#reservation")[0].value.substring(13, 23);
+				var dateRangeFirst = $("#reservation").val().substring(0, 10);
+				var dateRangeLast = $("#reservation").val().substring(13, 23);
+				var baseSalary = $("#baseSalary").val();
+				
+				var MM1 = dateRangeFirst.substring(0, 2)
+				var DD1 = dateRangeFirst.substring(3, 5)
+				var YYYY1 = dateRangeFirst.substring(6, 10)
+				var newDateFormatFirst = YYYY1 + "-" + MM1 + "-" + DD1;
 
-				var MM1 = dateRange1.substring(0, 2)
-				var DD1 = dateRange1.substring(3, 5)
-				var YYYY1 = dateRange1.substring(6, 10)
-				var newDateFormat1 = YYYY1 + "-" + MM1 + "-" + DD1;
-
-				var MM2 = dateRange2.substring(0, 2)
-				var DD2 = dateRange2.substring(3, 5)
-				var YYYY2 = dateRange2.substring(6, 10)
-				var newDateFormat2 = YYYY2 + "-" + MM2 + "-" + DD2
+				var MM2 = dateRangeLast.substring(0, 2)
+				var DD2 = dateRangeLast.substring(3, 5)
+				var YYYY2 = dateRangeLast.substring(6, 10)
+				var newDateFormatLast = YYYY2 + "-" + MM2 + "-" + DD2
+				
+				var date =new Date(newDateFormatLast)
+				var dayOfMonth = new Date(date.getFullYear(),(date.getMonth()+1),0).getDate();
+				var startDate = moment(newDateFormatFirst);
+				var endDate = moment(newDateFormatLast);
+				var dateDiff = endDate.diff(startDate, 'days')+1
 
 				/* ********************************************** */
 				//$.ajax() 호출시 ajax에 관련된 객체를 반환한다.
 				var request = $.ajax({
-					url : "/admin/teacher/teacherSalaryAjax2", //요청 url
+					url : "/admin/manager/manangerAbsent", //요청 url
 					method : "POST", //요청 방식
 					data : {
 						managerId : managerId,
-						dateRange1 : newDateFormat1,
-						dateRange2 : newDateFormat2
+						dateRangeFirst : newDateFormatFirst,
+						dateRangeLast : newDateFormatLast
 					}, //요청하는 곳에 전달될 데이타
 					dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
 				});
-				request.done(function(data) {
-					$("#TWH").val(data) //data는 총 근무시간(분)으로 입력
+				request.done(function(data) { // 리턴 받을 data는 결근 횟수
+					var workedDays = Math.ceil((baseSalary/dayOfMonth)*(dateDiff-data));
+					$("#SBA").val(workedDays) //data는 총 근무시간(분)으로 입력
 				});
 
 				request.fail(function(jqXHR, textStatus) {
@@ -280,39 +290,80 @@
 
 		$(function() {
 			$("#calc").click(function() {
-				var twh = $("#TWH").val();
-				var hr = $("#managerHourlyRate").val();
-				var bonus = $("#bonus").val();
-				var deduction = $("#deduction").val();
-
-				var sum = Math.ceil(twh * (hr / 60)
-						+ (bonus - deduction));
-				$("#totalSalaryPHP").val(sum)
-				/* -------------------------------------------------------------------------------- */
-				var request = $
-						.ajax({
-							url : "http://api.exchangeratesapi.io/v1/2021-09-05?access_key=1d4ae7f592a21345bdf8b8de12dab34c&base =KRW & symbols = PHP", //요청 url
-							method : "POST", //요청 방식
-							data : {}, //요청하는 곳에 전달될 데이타
-							dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
-						});
-				request.done(function(data) {
-					//data.rate.PHP = 필리핀 페소-유로 환율
-					//data.rate.KRW = 한국 원-유로 환율
-					//무료버전 API에서는 유로 기준 환율밖에 적용이 안되므로 더 정확하게 사용하려면 유료버전 사용하자.
-					var sumKRW = Math
-							.ceil((sum / (data.rates.PHP))
-									* (data.rates.KRW));
-					$("#totalSalaryKRW").val(sumKRW);
+				var SBA = parseInt($("#SBA").val()); // 근태 반영 급여
+				var bonus = parseInt($("#bonus").val());
+				var mealAllowance = parseInt($("#mealAllowance").val());
+				var vehicleExpenses = parseInt($("#vehicleExpenses").val());
+				var otherAllowance = parseInt($("#otherAllowance").val());
+				var otherDeduction = parseInt($("#otherDeduction").val());
+				var dependants = parseInt($("#dependants").val());
+				var minorChildren = parseInt($("#minorChildren").val());
+				
+				var total = SBA+bonus+mealAllowance+vehicleExpenses+otherAllowance-otherDeduction
+				var taxFreeTotal = SBA+bonus+mealAllowance+vehicleExpenses+otherAllowance-otherDeduction
+				//식대 비과세 최대 10만원
+				if(mealAllowance<100000){
+					taxFreeTotal = taxFreeTotal-mealAllowance;
+				}else if(mealAllowance>=100000){
+					taxFreeTotal = taxFreeTotal-100000;
+				}
+				//차량지원비 비과세 최대 20만원
+				if(vehicleExpenses<200000){
+					taxFreeTotal = taxFreeTotal-vehicleExpenses;
+				}else if(vehicleExpenses>=200000){
+					taxFreeTotal = taxFreeTotal-200000;
+				}
+				
+				$('#totalSalaryPreTax').val(total);
+				$('#totalSalaryTaxFree').val(taxFreeTotal);
+				
+				
+				
+				
+				var dependantsNum = 'dependantx'+(dependants+minorChildren);
+				if(dependantsNum >11){
+					dependantsNum = 11;
+				}
+				var milliTaxFreeTotal = Math.ceil(taxFreeTotal/1000);
+				if(milliTaxFreeTotal < 770){
+					milliTaxFreeTotal = 770
+				}
+				var request = $.ajax({
+					url : "/admin/manager/incomeTax", //요청 url
+					method : "POST", //요청 방식
+					data : {
+						dependantsNum : dependantsNum,
+						milliTaxFreeTotal : milliTaxFreeTotal
+					}, //요청하는 곳에 전달될 데이타
+					dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
+				});
+				request.done(function(data) { //리턴받은 data는 기간 내 결근 및 무급 휴가 횟수
+					$('#incomeTax').val(data);
+					$('#localIncomeTax').val(Math.ceil(data*0.1));
+					$('#nationalPension').val(Math.ceil(taxFreeTotal*0.045));
+					$('#healthInsurance').val(Math.ceil(taxFreeTotal*0.0343));
+					var healthInsurance = $('#healthInsurance').val();
+					$('#longTermCareInsurance').val(Math.ceil(healthInsurance*0.1152));
+					$('#employmentInsurance').val(Math.ceil(taxFreeTotal*0.008));
+					var totalDeduction = 
+					  parseInt($('#incomeTax').val())
+					+ parseInt($('#localIncomeTax').val())
+					+ parseInt($('#nationalPension').val())
+					+ parseInt($('#healthInsurance').val())
+					+ parseInt($('#longTermCareInsurance').val())
+					+ parseInt($('#employmentInsurance').val());
+					
+					$('#totalDeduction').val(totalDeduction)
+					$('#TotalSalaryAfterTax').val(taxFreeTotal-totalDeduction)
 				});
 
 				request.fail(function(jqXHR, textStatus) {
-
 					alert("요청 실패: " + textStatus);
+				});
 
+				
 				});
 			})
-		})
 	</script>
 </th:block>
 

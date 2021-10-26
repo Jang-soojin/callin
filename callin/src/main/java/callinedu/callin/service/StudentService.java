@@ -76,16 +76,7 @@ public class StudentService {
 		return studentMapper.selectMileageResnList();
 	}
 	
-	public List<Mileage> getallMileageGet() {
-		
-		return null;
-	}
-	
-	  public List<Mileage> getwaitingMileageGet() {
-	  
-	  return null; 
-	}
-	  
+
 	  
 	  
 	public List<Mileage> getAllMileageListBySearch(Map<String, Object> paramMap){
@@ -112,7 +103,15 @@ public class StudentService {
 		
 		return studentMapper.getwaitingMileageListBySearch(paramMap);
 	}  
-	  
-	 
-		
+	
+	/**
+	 * 대기 마일리지 즉시적립으로 Update
+	 * @param paramMap
+	 */
+	public void updateMileageWaiting(Map<String, Object> paramMap){
+		studentMapper.updateMileageWaiting(paramMap);
+	}
+	public void deleteMileageWaiting(Map<String, Object> paramMap) {
+		studentMapper.deleteMileageWaiting(paramMap);
+	}
 }
