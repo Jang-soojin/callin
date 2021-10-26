@@ -27,8 +27,6 @@ public class EbookController {
 		this.ebookService = ebookService;
 	}
 	
-	
-	
 	  
 	//교재등록
 	@GetMapping("/ebookRegister")
