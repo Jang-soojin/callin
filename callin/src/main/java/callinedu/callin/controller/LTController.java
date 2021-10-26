@@ -45,8 +45,6 @@ public class LTController {
 	@PostMapping("/LTApply")
 	public String LTApply(@RequestParam Map<String, Object> map) {
 		
-		
-		
 		System.out.println("===================");
 		System.out.println("커맨드 객체 : map : " + map);
 		System.out.println("===================");

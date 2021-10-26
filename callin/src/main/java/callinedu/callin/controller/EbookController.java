@@ -10,10 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import callinedu.callin.domain.EbookData;
+import callinedu.callin.domain.EbookLevel;
 import callinedu.callin.service.EbookService;
 
 @Controller
@@ -30,14 +32,31 @@ public class EbookController {
 	  
 	//교재등록
 	@GetMapping("/ebookRegister")
-	public String LTListDetail(Model model){ 
+	public String ebookRegister(Model model){ 
 			
 		model.addAttribute("title", "교재관리");
 		model.addAttribute("midTitle", "교재등록"); 
 		
 		return "ebook/ebookRegister"; 
 	}
-	  
+	
+	//교재등록
+	@PostMapping("/ebookRegister")
+	public String ebookRegister(@RequestParam Map<String, Object> map) {
+		
+		System.out.println("===================");
+		System.out.println("커맨드 객체 : map : " + map);
+		System.out.println("===================");
+		
+		//교재등록
+		ebookService.ebookRegister(map);
+		
+		return "redirect:/admin/ebook/ebookRegister";
+		
+	}
+	
+	
+	
 	  
 	  
 	//교재리스트화면
@@ -50,6 +69,7 @@ public class EbookController {
 			  
 		return "ebook/ebookList";
 	}
+	
 	  
 	//교재목록조회
 	@PostMapping(value="/searchEbookList", produces = "application/json")

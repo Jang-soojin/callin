@@ -3,7 +3,7 @@ package callinedu.callin.domain;
 public class EbookData {
 	private String ebookDataCode;
 	private String ebookName;
-	private String ebookLevel;
+	private int ebookLevel;
 	private String ebookFile;
 	private String registrationDate;
 	private String managerId;
@@ -19,10 +19,10 @@ public class EbookData {
 	public void setEbookName(String ebookName) {
 		this.ebookName = ebookName;
 	}
-	public String getEbookLevel() {
+	public int getEbookLevel() {
 		return ebookLevel;
 	}
-	public void setEbookLevel(String ebookLevel) {
+	public void setEbookLevel(int ebookLevel) {
 		this.ebookLevel = ebookLevel;
 	}
 	public String getEbookFile() {
@@ -61,6 +61,9 @@ public class EbookData {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+	
 	
 	
 	

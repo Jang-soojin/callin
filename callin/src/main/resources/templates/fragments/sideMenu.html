@@ -73,30 +73,39 @@
               </li>
             </ul>
           </li>
-          <!-- li class="nav-item">
+        </ul>
+             <!--강사 페이지  -->
+        <ul th:if="${sideMenu eq 'myPage'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <!-- ↓ 강사/매니저 관리 -->
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
               <p>
-				학생 관리
+				Schedule
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a th:href="@{/admin/manager/managerSalary}" class="nav-link">
+                <a th:href="@{/teacherPage/myPage/calendar}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>재학생 목록</p>
+                  <p>Schedule Calendar</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a th:href="@{/admin/manager/managerSalaryList}" class="nav-link">
+                <a th:href="@{/admin/teacher/teacherTotalList}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>수강 종료 목록</p>
+                  <p>Payment</p>
                 </a>
               </li>
             </ul>
-          </li> -->
+          </li>
+          <!-- ↓ 급여 정산 메뉴 -->
         </ul>
+    
+        
 <!--------------------------------------- 김경수 메뉴 영역 ------------------------------------------>
 	<!-- th:if="${sideMenu eq ''}" ''부분에 본인 메뉴 넣어 주시면 됩니다. ul 통째로 복사해서 쓰세요. -->
 	<ul th:if="${sideMenu eq 'class'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

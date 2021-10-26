@@ -33,6 +33,10 @@ public class MenuInterceptor implements HandlerInterceptor{
 			url = url.replace("/admin/", "");
 		}		
 		
+		if(url.indexOf("/teacherPage") > -1) {
+			url = url.replace("/teacherPage/", "");
+		}	
+		
 		if(url.indexOf("/") > -1) {			
 			moduleName = url.substring(0, url.indexOf("/"));
 		}
