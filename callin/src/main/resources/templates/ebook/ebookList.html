@@ -32,8 +32,7 @@
 							</div>
 							<!-- /.card-header -->
 							<div class="card-body">
-								<form id="searchEbookList" th:action="@{/admin/ebook/ebookList}"
-									method="post">
+								<form id="searchEbookList" th:action="@{/admin/ebook/ebookList}" method="post">
 									<table class="table table-bordered table-hover" border="1" style="width: 100%; vertical-align: inherit;">
 										<tr>
 											<td class="searchInfo" style=" vertical-align: middle; text-align: center;"><span>키워드 검색</span></td>
@@ -95,7 +94,7 @@
 													<td th:text="${l.registrationDate}"></td>
 													<td th:text="${l.managerId}"></td>
 													<td><a class="btn btn-info btn-sm" href="#"><i class="fas fa-pencil-alt"></i>Edit</a></td>
-													<td><a th:href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}" class="btn btn-danger btn-sm">
+													<td><a type="button" th:href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}" class="deleteBtn btn btn-danger btn-sm">
 														<i class="fas fa-trash"></i>Delete</a>
 													</td>
 												</tr>
@@ -175,10 +174,11 @@
 								htmltag += data[i].managerId;
 								htmltag += "</td>";
 								htmltag += "<td>";
+								htmltag += "<input type='hidden' name='ebookDataCode' id='ebookDataCode" + i + "' value='" + data[i].ebookDataCode + "' />";
 								htmltag += '<a class="btn btn-info btn-sm" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>';
 								htmltag += "</td>";
 								htmltag += "<td>";
-								htmltag += '<a class="btn btn-danger btn-sm" href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}"><i class="fas fa-trash"></i>Delete</a>';
+								htmltag += '<a type="button" class="deleteBtn btn btn-danger btn-sm" ><i class="fas fa-trash"></i>Delete</a>';
 								htmltag += "</td>";
 								htmltag += "</tr>";
 							}
@@ -188,12 +188,53 @@
 				});
 			})
 		
+		//ajax 삭제버튼 클릭
+		$(document).on("click", ".deleteBtn", function(){
+					var objVal = $(this).closest("td").prev().find("input[name=ebookDataCode]").val();
+					var searchDataObj = {};
+					searchDataObj.ebookDataCode = objVal;
+					
+					$.ajax({
+						url : "/admin/ebook/deleteEbookListAjax"
+						, data : JSON.stringify(searchDataObj)
+						, contentType : 'application/json'
+						, dataType : "json"
+						, async : false
+						, type : "post"
+						, success : function(){
+							
+							$("#searchButton").trigger("click");
+								var result = confirm('정말 삭제하시겠습니까?');
+								if(result){
+									alert('삭제되었습니다.');
+									return true;
+								}
+							}
+						});
+					});	
+				
+			
+			
+		//초기화버튼 클릭시 (초기값은 교재명 검색)
 		$(function() {
 			$('#resetButton').click(function() {
-				$('#searchKey').val('ebook_name'); 	 // 검색조건 초기화 (초기값은 교재명 검색)
-				$('#searchValue').val('');			 //검색어 초기화
+				$('#searchKey').val('ebook_name'); 	 
+				$('#searchValue').val('');			 
 			})
 		});
+		
+		/* //삭제버튼 클릭시
+		$(function(){
+			$('.deleteBtn').on("click", function(){
+				var result = confirm('정말 삭제하시겠습니까?');
+				if(result){
+					alert('삭제되었습니다.');
+					return true;
+				}
+				else return false;
+			});
+		}); */
+		
 			
 	</script>
 

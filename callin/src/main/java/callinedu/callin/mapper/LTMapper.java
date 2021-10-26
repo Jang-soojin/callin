@@ -1,6 +1,7 @@
 package callinedu.callin.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,6 +31,12 @@ public interface LTMapper {
 													  ,@Param(value = "lTApplySearchValue") String lTApplySearchValue
 													  ,@Param(value = "searchStartDate") 	String searchStartDate
 													  ,@Param(value = "searchEndDate") 		String searchEndDate);
+	//LT신청삭제
+	public int deleteLTApplyList(String ltCode);
+	//LT신청삭제 Ajax
+	public void deleteLTApplyListAjax(Map<String, Object> paramMap);
+	
+	
 	
 	public List<LTApplyCode> LTListDetail();
 		

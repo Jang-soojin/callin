@@ -22,7 +22,8 @@ public class LTService {
 	public LTService(LTMapper ltMapper) {
 		this.ltMapper = ltMapper;
 	}
-
+	
+	//LT신청
 	public int LTApply(Map<String, Object> map ) {
 		String tdate = (String) map.get("tdate");
 		String studentId = (String) map.get("studentId");
@@ -46,12 +47,13 @@ public class LTService {
 		return ltMapper.LTApply(studentId, userName, userNickname, skypeId, userEmail, userPhone, lTHopeDate, lTHopeTime, requestedTerm);
 	}
 	
-
+	//LT신청목록조회
 	public List<LTApplyCode> getLTApplyList() {
 		List<LTApplyCode> lTApplyList = ltMapper.getlTApplyList();
 		return lTApplyList;
 	}
 	
+	//LT신청목록검색
 	public List<LTApplyCode> getLTApplyListBySearchKey(String levelSearchKey, String lTApplySearchValue, String searchStartDate, String searchEndDate){
 
 		if("studentName".equals(levelSearchKey)) 	levelSearchKey = "user_name";
@@ -64,6 +66,18 @@ public class LTService {
 		
 		return lTApplyCodeList;
 	}
+	
+	//LT신청목록삭제
+	public int deleteLTApplyList(String ebookDataCode) {
+		return ltMapper.deleteLTApplyList(ebookDataCode);
+	}
+	//LT신청목록삭제 Ajax
+	public void deleteLTApplyListAjax(Map<String, Object> paramMap) {
+		ltMapper.deleteLTApplyListAjax(paramMap);
+	}
+	
+	
+	
 	
 
 	public List<LTApplyCode> LTListDetail() {

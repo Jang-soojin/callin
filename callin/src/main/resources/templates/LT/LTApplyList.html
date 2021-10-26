@@ -101,10 +101,7 @@
 								<form id="chooseLT" th:action="@{/admin/LT/LTListDetail}" method="get">
 								<table id="example1" class="table table-bordered table-hover" style="text-align: center;">
 									<thead>
-										<tr role="row">
-		                  					  <th>
-		                  						<input type="checkbox" id="exampleCheck1"></th>
-							                  <th>No.</th>
+										<tr>
 							                  <th>신청일</th>
 							                  <th>이름</th>
 							                  <th>이메일</th>
@@ -114,15 +111,15 @@
 										</tr>
 		                  			</thead>
 									<tbody id="ltList">
-											<tr th:each="l : ${LTApplyList}">
-									 			<th><input type="checkbox"></th>
-												<td>1</td>
+											<tr th:if="${#lists.size(ltList)> 0}" th:each="l : ${ltList}">
 												<td th:text="${l.lTApplyDate}"></td>
 												<td th:text="${l.user.userName}"></td>
 												<td th:text="${l.user.userEmail}"></td>
 												<td th:text="${l.user.userPhone}"></td>
 												<td><a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail"><i class="fas fa-folder"></i>View</a></td>
-												<td><a class="btn btn-danger btn-sm" href="#"><i class="fas fa-trash"></i>Delete</a></td>
+												<td><a type="button" th:href="@{/admin/LT/deleteLTApplyList(ltCode=${l.ltCode})}" class="deleteBtn btn btn-danger btn-sm">
+													<i class="fas fa-trash"></i>Delete</a>
+												</td>
 											</tr>
 										</th:block>
 									</tbody>
@@ -237,14 +234,6 @@
 						$('#ltList').html("");
 						for(var i=0; i<data.length; i++){
 							htmltag += "<tr>";
-							htmltag += '<td>';
-							htmltag += '<div class="form-check">';
-							htmltag += '<input type="checkbox" class="form-check-input" id="exampleCheck1">';
-							htmltag += '</div>';
-							htmltag += "</td>";
-							htmltag += "<td>";
-							htmltag += (i+1);
-							htmltag += "</td>";
 							htmltag += "<td>";
 							htmltag += data[i].lTApplyDate;
 							htmltag += "</td>";

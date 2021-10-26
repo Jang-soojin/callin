@@ -13,7 +13,8 @@
 		<result property="managerId" 				column="manager_id"/>
 	</resultMap>
 	
-	<insert id="LTApply" parameterType="String">
+	<!-- 교재 등록 -->
+	<insert id="ebookRegister" parameterType="String">
 		INSERT INTO ebook_data
 			(	  ebook_data_code
 				, ebook_name
@@ -21,7 +22,7 @@
 				, ebook_file
 				, registration_date
 				, manager_id
-			) VALUES (
+			)VALUES(
 				  #{ebookDataCode}
 				, #{ebookName}
 				, #{ebookLevel}
@@ -31,8 +32,8 @@
 			 );
 	</insert>
 	
-	
-	
+
+	<!-- 교재 목록조회 -->
  	<select id="getEbookList" resultMap="ebookDataResultMap" parameterType="String">
 		SELECT 
 			  ebook_data_code
@@ -45,6 +46,7 @@
 			ebook_data
 	</select>
 	
+	<!-- 교재목록검색 -->
  	<select id="getEbookListBySearchKey" resultMap="ebookDataResultMap" parameterType="String">
 		SELECT 
 			  ebook_data_code
@@ -62,7 +64,16 @@
 		</trim>	
 	</select>
 	
+	<!-- 교재삭제   -->
 	<delete id="deleteEbookList" parameterType="String">
+		DELETE
+		FROM 
+			ebook_data
+		WHERE
+			ebook_data_code = #{ebookDataCode};
+	</delete>
+	<!-- 교재삭제 Ajax -->
+	<delete id="deleteEbookListAjax" parameterType="String">
 		DELETE
 		FROM 
 			ebook_data

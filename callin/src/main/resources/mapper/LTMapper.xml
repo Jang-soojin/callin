@@ -93,6 +93,25 @@
 		</trim>
 	</select>
 	
+	<!-- LT신청삭제   -->
+	<delete id="deleteLTApplyList" parameterType="String">
+		DELETE 
+		FROM
+			lt_apply_code
+		WHERE
+			lt_code= #{ltCode};
+	</delete>
+	<!-- LT신청삭제 Ajax -->
+	<delete id="deleteLTApplyListAjax" parameterType="String">
+		DELETE 
+		FROM
+			lt_apply_code
+		WHERE
+			lt_code= #{ltCode};
+	</delete>
+	
+	
+	
 	
 	
 </mapper>

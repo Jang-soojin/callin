@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import callinedu.callin.domain.EbookData;
-import callinedu.callin.domain.EbookLevel;
 import callinedu.callin.mapper.EbookMapper;
 
 @Service
@@ -43,6 +42,10 @@ public class EbookService {
 	public int deleteEbookList(String ebookDataCode) {
 		return ebookMapper.deleteEbookList(ebookDataCode);
 	}
+	//교재삭제 Ajax
+	public void deleteEbookListAjax(Map<String, Object> paramMap) {
+		ebookMapper.deleteEbookListAjax(paramMap);
+	}
 	
 	//교재등록
 	public int ebookRegister(Map<String, Object> map) {
@@ -55,6 +58,8 @@ public class EbookService {
 		
 		return ebookMapper.ebookRegister(ebookDataCode,ebookName,ebookLevel,ebookFile,registrationDate,managerId);
 	}
+
+
 
 
 

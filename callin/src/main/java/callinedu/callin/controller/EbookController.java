@@ -1,5 +1,6 @@
 package callinedu.callin.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,13 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import callinedu.callin.domain.EbookData;
-import callinedu.callin.domain.EbookLevel;
 import callinedu.callin.service.EbookService;
 
 @Controller
@@ -23,14 +23,19 @@ import callinedu.callin.service.EbookService;
 public class EbookController {
 	
 	
+	private static final Logger log = LoggerFactory.getLogger(EbookController.class);
+
 	private final EbookService ebookService;
 	  
 	public EbookController(EbookService ebookService) {
 		this.ebookService = ebookService;
 	}
 	
+	
+
+	
 	  
-	//교재등록
+	//교재등록화면
 	@GetMapping("/ebookRegister")
 	public String ebookRegister(Model model){ 
 			
@@ -41,25 +46,19 @@ public class EbookController {
 	}
 	
 	//교재등록
-	@PostMapping("/ebookRegister")
+	@PostMapping("ebookRegister")
 	public String ebookRegister(@RequestParam Map<String, Object> map) {
 		
-		System.out.println("===================");
-		System.out.println("커맨드 객체 : map : " + map);
-		System.out.println("===================");
-		
-		//교재등록
+		log.info("교재 등록 옵션 : {}", map);
 		ebookService.ebookRegister(map);
 		
 		return "redirect:/admin/ebook/ebookRegister";
-		
 	}
 	
 	
-	
 	  
 	  
-	//교재리스트화면
+	//교재목록화면
 	@GetMapping("/ebookList")
 	public String getEbookList(Model model) {
 		List<EbookData> ebookList = ebookService.getEbookList();
@@ -96,5 +95,19 @@ public class EbookController {
 		return "redirect:/admin/ebook/ebookList";
 	}
 		 
+	//교재삭제Ajax
+	@PostMapping(value="/deleteEbookListAjax", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> deleteEbookListAjax(@RequestBody Map<String, Object> paramMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		System.out.println(paramMap);
+		
+		ebookService.deleteEbookListAjax(paramMap);
+		
+		resultMap.put("paramMap", paramMap);
+		
+		return resultMap;
+	}
+	
 }
 

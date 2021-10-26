@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -130,6 +131,33 @@ public class LTController {
 		List<LTApplyCode> lTApplyCodeList = lTService.getLTApplyListBySearchKey(levelSearchKey, lTApplySearchValue, searchStartDate, searchEndDate);
 		
 	    return lTApplyCodeList;
+	}
+	
+	//LT신청목록삭제
+	@GetMapping("/deleteLTApplyList")
+	public String deleteLTApplyList(@RequestParam(name="ltCode",required = false) String ltCode
+									,Model model) {
+		
+		System.out.println("(deleteLTApplyList)화면에서 입력받은 값:" + ltCode);
+		
+		model.addAttribute("title", "LT신청삭제");
+		model.addAttribute("ltCode", ltCode);
+		lTService.deleteLTApplyList(ltCode);
+		return "redirect:/admin/LT/LTApplyList";
+	}
+	
+	//LT신청목록삭제 Ajax
+	@PostMapping(value="/deleteLTApplyListAjax", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> deleteLTApplyListAjax(@RequestBody Map<String, Object> paramMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		System.out.println(paramMap);
+		
+		lTService.deleteLTApplyListAjax(paramMap);
+		
+		resultMap.put("paramMap", paramMap);
+		
+		return resultMap;
 	}
 	
 	
