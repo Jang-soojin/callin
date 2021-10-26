@@ -5,10 +5,15 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import callinedu.callin.domain.ClassPolicy;
+import callinedu.callin.domain.RegularClass;
 
 @Mapper
 public interface ClassMapper {
 	public int addClassPolicy(ClassPolicy classPolicy);
+	
+	public int modifyPolicy(ClassPolicy classPolicy);
+	
+	public ClassPolicy getPolicyInfoByCode(String classPolicyCode);
 	
 	public int deleteClassPolicy(String classPolicyCode);
 	
@@ -20,4 +25,5 @@ public interface ClassMapper {
 	
 	public List<ClassPolicy> getClassPolicyListBySearchKey(String levelSearchKey, String classPolicySearchValue);
 
+	public int addRegularClass(RegularClass regularClass);
 }

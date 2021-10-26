@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+<head th:replace="fragments/head :: headFragment"></head>
+	<!-- daterange picker -->
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<div id="wrapper">
+			<!-- begin topNav -->
+			<div th:replace="fragments/topNav :: topNavFragment"></div>
+			<!-- end topNav -->
+			
+			<!-- Main Sidebar Container -->
+			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
+			<th:block layout:fragment="classPolicy"> 
+				<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 th:text="${midTitle}"></h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a th:href="@{/admin/class/classPolicy}">수업관리</a></li>
+									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+								</ol>
+							</div>
+						</div>
+					</div><!-- /.container-fluid -->
+				</section>
+			
+			    <!-- Main content -->
+				<section class="content">
+					<div class="container-fluid">
+						<form id="submitAll" th:action="@{/admin/class/modifyPolicy}" method="post">
+							<div class="row">
+							<!-- left column -->
+								<div class="col-md-5">
+								<!-- general form elements -->
+									<div class="card card-secondary">
+										<div class="card-header">
+											<h3 class="card-title">수업 기본 정책 설정</h3>
+										</div>
+										<!-- /.card-header -->
+										<div class="card-body">
+											<div class="form-group">
+												<label> 정책 이름 </label>
+												<div class="input-group-prepend">
+													<input type="text" name="classPolicyName" id="classPolicyName" readonly="readonly" th:value="${classPolicy.classPolicyName}">
+												</div>
+												<input type="text"name="classPolicyCode" id="classPolicyCode" readonly="readonly" th:value="${classPolicy.classPolicyCode}" style="display: none;">
+											</div>
+											<div class="form-group">
+												<label> 수업기간 선택 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" name="classPeriod" id="classPeriod">
+															<option> :: 선택하세요 ::</option>
+															<option value="4" th:selected="${classPolicy.classPeriod}=='4'"> 4주 </option>
+															<option value="8" th:selected="${classPolicy.classPeriod}=='8'"> 8주 </option>
+															<option value="12" th:selected="${classPolicy.classPeriod}=='12'"> 12주 </option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 수업요일 선택 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" name="classDay" id="classDay">
+															<option> :: 선택하세요 ::</option>
+															<option value="월, 수, 금" th:selected="${classPolicy.classDay}=='월, 수, 금'"> 월, 수, 금 </option>
+															<option value="화, 목" th:selected="${classPolicy.classDay}=='화, 목'"> 화, 목 </option>
+															<option value="월, 화, 수, 목, 금" th:selected="${classPolicy.classDay}=='월, 화, 수, 목, 금'"> 월, 화, 수, 목, 금 </option>
+															<option value="토, 일" th:selected="${classPolicy.classDay}=='토, 일'"> 토, 일 </option>
+															<option value="월, 화, 수, 목, 금, 토, 일" th:selected="${classPolicy.classDay}=='월, 화, 수, 목, 금, 토, 일'"> 월, 화, 수, 목, 금, 토, 일 </option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 수업시간 선택 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" name="classTime" id="classTime">
+															<option> :: 선택하세요 ::</option>
+															<option value="10" th:selected="${classPolicy.classTime}=='00:00:10'"> 10분 </option>
+															<option value="20" th:selected="${classPolicy.classTime}=='00:00:20'"> 20분 </option>
+															<option value="30" th:selected="${classPolicy.classTime}=='00:00:30'"> 30분 </option>
+															<option value="40" th:selected="${classPolicy.classTime}=='00:00:40'"> 40분 </option>
+															<option value="50" th:selected="${classPolicy.classTime}=='00:00:50'"> 50분 </option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								<!-- /.card -->
+								</div>
+								<!--/.col (left) -->
+								<!-- Right column -->
+								<div class="col-md-5">
+									<!-- general form elements -->
+									<div class="card card-secondary">
+										<div class="card-header">
+											<h3 class="card-title"> 수업 연기 정책 설정 </h3>
+										</div>
+										<div class="card-body">
+											<div class="form-group">
+												<label> 연기(일일) 횟수 설정 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" name="classPostponeDay" id="classPostponeDay">
+															<option> :: 선택하세요 ::</option>
+															<option value="1" th:selected="${classPolicy.classPostponeDay}=='1'"> 1일 </option>
+															<option value="2" th:selected="${classPolicy.classPostponeDay}=='2'"> 2일 </option>
+															<option value="3" th:selected="${classPolicy.classPostponeDay}=='3'"> 3일 </option>
+															<option value="4" th:selected="${classPolicy.classPostponeDay}=='4'"> 4일 </option>
+															<option value="5" th:selected="${classPolicy.classPostponeDay}=='5'"> 5일 </option>
+															<option value="6" th:selected="${classPolicy.classPostponeDay}=='6'"> 6일 </option>
+														</select>
+													</div>
+												<!-- /btn-group -->
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 연기(장기) 횟수 설정 </label>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<select class="form-control" name="classPostponeDays" id="classPostponeDays">
+															<option> :: 선택하세요 ::</option>
+															<option value="1" th:selected="${classPolicy.classPostponeDays}=='1'"> 1회 </option>
+															<option value="2" th:selected="${classPolicy.classPostponeDays}=='2'"> 2회 </option>
+															<option value="3" th:selected="${classPolicy.classPostponeDays}=='3'"> 3회 </option>
+															<option value="4" th:selected="${classPolicy.classPostponeDays}=='4'"> 4회 </option>
+															<option value="5" th:selected="${classPolicy.classPostponeDays}=='5'"> 5회 </option>
+															<option value="6" th:selected="${classPolicy.classPostponeDays}=='6'"> 6회 </option>
+														</select>
+													</div>
+												<!-- /btn-group -->
+												</div>
+											</div>
+											<div class="form-group">
+												<label> 연기(장기) 기간 설정 </label>
+												<div class="input-group-prepend">
+													<input type="number" name="classPostponePeriod" id="classPostponePeriod" th:value="${classPolicy.classPostponePeriod}"> 일
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							<!-- /.card -->
+							</div>
+							<div>
+								<button style="width: 200px; margin-left: 750px" class="form-control" onclick="checkAll()" type="button"> 수정 완료 </button>
+							</div>
+						</form>
+						<!--/.col (right) --> 
+					</div>
+				</section>
+				<!-- /.row -->
+			</div><!-- /.container-fluid -->
+			<!-- /.content -->
+		</th:block>
+		
+		<div th:replace="fragments/footer :: footerFragment"></div>
+		</div>
+		<!-- jQuery -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<!-- jQuery UI 1.11.4 -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+		  $.widget.bridge('uibutton', $.ui.button)
+		</script>
+		<!-- Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- ChartJS -->
+		<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
+		<!-- Sparkline -->
+		<script th:src="@{/AdminLTE-master/plugins/sparklines/sparkline.js}"></script>
+		<!-- daterangepicker -->
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- date-range-picker -->
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- Tempusdominus Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+		<!-- Summernote -->
+		<script th:src="@{/AdminLTE-master/plugins/summernote/summernote-bs4.min.js}"></script>
+		<!-- overlayScrollbars -->
+		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
+		<!-- AdminLTE for demo purposes -->
+		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
+		<script>
+			$(function () {
+		    //Date range picker
+		    $('#reservation').daterangepicker()})
+		</script>
+		<!-- 정책 이름 중복확인 에이잭스 부분 -->
+		<script type="text/javascript">
+		function checkAll() {
+			if (document.getElementById('classPeriod').value == ':: 선택하세요 ::') {
+				alert('기간을 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classDay').value == ':: 선택하세요 ::') {
+				alert('요일을 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classTime').value == ':: 선택하세요 ::') {
+				alert('수업 시간을 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classPostponeDay').value == ':: 선택하세요 ::') {
+				alert('연기(일일)횟수를 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classPostponeDays').value == ':: 선택하세요 ::') {
+				alert('연기(장기)횟수를 입력해 주세요.');
+				return false;
+			}else if (document.getElementById('classPostponePeriod').value == '') {
+				alert('연기 기간을 입력해 주세요.');
+				return false;
+			}
+			alert('정책 수정이 완료되었습니다!'); 
+			document.getElementById('submitAll').submit();
+			return true;
+		}
+
+
+		</script>
+</body>
+</html>
