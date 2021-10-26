@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+<head th:replace="fragments/head :: headFragment"></head>
+	<!-- daterange picker -->
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}">
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}">
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<div id="wrapper">
+			<!-- begin topNav -->
+			<div th:replace="fragments/topNav :: topNavFragment"></div>
+			<!-- end topNav -->
+			
+			<!-- Main Sidebar Container -->
+			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
+			<th:block layout:fragment="allMileageGet"> 
+				<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 th:text="${midTitle}"></h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</section>
+			
+			    <!-- Main content -->
+			    <section class="content">
+					<div class="container-fluid">
+						<div class="card card card-secondary">
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="chooseMileage" name="chooseMileage" th:action="@{/admin/mileage/waitingMileageSearch}" method="post">
+									<table class="table table-bordered table-hover" border="1" style="width: 100%; vertical-align: inherit;">
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center; background-color:#ebebeb;"><span>키워드 검색</span></td>
+											<td colspan="3">
+												<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 120px; display: inline;">
+													<option value="" selected="selected">검색 항목</option>
+													<option value="student_id">아이디</option>
+													<option value="user_name">이름</option>
+												</select> 
+											<input id="searchValue"class="form-control" type="text" style="width: 400px; display: inline; virtical-"></td>
+										</tr>
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center; background-color:#ebebeb;"><span>날짜 검색 </span></td>
+											<td colspan="3">
+												<div>
+													<div class="input-group">
+														<div class="input-group-prepend">
+															<span class="input-group-text"> 
+																<i class="far fa-calendar-alt"></i>
+															</span>
+														</div>
+														<input type="text" class="form-control float-right" id="reservation" style="width: 464px; flex:none;">
+													</div>
+													<!-- /.input group -->
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center; background-color:#ebebeb;"><span>적립금 유형</span></td>
+											<td colspan="3">
+												<select id="mileageUseReasonCode" name="mileageUseReasonCode" class="form-control select2 select2-hidden-accessible" style="width: 300px; display: inline;">
+														<option value="" selected="selected">적립 유형 선택</option>
+														<option th:each="list : ${resnList}" th:value="${list.mileageUseReasonCode}" th:text="${list.mileageReason}"></option>
+												</select>
+										</tr>
+									</table>
+									<div class="row">
+										<div class="col-md-5"></div>
+										<div class="col-md-3" style="align-items: center;">
+											<button type="button" id="searchButton" class="btn btn-secondary">검색</button>
+											<button type="button" id="resetButton" class="btn btn-secondary">초기화</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- /.card-body -->
+							<div class="card-body">
+						
+								<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
+									<thead>
+										<tr>
+											<th><input type="checkbox"></th>
+											<th>NO.</th>
+											<th>적립등록날짜</th>
+											<th>학생아이디</th>
+											<th>학생이름</th>
+											<th>적립금유형</th>
+											<th>ㅡ ㅡ ㅡ ㅡ  메모 ㅡ ㅡ ㅡ ㅡ</th>
+											<th>적립/차감</th>
+											<th>적립금</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="mileage : ${waitingMileageSearch}">
+											<td><input type="checkbox"></td>
+											<td>1</td>		
+											<td th:text="${mileage.mileagDeductDate}"></td>
+											<td th:text="${mileage.studentId}"></td>
+											<td th:text="${mileage.userName}"></td>
+											<td th:text="${mileage.mileageReason}"></td>
+											<td th:text="${mileage.mileageMemo}"></td>
+											<td th:text="${mileage.mileageDivision}"></td>
+											<td th:text="${mileage.mileagDeduct}"></td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- <div class="row">
+									<div class="col-sm-12">
+				                        <div class="card-footer clearfix">
+				                          <ul class="pagination pagination-sm m-0 float-right">
+				                            <li class="page-item"><a class="page-link" href="#">«</a></li>
+				                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+				                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+				                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+				                            <li class="page-item"><a class="page-link" href="#">»</a></li>
+				                          </ul>
+				                        </div>
+				                      </div>
+								</div> -->
+						
+							</div>
+						</div>
+					</div>
+				</section>		
+			</div>
+		</th:block>
+			<div th:replace="fragments/footer :: footerFragment"></div>
+		</div>
+		<!-- jQuery -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<!-- jQuery UI 1.11.4 -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+		  $.widget.bridge('uibutton', $.ui.button)
+		</script>
+		<!-- Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- ChartJS -->
+		<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
+		<!-- Sparkline -->
+		<script th:src="@{/AdminLTE-master/plugins/sparklines/sparkline.js}"></script>
+		<!-- daterangepicker -->
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- date-range-picker -->
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- Tempusdominus Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+		<!-- Summernote -->
+		<script th:src="@{/AdminLTE-master/plugins/summernote/summernote-bs4.min.js}"></script>
+		<!-- overlayScrollbars -->
+		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
+		<!-- 데이터 테이블 -->
+	
+<!-- 		<script th:src="@{/AdminLTE-master/plugins/datatables/jquery.dataTables.min.js}"></script>
+ 		<script th:src="@{/AdminLTE-master/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
+ 		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/jszip/jszip.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/pdfmake/pdfmake.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/pdfmake/vfs_fonts.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.html5.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.print.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>  --> 
+		
+		<script>
+					  $(function () {
+			    $('#example2').DataTable({
+			    
+			      "paging": true,
+			      "lengthChange": false,
+			      "searching": false,
+			      "ordering": true,
+			      "info": true,
+			      "autoWidth": false,
+			      "responsive": true
+			      
+			    });
+			    $("ul.pagination").css({"justify-content": "flex-end"})
+			  });
+	  </script>
+		
+		<script type="text/javascript">
+			$(function(){
+				var resDaterangepicker = $('#reservation').daterangepicker({
+					locale: {
+						format: 'YYYY-MM-DD'
+					}
+				});
+				
+	
+				$(document).on('click', '#searchButton', function(){
+					var searchKey = $('#searchKey').val();
+					var searchValue = $('#searchValue').val();
+					var reservation = $('#reservation').val();
+					var mileageUseReasonCode = $('#mileageUseReasonCode').val();
+					var searchDataObj = {};
+					searchDataObj.searchKey = searchKey;
+					searchDataObj.searchValue = searchValue;
+					searchDataObj.reservation = reservation;
+					searchDataObj.mileageUseReasonCode = mileageUseReasonCode;
+					
+					$.ajax({
+						  url : "/admin/mileage/waitingMileageSearch"
+						, contentType:'application/json'
+						, dataType : "json"
+						, data : JSON.stringify(searchDataObj)
+						, type : "post"
+						, success : function(data){
+							var sHtml = "";
+							
+							$("#example2 tbody").empty();
+							
+							for(var i = 0; i < data.miList.length; i++){
+								sHtml += "<tr>";
+								sHtml += "<td>";
+								sHtml += '<input type="checkbox">';
+								sHtml += "</td>";
+								sHtml += "<td>";
+								sHtml += (i+1);
+								sHtml += "</td>";
+								sHtml += "<td>" + data.miList[i].mileagDeductDate + "</td>";
+								sHtml += "<td>" + data.miList[i].studentId + "</td>";
+								sHtml += "<td>" + data.miList[i].userName + "</td>";
+								sHtml += "<td>" + data.miList[i].mileageReason + "</td>";
+								sHtml += "<td>" + data.miList[i].mileageMemo + "</td>";
+								sHtml += "<td>" + data.miList[i].mileageDivision + "</td>";
+								sHtml += "<td>" + data.miList[i].mileagDeduct + "</td>";
+								sHtml += "</tr>";
+							}
+							$("#example2 tbody").append(sHtml);
+						}
+					});
+				});
+			});
+			$(function(){
+				$('#resetButton').click(function(){
+					var today = new Date()
+					var date = today.getDate()
+					var month = today.getMonth()+1
+					var year = today.getFullYear()
+					
+					if(month<10){
+						if(date<10){
+							$('#reservation').val('0'+year+'-'+'0'+month+'-'+date+' - '+'0'+year+'-'+'0'+month+'-'+date)
+						}else{
+							$('#reservation').val('0'+year+'-'+month+'-'+date+' - '+'0'+year+'-'+month+'-'+date)
+						}
+					}else(
+							$('#reservation').val(year+'-'+month+'-'+date+' - '+year+'-'+month+'-'+date)
+					);
+					$('#searchKey').val("");
+					$('#searchValue').val("");
+					$('#mileageUseReasonCode').val("");
+				})
+			});
+			
+		</script>
+
+		
+		
+
+		
+</body>
+</html>

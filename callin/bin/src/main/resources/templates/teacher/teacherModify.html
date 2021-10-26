@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+	
+ 
+	
+<th:block layout:fragment="customContents">  	  
+<style>
+	.reg-form-th{
+		vertical-align: middle !important;
+		text-align: center;
+		font-weight: bold;
+		background-color: #f6f6f6;
+	}
+	.reg-form-td{
+		vertical-align: middle !important;
+	}
+	.reg-form-td input{
+		width:250px;
+		display: inline;
+	}
+	#radio-M, #radio-F{
+		width:30px !important;
+	}
+	.user_birth{
+	    margin-left: 15px !important;
+	    width: 95px !important;
+	    display: inline !important;
+	    text-align: center;
+	    margin-right: 5px;
+	}
+</style>	 
+<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/inputmask/jquery.inputmask.min.js}"></script>
+<!-- ㄴ스타일 영역 -->
+	<div class="content-wrapper">
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 th:text="${midTitle}">미드타이틀</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${midTitle}">경로 표시</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card card card-secondary">
+								<div class="card-header">
+									<h3 class="card-title">강사 정보</h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<form id="teacherRegister" th:action="@{/admin/teacher/teacherModify}"
+										method="post">
+										<table class="table table-bordered table-hover" style="border:none; vertical-align: inherit;">
+											<tbody>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>강사 ID</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="user_id" name="user_id" th:value="${teacher.teacherId}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>이름</span> <!-- 영문 본명 -->
+													</td>
+													<td class="reg-form-td">
+														<input type="text" class="form-control" id="user_name" name="user_name" th:value="${teacher.User.userName}">
+													</td>
+													<td class="reg-form-th col-md-2">
+														<span>닉네임</span>
+													</td>
+													<td class="reg-form-td">
+														<input type="text" class="form-control" id="user_nickname" name="user_nickname" th:value="${teacher.User.userNickname}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>전화번호</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="user_phone" name="user_phone" th:value="${teacher.User.userPhone}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>E-Mail</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="user_email" name="user_email" th:value="${teacher.User.userEmail}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>Skype ID</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="skype_id" name="skype_id" th:value="${teacher.skypeId}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>Skype PW</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="skype_pw" name="skype_pw" th:value="${teacher.skypePw}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>단위 급여</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="unit_pay" name="unit_pay" th:value="${teacher.unitPay}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>근무 시작 시간</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="class_start_time" name="class_start_time" th:value="${teacher.classStartTime}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>근무 종료 시간</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="class_end_time" name="class_end_time" th:value="${teacher.classEndTime}">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>브레이크 타임</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="class_break_time" name="class_break_time">
+													</td>
+												</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<td colspan="4">
+													<div class="reg_button" style="text-align: center;">
+														<a class="btn btn-danger px-3" href="${}">
+															<i aria-hidden="true"></i>취소하기
+														</a>
+														<button type="submit" class="btn btn-primary px-3" id="reg_submit">
+															<i aria-hidden="true"></i>수정하기
+														</button>
+													</div>
+												</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>
+												</td>
+											</tr>
+											</tfoot>
+										</table>
+									</form>
+								</div>
+								<!-- /.card-body -->
+							</div>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+		</div>
+	
+	
+		<!-- 생년월일 Select박스 만들기 -->	
+		<script type="text/javascript">
+			
+			$(document).ready(function(){ 
+				var now = new Date(); 
+				var year = now.getFullYear(); 
+				var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
+				var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate()); //년도 selectbox만들기 
+				
+				for(var i = year ; i >= 1900 ; i--) { 
+					$('#year').append('<option value="' + i + '">' + i + '</option>'); 
+				} // 월별 selectbox 만들기 
+				
+				for(var i=1; i <= 12; i++) { 
+					var mm = i > 9 ? i : "0"+i ; 
+					$('#month').append('<option value="' + mm + '">' + mm + '</option>'); } // 일별 selectbox 만들기 
+				
+					for(var i=1; i <= 31; i++) { 
+						var dd = i > 9 ? i : "0"+i ; 
+					$('#day').append('<option value="' + dd + '">' + dd+ '</option>'); 
+				};
+					$("#year > option[value="+year+"]").attr("selected", "true"); 
+					$("#month > option[value="+mon+"]").attr("selected", "true");
+					$("#day > option[value="+day+"]").attr("selected", "true"); 
+			})
+
+		</script>
+	
+</th:block>
+</html>

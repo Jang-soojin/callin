@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+	
+ 
+	
+<th:block layout:fragment="customContents">  	  
+<style>
+	.reg-form-th{
+		vertical-align: middle !important;
+		text-align: center;
+		font-weight: bold;
+		background-color: #f6f6f6;
+	}
+	.reg-form-td{
+		vertical-align: middle !important;
+	}
+	.reg-form-td input{
+		width:250px;
+		display: inline;
+	}
+	#radio-M, #radio-F{
+		width:30px !important;
+	}
+	.user_birth{
+	    margin-left: 15px !important;
+	    width: 95px !important;
+	    display: inline !important;
+	    text-align: center;
+	    margin-right: 5px;
+	}
+</style>	 
+<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/inputmask/jquery.inputmask.min.js}"></script>
+<!-- ㄴ스타일 영역 -->
+	<div class="content-wrapper">
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 th:text="${midTitle}">미드타이틀</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${midTitle}">경로 표시</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card card card-secondary">
+								<div class="card-header">
+									<h3 class="card-title">강사 정보</h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<form id="teacherRegister" th:action="@{/admin/teacher/teacherRegister}" method="post">
+										<table class="table table-bordered table-hover" style="border:none; vertical-align: inherit;">
+											<tbody>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>강사 ID</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="user_id" name="user_id">
+															<button class="form-control btn-dark" style=" width: 100px; display: inline; color: white" type="button" id="id_Check1"> 중복확인 </button>
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>Password</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="Password" >
+														<div class="check_font" id="pw_check"></div>
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>Password 확인</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="password" class="form-control" id="user_pw2" name="user_pw_check" placeholder="Confirm Password" >
+														<div class="check_font" id="pw2_check"></div>
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>이름</span> <!-- 영문 본명 -->
+													</td>
+													<td class="reg-form-td">
+														<input type="text" class="form-control" id="user_name" name="user_name">
+													</td>
+													<td class="reg-form-th col-md-2">
+														<span>닉네임</span>
+													</td>
+													<td class="reg-form-td">
+														<input type="text" class="form-control" id="user_nickname" name="user_nickname" placeholder="English Nickname">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>전화번호</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Phone Number">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>E-Mail</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="user_email" name="user_email">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>생년월일</span>
+													</td>
+													<td class="reg-form-td">
+														<div class="form-group" style="margin: 0px">
+															<select name="birth_year" id="year" class="user_birth form-control select2 select2-hidden-accessible" style=" margin-left: 0px !important;" ></select>년 
+															<select name="birth_month" id="month" class="user_birth form-control select2 select2-hidden-accessible"></select>월 
+															<select name="birth_day" id="day" class="user_birth form-control select2 select2-hidden-accessible" ></select>일 
+															<div class="check_font" id="birth_check"></div>
+														</div>
+													</td>
+													<td class="reg-form-th col-md-2">
+														<span>성별 </span>
+													</td>
+													<td class="reg-form-td">
+														<label for="radio-M" style="font-weight: normal; margin: 0;">
+															<input type="radio" id="radio-M" name="gender" style="width:30px" value="M">Male
+														</label>
+														<label for="radio-F" style="font-weight: normal;margin: 0;">
+															<input type="radio" id="radio-F" name="gender" value="F" checked>Female
+														</label>
+													</td>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>Skype ID</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="skype_id" name="skype_id">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>Skype PW</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="skype_pw" name="skype_pw">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>단위 급여</span>
+													</td>
+													<td class="reg-form-td" colspan="3">
+														<input type="text" class="form-control" id="unit_pay" name="unit_pay">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>근무 시작 시간</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="class_start_time" name="class_start_time">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>근무 종료 시간</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="class_end_time" name="class_end_time">
+													</td>
+												</tr>
+												<tr>
+													<td class="reg-form-th col-md-2">
+														<span>브레이크 타임</span>
+													</td>
+													<td class="reg-form-td"colspan="3">
+														<input type="text" class="form-control" id="class_break_time" name="class_break_time">
+													</td>
+												</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<td colspan="4">
+													<div class="reg_button" style="text-align: center;">
+														<a class="btn btn-danger px-3" href="${}">
+															<i aria-hidden="true"></i>취소하기
+														</a>
+														<button type="button" class="btn btn-primary px-3" id="reg_submit">
+															<i aria-hidden="true"></i>등록하기
+														</button>
+													</div>
+												</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>
+												</td>
+											</tr>
+											</tfoot>
+										</table>
+									</form>
+								</div>
+								<!-- /.card-body -->
+							</div>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+		</div>
+		
+	
+	<!-- 생년월일 Select박스 만들기 -->	
+	<script type="text/javascript">
+		
+		$(document).ready(function(){ 
+			var now = new Date(); 
+			var year = now.getFullYear(); 
+			var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
+			var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate()); //년도 selectbox만들기 
+			
+			for(var i = year ; i >= 1900 ; i--) { 
+				$('#year').append('<option value="' + i + '">' + i + '</option>'); 
+			} // 월별 selectbox 만들기 
+			
+			for(var i=1; i <= 12; i++) { 
+				var mm = i > 9 ? i : "0"+i ; 
+				$('#month').append('<option value="' + mm + '">' + mm + '</option>'); } // 일별 selectbox 만들기 
+			
+				for(var i=1; i <= 31; i++) { 
+					var dd = i > 9 ? i : "0"+i ; 
+				$('#day').append('<option value="' + dd + '">' + dd+ '</option>'); 
+			};
+				$("#year > option[value="+year+"]").attr("selected", "true"); 
+				$("#month > option[value="+mon+"]").attr("selected", "true");
+				$("#day > option[value="+day+"]").attr("selected", "true"); 
+		})
+	
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){//페이지 읽기 후 스크립트 읽기(시작) 
+					var idChecked = false;
+					var pwChecked = false;
+					
+					$('#id_Check1').click(function(){
+						var userId = $('#user_id').val()
+						
+						/* 아이디 유효성 검사(공백 검사) 시작*/
+					 	var blank = false;
+						for(var i=0; i<userId.length; i++){
+							var piece = userId.slice(i,i+1)
+							if(piece==' '){
+							    blank = true;
+							    alert('아이디에는 공백을 사용할 수 없습니다.');
+							    return false;
+							}
+						}/* 아이디 유효성 검사(공백 검사) 끝*/
+						var idFormat = /^[a-z0-9_-]{4,20}$/i;
+						if(userId.match(idFormat) ==null){
+							alert('5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.');
+							return false;
+						}
+						
+						// 아이디 중복 검사
+						if(userId != ''){
+							var request = $.ajax({
+								url : "/register/idDuplicateCheck", //요청 url
+								method : "POST", //요청 방식
+								data : {userId : userId	},
+								dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
+							});
+							
+							request.done(function(data) {
+								if(data.userId=="사용가능"){
+									if(blank == false){
+										alert("사용 가능한 아이디입니다.");
+										idChecked = true;
+									}
+								}else{
+									alert("사용할 수 없는 아이디입니다");
+									$('#user_id').val('');
+									$('#user_id').focus();
+									idChecked = false;
+								}
+								
+							});
+			
+							request.fail(function(jqXHR, textStatus) {
+								alert("요청 실패: " + textStatus);
+							});
+							
+						}else{
+							alert('아이디를 입력해주세요');
+						}
+					})
+						
+					
+		<!--패스워드 일치 확인-->
+					
+					//1. 패스워드 항목 변경시 패스워드 일치 여부 확인
+					$('#user_pw').on("keyup",function(){
+						
+						if($('#user_pw').val() != $('#user_pw2').val()){
+							$('#pw2_check').css({ 'color':'red'});
+							$('#pw2_check').text('비밀번호 불일치');
+							pwChecked = false;
+						}else if($('#user_pw2').val() == $('#user_pw').val() && $('#user_pw').val()!=''){
+							$('#pw2_check').css({ 'color':'#00ff3a'});
+							$('#pw2_check').text('비밀번호 일치합니다');
+							pwChecked = true;
+						}else{
+							$('#pw2_check').text('');
+						}
+						
+						var pwVal = $('#user_pw').val();
+						var pwFormat = /^(?=.*[a-zA-ZS])(?=.*[a-zA-ZS])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+						if (pwVal.match(pwFormat)==null){
+							$('#pw_check').css({ 'color':'red'});
+							$('#pw_check').text('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
+							pwChecked = false;
+						}else if(pwVal.match(pwFormat)!=null) {
+							$('#pw_check').css({ 'color':'#00ff3a'});
+							$('#pw_check').text('사용 가능한 패스워드입니다.');
+							pwChecked = true;
+						}
+					})
+					//2. 패스워드 확인 항목 변경시 패스워드 일치 여부 확인
+					$('#user_pw2').on("keyup",function(){
+						if($('#user_pw2').val() != $('#user_pw').val()){
+							$('#pw2_check').css({ 'color':'red'});
+							$('#pw2_check').text('비밀번호 불일치');
+							pwChecked = false;
+						}else if($('#user_pw2').val() == $('#user_pw').val() && $('#user_pw').val()!=''){
+							$('#pw2_check').css({ 'color':'#00ff3a'});
+							$('#pw2_check').text('비밀번호가 일치합니다.');
+							pwChecked = true;
+						}else{
+							$('#pw2_check').text('');
+						}
+					})
+			
+					
+		<!--회원 가입 양식 입력 여부 유효성 검사-->
+					
+					$('#reg_submit').click(function(){
+						
+						if($('#user_id').val()=='' ){ //아이디 입력 여부 체크
+							alert('아이디를 입력해주세요');
+							return false;
+						}
+						if(idChecked == false){ // 아이디 중복 확인 체크
+							alert('아이디 중복 확인을 해주세요');
+							return false;
+						}
+						
+						var pwVal = $('#user_pw').val();
+						if(pwVal =='' || pwVal==''){ //패스워드/패스워드 확인 입력 여부 체크
+							alert('패스워드를 입력해주세요');
+							return false;
+						}
+						if(pwChecked == false){ // 패스워드 일치 여부 체크 + 패스워드 형식 유효성 체크
+							alert('입력한 패스워드가 일치하지 않습니다.');
+							return false;
+						}
+						if($('#user_name').val()==''){//사용자 이름 입력 여부 체크
+							alert('사용자 이름을 입력해주세요.');
+							return false;
+						}
+						if($('#user_nickname').val()==''){//영어 닉네임 입력 여부 체크
+							alert('영어 닉네임을 입력해주세요.');
+							return false;
+						}
+						
+						if($('#gender').val()==''){//성별 입력 여부 체크
+							alert('성별을 선택해주세요.')
+							return false;
+						}
+						
+						if($('#user_phone').val()==''){//연락처 입력 여부 체크
+							alert('연락처를 선택해주세요.');
+							return false;
+						}else if($('#user_phone').val().length > 11){ // 11자리 이상 숫자라면 알림
+							alert('유효한 연락처를 선택해주세요.');
+							return false;
+						}else if(isNaN($('#user_phone').val())==true){ // 숫자가 아니라면 알림
+							alert('연락처는 숫자만 입력할 수 있습니다..');
+							return false;
+						}
+						
+						//이메일 유효성 검사
+						var emailVal = $('#user_email').val();
+						var emailFormat = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/; //이메일 형식 유효성 검사 정규식
+						
+						if(emailVal =='' || emailVal ==' '){//이메일 입력 여부 체크
+							alert('이메일을 입력해주세요')
+							return false;
+						}
+						if (emailVal.match(emailFormat) == null){ //이메일 포맷 체크
+							alert('올바른 이메일 형식을 입력해 주세요.');
+							return false;
+						}
+						//날짜 유효성 검사 체크 (현재일<생년월일 불가능)
+						var now = new Date(); 
+						var year = now.getFullYear(); 
+						var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
+						var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate()); 
+						const nowDate = year+'-'+mon+'-'+day;
+						
+						var yearSelect = $('#year').val()
+						var monthSelect = $('#month').val()
+						var daySelect = $('#day').val()
+						const selectedDate =  yearSelect +'-'+monthSelect +'-'+daySelect ;
+						if(nowDate<selectedDate){
+							alert('현재 날짜 이후 날짜는 선택할 수 없습니다.')
+							return false;
+						}
+						if($('#skype_id').val()==''){//스카이프 아이디 입력 여부 체크
+							alert('스카이프 아이디를 입력해주세요.');
+							return false;
+						}
+						if($('#skype_pw').val()==''){//스카이프 아이디 입력 여부 체크
+							alert('스카이프 패스워드를 입력해주세요.');
+							return false;
+						}
+						if($('#class_start_time').val()==''){//스카이프 아이디 입력 여부 체크
+							alert('근무 시작 시간을 입력해주세요.');
+							return false;
+						}
+						if($('#class_end_time').val()==''){//스카이프 아이디 입력 여부 체크
+							alert('근무 종료 시간을 입력해주세요.');
+							return false;
+						}
+						
+						
+						
+						// 전체 입력항목 공백 포함 검사 시작
+						for(var i=2; i<$('.form-control').length; i++){
+						    for(var j=0; j<$($('.form-control')[i]).val().length; j++){
+						        var cha = $($('.form-control')[i]).val().slice(j,j+1);
+						        if(cha==' '){
+						            var target = $($('.form-control')[i]).siblings('label').text();
+						           	$($('.form-control')[i]).siblings('.check_font').css({ 'color':'red'});
+									$($('.form-control')[i]).siblings('.check_font').text(target+'에는 공백이 들어갈 수 없습니다');
+									return false;
+						        }else{
+						        	$($('.form-control')[i]).siblings('.check_font').text('');
+						        	$('#teacherRegister').submit();  // 이상이 없는 경우 Submit
+						        }
+						    } 
+						}// 전체 입력항목 공백 포함 검사 끝
+					})//클릭 이벤트 종료
+		})//페이지 읽기 후 스크립트 읽기(끝) 	
+	</script>
+	
+</th:block>
+</html>

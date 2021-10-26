@@ -4,9 +4,192 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="callinedu.callin.mapper.StudentMapper">
 	
-	<select id="getTest" resultType="java.lang.String">
+	<resultMap type="student" id="studentResultMap">
+		<result property="studentId" 			column="user_id"/>
+		<result property="userName" 			column="user_name"/>
+		<result property="studentDegreeCode" 	column="student_degree_code"/>
+		<result property="studentDegreeName" 	column="student_degree_name"/>
+	</resultMap>
+	
+	<select id="getMemberListBySearch" parameterType="map" resultMap="studentResultMap">
 		SELECT
-			1 AS AA
-		FROM DUAL
+			 ui.user_id
+			,ui.user_name
+			,sd.student_degree_code
+			,sd.student_degree_name
+		FROM
+			user_info AS ui
+			INNER JOIN 
+			student AS s
+			ON 
+			ui.user_id = s.student_id
+			INNER JOIN
+			student_degree AS sd
+			ON 
+			s.student_degree_code = sd.student_degree_code
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchDegree != null and searchDegree != ''">
+				sd.student_degree_name LIKE CONCAT('%', #{searchDegree}, '%')
+			</if>
+			<if test="searchKey != null and searchKey != ''">
+				AND ${searchKey} LIKE CONCAT('%',#{searchValue}, '%')
+			</if>
+		</trim>
 	</select>
+	<resultMap type="mileage" id="mileageResultMap">
+		<result property="rn"            	column="RN"/>
+		<result property="mileageUseCode"            	column="mileage_use_code"/>
+		<result property="studentId"                  	column="student_id"/>
+		<result property="mileageUseReasonCode" 		column="mileage_use_reason_code"/>
+		<result property="mileagDeductDate" 			column="mileag_deduct_date"/>
+		<result property="mileagDeduct" 				column="mileag_deduct"/>
+		<result property="mileageAnticipateDelDate" 	column="mileage_anticipate_del_date"/>
+		<result property="mileageUseGroupCode" 			column="mileage_use_group_code"/>
+		<result property="mileageGroupCode" 			column="mileage_group_code"/>
+		<result property="mileageMemo" 					column="mileage_memo"/>
+		<result property="mileageWaitDivision" 			column="mileage_wait_division"/>
+		<result property="mileageDivision" 				column="mileage_division"/>
+		<result property="mileageReason" 				column="mileage_reason"/>
+		<result property="userName" 					column="user_name"/>
+	</resultMap>
+	
+ 			<insert id="addMileage" parameterType="Mileage">
+			    <selectKey keyProperty="mileageUseCode" resultType="java.lang.String" order="BEFORE">
+			    	SELECT
+			    		CONCAT('mileage_use_', LPAD(IFNULL(MAX(SUBSTR(mileage_use_code, 13)), 0) + 1, 2, '0'))
+			    	FROM mileage_use
+			    </selectKey>
+					INSERT INTO mileage_use
+					(   mileage_use_code
+					   ,student_id
+					   ,mileage_use_reason_code
+					   ,mileag_deduct_date
+					   ,mileag_deduct
+					   ,mileage_anticipate_del_date
+					   ,mileage_use_group_code
+					   ,mileage_group_code
+					   ,mileage_memo
+					   ,mileage_wait_division
+					) VALUES (
+						#{mileageUseCode}
+					   ,#{studentId}
+					   ,#{mileageUseReasonCode}
+					   ,NOW()
+					   ,#{mileagDeduct}
+					   ,CASE
+					   		WHEN #{mileageWaitDivision} = 'A'
+					   		THEN DATE_ADD(NOW(), INTERVAL 3 YEAR)
+					   		ELSE NULL
+					   	END
+					   ,#{mileageUseGroupCode}
+					   ,#{mileageGroupCode}
+					   ,#{mileageMemo}
+					   ,#{mileageWaitDivision}
+					);	
+		</insert>
+		
+		<select id="getAllMileageListBySearch" parameterType="map" resultMap="mileageResultMap">
+			SELECT
+				mileag_deduct_date
+				,mileage_anticipate_del_date
+				,student_id
+				,user_name
+				,mileage_reason
+				,mileage_memo 
+				,mileage_division
+				,mileag_deduct
+			FROM (
+				SELECT mileag_deduct_date
+						,mileage_anticipate_del_date
+						,student_id
+						,(SELECT user_name FROM user_info A WHERE A.user_id = T.student_id) AS user_name
+						,(SELECT mileage_reason FROM mileage_use_reason A WHERE A.mileage_use_reason_code = T.mileage_use_reason_code) AS mileage_reason
+						,mileage_memo 
+						,(SELECT mileage_division FROM mileage_use_reason A WHERE A.mileage_use_reason_code = T.mileage_use_reason_code) AS mileage_division
+						,mileag_deduct
+				FROM mileage_use T
+				WHERE 1=1
+				<if test="searchValue != null and searchValue != ''">
+					<if test="searchKey.equals('student_id')">
+						AND STUDENT_ID LIKE CONCAT('%',#{searchValue}, '%')
+					</if>
+					<if test="searchKey.equals('user_name')">
+						AND (SELECT user_name FROM user_info A WHERE A.user_id = T.student_id) LIKE CONCAT('%',#{searchValue}, '%')
+					</if>
+				</if>
+				
+				<if test="dateRangeFirst != null or dateRangeLast != null">
+					<if test="dateRangeFirst != null and !''.equals(dateRangeFirst)">
+						AND DATE_FORMAT(mileag_deduct_date, '%Y%m%d') >= REPLACE(#{dateRangeFirst},'-','')
+					</if>
+					<if test="dateRangeLast!= null and !''.equals(dateRangeLast)">
+						<![CDATA[ AND DATE_FORMAT(mileag_deduct_date, '%Y%m%d') <= REPLACE(#{dateRangeLast},'-','') ]]>
+					</if>
+				</if>
+				<if test="mileageUseReasonCode != null and !''.equals(mileageUseReasonCode)">
+					AND T.mileage_use_reason_code = #{mileageUseReasonCode}
+				</if>
+				ORDER BY mileag_deduct_date DESC
+				) TT
+		</select>
+		<select id="getwaitingMileageListBySearch" parameterType="map" resultMap="mileageResultMap">
+			SELECT
+				mileag_deduct_date
+				,student_id
+				,user_name
+				,mileage_reason
+				,mileage_memo 
+				,mileage_division
+				,mileag_deduct
+			FROM (
+				SELECT mileag_deduct_date
+						,student_id
+						,(SELECT user_name FROM user_info A WHERE A.user_id = T.student_id) AS user_name
+						,(SELECT mileage_reason FROM mileage_use_reason A WHERE A.mileage_use_reason_code = T.mileage_use_reason_code) AS mileage_reason
+						,mileage_memo 
+						,(SELECT mileage_division FROM mileage_use_reason A WHERE A.mileage_use_reason_code = T.mileage_use_reason_code) AS mileage_division
+						,mileag_deduct
+				FROM mileage_use T
+				WHERE 1=1
+				<if test="searchValue != null and searchValue != ''">
+					<if test="searchKey.equals('student_id')">
+						AND STUDENT_ID LIKE CONCAT('%',#{searchValue}, '%')
+					</if>
+					<if test="searchKey.equals('user_name')">
+						AND (SELECT user_name FROM user_info A WHERE A.user_id = T.student_id) LIKE CONCAT('%',#{searchValue}, '%')
+					</if>
+				</if>
+				
+				<if test="dateRangeFirst != null or dateRangeLast != null">
+					<if test="dateRangeFirst != null and !''.equals(dateRangeFirst)">
+						AND DATE_FORMAT(mileag_deduct_date, '%Y%m%d') >= REPLACE(#{dateRangeFirst},'-','')
+					</if>
+					<if test="dateRangeLast!= null and !''.equals(dateRangeLast)">
+						<![CDATA[ AND DATE_FORMAT(mileag_deduct_date, '%Y%m%d') <= REPLACE(#{dateRangeLast},'-','') ]]>
+					</if>
+				</if>
+				<if test="mileageUseReasonCode != null and !''.equals(mileageUseReasonCode)">
+					AND T.mileage_use_reason_code = #{mileageUseReasonCode}
+				</if>
+				ORDER BY mileag_deduct_date DESC
+				) TT
+		</select>
+		
+		<resultMap type="Mileage" id="mileageResnResultMap">
+			<result property="mileageUseReasonCode"            	column="mileage_use_reason_code"/>
+			<result property="mileageReason"            		column="mileage_reason"/>
+			<result property="mileageDivision"            		column="mileage_division"/>
+			
+		</resultMap>
+		
+		<select id="selectMileageResnList" resultMap="mileageResnResultMap">
+			SELECT
+				mileage_use_reason_code
+				, mileage_reason
+				, mileage_division
+			FROM mileage_use_reason
+		</select>
+
+ 	
+
 </mapper>

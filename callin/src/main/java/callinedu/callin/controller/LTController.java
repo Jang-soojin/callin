@@ -43,13 +43,15 @@ public class LTController {
 	}
 	
 	@PostMapping("/LTApply")
-	public String LTApply(LTApplyCode lTApplyCode) {
+	public String LTApply(@RequestParam Map<String, Object> map) {
+		
+		
 		
 		System.out.println("===================");
-		System.out.println("커맨드 객체 : LTApplyCode : " + lTApplyCode);
+		System.out.println("커맨드 객체 : map : " + map);
 		System.out.println("===================");
 		
-		if(lTApplyCode != null) lTService.LTApply(lTApplyCode);
+		lTService.LTApply(map);
 		
 		
 		return "redirect:/admin/LT/LTApply";
@@ -62,9 +64,9 @@ public class LTController {
 		System.out.println("constroller 실행");
 		
 		List<LTApplyCode> LTApplyList = lTService.getLTApplyList();
-		System.out.println(LTApplyList);
 		model.addAttribute("title", "레벨테스트신청리스트");
 		model.addAttribute("midTitle", "레벨테스트신청리스트"); 
+		model.addAttribute("LTApplyList", LTApplyList); 
 		
 		return "LT/LTApplyList"; 
 	}
@@ -86,6 +88,7 @@ public class LTController {
 		}
 		
 		map.put("result", result);
+		
 		
 		return map; 
 	}

@@ -34,7 +34,7 @@
 							</div>
 							<div class="col-sm-6">
 								<ol class="breadcrumb float-sm-right">
-									<li class="breadcrumb-item"><a th:href="@{/admin/LT/LTApply}"> 레벨테스트 관리 </a></li>
+									<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
 									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
 								</ol>
 							</div>
@@ -93,7 +93,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="user.userName" id="userName" value="" style="background:#fff">
+											<input type="text" name="userName" id="userName" value="" style="background:#fff">
 											<b id="kname_msg" class="tooltip tooltip-top-right">한글이름을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -105,7 +105,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="user.userNickname" id="userNickname" value="" style="background:#fff">
+											<input type="text" name="userNickname" id="userNickname" value="" style="background:#fff">
 											<b id="ename_msg" class="tooltip tooltip-top-right">영어닉네임을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -118,7 +118,7 @@
 								<div class="form-group">
 									<label class="input">
 										<i class="icon-append fa fa-user"></i>
-										<input type="text" name="user.skypeId" id="skypeId" value="" style="background:#fff">
+										<input type="text" name="skypeId" id="skypeId" value="" style="background:#fff">
 										<b id="skype_msg" class="tooltip tooltip-top-right">스카이프 아이디를 입력해 주세요.</b>
 									</label>
 								</div>
@@ -130,7 +130,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-envelope"></i>
-											<input type="tel" name="user.userEmail" id="userEmail" value="" style="background:#fff">
+											<input type="tel" name="userEmail" id="userEmail" value="" style="background:#fff">
 											<b class="tooltip tooltip-top-right">이메일을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -142,7 +142,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-phone"></i>
-											<input type="tel" name="user.userPhone" id="userPhone" value="" style="background:#fff">
+											<input type="tel" name="userPhone" id="userPhone" value="" style="background:#fff">
 											<b class="tooltip tooltip-top-right">핸드폰 번호를 입력해 주세요.</b>
 										</label>
 									</div>
@@ -386,7 +386,7 @@
 					$('#bf-modal').modal({
 						show:true,
 						backdrop:false
-					}).find(".modal-body").load("/registration/free_time.exe.php");
+					}).find(".modal-body").load("/LT/LTApplyListAjax");
 				}
 				function setDateTime(d) {
 					$("#bf-modal").modal('hide');
@@ -453,7 +453,7 @@
 						changeYear:true
 					}).change(function() {
 						$("#bf-modal").removeData('modal');
-						$("#bf-modal").find(".modal-body").load("/registration/free_time.exe.php?nday="+document.getElementById('datepicker').value);
+						$("#bf-modal").find(".modal-body").load("/LT/LTApplyListAjax?nday="+document.getElementById('datepicker').value);
 					});
 				$('#sDate').click(function(){
 				    $('#nday').css('position','static').datepicker("show");

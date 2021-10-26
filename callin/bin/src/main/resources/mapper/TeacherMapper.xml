@@ -4,37 +4,165 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="callinedu.callin.mapper.TeacherMapper">
 	<resultMap type="Teacher" id="teacherResultMap">
-		<result property="teacherId" 		column="teacher_id"/>
-		<result property="teacherName" 		column="teacher_name"/>
-		<result property="contractType" 	column="contract_type"/>
-		<result property="hourlyRate" 		column="hourly_rate"/>
+		<result property="teacherId" 			column="teacher_id"/>
+		<result property="nationality" 			column="nationality"/>
+		<result property="residence" 			column="residence"/>
+		<result property="skypeId" 				column="skype_id"/>
+		<result property="skypePw" 				column="skype_pw"/>
+		<result property="language" 			column="language"/>
+		<result property="timeZoneCode" 		column="time_zone_code"/>
+		<result property="contractTypeCode" 	column="contract_type_code"/>
+		<result property="unitPay" 				column="unit_pay"/>
+		<result property="educationLevel" 		column="education_level"/>
+		<result property="employmentStatus" 	column="employment_status"/>
+		<result property="dateOfEmployment" 	column="date_of_employment"/>
+		<result property="dateOfResignation" 	column="date_of_resignation"/>
+		<result property="introductionText" 	column="introduction_text"/>
+		<result property="introductionVoice" 	column="introduction_voice"/>
+		<result property="bankCode" 			column="bank_code"/>
+		<result property="accountNumber" 		column="account_number"/>
+		<result property="nameOfDepositor" 		column="name_of_depositor"/>
+		<result property="classStartTime" 		column="class_start_time"/>
+		<result property="classEndTime" 		column="class_end_time"/>
+		<result property="subjectInCharge" 		column="subject_in_charge"/>
+		<result property="workingDayOfWeek" 	column="working_day_of_week"/>
+		<result property="managerId" 			column="manager_id"/>
+		<result property="managerInChargeGroup" column="manager_in_charge_group"/>
+		<association property="user" javaType="User">
+			<id property="userId" column="user_id"/>
+			<result property="userName" 	column="user_name"/>
+			<result property="userNickname" 	column="user_nickname"/>
+			<result property="userEmail" 	column="user_email"/>
+			<result property="userPhone" 	column="user_phone"/>
+			<result property="userJoinDate" column="user_join_date"/>
+		</association>
 	</resultMap>
 	
-	<resultMap type="TeacherAttendance" id="teacherAttendanceResultMap">
-		<result property="attendanceCode" 	column="attendance_code"/>
-		<result property="teacherId" 		column="teacher_id"/>
-		<result property="teacherWorkHour" 	column="teacher_work_hour"/>
-		<result property="workDate" 		column="work_date"/>
+	<resultMap type="TeacherSchedule" id="TeacherScheduleResultMap">
+		<result property="scheduleDayCode" 			column="schedule_day_code"/>
+		<result property="scheduleRegisterCode" 	column="schedule_register_code"/>
+		<result property="teacherId2" 				column="teacher_id2"/>
+		<result property="classDayAttendance" 		column="class_day_attendance"/>
+		<result property="classDayDate" 			column="class_day_date"/>
+		<result property="classExpectedStartTime" 	column="class_expected_start_time"/>
+		<result property="classExpectedEndTime" 	column="class_expected_end_time"/>
+		<result property="classRealStartTime" 		column="class_real_start_time"/>
+		<result property="classRealEndTime" 		column="class_real_end_time"/>
+		<result property="classProgressTime" 		column="class_progress_time"/>
 	</resultMap>
+	
+	<resultMap type="teacherSalarySettlement" id="teacherSalarySettlementResultMap">
+		<result property="teacherSalarySettlementCode" 	column="teacher_salary_settlement_code"/>
+		<result property="teacherId" 					column="teacher_id"/>
+		<result property="bonus" 						column="bonus"/>
+		<result property="deduction" 					column="deduction"/>
+		<result property="totalSalaryPhp" 				column="total_salary_php"/>
+		<result property="totalSalaryKrw" 				column="total_salary_krw"/>
+		<result property="settlementDate" 				column="settlement_date"/>
+		<result property="settlementVerifierId" 		column="settlement_verifier_id"/>
+		<result property="settlementYearMonth" 			column="settlement_year_month"/>
+		<result property="appliedExchangeRate" 			column="applied_exchange_rate"/>
+		<association property="user" javaType="User">
+			<id property="userId" column="user_id"/>
+			<result property="userName" column="user_name"/>
+			<result property="userEmail" column="user_email"/>
+			<result property="userPhone" column="user_phone"/>
+		</association>
+	</resultMap>
+	
+	
+	
+	<select id="getTeacherSalaryList" resultMap="teacherSalarySettlementResultMap" parameterType="String">
+		SELECT 
+			 ts.teacher_salary_settlement_code
+			,ts.teacher_id
+			,u.user_name
+			,ts.bonus
+			,ts.deduction
+			,ts.total_salary_php
+			,ts.total_salary_krw
+			,ts.settlement_date
+			,ts.settlement_verifier_id
+			,ts.applied_exchange_rate
+		FROM 
+			teacher_salary_settlement AS ts
+			LEFT JOIN 
+			user_info AS u 
+			ON 
+			ts.teacher_id = u.user_id 
+	</select>
+	
+	<select id="searchSalaryList" resultMap="teacherSalarySettlementResultMap" parameterType="String">
+		SELECT 
+			 ts.teacher_salary_settlement_code
+			,ts.teacher_id
+			,u.user_name
+			,ts.bonus
+			,ts.deduction
+			,ts.total_salary_php
+			,ts.total_salary_krw
+			,ts.settlement_date
+			,ts.settlement_verifier_id
+			,ts.applied_exchange_rate
+		FROM 
+			teacher_salary_settlement AS ts
+			LEFT JOIN 
+			user_info AS u 
+			ON 
+			ts.teacher_id = u.user_id 
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchKey != null and searchKey != ''.toString()">
+				${searchKey} LIKE CONCAT('%', #{searchValue},'%')
+			</if>
+			<if test="dateRangeFirst != null and dateRangeFirst != ''">
+				AND ts.settlement_date BETWEEN DATE(#{dateRangeFirst}) AND DATE(#{dateRangeLast})
+			</if>			
+		</trim>	
+	</select>
 	
 	<select id="getTeacherList" resultMap="teacherResultMap">
-		SELECT
-			 teacher_id
-			,teacher_name
-			,contract_type
-			,hourly_rate
-		FROM
-			tb_teacher
+		SELECT 
+			 t.teacher_id
+			,u.user_name
+			,t.skype_id
+			,t.skype_pw
+			,u.user_phone
+			,u.user_email
+			,u.user_join_date
+			,t.contract_type_code
+			,t.unit_pay
+			,t.class_start_time
+			,t.class_end_time
+			,t.employment_status
+		FROM 
+			teacher_detail AS t
+			LEFT JOIN
+			user_info AS u 
+			ON 
+			t.teacher_id = u.user_id
 	</select>
 	
 	<select id="getTeacherInfoById" resultMap="teacherResultMap" parameterType="String">
 		SELECT
-			teacher_id
-			,teacher_name
-			,contract_type
-			,hourly_rate
+			 t.teacher_id
+			,u.user_name
+			,u.user_nickname
+			,t.skype_id
+			,t.skype_pw
+			,u.user_phone
+			,u.user_email
+			,u.user_join_date
+			,t.contract_type_code
+			,t.unit_pay
+			,t.class_start_time
+			,t.class_end_time
+			,t.employment_status
 		FROM
-			tb_teacher
+			teacher_detail AS t
+			LEFT JOIN
+			user_info AS u 
+			ON 
+			t.teacher_id = u.user_id
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
 			teacher_id=#{teacherId}
 		</trim>		
@@ -42,14 +170,86 @@
 	
 	<select id="getTotalWorkHour"  resultType="int" parameterType="String">
 		SELECT 
-			COALESCE(SUM(teacher_work_hour),0)
+			COALESCE(SUM(class_progress_time),0)
 		FROM 
-			teacher_attendance 
+			schedule_day
 		WHERE 
-			teacher_id = #{teacherId} AND
-			work_date BETWEEN DATE(#{dateRange1}) AND DATE(#{dateRange2})
-		
+			teacher_id2 = #{teacherId} AND
+			class_day_date BETWEEN DATE(#{dateRangeFirst}) AND DATE(#{dateRangeLast})
 	</select>
 	
+	<insert id="addTeacherSalarySettlement" parameterType="teacherSalarySettlement">
+		INSERT INTO teacher_salary_settlement 
+			(
+			 teacher_salary_settlement_code
+			,teacher_id
+			,Bonus
+			,deduction
+			,total_salary_php
+			,total_salary_krw
+			,settlement_date
+			,settlement_verifier_id
+			,settlement_year_month
+			,applied_exchange_rate
+			)
+		VALUES
+			(
+			  (Select CONCAT('T_salary', '_', (SELECT LPAD(COUNT(*)+1,5,'0') FROM teacher_salary_settlement AS TSS)))
+			 ,#{teacherId}
+			 ,#{bonus}
+			 ,#{deduction}
+			 ,#{totalSalaryPhp}
+			 ,#{totalSalaryKrw}
+			 ,CURDATE()
+			 ,'ksk1908'
+			 ,CURDATE()
+			 ,#{appliedExchangeRate}
+			)
+	</insert>
 	
+	
+	<insert id="addTeacherDetail" parameterType="String">
+		INSERT INTO teacher_detail
+			(
+			 teacher_id
+			,nationality
+			,language
+			,time_zone_code
+			,contract_type_code
+			,skype_id
+			,skype_pw
+			,unit_pay
+			,class_start_time
+			,class_end_time
+			,employment_status
+			,date_of_employment
+			)
+		VALUES
+			(
+			 #{id}
+			,'nationality002'
+			,'language002'
+			,'Timezone002'
+			,'contract_type002'
+			,#{skypeId}
+			,#{skypePw}
+			,#{unitPay}
+			 ,#{classStartTime}
+			,#{classEndTime}
+			,'재직'
+			,CURDATE()
+			)
+	</insert>
+	
+	<update id="modifyTeacher" parameterType="String">
+		Update teacher_detail
+		SET 
+			 skype_id = #{skypeId}
+			,skype_pw = #{skypePw}
+			,unit_pay = #{unitPay}
+			,class_start_time = #{classStartTime}
+			,class_end_time = #{classEndTime}
+		WHERE  
+			teacher_id = #{id}
+	</update>
 </mapper>
