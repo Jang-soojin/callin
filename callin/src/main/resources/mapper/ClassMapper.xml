@@ -23,6 +23,12 @@
 		<result property="courseLanguage" 			column="course_language"/>
 		<result property="managerId" 				column="manager_id"/>
 		<result property="courseTuition" 			column="course_tuition"/>
+		<association property="classPolicy" javaType="ClassPolicy">
+			<id property="classPolicyCode"			column="class_policy_code"/>
+			<result property="classPeriod" 			column="class_period"/>
+			<result property="classDay" 			column="class_day"/>
+			<result property="classTime" 			column="class_time"/>
+		</association>
 	</resultMap>
 	
 	
@@ -104,6 +110,26 @@
 			class_postpone_period
 		FROM 
 			class_policy order by class_policy_name ASC limit 0,10;
+	</select>
+	
+	<select id="getRegularClass" parameterType="RegularClass" resultMap="regularClassResultMap">
+		SELECT
+			r.regular_class_code,
+			r.class_policy_code, 
+			r.course_name, 
+			r.course_language, 
+			r.manager_id, 
+			r.course_tuition,
+			p.class_period,
+			p.class_day,
+			p.class_time
+		FROM 
+			regular_class AS r
+		INNER JOIN
+			class_policy AS p
+		ON
+			p.class_policy_code = r.class_policy_code	
+		order by r.course_name ASC limit 0,10;
 	</select>
 	
 	<select id="getPolicyInfoByCode" parameterType="String" resultMap="classPolicyResultMap">

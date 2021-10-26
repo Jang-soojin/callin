@@ -26,4 +26,6 @@ public interface ClassMapper {
 	public List<ClassPolicy> getClassPolicyListBySearchKey(String levelSearchKey, String classPolicySearchValue);
 
 	public int addRegularClass(RegularClass regularClass);
+
+	public List<RegularClass> getRegularClass();
 }

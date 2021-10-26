@@ -98,6 +98,9 @@ public class ClassController {
 		System.out.println("정규수업 리스트 컨트롤러 실행");
 		model.addAttribute("title", "정규수업");
 		model.addAttribute("midTitle", "정규 수업 리스트");
+		List<RegularClass> regularClass = classService.getRegularClass();
+		
+		model.addAttribute("regularClass", regularClass);
 		
 		return "class/regularClassList";
 	}
