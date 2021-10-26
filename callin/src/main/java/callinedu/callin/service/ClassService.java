@@ -72,4 +72,9 @@ public class ClassService {
 		return classMapper.addRegularClass(regularClass);
 	}
 
+	public List<RegularClass> getRegularClass() {
+		List<RegularClass> regularClass = classMapper.getRegularClass();
+		return regularClass;
+	}
+
 }
