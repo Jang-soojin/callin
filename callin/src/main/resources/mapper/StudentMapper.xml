@@ -90,7 +90,8 @@
 		
 		<select id="getAllMileageListBySearch" parameterType="map" resultMap="mileageResultMap">
 			SELECT
-				mileag_deduct_date
+				mileage_use_code
+				,mileag_deduct_date
 				,mileage_anticipate_del_date
 				,student_id
 				,user_name
@@ -99,7 +100,8 @@
 				,mileage_division
 				,mileag_deduct
 			FROM (
-				SELECT mileag_deduct_date
+				SELECT	mileage_use_code
+						,mileag_deduct_date
 						,mileage_anticipate_del_date
 						,student_id
 						,(SELECT user_name FROM user_info A WHERE A.user_id = T.student_id) AS user_name
@@ -109,6 +111,7 @@
 						,mileag_deduct
 				FROM mileage_use T
 				WHERE 1=1
+				AND mileage_wait_division = 'A'
 				<if test="searchValue != null and searchValue != ''">
 					<if test="searchKey.equals('student_id')">
 						AND STUDENT_ID LIKE CONCAT('%',#{searchValue}, '%')
@@ -134,7 +137,8 @@
 		</select>
 		<select id="getwaitingMileageListBySearch" parameterType="map" resultMap="mileageResultMap">
 			SELECT
-				mileag_deduct_date
+				mileage_use_code
+				, mileag_deduct_date
 				,student_id
 				,user_name
 				,mileage_reason
@@ -142,7 +146,8 @@
 				,mileage_division
 				,mileag_deduct
 			FROM (
-				SELECT mileag_deduct_date
+				SELECT	mileage_use_code
+						, mileag_deduct_date
 						,student_id
 						,(SELECT user_name FROM user_info A WHERE A.user_id = T.student_id) AS user_name
 						,(SELECT mileage_reason FROM mileage_use_reason A WHERE A.mileage_use_reason_code = T.mileage_use_reason_code) AS mileage_reason
@@ -151,6 +156,7 @@
 						,mileag_deduct
 				FROM mileage_use T
 				WHERE 1=1
+				AND mileage_wait_division = 'B'
 				<if test="searchValue != null and searchValue != ''">
 					<if test="searchKey.equals('student_id')">
 						AND STUDENT_ID LIKE CONCAT('%',#{searchValue}, '%')
@@ -189,7 +195,23 @@
 				, mileage_division
 			FROM mileage_use_reason
 		</select>
-
+		
+		<!-- 대기 마일리지 Update -->
+		<update id="updateMileageWaiting" parameterType="map">
+			UPDATE mileage_use
+			SET
+				mileage_wait_division = 'A'
+				, mileag_deduct_date = NOW()
+				, mileage_anticipate_del_date = DATE_ADD(NOW(), INTERVAL 3 YEAR)
+			WHERE mileage_use_code = #{mileageUseCode}
+		</update>
+		
+		<!-- 대기 마일리지 Delete -->
+		<delete id="deleteMileageWaiting" parameterType="map">
+			DELETE FROM mileage_use 						
+			WHERE mileage_use_code = #{mileageUseCode}
+		</delete>
+		
  	
 
 </mapper>

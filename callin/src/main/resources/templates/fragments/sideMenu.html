@@ -4,7 +4,7 @@
 	
 	<nav class="mt-2" th:fragment="sideBarMenu">
         <!--------------------------------------- 김경수 메뉴 영역 --------------------------------------->
-           <ul th:if="${sideMenu eq 'teacher' || sideMenu eq 'manager' || sideMenu eq 'student'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+           <ul th:if="${sideMenu eq 'teacher' || sideMenu eq 'manager'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <!-- ↓ 강사/매니저 관리 -->
@@ -353,6 +353,12 @@
                 <a th:href="@{/admin/student/studentDetailList}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> 학생 리스트 </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/student/studentDetailInfo}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> 학생 상세정보 </p>
                 </a>
               </li>
             </ul>

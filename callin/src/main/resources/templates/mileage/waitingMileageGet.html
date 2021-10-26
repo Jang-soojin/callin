@@ -225,10 +225,11 @@
 								sHtml += "<td>" + data.miList[i].mileageDivision + "</td>";
 								sHtml += "<td>" + data.miList[i].mileagDeduct + "</td>";
 								sHtml += "<td>";
-								sHtml += '<button type="button" id="addButton" class="btn btn-secondary">등록</button>';
+								sHtml += "<input type='hidden' name='mileageUseCode' id='mileageUseCode" + i + "' value='" + data.miList[i].mileageUseCode + "' />";
+								sHtml += '<button type="button" class=" addButton btn btn-secondary">등록</button>';
 								sHtml += "</td>";
 								sHtml += "<td>";
-								sHtml += '<button type="button" id="removeButton" class="btn btn-secondary">삭제</button>';
+								sHtml += '<button type="button" class="removeButton btn btn-secondary">삭제</button>';
 								sHtml += "</td>";
 								sHtml += "</tr>";
 							}
@@ -256,7 +257,45 @@
 					$('#searchKey').val("");
 					$('#searchValue').val("");
 					$('#mileageUseReasonCode').val("");
-				})
+				});
+				
+				// 등록 버튼 이벤트
+				$(document).on("click", ".addButton", function(){
+					var objVal = $(this).closest("td").find("input[name=mileageUseCode]").val();
+					var searchDataObj = {};
+					searchDataObj.mileageUseCode = objVal;
+					
+					$.ajax({
+						url : "/admin/mileage/waitingMileageUpdate"
+						, data : JSON.stringify(searchDataObj)
+						, contentType:'application/json'
+						, dataType : "json"
+						, async : false
+						, type : "post"
+						, success : function(){
+							// 검색 버튼 강제 클릭
+							$("#searchButton").trigger("click");
+						}
+					});
+				});
+				$(document).on("click", ".removeButton", function(){
+					var objVal = $(this).closest("td").prev().find("input[name=mileageUseCode]").val();
+					var searchDataObj = {};
+					searchDataObj.mileageUseCode = objVal;
+					
+					$.ajax({
+						url : "/admin/mileage/waitingMileageDelete"
+						, data : JSON.stringify(searchDataObj)
+						, contentType : 'application/json'
+						, dataType : "json"
+						, async : false
+						, type : "post"
+						, success : function(){
+							$("#searchButton").trigger("click");
+						}
+						
+					});
+				});
 			});
 			
 		</script>

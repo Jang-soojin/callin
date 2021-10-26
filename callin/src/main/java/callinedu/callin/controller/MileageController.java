@@ -125,7 +125,34 @@ public class MileageController {
 		
 		return  resultMap;
 	}
-
-
+	
+	//대기mileage update
+	@PostMapping(value="/waitingMileageUpdate", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> waitingMileageUpdate(@RequestBody Map<String, Object> paramMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		System.out.println(paramMap);
+		
+		// 업데이트
+		studentService.updateMileageWaiting(paramMap);
+		
+		resultMap.put("paramMap", paramMap);
+		
+		return  resultMap;
+	}
+	//대기mileage update
+	@PostMapping(value="/waitingMileageDelete", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> waitingMileageDelete(@RequestBody Map<String, Object> paramMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		System.out.println(paramMap);
+		
+		// 업데이트
+		studentService.deleteMileageWaiting(paramMap);
+		
+		resultMap.put("paramMap", paramMap);
+		
+		return  resultMap;
+	}
 }
 
