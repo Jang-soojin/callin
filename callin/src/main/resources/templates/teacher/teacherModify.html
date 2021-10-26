@@ -16,7 +16,7 @@
 	.reg-form-td{
 		vertical-align: middle !important;
 	}
-	.reg-form-td input{
+	.reg-form-td input,.reg-form-td select{
 		width:250px;
 		display: inline;
 	}
@@ -31,7 +31,7 @@
 	    margin-right: 5px;
 	}
 </style>	 
-<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
 		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
 		<script th:src="@{/AdminLTE-master/plugins/inputmask/jquery.inputmask.min.js}"></script>
 <!-- ㄴ스타일 영역 -->
@@ -70,8 +70,18 @@
 													<td class="reg-form-th col-md-2">
 														<span>강사 ID</span>
 													</td>
-													<td class="reg-form-td" colspan="3">
+													<td class="reg-form-td" >
 														<input type="text" class="form-control" id="user_id" name="user_id" th:value="${teacher.teacherId}">
+													</td>
+													<td class="reg-form-th col-md-2">
+														<span>상태</span>
+													</td>
+													<td class="reg-form-td" >
+														<select class="form-control" id="employment_status" name="employment_status">
+															<option value="재직">재직</option>
+															<option value="휴직">휴직</option>
+															<option value="퇴사">퇴사</option>
+														</select>
 													</td>
 												</tr>
 												<tr>
@@ -133,7 +143,7 @@
 														<span>근무 시작 시간</span>
 													</td>
 													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="class_start_time" name="class_start_time" th:value="${teacher.classStartTime}">
+														<input type="text" class="form-control timepicker" id="class_start_time" name="class_start_time" th:value="${teacher.classStartTime}">
 													</td>
 												</tr>
 												<tr>
@@ -141,7 +151,7 @@
 														<span>근무 종료 시간</span>
 													</td>
 													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="class_end_time" name="class_end_time" th:value="${teacher.classEndTime}">
+														<input type="text" class="form-control timepicker" id="class_end_time" name="class_end_time" th:value="${teacher.classEndTime}">
 													</td>
 												</tr>
 												<tr>
@@ -149,7 +159,8 @@
 														<span>브레이크 타임</span>
 													</td>
 													<td class="reg-form-td"colspan="3">
-														<input type="text" class="form-control" id="class_break_time" name="class_break_time">
+														<input type="text" class="form-control timepicker" id="break_time_begin" name="break_time_begin"> ~ 
+														<input type="text" class="form-control timepicker" id="break_time_end" name="break_time_end">
 													</td>
 												</tr>
 											</tbody>
@@ -164,12 +175,6 @@
 															<i aria-hidden="true"></i>수정하기
 														</button>
 													</div>
-												</td>
-												<td>
-												</td>
-												<td>
-												</td>
-												<td>
 												</td>
 											</tr>
 											</tfoot>
@@ -186,11 +191,11 @@
 				<!-- /.container-fluid -->
 			</section>
 		</div>
-	
+		<!--제이쿼리 timepicker cdn  -->	
+		<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	
 		<!-- 생년월일 Select박스 만들기 -->	
 		<script type="text/javascript">
-			
 			$(document).ready(function(){ 
 				var now = new Date(); 
 				var year = now.getFullYear(); 
@@ -213,8 +218,20 @@
 					$("#month > option[value="+mon+"]").attr("selected", "true");
 					$("#day > option[value="+day+"]").attr("selected", "true"); 
 			})
-
+			
+			
 		</script>
-	
+		<script type="text/javascript">
+			$('.timepicker').timepicker({
+			    timeFormat: 'HH:mm',
+			    interval: 10,
+			    minTime: '06:00',
+			    maxTime: '23:50',
+			    startTime: '06:00',
+			    dynamic: false,
+			    dropdown: true,
+			    scrollbar: true
+			});
+		</script>
 </th:block>
 </html>

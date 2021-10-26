@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="callinedu.callin.mapper.ScheduleMapper">
+
+<resultMap type="Schedule" id="schduleMap">
+			<result property="scheduleRegisterCode" column="schedule_register_code"/>
+			<result property="regularClassCode" 	column="regular_class_code"/>
+			<result property="teacherId2" 			column="teacher_id2"/>
+			<result property="studentId2" 			column="student_id2"/>
+			<result property="classStartDay" 		column="class_start_day"/>
+			<result property="classStartTime" 		column="class_start_time"/>
+			<result property="classEndTime" 		column="class_end_time"/>
+			<result property="classEndDay" 			column="class_end_day"/>
+			<result property="classDay" 			column="class_day"/>
+			<result property="classRegisterDay" 	column="class_register_day"/>
+			<result property="classEvaluation" 		column="class_evaluation"/>
+			<result property="classProgress" 		column="class_progress"/>
+			<result property="allDay" 				column="all_day"/>
+	</resultMap>
+	<insert id="saveSchedule" parameterType="String">
+		INSERT INTO schedule_register (
+			 schedule_register_code
+			, regular_class_code
+			, teacher_id2
+			, student_id2
+			, class_start_day
+			, class_end_day
+			, class_start_time
+			, class_end_time
+			, class_day
+			, class_register_day
+			, class_evaluation
+			, class_progress
+			, all_day
+		) VALUES (
+			 CONCAT('schedule_code', '_', (SELECT LPAD(COUNT(*)+1,5,'0') FROM schedule_register AS SR))
+			, 'regular_class001'
+			, 'APA'
+			, #{title}
+			, #{startDay}
+			, #{endDay}
+			, #{startTime}
+			, #{endTime}
+			, 'abc'
+			, '2021-10-26'
+			, 'good'
+			, 'asd'
+			,  #{allDay}
+			);
+	</insert>
+	<select id="getAllSchedule" resultMap="schduleMap">
+		SELECT 
+			student_id2
+			,class_start_day
+			,class_end_day
+			,class_start_time
+			,class_end_time
+			,all_day
+		 
+		FROM
+			schedule_register
+	</select>
+	
+</mapper>
