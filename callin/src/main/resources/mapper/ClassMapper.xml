@@ -102,9 +102,56 @@
 			class_postpone_day, 
 			class_postpone_days, 
 			class_postpone_period
-		FROM class_policy
-			order by class_policy_name ASC limit 0,10;
+		FROM 
+			class_policy order by class_policy_name ASC limit 0,10;
 	</select>
+	
+	<select id="getPolicyInfoByCode" parameterType="String" resultMap="classPolicyResultMap">
+		SELECT
+			class_policy_code,
+			class_policy_name, 
+			class_period, 
+			class_day, 
+			class_time, 
+			class_postpone_day, 
+			class_postpone_days, 
+			class_postpone_period
+		FROM
+			class_policy
+		WHERE
+			class_policy_code = #{classPolicyCode};
+	</select>
+	<update id="modifyPolicy" parameterType="ClassPolicy">
+		UPDATE class_policy
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="classPolicyCode != null and classPolicyCode != ''.toString()">
+				class_policy_code = #{classPolicyCode},
+			</if>
+			<if test="classPolicyName != null and classPolicyName != ''.toString()">
+				class_policy_name = #{classPolicyName},
+			</if>
+			<if test="classPeriod != null and classPeriod != ''.toString()">
+				class_period = #{classPeriod},
+			</if>
+			<if test="classDay != null and classDay != ''.toString()">
+				class_day = #{classDay},
+			</if>
+			<if test="classTime != null and classTime != ''.toString()">
+				class_time = #{classTime},
+			</if>
+			<if test="classPostponeDay != null and classPostponeDay != ''.toString()">
+				class_postpone_day = #{classPostponeDay},
+			</if>
+			<if test="classPostponeDays != null and classPostponeDays != ''.toString()">
+				class_postpone_days = #{classPostponeDays},
+			</if>
+			<if test="classPostponePeriod != null and classPostponePeriod != ''.toString()">
+				class_postpone_period = #{classPostponePeriod},
+			</if>
+		</trim>
+		WHERE
+			class_policy_code= #{classPolicyCode};
+	</update>
 	<delete id="deleteClassPolicy" parameterType="String">
 		DELETE
 		FROM 
@@ -112,5 +159,23 @@
 		WHERE
 			class_policy_code = #{classPolicyCode};
 	</delete>
+	
+	<insert id="addRegularClass" parameterType="RegularClass">
+		INSERT INTO regular_class
+		(   regular_class_code
+		   ,class_policy_code
+		   ,course_name
+		   ,course_language
+		   ,manager_id
+		   ,course_tuition
+		) VALUES (
+		    CONCAT(NOW(), 'id001')
+		   ,#{classPolicyCode}
+		   ,#{courseName}
+		   ,#{courseLanguage}
+		   ,#{managerId}
+		   ,#{courseTuition}
+		);	
+	</insert>
 	
 </mapper>

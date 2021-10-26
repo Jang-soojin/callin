@@ -50,6 +50,30 @@ public class ClassController {
 		return "class/classPolicyList";
 	}
 	
+	@PostMapping("modifyPolicy")
+	public String modifyPolicy(ClassPolicy classPolicy) {
+		System.out.println("수업정책 수정 컨트롤러 실행");
+		classService.modifyPolicy(classPolicy);
+		return "redirect:/admin/class/classPolicyList";
+	}
+	
+	@GetMapping("modifyPolicy")
+	public String modifyPolicy(@RequestParam(name = "classPolicyCode", required = false) String classPolicyCode ,Model model) {
+		System.out.println("=========================");
+		System.out.println("classPolicyCode : " + classPolicyCode);
+		System.out.println("=========================");
+		
+		ClassPolicy classPolicy = classService.getPolicyInfoByCode(classPolicyCode);
+		
+		System.out.println("수업정책 수정 컨트롤러 실행");
+		model.addAttribute("title", "수업관리");
+		model.addAttribute("midTitle", "수업 정책 수정");
+		model.addAttribute("classPolicy", classPolicy);
+		
+		
+		return "class/modifyPolicy";
+	}
+	
 	@GetMapping("regularClass")
 	public String regularClass(Model model) {
 		System.out.println("정규수업 등록 컨트롤러 실행");
@@ -128,5 +152,20 @@ public class ClassController {
 		List<ClassPolicy> classPolicyList = classService.getClassPolicyListBySearchKey(levelSearchKey, classPolicySearchValue);
 		
 	    return classPolicyList;
+	}
+	
+	@PostMapping("addRegularClass")
+	public String addRegularClass(Model model, @ModelAttribute RegularClass regularClass) {
+		System.out.println("정규수업 컨트롤러 실행" + "---" + regularClass.toString());
+		model.addAttribute("title", "정규수업");
+		model.addAttribute("midTitle", "정규수업등록");	
+		
+		int result = classService.addRegularClass(regularClass);
+		
+		System.out.println(result);
+		
+		return "redirect:/admin/class/regularClass";
+		
+		
 	}
 }

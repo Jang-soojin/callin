@@ -98,85 +98,88 @@
           </li> -->
         </ul>
 <!--------------------------------------- 김경수 메뉴 영역 ------------------------------------------>
-        <!-- th:if="${sideMenu eq ''}" ''부분에 본인 메뉴 넣어 주시면 됩니다. ul 통째로 복사해서 쓰세요. -->
-        <ul th:if="${sideMenu eq 'class'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+	<!-- th:if="${sideMenu eq ''}" ''부분에 본인 메뉴 넣어 주시면 됩니다. ul 통째로 복사해서 쓰세요. -->
+	<ul th:if="${sideMenu eq 'class'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                	수업관리 메뉴
-                <i class="right fas fa-angle-left"></i>
-              </p>
-          </li>
-         
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-envelope"></i>
-              <p>
+		<li class="nav-item menu-open">
+			<p>
 				수업 관리 (장수진)
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a th:href="@{/admin/class/classPolicy}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>수업 정책 등록</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a th:href="@{/admin/class/classPolicyList}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>수업 정책 리스트 보기</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a th:href="@{/admin/class/regularClass}"  class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>정규 수업 등록</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a th:href="@{/admin/class/regularClassList}"  class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>정규 수업 리스트 보기</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+				<i class="right fas"></i>
+			</p>
+		</li>
          
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-plus-square"></i>
-              <p>
-                Extras
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item menu-open">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Login & Register v1
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="pages/examples/login.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Login v1</p>
-                    </a>
-                  </li>
-                 
-                </ul>
-              </li>              
-              
-            </ul>
-          </li>
-        </ul>
+		<li class="nav-item">
+			<a href="#" class="nav-link">
+				<i class="nav-icon far fa-sticky-note"></i>
+				<p>
+					수업 정책 관리
+				<i class="fas fa-angle-left right"></i>
+				</p>
+			</a>
+			<ul class="nav nav-treeview">
+				<li class="nav-item">
+					<a th:href="@{/admin/class/classPolicy}" class="nav-link">
+						<i class="far fa-circle nav-icon"></i>
+						<p>수업 정책 등록</p>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a th:href="@{/admin/class/classPolicyList}" class="nav-link">
+						<i class="far fa-circle nav-icon"></i>
+						<p>수업 정책 리스트 보기</p>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li class="nav-item">
+			<a href="#" class="nav-link">
+				<i class="nav-icon far fa-clone"></i>
+				<p>
+					정규 수업 관리
+				<i class="fas fa-angle-left right"></i>
+				</p>
+			</a>
+			<ul class="nav nav-treeview">
+				<li class="nav-item">
+					<a th:href="@{/admin/class/regularClass}"  class="nav-link">
+						<i class="far fa-circle nav-icon"></i>
+						<p>정규 수업 등록</p>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a th:href="@{/admin/class/regularClassList}"  class="nav-link">
+						<i class="far fa-circle nav-icon"></i>
+						<p>정규 수업 리스트 보기</p>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li class="nav-item">
+			<a href="#" class="nav-link">
+				<i class="nav-icon far fa-calendar"></i>
+				<p>
+					수업 스케줄 관리
+				<i class="fas fa-angle-left right"></i>
+				</p>
+			</a>
+			<ul class="nav nav-treeview">
+				<li class="nav-item">
+					<a th:href="@{/admin/class/regularClass}"  class="nav-link">
+						<i class="far fa-circle nav-icon"></i>
+						<p>정규 수업 등록</p>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a th:href="@{/admin/class/regularClassList}"  class="nav-link">
+						<i class="far fa-circle nav-icon"></i>
+						<p>정규 수업 리스트 보기</p>
+					</a>
+				</li>
+			</ul>
+		</li>
+	 </ul>
+
         
         
         <ul th:if="${sideMenu eq 'LT' || sideMenu eq 'ebook'}" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
