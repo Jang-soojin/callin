@@ -54,14 +54,14 @@
 							<div class="card-body">
 								<form id="ebookRegister" th:action="@{/admin/ebook/ebookRegister}" method="post">
 									<table class="table table-bordered table-hover" style="border:none; vertical-align: inherit;">
-										<tr>
+										<!-- <tr>
 											<td class="reg-form-th col-md-2">
 												<span>교재코드</span>
 											</td>
 											<td class="reg-form-td" colspan="3">
 												<input type="text" class="form-control" id="ebook_code" name="ebook_code">
 											</td>
-										</tr>
+										</tr> -->
 										<tr>
 											<td class="reg-form-th col-md-2">
 												<span>교재명</span>
@@ -76,12 +76,13 @@
 											</td>
 											<td class="reg-form-td">
 												<div class="input-group-prepend">
-													<select class="form-control" name="ebook_level" id="ebook_level">
+													<select class="form-control" id="ebook_level" name="ebook_level">
 														<option>:: 선택하세요 ::</option>
 														<option value="1"> 기초 </option>
 														<option value="2"> 초급 </option>
 														<option value="3"> 중급 </option>
 														<option value="4"> 고급 </option>
+														<option value="5"> 심화 </option>
 													</select>
 												</div>
 											</td>
@@ -91,7 +92,7 @@
 											</td>
 											<td class="reg-form-td" colspan="3">
 												<div class="custom-file">
-							                      <input type="file" class="custom-file-input" id="customFile">
+							                      <input type="file" class="custom-file-input" id="customFile" name="customFile">
 							                      <label class="custom-file-label" for="customFile">Choose file</label>
 							                    </div>
 											</td>
@@ -147,5 +148,39 @@
 	<script>
 	
 	</script>
+	<script type="text/javascript">
+		
+			//=== 유효성검사
+			$(function(){
+				$('#reg_submit').click(function(){
+					var form = document.getElementById('ebookRegister');
+					//=== 교재명
+					if($('#ebook_name').val()=='') {	
+						alert("교재명을 입력하세요")
+						$('#ebook_name').focus(); 
+						return false;
+					}
+					//=== 교재난이도
+					if($('#ebook_level').val()=='') {	
+						alert("교재난이도를 선택하세요")
+						$('#ebook_level').focus(); 
+						return false;
+					}
+					//=== 교재파일
+					if($('#customFile').val()=='') {	
+						alert("교재파일을 선택하세요");
+						$('#customFile').focus(); 
+						return false;
+					}
+					alert('등록이 완료되었습니다!'); 
+					document.getElementById('ebookRegister').submit();
+				});
+			});
+	
+	
+		</script>
+	
+	
+	
 </th:block>
 </html>
