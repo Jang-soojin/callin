@@ -103,7 +103,15 @@ public class StudentService {
 		
 		return studentMapper.getwaitingMileageListBySearch(paramMap);
 	}  
-	  
-	 
-		
+	
+	/**
+	 * 대기 마일리지 즉시적립으로 Update
+	 * @param paramMap
+	 */
+	public void updateMileageWaiting(Map<String, Object> paramMap){
+		studentMapper.updateMileageWaiting(paramMap);
+	}
+	public void deleteMileageWaiting(Map<String, Object> paramMap) {
+		studentMapper.deleteMileageWaiting(paramMap);
+	}
 }

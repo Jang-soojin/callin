@@ -27,7 +27,23 @@ public class StudentDetailService {
 		}
 		return studentDetailMapper.getStudentDetailListBySearch(paramMap);
 	}
-	  
-	 
-		
+	
+	/**
+	 * 학생상세정보 조회
+	 * @param paramMap
+	 * @return
+	 */
+	public StudentDetail getStudentDetailInfo(Map<String, Object> paramMap) {
+		return studentDetailMapper.getStudentDetailInfo(paramMap);
+	}
+	
+	/**
+	 * 
+	 * @param paramMap
+	 * @return
+	 */
+	public void updateStudentDetail(Map<String, Object> paramMap) {
+		studentDetailMapper.updateStudentDetail(paramMap);
+		studentDetailMapper.updateStudentDetail2(paramMap);
+	}
 }

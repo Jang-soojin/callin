@@ -17,5 +17,16 @@ public interface StudentMapper {
 	public List<Mileage> getwaitingMileageListBySearch(Map<String, Object> paramMap);
 	public int addMileage(Mileage mileage);
 	public List<Mileage> selectMileageResnList();
+	
+	/**
+	 * 대기 마일리지 즉시적립으로 Update
+	 * @param paramMap
+	 */
+	public void updateMileageWaiting(Map<String, Object> paramMap);
+	/**
+	 * 대기 마일리지  Delete
+	 * @param paramMap
+	 */
+	public void deleteMileageWaiting(Map<String, Object> paramMap);
 
 }

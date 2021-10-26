@@ -41,8 +41,10 @@
 					<div class="container-fluid">
 						<div class="card card card-secondary">
 							<!-- /.card-header -->
-							<div class="card-body">
-								<form id="chooseStudent" name="chooseStudent" th:action="@{/admin/studnet/studentDetailSearch}" method="post"> 
+							<form id="chooseStudent" name="chooseStudent" th:action="@{/admin/studnet/studentDetailSearch}" method="post">
+								<div class="card-body">
+									<input type="hidden" name="studentId" id="studentId" value="" />
+									
 									<table class="table table-bordered table-hover" border="1" style="width: 100%; vertical-align: inherit;">
 										<tr>
 											<td class="searchInfo" style=" vertical-align: middle; text-align: center; background-color:#ebebeb;"><span>학생 검색</span></td>
@@ -58,34 +60,34 @@
 											</td>
 										</tr>
 									</table>
-								</form>
-							</div>
-							<!-- /.card-body -->
-							<div class="card-body">
-						
-								<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
-									<thead>
-										<tr>
-											<th><input type="checkbox"></th>
-											<th>NO.</th>
-											<th>학생이름</th>
-											<th>학생아이디</th>
-											<th>학생이메일</th>
-											<th>상세정보</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="studentDetail : ${studentDetailSearch}">
-											<td><input type="checkbox"></td>
-											<td>1</td>
-											<td th:text="${studentDetail.userName}"></td>
-											<td th:text="${studentDetail.userId}"></td>
-											<td th:text="${studentDetail.userEmail}"></td>
-											<td><button type="button" id="detailButton" class="btn btn-secondary">상세보기</button></td>
-										</tr>
-									</tbody>
-								</table>		
-							</div>
+								</div>
+								<!-- /.card-body -->
+								<div class="card-body">
+							
+									<table id="example2" class="table table-bordered table-hover" style="text-align: center;">
+										<thead>
+											<tr>
+												<th><input type="checkbox"></th>
+												<th>NO.</th>
+												<th>학생이름</th>
+												<th>학생아이디</th>
+												<th>학생이메일</th>
+												<th>상세정보</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="studentDetail : ${studentDetailSearch}">
+												<td><input type="checkbox"></td>
+												<td>1</td>
+												<td th:text="${studentDetail.userName}"></td>
+												<td th:text="${studentDetail.userId}"></td>
+												<td th:text="${studentDetail.userEmail}"></td>
+												<td><a href="/admin/student/studentDetailInfo" class="nav-link"><input type="submit" class="btn btn-secondary" value="상세보기"></a></td>
+											</tr>
+										</tbody>
+									</table>		
+								</div>
+							</form>
 						</div>
 					</div>
 				</section>		
@@ -142,7 +144,7 @@
 						  for(var i = 0; i < data.studentList.length; i++){
 							  sHtml += "<tr>";
 							  sHtml += "<td>";
-							  sHtml += '<input type="checkbox">';
+							  sHtml += "<input type='checkbox'>";
 							  sHtml += "</td>";
 							  sHtml += "<td>";
 							  sHtml += (i+1);
@@ -151,7 +153,8 @@
 							  sHtml += "<td>" + data.studentList[i].userId + "</td>";
 							  sHtml += "<td>" + data.studentList[i].userEmail + "</td>";
 							  sHtml += "<td>";
-							  sHtml += '<button type="button" id="detailButton" class="btn btn-secondary">상세보기</button>';
+							  sHtml += "<input type='hidden' name='dUserId' value='" + data.studentList[i].userId + "' />";
+							  sHtml += "<a href='javascript:void(0)' class='btn btn-secondary' onclick='javascript:fnDtl(this); return false;'>상세보기</a>";
 							  sHtml += "</td>";
 							  sHtml += "</tr>";
 						  }
@@ -160,13 +163,18 @@
 					});
 				});
 			});
+			
+			function fnDtl(obj){
+				$("#studentId").val($(obj).closest("td").find("input[name=dUserId]").val());
+				
+				var frm = document.chooseStudent;
+				
+				frm.action = "/admin/student/studentDetailInfo";
+				frm.target = "_self";
+ 				frm.method = "post";
+				frm.submit();
+			}
 		</script>
-		
-
-
-		
-		
-
 		
 </body>
 </html>

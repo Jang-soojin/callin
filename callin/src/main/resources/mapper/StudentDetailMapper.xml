@@ -4,15 +4,26 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="callinedu.callin.mapper.StudentDetailMapper">
 	<resultMap type="StudentDetail" id="studentDetailResultMap">
-		<result property="userName"			column="user_name"/>
-		<result property="userId"			column="user_id"/>
-		<result property="userEmail"		column="user_email"/>
+		<result property="userName"						column="user_name"/>
+		<result property="userId"						column="user_id"/>
+		<result property="userEmail"					column="user_email"/>
+		<result property="studentId"					column="student_id"/>
+		<result property="userNickname"					column="user_nickname"/>
+		<result property="skypeId"						column="skype_id"/>
+		<result property="userBirth"					column="user_birth"/>
+		<result property="userBirthYear"				column="user_birth_year"/>
+		<result property="userBirthMon"					column="user_birth_mon"/>
+		<result property="userBirthDay"					column="user_birth_day"/>
+		<result property="userGender"					column="user_gender"/>
+		<result property="userPhone"					column="user_phone"/>
+		<result property="studentGuardianNumber"		column="student_guardian_number"/>
+		<result property="studentData"					column="student_data"/>
 	</resultMap>
 	<select id="getStudentDetailListBySearch" parameterType="map" resultMap="studentDetailResultMap">
 		SELECT
 			user_name
-			,user_id
-			,user_email
+			, user_id
+			, user_email
 		FROM 
 			user_info
 		WHERE
@@ -21,6 +32,47 @@
 					AND ${searchKey} LIKE CONCAT('%',#{searchValue}, '%')				
 			</if>
 	</select>
+	
+	<select id="getStudentDetailInfo" parameterType="map" resultMap="studentDetailResultMap">
+		SELECT
+			TA.student_id
+			, TB.user_name
+			, TB.user_nickname
+			, TB.skype_id
+			, TB.user_birth
+			, SUBSTR(REPLACE(TB.user_birth, '-', ''), 1, 4) user_birth_year
+			, SUBSTR(REPLACE(TB.user_birth, '-', ''), 5, 2) user_birth_mon
+			, SUBSTR(REPLACE(TB.user_birth, '-', ''), 7) user_birth_day
+			, TB.user_gender
+			, TB.user_email
+			, TB.user_phone
+			, TA.student_guardian_number
+			, TA.student_data
+		FROM student TA, user_info TB
+		WHERE TA.student_id = TB.user_id
+		AND TA.student_id = #{studentId}
+	</select>
+	
+	<update id="updateStudentDetail" parameterType="map">
+		UPDATE user_info
+		SET
+			user_name = #{userName}
+			, user_nickname = #{userNickname}
+			, skype_id = #{skypeId}
+			, user_birth = CONCAT(#{userBirthYear}, '-', #{userBirthMon}, '-', #{userBirthDay})
+			, user_gender = #{userGender}
+			, user_email = #{userEmail}
+			, user_phone = #{userPhone}
+		WHERE user_id = #{studentId}
+	</update>
+	
+	<update id="updateStudentDetail2" parameterType="map">
+		UPDATE student
+		SET
+			student_guardian_number = #{studentGuardianNumber}
+			, student_data = #{studentData}
+		WHERE student_id = #{studentId}
+	</update>
 
  	
 

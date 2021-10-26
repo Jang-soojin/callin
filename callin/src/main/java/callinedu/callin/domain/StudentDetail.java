@@ -13,6 +13,9 @@ public class StudentDetail {
 	private String studentGuardianNumber;
 	private String studentData;
 	private String userId;
+	private String userBirthYear;
+	private String userBirthMon;
+	private String userBirthDay;
 
 	
 
@@ -88,6 +91,25 @@ public class StudentDetail {
 	public void setStudentData(String studentData) {
 		this.studentData = studentData;
 	}
+
+	public String getUserBirthYear() {
+		return userBirthYear;
+	}
+	public void setUserBirthYear(String userBirthYear) {
+		this.userBirthYear = userBirthYear;
+	}
+	public String getUserBirthMon() {
+		return userBirthMon;
+	}
+	public void setUserBirthMon(String userBirthMon) {
+		this.userBirthMon = userBirthMon;
+	}
+	public String getUserBirthDay() {
+		return userBirthDay;
+	}
+	public void setUserBirthDay(String userBirthDay) {
+		this.userBirthDay = userBirthDay;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -115,6 +137,13 @@ public class StudentDetail {
 		builder.append(studentData);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", userBirthYear=");
+		builder.append(userBirthYear);
+		builder.append(", userBirthMon=");
+		builder.append(userBirthMon);
+		builder.append(", userBirthDay=");
+		builder.append(userBirthDay);
+		builder.append("]");
 		return builder.toString();
 	}
 
