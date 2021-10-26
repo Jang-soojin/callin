@@ -43,13 +43,13 @@
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label for="user_pw">비밀번호</label>
-									<input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="Password" >
+								<input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="Password" >
 								<div class="check_font" id="pw_check"></div>
 							</div>
 							<!-- 비밀번호 재확인 -->
 							<div class="form-group">
 								<label for="user_pw2">비밀번호 확인</label>
-									<input type="password" class="form-control" id="user_pw2" name="user_pw_check" placeholder="Confirm Password" >
+								<input type="password" class="form-control" id="user_pw2" name="user_pw_check" placeholder="Confirm Password" >
 								<div class="check_font" id="pw2_check"></div>
 							</div>
 							<!-- 이름 -->
@@ -98,14 +98,14 @@
 							<!-- 휴대전화 -->
 							
 							<div class="form-group">
-								<label for="user_phone">휴대전화 ('-' 없이 번호만 입력해주세요)</label>
+								<label for="user_phone">휴대전화</label><span> ('-' 없이 번호만 입력해주세요)</span>
 									<input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Phone Number" >
 								<!-- <button class="form-control" style="background-color: gray;  width: 150px;  color: white" type="button" id="phone_check1"> 인증번호 받기 </button> -->
 									<div class="check_font" id="phone_check"></div>
                    			 </div>
 							<div class="reg_button" style="text-align: center;">
-								<a class="btn btn-danger px-3" href="${}">
-									<i aria-hidden="true"></i>취소하기
+								<a class="btn btn-danger px-3" href="/">
+									<i aria-hidden="true" ></i>취소하기
 								</a>
 								<button type="button" class="btn btn-primary px-3" id="reg_submit">
 									<i aria-hidden="true"></i>가입하기
@@ -152,7 +152,7 @@
 
 <!-- 	아이디 중복 검사 및 유효성 검사-->
 		<script type="text/javascript">
-$(function(){ //페이지 읽기 후 스크립트 읽기(시작) 
+$(document).ready(function(){//페이지 읽기 후 스크립트 읽기(시작) 
 			var idChecked = false;
 			var pwChecked = false;
 			
@@ -289,6 +289,14 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 					alert('스카이프 아이디를 입력해주세요.');
 					return false;
 				}
+				if($('#skype_pw').val()==''){//스카이프 아이디 입력 여부 체크
+					alert('스카이프 패스워드를 입력해주세요.');
+					return false;
+				}
+				if(isNaN($('#unit_pay').val())==true){ // 숫자가 아니라면 알림
+					alert('단위 급여는 숫자만 입력할 수 있습니다..');
+					return false;
+				}
 				
 				//1. 날짜 유효성 검사 체크 (현재일<생년월일 불가능)
 				var now = new Date(); 
@@ -310,21 +318,8 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 					alert('성별을 선택해주세요.')
 					return false;
 				}
-				//2. 이메일 유효성 검사
-				var emailVal = $('#user_email').val();
-				var emailFormat = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/; //이메일 형식 유효성 검사 정규식
-
-				if(emailVal =='' || emailVal ==' '){//이메일 입력 여부 체크
-					alert('이메일을 입력해주세요')
-					return false;
-				}
-				if (emailVal.match(emailFormat) == null){
-					alert('올바른 이메일 형식을 입력해 주세요.');
-					return false;
-				}
-
 				
-				
+				//2. 연락처 유효성 검사
 				if($('#user_phone').val()==''){//연락처 입력 여부 체크
 					alert('연락처를 선택해주세요.');
 					return false;
@@ -336,7 +331,23 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 					return false;
 				}
 				
+				//3. 이메일 유효성 검사
+				var emailVal = $('#user_email').val();
+				var emailFormat = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/; //이메일 형식 유효성 검사 정규식
+				if(emailVal =='' || emailVal ==' '){//이메일 입력 여부 체크
+					alert('이메일을 입력해주세요')
+					return false;
+				}
+				if (emailVal.match(emailFormat) == null){
+					alert('올바른 이메일 형식을 입력해 주세요.');
+					return false;
+				}
+
+				
+				
+				
 				// 전체 입력항목 공백 포함 검사 시작
+				var blankCheck = true; //true:공백 없음 false:공백 있음
 				for(var i=2; i<$('.form-control').length; i++){
 				    for(var j=0; j<$($('.form-control')[i]).val().length; j++){
 				        var cha = $($('.form-control')[i]).val().slice(j,j+1);
@@ -344,12 +355,15 @@ $(function(){ //페이지 읽기 후 스크립트 읽기(시작)
 				            var target = $($('.form-control')[i]).siblings('label').text();
 				           	$($('.form-control')[i]).siblings('.check_font').css({ 'color':'red'});
 							$($('.form-control')[i]).siblings('.check_font').text(target+'에는 공백이 들어갈 수 없습니다');
+							blankCheck = false;
 							return false;
-				        }else{
-				        	$($('.form-control')[i]).siblings('.check_font').text('');
-				        	$('#reg_form').submit();  // 이상이 없는 경우 Submit
 				        }
 				    } 
+				        $($('.form-control')[i]).siblings('.check_font').text('');
+				        blankCheck = true;
+				}
+				if(blankCheck == true){
+					$('#reg_form').submit();
 				}// 전체 입력항목 공백 포함 검사 끝
 			})//클릭 이벤트 종료
 })//페이지 읽기 후 스크립트 읽기(끝) 	
