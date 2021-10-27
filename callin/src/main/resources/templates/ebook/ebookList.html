@@ -40,7 +40,7 @@
 												<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 150px; display: inline;">
 													<option value="ebook_name">교재명</option>
 													<option value="ebook_level">교재난이도</option>
-											</select> 
+												</select> 
 											<input id="searchValue"class="form-control" type="text" style="width: 400px; display: inline; virtical-"></td>
 										</tr>
 									</table>
@@ -87,13 +87,14 @@
 										</thead>
 										<tbody id="ebookList">
 												<tr th:if="${#lists.size(ebookList)> 0}" th:each="l: ${ebookList}">
-													<td th:text="${l.ebookDataCode}"></td>
+													<td th:text="${l.ebookDataCode}"  class="ebookDataCode2"></td>
 													<td th:text="${l.ebookName}" ></td>
 													<td th:text="${l.ebookLevel}"></td>
 													<td th:text="${l.ebookFile}"></td>
 													<td th:text="${l.registrationDate}"></td>
 													<td th:text="${l.managerId}"></td>
-													<td><a class="btn btn-info btn-sm" href="#"><i class="fas fa-pencil-alt"></i>Edit</a></td>
+													<td><a type="button" th:href="@{/admin/ebook/ebookModify(ebookDataCode2=${l.ebookDataCode})}" class="btn btn-info btn-sm">
+														<i class="pick fas fa-pencil-alt"></i>Edit</a></td>
 													<td><a type="button" th:href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}" class="deleteBtn btn btn-danger btn-sm">
 														<i class="fas fa-trash"></i>Delete</a>
 													</td>
@@ -148,7 +149,7 @@
 						searchKey : searchKey,
 						searchValue : searchValue,
 					}, 											//전달 할 파라미터
-					dataType : "json" 							//받아 올 포맷 방식
+					dataType : "json"							//받아 올 포맷 방식
 				});
 				request.done(function(data){ 
 							$('#ebookList').html("");
@@ -175,7 +176,7 @@
 								htmltag += "</td>";
 								htmltag += "<td>";
 								htmltag += "<input type='hidden' name='ebookDataCode' id='ebookDataCode" + i + "' value='" + data[i].ebookDataCode + "' />";
-								htmltag += '<a class="btn btn-info btn-sm" href="#"><i class="fas fa-pencil-alt"></i>Edit</a>';
+								htmltag += '<a type="button" class="pick btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i>Edit</a>';
 								htmltag += "</td>";
 								htmltag += "<td>";
 								htmltag += '<a type="button" class="deleteBtn btn btn-danger btn-sm" ><i class="fas fa-trash"></i>Delete</a>';
@@ -187,6 +188,7 @@
 					});
 				});
 			})
+		
 		
 		//ajax 삭제버튼 클릭
 		$(document).on("click", ".deleteBtn", function(){
@@ -209,6 +211,7 @@
 									alert('삭제되었습니다.');
 									return true;
 								}
+								else return false;
 							}
 						});
 					});	
@@ -223,6 +226,8 @@
 			})
 		});
 		
+		
+
 		/* //삭제버튼 클릭시
 		$(function(){
 			$('.deleteBtn').on("click", function(){
@@ -235,7 +240,6 @@
 			});
 		}); */
 		
-			
 	</script>
 
 </th:block>

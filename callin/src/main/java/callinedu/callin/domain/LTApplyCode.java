@@ -3,11 +3,11 @@ package callinedu.callin.domain;
 public class LTApplyCode {
 	private String lTCode;
 	private String studentId;
-	private String userName;
-	private String userNickname;
-	private String skypeId;
-	private String userEmail;
-	private String userPhone;
+	private String userNameEx;
+	private String userNicknameEx;
+	private String skypeIdEx;
+	private String userEmailEx;
+	private String userPhoneEx;
 	private String lTApplyDate;
 	private String lTHopeDate;
 	private String lTHopeTime;
@@ -25,35 +25,35 @@ public class LTApplyCode {
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
-	public String getUserName() {
-		return userName;
+	public String getUserNameEx() {
+		return userNameEx;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUserNameEx(String userNameEx) {
+		this.userNameEx = userNameEx;
 	}
-	public String getUserNickname() {
-		return userNickname;
+	public String getUserNicknameEx() {
+		return userNicknameEx;
 	}
-	public void setUserNickname(String userNickname) {
-		this.userNickname = userNickname;
+	public void setUserNicknameEx(String userNicknameEx) {
+		this.userNicknameEx = userNicknameEx;
 	}
-	public String getSkypeId() {
-		return skypeId;
+	public String getSkypeIdEx() {
+		return skypeIdEx;
 	}
-	public void setSkypeId(String skypeId) {
-		this.skypeId = skypeId;
+	public void setSkypeIdEx(String skypeIdEx) {
+		this.skypeIdEx = skypeIdEx;
 	}
-	public String getUserEmail() {
-		return userEmail;
+	public String getUserEmailEx() {
+		return userEmailEx;
 	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setUserEmailEx(String userEmailEx) {
+		this.userEmailEx = userEmailEx;
 	}
-	public String getUserPhone() {
-		return userPhone;
+	public String getUserPhoneEx() {
+		return userPhoneEx;
 	}
-	public void setUserPhone(String userPhone) {
-		this.userPhone = userPhone;
+	public void setUserPhoneEx(String userPhoneEx) {
+		this.userPhoneEx = userPhoneEx;
 	}
 	public String getlTApplyDate() {
 		return lTApplyDate;
@@ -92,16 +92,16 @@ public class LTApplyCode {
 		builder.append(lTCode);
 		builder.append(", studentId=");
 		builder.append(studentId);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", userNickname=");
-		builder.append(userNickname);
-		builder.append(", skypeId=");
-		builder.append(skypeId);
-		builder.append(", userEmail=");
-		builder.append(userEmail);
-		builder.append(", userPhone=");
-		builder.append(userPhone);
+		builder.append(", userNameEx=");
+		builder.append(userNameEx);
+		builder.append(", userNicknameEx=");
+		builder.append(userNicknameEx);
+		builder.append(", skypeIdEx=");
+		builder.append(skypeIdEx);
+		builder.append(", userEmailEx=");
+		builder.append(userEmailEx);
+		builder.append(", userPhoneEx=");
+		builder.append(userPhoneEx);
 		builder.append(", lTApplyDate=");
 		builder.append(lTApplyDate);
 		builder.append(", lTHopeDate=");
@@ -115,7 +115,6 @@ public class LTApplyCode {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 	
 }

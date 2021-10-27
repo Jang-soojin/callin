@@ -31,9 +31,6 @@ public class EbookController {
 		this.ebookService = ebookService;
 	}
 	
-	
-
-	
 	  
 	//교재등록화면
 	@GetMapping("/ebookRegister")
@@ -54,8 +51,6 @@ public class EbookController {
 		
 		return "redirect:/admin/ebook/ebookRegister";
 	}
-	
-	
 	  
 	  
 	//교재목록화면
@@ -68,7 +63,6 @@ public class EbookController {
 			  
 		return "ebook/ebookList";
 	}
-	
 	  
 	//교재목록조회
 	@PostMapping(value="/searchEbookList", produces = "application/json")
@@ -79,6 +73,27 @@ public class EbookController {
 		  
 		return searchEbookList; 
 	}
+	
+	//교재수정화면
+	@GetMapping("/ebookModify")
+	public String ebookModify(@RequestParam String ebookDataCode2, Model model) {
+		System.out.println(ebookDataCode2);
+		EbookData ebookInfo = ebookService.getEbookInfoByCode(ebookDataCode2);
+		model.addAttribute("title", "교재 관리");
+		model.addAttribute("midTitle","교재 수정");
+		model.addAttribute("ebookData", ebookInfo);
+			  
+		return "ebook/ebookModify";
+	}
+	@PostMapping("/ebookModify")
+	public String ebookModify(@RequestParam Map<String, String> map){ 
+		System.out.println(map);
+		ebookService.ebookModify(map);
+		return "redirect:/admin/ebook/ebookList"; 
+	}
+		
+	
+	
 	
 	//교재삭제
 	@GetMapping("/deleteEbookList")

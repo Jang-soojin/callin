@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import callinedu.callin.domain.LTApplyCode;
 
@@ -13,24 +12,24 @@ public interface LTMapper {
 	
 	//레벨테스트 신청
 	public int LTApply(String studentId
-			, String userName
-			, String userNickname
-			, String skypeId
-			, String userEmail
-			, String userPhone
+			, String userNameEx
+			, String userNicknameEx
+			, String skypeIdEx
+			, String userEmailEx
+			, String userPhoneEx
 			, String lTHopeDate
 			, String lTHopeTime
 			, String requestedTerm
 			);
 
-	//레벨테스트신청목록
+	//레벨테스트신청목록조회
 	public List<LTApplyCode> getlTApplyList();
 	
-	//레벨테스트신청목록조회
-	public List<LTApplyCode> getLTApplyListBySearchKey(@Param(value = "levelSearchKey") 	String levelSearchKey
-													  ,@Param(value = "lTApplySearchValue") String lTApplySearchValue
-													  ,@Param(value = "searchStartDate") 	String searchStartDate
-													  ,@Param(value = "searchEndDate") 		String searchEndDate);
+	//레벨테스트신청목록검색
+	public List<LTApplyCode> getLTApplyListBySearchKey(String searchKey
+													  ,String searchValue
+													  ,String dateRangeFirst
+													  ,String dateRangeLast);
 	//LT신청삭제
 	public int deleteLTApplyList(String ltCode);
 	//LT신청삭제 Ajax

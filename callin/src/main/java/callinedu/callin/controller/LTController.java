@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,31 +44,12 @@ public class LTController {
 	
 	@PostMapping("/LTApply")
 	public String LTApply(@RequestParam Map<String, Object> map) {
-		
-		System.out.println("===================");
 		System.out.println("커맨드 객체 : map : " + map);
-		System.out.println("===================");
 		
 		lTService.LTApply(map);
-		
-		
 		return "redirect:/admin/LT/LTApply";
 		
 	}
-	
-	
-	@RequestMapping(value = "/LTApplyList", method = RequestMethod.GET)
-	public String LTApplyList(Model model){ 
-		System.out.println("constroller 실행");
-		
-		List<LTApplyCode> LTApplyList = lTService.getLTApplyList();
-		model.addAttribute("title", "레벨테스트신청리스트");
-		model.addAttribute("midTitle", "레벨테스트신청리스트"); 
-		model.addAttribute("LTApplyList", LTApplyList); 
-		
-		return "LT/LTApplyList"; 
-	}
-	
 	
 	@PostMapping(value="/LTApplyListAjax", produces = "application/json")
 	@ResponseBody
@@ -81,54 +61,31 @@ public class LTController {
 		if(part != null) {
 			partInt = Integer.parseInt(part);
 		}
-		
 		if(partInt % 2 == 0) {
 			result = 1; //1 사용가능일자
 		}
-		
 		map.put("result", result);
-		
-		
 		return map; 
 	}
 	
-	@GetMapping("/LTListDetail")
-	public String LTListDetail(Model model){ 
-		System.out.println("constroller 실행");
-		
-		List<LTApplyCode> lTListDetail = lTService.LTListDetail();
-		System.out.println(lTListDetail);
-		model.addAttribute("title", "레벨테스트 상세정보");
-		model.addAttribute("midTitle", "레벨테스트 상세정보"); 
-		
-		return "LT/LTListDetail"; 
-	}
-	
-	@GetMapping("/LTListMynote")
-	public String LTListMynote(Model model){ 
-		System.out.println("constroller 실행");
-		
-		List<LTApplyCode> lTListMynote = lTService.LTListMynote();
-		System.out.println(lTListMynote);
+	//LT신청목록조회
+	@GetMapping("/LTApplyList")
+	public String LTApplyList(Model model){ 
+		List<LTApplyCode> LTApplyList = lTService.getLTApplyList();
 		model.addAttribute("title", "레벨테스트신청리스트");
 		model.addAttribute("midTitle", "레벨테스트신청리스트"); 
+		model.addAttribute("LTApplyList", LTApplyList); 
+		log.info("레벨테스트신청리스트 검색 옵션 : {}", LTApplyList);
 		
-		return "LT/LTListMynote"; 
+		return "LT/LTApplyList"; 
 	}
 	
-	@RequestMapping(value="LTApplyListBySearch", method= RequestMethod.POST, produces = "application/json")
+	//LT신청목록검색
+	@PostMapping(value="LTApplyListBySearch", produces = "application/json")
 	@ResponseBody
-	public List<LTApplyCode> getLTApplyListBySearchKey( @RequestParam(value="levelSearchKey", required = false) String levelSearchKey
-													,@RequestParam(value="lTApplySearchValue", required = false) String lTApplySearchValue
-													,@RequestParam(value="searchStartDate", required = false) String searchStartDate
-													,@RequestParam(value="searchEndDate", required = false) String searchEndDate){
-		
-		log.info("레벨테스트신청리스트 검색 옵션 : {}", levelSearchKey);
-		log.info("레벨테스트신청리스트 검색 옵션 : {}", lTApplySearchValue);
-		log.info("레벨테스트신청리스트 검색 옵션 : {}", searchStartDate);
-		log.info("레벨테스트신청리스트 검색 옵션 : {}", searchEndDate);
-		
-		List<LTApplyCode> lTApplyCodeList = lTService.getLTApplyListBySearchKey(levelSearchKey, lTApplySearchValue, searchStartDate, searchEndDate);
+	public List<LTApplyCode> getLTApplyListBySearchKey(@RequestParam Map<String, Object> map, Model model){
+		log.info("레벨테스트신청리스트 검색 옵션 : {}", map);
+		List<LTApplyCode> lTApplyCodeList = lTService.getLTApplyListBySearchKey(map);
 		
 	    return lTApplyCodeList;
 	}
@@ -161,4 +118,27 @@ public class LTController {
 	}
 	
 	
+	@GetMapping("/LTListDetail")
+	public String LTListDetail(Model model){ 
+		System.out.println("constroller 실행");
+		
+		List<LTApplyCode> lTListDetail = lTService.LTListDetail();
+		System.out.println(lTListDetail);
+		model.addAttribute("title", "레벨테스트 상세정보");
+		model.addAttribute("midTitle", "레벨테스트 상세정보"); 
+		
+		return "LT/LTListDetail"; 
+	}
+	
+	@GetMapping("/LTListMynote")
+	public String LTListMynote(Model model){ 
+		System.out.println("constroller 실행");
+		
+		List<LTApplyCode> lTListMynote = lTService.LTListMynote();
+		System.out.println(lTListMynote);
+		model.addAttribute("title", "레벨테스트신청리스트");
+		model.addAttribute("midTitle", "레벨테스트신청리스트"); 
+		
+		return "LT/LTListMynote"; 
+	}
 }

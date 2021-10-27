@@ -19,13 +19,23 @@ public class EbookService {
 	this.ebookMapper = ebookMapper;
 	}
 	
+	//교재등록
+	public int ebookRegister(Map<String, Object> map) {
+		String ebookDataCode = (String) map.get("ebookDataCode");
+		String ebookName = (String) map.get("ebookName");
+		String ebookLevel = (String) map.get("ebookLevel");
+		String ebookFile = (String) map.get("ebookFile");
+		String registrationDate = (String) map.get("registrationDate");
+		String managerId = (String) map.get("managerId");
+		
+		return ebookMapper.ebookRegister(ebookDataCode,ebookName,ebookLevel,ebookFile,registrationDate,managerId);
+	}
 	  
-	//교재조회
+	//교재목록조회
 	public List<EbookData> getEbookList() {
 		List<EbookData> ebookList = ebookMapper.getEbookList();
 		return ebookList;
 	}
-	  
 	  
 	//교재목록검색
 	public List<EbookData> getEbookListBySearchKey(Map<String,Object> map){
@@ -38,6 +48,21 @@ public class EbookService {
 		return searchEbookList;
 	}
 	
+	//교재수정
+	public void ebookModify(Map<String, String> map) {
+		String ebookName = (String) map.get("ebookName");
+		String ebookLevel = (String) map.get("ebookLevel");
+		String ebookFile = (String) map.get("ebookFile");
+		
+		ebookMapper.ebookModify(ebookName,ebookLevel,ebookFile);
+	}
+	
+	public EbookData getEbookInfoByCode(String ebookDataCode) {
+		System.out.println("service.getEbookInfoByCode 실행");
+		EbookData ebookData= ebookMapper.getEbookInfoByCode(ebookDataCode);
+		return ebookData;
+	}
+	
 	//교재삭제
 	public int deleteEbookList(String ebookDataCode) {
 		return ebookMapper.deleteEbookList(ebookDataCode);
@@ -46,18 +71,10 @@ public class EbookService {
 	public void deleteEbookListAjax(Map<String, Object> paramMap) {
 		ebookMapper.deleteEbookListAjax(paramMap);
 	}
+
 	
-	//교재등록
-	public int ebookRegister(Map<String, Object> map) {
-		String ebookDataCode = (String) map.get("ebookDataCode");
-		String ebookName = (String) map.get("ebookName");
-		String ebookLevel = (String) map.get("ebookLevel");
-		String ebookFile = (String) map.get("ebookFile");
-		String registrationDate = (String) map.get("registrationDate");
-		String managerId = (String) map.get("managerId");
-		
-		return ebookMapper.ebookRegister(ebookDataCode,ebookName,ebookLevel,ebookFile,registrationDate,managerId);
-	}
+
+
 
 
 

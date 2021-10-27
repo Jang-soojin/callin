@@ -1,270 +1,245 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	  
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	  	  
-	  
-<th:block layout:fragment="customTitle">
-	<title th:text="${title}"></title>
-</th:block>
-<head th:replace="fragments/head :: headFragment"></head>
-	<!-- daterange picker -->
-	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
-	<body class="hold-transition sidebar-mini layout-fixed">
-		<div id="wrapper">
-			<!-- begin topNav -->
-			<div th:replace="fragments/topNav :: topNavFragment"></div>
-			<!-- end topNav -->
-			
-			<!-- Main Sidebar Container -->
-			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
-			<th:block layout:fragment="LTApply"> 
-			<!-- Content Wrapper. Contains page content -->
-			<div class="content-wrapper">
-			
-			<!-- Content Header (Page header) -->
-				<section class="content-header">
-					<div class="container-fluid">
-						<div class="row mb-2">
-							<div class="col-sm-6">
-								<h1 th:text="${midTitle}"></h1>
-							</div>
-							<div class="col-sm-6">
-								<ol class="breadcrumb float-sm-right">
-									<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
-								</ol>
-							</div>
-						</div>
-					</div><!-- /.container-fluid -->
-				</section>
-			
-		<!-- Main content -->
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{layout/default}">
+
+<th:block layout:fragment="customContents">
+	<div class="content-wrapper">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 th:text="${midTitle}"></h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+							<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		
+<!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-12">
-						<div class="card">
 							<!-- card-header -->
-							<div class="card-header">
-								<div class="row">
-									<div class="col-sm-2">
-			                        <!-- select -->
-				                        <div class="form-group">
-				                            <select class="custom-select levelSearchKey">
-				                                <option	value="">전체</option>
-				                                <option value="studentName">이름</option>
-				                                <option value="studentEmail">이메일</option>
-				                                <option value="studentTel">전화번호</option>
-				                            </select>
-				                        </div>
-	                    			</div>
-				                    <div class="col-sm-5">
-				                        <!-- text input -->
-				                        <div class="form-group">
-				                            <input type="text" name="search" class="form-control" placeholder="검색어를 입력하세요." id="lTApplySearch">
-				                        </div>
-				                    </div>
-				                    <div class="col-sm-2">
-				                        <!-- text input -->
-				                        <div class="form-group">
-				                            <button type="button" class="btn btn-block btn-outline-success btn-md" id="LTApplySearchCheck">검색</button>
-				                        </div>
-				                    </div>
-				                    <div class="col-sm-5">
-										<div class="form-group">
-											<label>신청 일자</label>
-											<div class="input-group">
-												<div class="input-group-prepend">
-													<span class="input-group-text"> 
-														<i class="far fa-calendar-alt"></i>
-													</span>
+							<div class="card card card-secondary">
+								<div class="card-header">
+									<h3 class="card-title">레벨테스트 신청 검색</h3>
+								</div>
+								<div class="card-body">
+								<form id="searchLTApplyList" th:action="@{/admin/LT/LTApplyList}" method="post">
+									<table class="table table-bordered table-hover" border="1" style="width: 100%; vertical-align: inherit;">
+										<tr>
+											<td class="searchInfo" style="vertical-align: middle; text-align: center;"><span>키워드 검색</span></td>
+											<td colspan="3">
+												<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 150px; display: inline;">
+					                                <option value="">전체</option>
+					                                <option value="user_name">이름</option>
+					                                <option value="user_email">이메일</option>
+					                                <option value="user_phone">전화번호</option>
+				                            	</select>
+												<input id="searchValue"  type="text" class="form-control" style="width: 400px; display: inline; virtical-">
+											</td>
+										</tr>
+										<tr>
+											<td class="searchInfo" style=" vertical-align: middle; text-align: center;"><span>날짜 검색 </span></td>
+											<td colspan="3">
+												<div>
+													<div class="input-group">
+														<div class="input-group-prepend">
+															<span class="input-group-text"> 
+																<i class="far fa-calendar-alt"></i>
+															</span>
+														</div>
+															<input type="text" class="form-control float-right" id="reservation" style="width: 515px; flex: none;">
+														</div>
+													<!-- /.input group -->
 												</div>
-												<input type="text" class="form-control float-right" id="reservation">
-												<input type="hidden" id="startDate"/>
-												<input type="hidden" id="endDate"/>
-											</div>
-											<!-- /.input group -->
+											</td>
+										</tr>
+									</table>
+								<div class="row">
+									<div class="col-md-4"></div>
+									<div class="col-md-3" style="align-items: center;">
+										<div>
+											<button type="button" id="searchButton"
+												class="btn btn-block btn-dark btn-md float-right"
+												style="width: 30%; margin-left: 20px;">검색</button>
+										</div>
+										<div>
+											<button type="button" id="resetButton"
+												class="btn btn-block btn-default btn-md float-right"
+												style="width: 44%; border-color: #68736a">초기화</button>
 										</div>
 									</div>
-	                			</div>
-	            			</div>
-		              	<!-- /.card-header -->
-						<div class="card-body">
-		                	<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-						<div class="row">
-							<div class="col-sm-12">
-								<form id="chooseLT" th:action="@{/admin/LT/LTListDetail}" method="get">
-								<table id="example1" class="table table-bordered table-hover" style="text-align: center;">
-									<thead>
-										<tr>
-							                  <th>신청일</th>
-							                  <th>이름</th>
-							                  <th>이메일</th>
-							                  <th>전화번호</th>
-							                  <th>상세보기</th>
-							                  <th>삭제</th>
-										</tr>
-		                  			</thead>
-									<tbody id="ltList">
-											<tr th:if="${#lists.size(ltList)> 0}" th:each="l : ${ltList}">
-												<td th:text="${l.lTApplyDate}"></td>
-												<td th:text="${l.user.userName}"></td>
-												<td th:text="${l.user.userEmail}"></td>
-												<td th:text="${l.user.userPhone}"></td>
-												<td><a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail"><i class="fas fa-folder"></i>View</a></td>
-												<td><a type="button" th:href="@{/admin/LT/deleteLTApplyList(ltCode=${l.ltCode})}" class="deleteBtn btn btn-danger btn-sm">
-													<i class="fas fa-trash"></i>Delete</a>
-												</td>
-											</tr>
-										</th:block>
-									</tbody>
-								</table>
-								</form>
-							</div>
+									<div class="col-md-5"></div>
+								</div>
+							</form>
 						</div>
-							<div class="row">
-								<div class="col-sm-12">
-			                        <div class="card-footer clearfix">
-			                          <ul class="pagination pagination-sm m-0 float-right">
-			                            <li class="page-item"><a class="page-link" href="#">«</a></li>
-			                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-			                            <li class="page-item"><a class="page-link" href="#">»</a></li>
-			                          </ul>
-									<div class="col-sm-12 col-md-5">
-										<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 16 entries</div>
-									</div>
-			                        </div>
-			                      </div>
+							<!-- /.card-body -->
+	            		</div>
+		              	<!-- /.card-header -->
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">레벨테스트 신청 리스트</h3>
 							</div>
-		                </div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<form id="chooseLT" th:action="@{/}" method="post">
+									<table id="example1" class="table table-bordered table-hover" style="text-align: center;">
+										<thead>
+											<tr>
+								                  <th>신청코드</th>
+								                  <th>신청일</th>
+								                  <th>이름</th>
+								                  <th>이메일</th>
+								                  <th>전화번호</th>
+								                  <th>상세보기</th>
+								                  <th>삭제</th>
+											</tr>
+			                  			</thead>
+										<tbody id="ltApplyList">
+												<tr th:if="${#lists.size(ltApplyList)> 0}" th:each="l : ${ltApplyList}">
+													<td th:text="${l.lTCode}"></td>
+													<td th:text="${l.lTApplyDate}"></td>
+													<td th:text="${l.userName}"></td>
+													<td th:text="${l.userEmail}"></td>
+													<td th:text="${l.userPhone}"></td>
+													<td><a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail"><i class="fas fa-folder"></i>View</a></td>
+													<td><a type="button" th:href="@{/admin/LT/deleteLTApplyList(ltCode=${l.ltCode})}" class="deleteBtn btn btn-danger btn-sm">
+														<i class="fas fa-trash"></i>Delete</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</form>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
 					</div>
-	              <!-- /.card-body -->
-	            </div>
-	            <!-- /.card -->
-	          </div>
-	          <!-- /.col -->
-	        </div>
-	        <!-- /.row -->
-	      </div>
-	      <!-- /.container-fluid -->
-	    </section>
-		<!-- /.content -->
-			</div>
-			<!-- /.content-wrapper -->
-			</th:block>
-
-			
-		<div th:replace="fragments/footer :: footerFragment"></div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
 		</div>
-		<!-- jQuery -->
-		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
-		<!-- jQuery UI 1.11.4 -->
-		<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
-		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-		<script>
-		  $.widget.bridge('uibutton', $.ui.button)
-		</script>
-		<!-- Bootstrap 4 -->
-		<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-		<!-- ChartJS -->
-		<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
-		<!-- Sparkline -->
-		<script th:src="@{/AdminLTE-master/plugins/sparklines/sparkline.js}"></script>
-		<!-- daterangepicker -->
-		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
-		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
-		<!-- date-range-picker -->
-		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
-		<!-- Tempusdominus Bootstrap 4 -->
-		<script th:src="@{/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
-		<!-- Summernote -->
-		<script th:src="@{/AdminLTE-master/plugins/summernote/summernote-bs4.min.js}"></script>
-		<!-- overlayScrollbars -->
-		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
-		<!-- AdminLTE App -->
-		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
-		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
-	
-  		<script type="text/javascript">
+	<!-- jQuery -->
+	<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+	<!-- Bootstrap 4 -->
+	<!-- pagination 스크립트 ↓ -->
+	 <script>
+	  $(function () {
+		    $('#example1').DataTable({
+			      "paging": true,
+			      "lengthChange": false,
+			      "searching": false,
+			      "ordering": true,
+			      "info": true,
+			      "autoWidth": false,
+			      "responsive": true
+		    });
+	    	$("ul.pagination").css({"justify-content": "flex-end"})
+	  });
+	</script>
+ 	<script>
+		//1.검색버튼 누를 때 조건에 맞는 리스트 출력
 		$(function(){
-			//Date range picker
-			var reservationDaterangepicker =  $('#reservation').daterangepicker({
-	    		locale: {
-	    					format: 'YYYY-MM-DD' // 날짜 표시 형식 설정
-	    		    	}
-				});
-			//초깃값 설정
-			$('#startDate').val(moment().format('YYYY-MM-DD'));
-			$('#endDate').val(moment().format('YYYY-MM-DD'));
-	    	
-	    	//선택 항목이 변경되지 않은 경우에도 검색 버튼을 클릭할 때마다 작업을 수행
-			$('#reservation').on('apply.daterangepicker', function(ev, picker) {
-				$('#startDate').val(picker.startDate.format('YYYY-MM-DD'));
-				$('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
-			});
-		    //1.검색버튼 누를 때 조건에 맞는 리스트 출력
-			$(document).on('click','#LTApplySearchCheck', function(){
+				$('#searchButton').click(function(){
+				var searchKey = $('#searchKey').val();
+				var searchValue = $('#searchValue').val();
+				var dateRangeFirst = $("#reservation").val().substring(0, 10);
+				var dateRangeLast = $("#reservation").val().substring(13, 23);
 				
-				var levelSearchKey = $('.levelSearchKey').val();
-				var lTApplySearchValue = $("#lTApplySearch").val();
-				var searchStartDate = $('#startDate').val();
-				var searchEndDate = $('#endDate').val();
-				
-				console.log(levelSearchKey)
-				console.log(lTApplySearchValue)
-				console.log(searchStartDate)
-				console.log(searchEndDate)
+				var MM1 = dateRangeFirst.substring(0, 2)
+				var DD1 = dateRangeFirst.substring(3, 5)
+				var YYYY1 = dateRangeFirst.substring(6, 10)
+				var newDateRangeFirst = YYYY1 + "-" + MM1 + "-" + DD1;
+
+				var MM2 = dateRangeLast.substring(0, 2)
+				var DD2 = dateRangeLast.substring(3, 5)
+				var YYYY2 = dateRangeLast.substring(6, 10)
+				var newDateRangeLast = YYYY2 + "-" + MM2 + "-" + DD2
 				
 				var htmltag = "";
-							    
-				var sendData = {"levelSearchKey":levelSearchKey, "lTApplySearchValue":lTApplySearchValue, "searchStartDate":searchStartDate, "searchEndDate":searchEndDate};
 				
-				$.ajax({
-					method : 'POST', //요청방식
-					url : '/admin/LT/LTApplyListBySearch', //요청주소
-					data : sendData,	//전달 할 파라미터
-					dataType:'json',	//받아 올 포맷 방식
-					  // 응답이 완료 되었을 경우 실행
-					success : function(data){
-						$('#ltList').html("");
+				var request = $.ajax({
+					method : "POST", //요청방식
+					url : "/admin/LT/LTApplyListBySearch", //요청주소
+					data : {
+						levelSearchKey : levelSearchKey ,
+						lTApplySearchValue :lTApplySearchValue,
+						dateRangeFirst : newDateRangeFirst,
+						dateRangeLast : newDateRangeLast
+					},
+					dataType:"json"	//받아 올 포맷 방식
+				});
+				request.done(function(data){
+						$('#ltApplyList').html("");
 						for(var i=0; i<data.length; i++){
 							htmltag += "<tr>";
+							htmltag += "<td>";
+							htmltag += data[i].lTCode;
+							htmltag += "</td>";
 							htmltag += "<td>";
 							htmltag += data[i].lTApplyDate;
 							htmltag += "</td>";
 							htmltag += '<td>';
-							htmltag += data[i].user.userName;
+							htmltag += data[i].userNameEx;
 							htmltag += '</a></td>';
 							htmltag += "</td>";
 							htmltag += '<td>';
-							htmltag += data[i].user.userEmail;
+							htmltag += data[i].userEmailEx;
 							htmltag += "</td>";
 							htmltag += '<td>';
-							htmltag += data[i].user.userPhone;
+							htmltag += data[i].userPhoneEx;
 							htmltag += "</td>";
 							htmltag += "<td>";
+							htmltag += "<input type='hidden' name='ltCode' id='ltCode" + i + "' value='" + data[i].ltCode + "' />";
 							htmltag += '<a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail"><i class="fas fa-folder"></i>View</a>';
 							htmltag += "</td>";
 							htmltag += "<td>";
-							htmltag += '<a class="btn btn-danger btn-sm" href="#"><i class="fas fa-trash"></i>Delete</a>';
+							htmltag += '<a type="button" class="deleteBtn btn btn-danger btn-sm" ><i class="fas fa-trash"></i>Delete</a>';
 							htmltag += "</td>";
 							htmltag += "</tr>";
 							}
 						console.log(data[0]);
-						$("#ltList").html(htmltag);
-		    		}
+						$("#ltApplyList").html(htmltag);
+						
 				});
 			});
 		})
+		$(function() {
+		// daterangepicker 초기화 시작
+		$('#resetButton').click(function() {
+			var today = new Date()
+			var date = today.getDate()
+			var month = today.getMonth()+1
+			var year = today.getFullYear()
+			
+			if(month<10){
+				if(date<10){
+					$('#reservation').val('0'+month+'/'+'0'+date+'/'+year+' - '+'0'+month+'/'+'0'+date+'/'+year)
+				}else{
+					$('#reservation').val('0'+month+'/'+date+'/'+year+' - '+'0'+month+'/'+date+'/'+year)
+				}
+			}else(
+					$('#reservation').val(month+'/'+date+'/'+year+' - '+month+'/'+date+'/'+year)
+			);
+		
+			//초기화버튼 클릭시 (초기값은  전체검색)
+			$('#searchKey').val(''); 	 
+			$('#searchValue').val('');			 
+			})
+		});
 		</script>
-  		
-		
-		
-		
-</body>
+
+</th:block>
 </html>

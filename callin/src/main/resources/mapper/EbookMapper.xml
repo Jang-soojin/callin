@@ -64,6 +64,42 @@
 		</trim>	
 	</select>
 	
+	<!-- 교재수정 -->
+	<update id="ebookModify" parameterType="String">
+		UPDATE ebook_data
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="ebookName != null and ebookName != ''.toString()">
+				ebook_name = #{ebookName},
+			</if>
+			<if test="ebookLevel != null and ebookLevel != ''.toString()">
+				ebook_level = #{ebookLevel},
+			</if>
+			<if test="ebookFile != null and ebookFile != ''.toString()">
+				ebook_file = #{ebookFile},
+			</if>
+		</trim>
+		WHERE
+			ebook_data_code= #{ebookDataCode2};
+	</update>
+	
+	<select id="getEbookInfoByCode" resultMap="ebookDataResultMap" parameterType="String">
+		SELECT 
+			  ebook_data_code
+			, ebook_name
+			, ebook_level
+			, ebook_file
+			, registration_date
+			, manager_id
+		FROM 
+			ebook_data
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			ebook_data_code=#{ebookDataCode}
+		</trim>	
+	</select>
+	
+	
+	
+	
 	<!-- 교재삭제   -->
 	<delete id="deleteEbookList" parameterType="String">
 		DELETE
