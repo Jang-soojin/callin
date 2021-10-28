@@ -79,7 +79,7 @@
 			</if>
 		</trim>
 		WHERE
-			ebook_data_code= #{ebookDataCode2};
+			ebook_data_code= #{ebookDataCode};
 	</update>
 	
 	<select id="getEbookInfoByCode" resultMap="ebookDataResultMap" parameterType="String">

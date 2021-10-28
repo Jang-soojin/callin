@@ -24,7 +24,7 @@ public interface EbookMapper {
 	//교재목록검색
 	public List<EbookData> getEbookListBySearchKey(String searchKey, String searchValue);
 	//교재수정
-	public int ebookModify(String ebookName, String ebookLevel, String ebookFile);
+	public int ebookModify(String ebookDataCode, String ebookName, String ebookLevel, String ebookFile);
 	
 	public EbookData getEbookInfoByCode(String ebookDataCode);
 	//교재삭제

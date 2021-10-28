@@ -105,14 +105,14 @@
 											</tr>
 			                  			</thead>
 										<tbody id="ltApplyList">
-												<tr th:if="${#lists.size(ltApplyList)> 0}" th:each="l : ${ltApplyList}">
+												<tr th:each="l : ${LTApplyList}">
 													<td th:text="${l.lTCode}"></td>
 													<td th:text="${l.lTApplyDate}"></td>
-													<td th:text="${l.userName}"></td>
-													<td th:text="${l.userEmail}"></td>
-													<td th:text="${l.userPhone}"></td>
+													<td th:text="${l.userNameEx}"></td>
+													<td th:text="${l.userEmailEx}"></td>
+													<td th:text="${l.userPhoneEx}"></td>
 													<td><a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail"><i class="fas fa-folder"></i>View</a></td>
-													<td><a type="button" th:href="@{/admin/LT/deleteLTApplyList(ltCode=${l.ltCode})}" class="deleteBtn btn btn-danger btn-sm">
+													<td><a type="button" href="/admin/LT/deleteLTApplyList(ltCode=${l.ltCode})" class="deleteBtn btn btn-danger btn-sm">
 														<i class="fas fa-trash"></i>Delete</a>
 													</td>
 												</tr>

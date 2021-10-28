@@ -50,11 +50,12 @@ public class EbookService {
 	
 	//교재수정
 	public void ebookModify(Map<String, String> map) {
+		String ebookDataCode = (String) map.get("ebookDataCode");
 		String ebookName = (String) map.get("ebookName");
 		String ebookLevel = (String) map.get("ebookLevel");
 		String ebookFile = (String) map.get("ebookFile");
 		
-		ebookMapper.ebookModify(ebookName,ebookLevel,ebookFile);
+		ebookMapper.ebookModify(ebookDataCode,ebookName,ebookLevel,ebookFile);
 	}
 	
 	public EbookData getEbookInfoByCode(String ebookDataCode) {

@@ -76,9 +76,9 @@ public class EbookController {
 	
 	//교재수정화면
 	@GetMapping("/ebookModify")
-	public String ebookModify(@RequestParam String ebookDataCode2, Model model) {
-		System.out.println(ebookDataCode2);
-		EbookData ebookInfo = ebookService.getEbookInfoByCode(ebookDataCode2);
+	public String ebookModify(@RequestParam String ebookDataCode, Model model) {
+		System.out.println(ebookDataCode);
+		EbookData ebookInfo = ebookService.getEbookInfoByCode(ebookDataCode);
 		model.addAttribute("title", "교재 관리");
 		model.addAttribute("midTitle","교재 수정");
 		model.addAttribute("ebookData", ebookInfo);

@@ -87,13 +87,13 @@
 										</thead>
 										<tbody id="ebookList">
 												<tr th:if="${#lists.size(ebookList)> 0}" th:each="l: ${ebookList}">
-													<td th:text="${l.ebookDataCode}"  class="ebookDataCode2"></td>
+													<td th:text="${l.ebookDataCode}"  class="ebookDataCode"></td>
 													<td th:text="${l.ebookName}" ></td>
 													<td th:text="${l.ebookLevel}"></td>
 													<td th:text="${l.ebookFile}"></td>
 													<td th:text="${l.registrationDate}"></td>
 													<td th:text="${l.managerId}"></td>
-													<td><a type="button" th:href="@{/admin/ebook/ebookModify(ebookDataCode2=${l.ebookDataCode})}" class="btn btn-info btn-sm">
+													<td><a type="button" th:href="@{/admin/ebook/ebookModify(ebookDataCode=${l.ebookDataCode})}" class="btn btn-info btn-sm">
 														<i class="pick fas fa-pencil-alt"></i>Edit</a></td>
 													<td><a type="button" th:href="@{/admin/ebook/deleteEbookList(ebookDataCode=${l.ebookDataCode})}" class="deleteBtn btn btn-danger btn-sm">
 														<i class="fas fa-trash"></i>Delete</a>
