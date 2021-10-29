@@ -29,8 +29,6 @@ public interface EbookMapper {
 	public EbookData getEbookInfoByCode(String ebookDataCode);
 	//교재삭제
 	public int deleteEbookList(String ebookDataCode);
-	//교재삭제 Ajax
-	public void deleteEbookListAjax(Map<String, Object> paramMap);
 	//교재난이도조회
 	public List<EbookLevel> getEbookLevelList();
 

@@ -32,9 +32,6 @@ public interface LTMapper {
 													  ,String dateRangeLast);
 	//LT신청삭제
 	public int deleteLTApplyList(String ltCode);
-	//LT신청삭제 Ajax
-	public void deleteLTApplyListAjax(Map<String, Object> paramMap);
-	
 	
 	
 	public List<LTApplyCode> LTListDetail();

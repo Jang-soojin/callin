@@ -68,19 +68,6 @@ public class EbookService {
 	public int deleteEbookList(String ebookDataCode) {
 		return ebookMapper.deleteEbookList(ebookDataCode);
 	}
-	//교재삭제 Ajax
-	public void deleteEbookListAjax(Map<String, Object> paramMap) {
-		ebookMapper.deleteEbookListAjax(paramMap);
-	}
-
-	
-
-
-
-
-
-
-
 
 
 	  

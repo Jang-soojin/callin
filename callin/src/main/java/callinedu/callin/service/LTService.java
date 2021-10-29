@@ -67,16 +67,9 @@ public class LTService {
 	}
 	
 	//LT신청목록삭제
-	public int deleteLTApplyList(String ebookDataCode) {
-		return ltMapper.deleteLTApplyList(ebookDataCode);
+	public int deleteLTApplyList(String ltCode) {
+		return ltMapper.deleteLTApplyList(ltCode);
 	}
-	//LT신청목록삭제 Ajax
-	public void deleteLTApplyListAjax(Map<String, Object> paramMap) {
-		ltMapper.deleteLTApplyListAjax(paramMap);
-	}
-	
-	
-	
 	
 
 	public List<LTApplyCode> LTListDetail() {

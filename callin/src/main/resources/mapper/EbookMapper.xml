@@ -108,13 +108,5 @@
 		WHERE
 			ebook_data_code = #{ebookDataCode};
 	</delete>
-	<!-- 교재삭제 Ajax -->
-	<delete id="deleteEbookListAjax" parameterType="String">
-		DELETE
-		FROM 
-			ebook_data
-		WHERE
-			ebook_data_code = #{ebookDataCode};
-	</delete>
 	
 </mapper>

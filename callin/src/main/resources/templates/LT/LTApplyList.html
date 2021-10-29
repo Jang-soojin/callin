@@ -33,16 +33,16 @@
 									<h3 class="card-title">레벨테스트 신청 검색</h3>
 								</div>
 								<div class="card-body">
-								<form id="searchLTApplyList" th:action="@{/admin/LT/LTApplyList}" method="post">
+								<form id="LTApplyListBySearch" th:action="@{/admin/LT/LTApplyList}" method="post">
 									<table class="table table-bordered table-hover" border="1" style="width: 100%; vertical-align: inherit;">
 										<tr>
 											<td class="searchInfo" style="vertical-align: middle; text-align: center;"><span>키워드 검색</span></td>
 											<td colspan="3">
 												<select id="searchKey" class="form-control select2 select2-hidden-accessible" style="width: 150px; display: inline;">
 					                                <option value="">전체</option>
-					                                <option value="user_name">이름</option>
-					                                <option value="user_email">이메일</option>
-					                                <option value="user_phone">전화번호</option>
+					                                <option value="user_name_ex">이름</option>
+					                                <option value="user_email_ex">이메일</option>
+					                                <option value="user_phone_ex">전화번호</option>
 				                            	</select>
 												<input id="searchValue"  type="text" class="form-control" style="width: 400px; display: inline; virtical-">
 											</td>
@@ -91,35 +91,39 @@
 							</div>
 							<!-- /.card-header -->
 							<div class="card-body">
-								<form id="chooseLT" th:action="@{/}" method="post">
-									<table id="example1" class="table table-bordered table-hover" style="text-align: center;">
-										<thead>
-											<tr>
-								                  <th>신청코드</th>
-								                  <th>신청일</th>
-								                  <th>이름</th>
-								                  <th>이메일</th>
-								                  <th>전화번호</th>
-								                  <th>상세보기</th>
-								                  <th>삭제</th>
-											</tr>
-			                  			</thead>
-										<tbody id="ltApplyList">
-												<tr th:each="l : ${LTApplyList}">
-													<td th:text="${l.lTCode}"></td>
-													<td th:text="${l.lTApplyDate}"></td>
-													<td th:text="${l.userNameEx}"></td>
-													<td th:text="${l.userEmailEx}"></td>
-													<td th:text="${l.userPhoneEx}"></td>
-													<td><a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail"><i class="fas fa-folder"></i>View</a></td>
-													<td><a type="button" href="/admin/LT/deleteLTApplyList(ltCode=${l.ltCode})" class="deleteBtn btn btn-danger btn-sm">
-														<i class="fas fa-trash"></i>Delete</a>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</form>
-								</div>
+								<table id="example1" class="table table-bordered table-hover" style="text-align: center;">
+									<thead>
+										<tr>
+						                  <th>신청코드</th>
+						                  <th>신청일</th>
+						                  <th>이름</th>
+						                  <th>이메일</th>
+						                  <th>전화번호</th>
+						                  <th>상세보기</th>
+						                  <th>삭제</th>
+										</tr>
+		                  			</thead>
+									<tbody id="ltApplyList">
+										<tr th:each="l : ${LTApplyList}">
+											<td th:text="${l.lTCode}" class="lTCode"></td>
+											<td th:text="${l.lTApplyDate}"></td>
+											<td th:text="${l.userNameEx}"></td>
+											<td th:text="${l.userEmailEx}"></td>
+											<td th:text="${l.userPhoneEx}"></td>
+											<td>
+												<a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail">
+													<i class="fas fa-folder"></i>View
+												</a>
+											</td>
+											<td>
+												<a th:href="@{/admin/LT/deleteLTApplyList(ltCode=${l.lTCode})}" class="deleteBtn btn btn-danger btn-sm">
+													<i class="fas fa-trash"></i>Delete
+												</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 								<!-- /.card-body -->
 							</div>
 							<!-- /.card -->
@@ -174,8 +178,8 @@
 					method : "POST", //요청방식
 					url : "/admin/LT/LTApplyListBySearch", //요청주소
 					data : {
-						levelSearchKey : levelSearchKey ,
-						lTApplySearchValue :lTApplySearchValue,
+						searchKey : searchKey ,
+						searchValue :searchValue,
 						dateRangeFirst : newDateRangeFirst,
 						dateRangeLast : newDateRangeLast
 					},
@@ -206,16 +210,40 @@
 							htmltag += '<a class="btn btn-primary btn-sm" href="/admin/LT/LTListDetail"><i class="fas fa-folder"></i>View</a>';
 							htmltag += "</td>";
 							htmltag += "<td>";
-							htmltag += '<a type="button" class="deleteBtn btn btn-danger btn-sm" ><i class="fas fa-trash"></i>Delete</a>';
+							htmltag += '<a href="/admin/LT/deleteLTApplyList?ltCode='
+							htmltag += data[i].lTCode;
+							htmltag += '" class="deleteBtn btn btn-danger btn-sm" ><i class="fas fa-trash"></i>Delete</a>';
 							htmltag += "</td>";
 							htmltag += "</tr>";
 							}
+							$(function(){
+								$('.deleteBtn').on("click", function(){
+									var result = confirm('정말 삭제하시겠습니까?');
+									if(result){
+										alert('삭제되었습니다.');
+										return true;
+									}
+									else return false;
+								});
+							});
 						console.log(data[0]);
 						$("#ltApplyList").html(htmltag);
 						
 				});
 			});
 		})
+		
+		$(function(){
+			$('.deleteBtn').on("click", function(){
+				var result = confirm('정말 삭제하시겠습니까?');
+				if(result){
+					alert('삭제되었습니다.');
+					return true;
+				}
+				else return false;
+			});
+		});
+				
 		$(function() {
 		// daterangepicker 초기화 시작
 		$('#resetButton').click(function() {
@@ -233,7 +261,7 @@
 			}else(
 					$('#reservation').val(month+'/'+date+'/'+year+' - '+month+'/'+date+'/'+year)
 			);
-		
+			
 			//초기화버튼 클릭시 (초기값은  전체검색)
 			$('#searchKey').val(''); 	 
 			$('#searchValue').val('');			 

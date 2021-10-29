@@ -32,6 +32,7 @@ public class LTController {
 		this.lTService =lTService;
 	}
 	
+	//레벨테스트신청화면
 	@GetMapping("/LTApply")
 	public String LTApply(Model model){ 
 		System.out.println("constroller 실행");
@@ -42,6 +43,7 @@ public class LTController {
 		return "LT/LTApply"; 
 	}
 	
+	//레벨테스트신청
 	@PostMapping("/LTApply")
 	public String LTApply(@RequestParam Map<String, Object> map) {
 		System.out.println("커맨드 객체 : map : " + map);
@@ -70,7 +72,7 @@ public class LTController {
 	
 	//LT신청목록조회
 	@GetMapping("/LTApplyList")
-	public String LTApplyList(Model model){ 
+	public String getLTApplyList(Model model){ 
 		List<LTApplyCode> LTApplyList = lTService.getLTApplyList();
 		model.addAttribute("title", "레벨테스트신청리스트");
 		model.addAttribute("midTitle", "레벨테스트신청리스트"); 
@@ -83,7 +85,7 @@ public class LTController {
 	//LT신청목록검색
 	@PostMapping(value="LTApplyListBySearch", produces = "application/json")
 	@ResponseBody
-	public List<LTApplyCode> getLTApplyListBySearchKey(@RequestParam Map<String, Object> map, Model model){
+	public List<LTApplyCode> LTApplyListBySearch(@RequestParam Map<String, Object> map, Model model){
 		log.info("레벨테스트신청리스트 검색 옵션 : {}", map);
 		List<LTApplyCode> lTApplyCodeList = lTService.getLTApplyListBySearchKey(map);
 		
@@ -100,21 +102,9 @@ public class LTController {
 		model.addAttribute("title", "LT신청삭제");
 		model.addAttribute("ltCode", ltCode);
 		lTService.deleteLTApplyList(ltCode);
+		if(ltCode != null) model.addAttribute("ltCode",ltCode);
+		
 		return "redirect:/admin/LT/LTApplyList";
-	}
-	
-	//LT신청목록삭제 Ajax
-	@PostMapping(value="/deleteLTApplyListAjax", produces = "application/json")
-	@ResponseBody
-	public Map<String, Object> deleteLTApplyListAjax(@RequestBody Map<String, Object> paramMap) {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		System.out.println(paramMap);
-		
-		lTService.deleteLTApplyListAjax(paramMap);
-		
-		resultMap.put("paramMap", paramMap);
-		
-		return resultMap;
 	}
 	
 	

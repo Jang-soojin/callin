@@ -53,7 +53,7 @@ public class EbookController {
 	}
 	  
 	  
-	//교재목록화면
+	//교재목록조회
 	@GetMapping("/ebookList")
 	public String getEbookList(Model model) {
 		List<EbookData> ebookList = ebookService.getEbookList();
@@ -64,7 +64,7 @@ public class EbookController {
 		return "ebook/ebookList";
 	}
 	  
-	//교재목록조회
+	//교재목록검색
 	@PostMapping(value="/searchEbookList", produces = "application/json")
 	@ResponseBody
 	public List<EbookData> searchEbookList(@RequestParam Map<String, Object> map, Model model) {
@@ -110,19 +110,5 @@ public class EbookController {
 		return "redirect:/admin/ebook/ebookList";
 	}
 		 
-	//교재삭제Ajax
-	@PostMapping(value="/deleteEbookListAjax", produces = "application/json")
-	@ResponseBody
-	public Map<String, Object> deleteEbookListAjax(@RequestBody Map<String, Object> paramMap) {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		System.out.println(paramMap);
-		
-		ebookService.deleteEbookListAjax(paramMap);
-		
-		resultMap.put("paramMap", paramMap);
-		
-		return resultMap;
-	}
-	
 }
 
