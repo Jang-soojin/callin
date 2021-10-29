@@ -24,12 +24,37 @@
 		<result property="managerId" 				column="manager_id"/>
 		<result property="courseTuition" 			column="course_tuition"/>
 		<association property="classPolicy" javaType="ClassPolicy">
-			<id property="classPolicyCode"			column="class_policy_code"/>
-			<result property="classPeriod" 			column="class_period"/>
-			<result property="classDay" 			column="class_day"/>
-			<result property="classTime" 			column="class_time"/>
+			<id property="classPolicyCode"				column="class_policy_code"/>
+			<result property="classPeriod" 				column="class_period"/>
+			<result property="classDay" 				column="class_day"/>
+			<result property="classTime" 				column="class_time"/>
 		</association>
 	</resultMap>
+	
+	<resultMap type="ClassApply" id="classApplyResultMap">
+		<result property="studentId" 				column="student_id"/>
+		<result property="regularClassCode" 		column="regular_class_code"/>
+		<result property="classStartTime" 			column="class_start_time"/>
+		<result property="classStartDate" 			column="class_start_date"/>
+		<result property="registrationDate" 		column="registration_date"/>
+		<result property="applyApproveCode"			column="apply_approve_code"/>
+		<result property="applyApproveDate"			column="apply_approve_date"/>
+		<association property="regularClass" javaType="RegularClass">
+			<result property="regularClassCode" 		column="regular_class_code"/>
+			<result property="classPolicyCode" 			column="class_policy_code"/>
+			<result property="courseName" 				column="course_name"/>
+			<result property="courseLanguage" 			column="course_language"/>
+			<result property="managerId" 				column="manager_id"/>
+			<result property="courseTuition" 			column="course_tuition"/>
+			<association property="classPolicy" javaType="ClassPolicy">
+				<id property="classPolicyCode"				column="class_policy_code"/>
+				<result property="classPeriod" 				column="class_period"/>
+				<result property="classDay" 				column="class_day"/>
+				<result property="classTime" 				column="class_time"/>
+			</association>
+		</association>
+	</resultMap>
+	
 	
 	
 	
@@ -203,5 +228,18 @@
 		   ,#{courseTuition}
 		);	
 	</insert>
+	<select id="getClassApplyList" parameterType="ClassApply" resultMap="classApplyResultMap">
+		SELECT
+			student_id,
+			re, 
+			class_period, 
+			class_day, 
+			class_time, 
+			class_postpone_day, 
+			class_postpone_days, 
+			class_postpone_period
+		FROM 
+			class_policy order by class_policy_name ASC limit 0,10;
+	</select>
 	
 </mapper>

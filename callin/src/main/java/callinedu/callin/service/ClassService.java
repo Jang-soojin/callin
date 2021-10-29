@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import callinedu.callin.domain.ClassApply;
 import callinedu.callin.domain.ClassPolicy;
 import callinedu.callin.domain.RegularClass;
 import callinedu.callin.mapper.ClassMapper;
@@ -75,6 +76,11 @@ public class ClassService {
 	public List<RegularClass> getRegularClass() {
 		List<RegularClass> regularClass = classMapper.getRegularClass();
 		return regularClass;
+	}
+
+	public List<ClassApply> getClassApplyList() {
+		List<ClassApply> classApplyList = classMapper.getClassApplyList();
+		return classApplyList;
 	}
 
 }
