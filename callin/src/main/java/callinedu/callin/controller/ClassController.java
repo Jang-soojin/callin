@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import callinedu.callin.domain.ClassApply;
 import callinedu.callin.domain.ClassPolicy;
 import callinedu.callin.domain.RegularClass;
 import callinedu.callin.service.ClassService;
@@ -170,5 +171,16 @@ public class ClassController {
 		return "redirect:/admin/class/regularClass";
 		
 		
+	}
+	@GetMapping("classApplyList")
+	public String ClassPolicyList(Model model) {
+		System.out.println("정규수업 리스트 컨트롤러 실행");
+		model.addAttribute("title", "정규수업");
+		model.addAttribute("midTitle", "정규 수업 리스트");
+		List<ClassApply> classApplyList = classService.getClassApplyList();
+		
+		model.addAttribute("classApplyList", classApplyList);
+		
+		return "class/classApplyList";
 	}
 }

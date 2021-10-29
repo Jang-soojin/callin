@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+<head th:replace="fragments/head :: headFragment"></head>
+<style>
+.table td, .table th {
+    padding: 12px 6px;
+    text-align: center;
+}
+</style>
+	<!-- daterange picker -->
+	<link rel="stylesheet" th:href="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.css}">
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<div id="wrapper">
+			<!-- begin topNav -->
+			<div th:replace="fragments/topNav :: topNavFragment"></div>
+			<!-- end topNav -->
+			
+			<!-- Main Sidebar Container -->
+			<div th:replace="fragments/sideBar :: sideBarFragment01"></div>
+			<th:block layout:fragment="classPolicy"> 
+				<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 th:text="${midTitle}"></h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a th:href="@{/admin/class/classPolicy}">수업관리</a></li>
+									<li class="breadcrumb-item active" th:text="${midTitle}"></li>
+								</ol>
+							</div>
+						</div>
+					</div><!-- /.container-fluid -->
+				</section>
+			
+			    <!-- Main content -->
+				<section class="content">
+					<div class="container-fluid">
+						<div class="card card-secondary">
+							<div class="card-header">
+								<h3 class="card-title"> 수업 정책 리스트 </h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body form-group">
+								<div class="float-right">
+									<div class="form-group form-inline"> 
+										<select class="form-control levelSearchKey">
+											<option value="policyName">정책명</option>
+											<option value="classPeriod">수업기간(주)</option>
+											<option value="classTime">수업시간(분)</option>
+										</select>
+										<div id="className" style="display: block;">
+											<input type="text" class="form-control" id="searchByName">
+										</div>
+										<div id="classPeriod" style="display: none;">
+											<select class="form-control" id="searchByPeriod">
+												<option> :: 선택하세요 ::</option>
+												<option value="4"> 4주 </option>
+												<option value="8"> 8주 </option>
+												<option value="12"> 12주 </option>
+											</select>
+										</div>
+										<div id="classTime" style="display: none;">
+											<select class="form-control" id="searchByTime">
+												<option> :: 선택하세요 ::</option>
+												<option value="10"> 10분 </option>
+												<option value="20"> 20분 </option>
+												<option value="30"> 30분 </option>
+												<option value="40"> 40분 </option>
+												<option value="50"> 50분 </option>
+											</select>
+										</div>
+										<button class="btn btn-default" id="policyListSearchCheck"> 검색 </button> 
+									</div>
+								</div>
+								<table class="table table-striped" >
+									<thead>
+										<tr>
+											<th>
+												정책명
+											</th>
+											<th>
+												수업기간
+											</th>
+											<th>
+												수업요일
+											</th>
+											<th>
+												수업시간
+											</th>
+											<th>
+												연기(일일)횟수
+											</th>
+											<th>
+												연기(장기)횟수
+											</th>
+											<th>
+												연기(장기)기간
+											</th>
+										</tr>
+									</thead>
+									<tbody id="classPolicyList">
+										<th:block th:if="${!#lists.isEmpty(classPolicy)}" >         
+											<tr th:each="l : ${classPolicy}">
+												<td th:text="${l.classPolicyName}"></td>
+												<td th:text="${l.classPeriod} + 주"></td>
+												<td th:text="${l.classDay}"></td>
+												<td th:text="${l.classTime}"></td>
+												<td th:text="${l.classPostponeDay}"></td>
+												<td th:text="${l.classPostponeDays}"></td>
+												<td th:text="${l.classPostponePeriod}"></td>
+												<td>
+													<a th:href="@{/admin/class/modifyPolicy(classPolicyCode=${l.classPolicyCode})}">수정</a>
+												</td>
+												<td>
+													<a th:href="@{/admin/class/deleteClassPolicy(classPolicyCode=${l.classPolicyCode})}">삭제</a>
+												</td>
+											</tr>
+										</th:block>
+										<tr th:unless="${!#lists.isEmpty(classPolicy)}">
+											<td colspan="16">조회된 데이터가 없습니다</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							
+						</div>
+					</div>
+				</section>
+				<!-- /.row -->
+			</div><!-- /.container-fluid -->
+			<!-- /.content -->
+		</th:block>
+		
+		<div th:replace="fragments/footer :: footerFragment"></div>
+		</div>
+		<!-- jQuery -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+		<!-- jQuery UI 1.11.4 -->
+		<script th:src="@{/AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js}"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+		  $.widget.bridge('uibutton', $.ui.button)
+		</script>
+		<!-- Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- ChartJS -->
+		<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
+		<!-- Sparkline -->
+		<script th:src="@{/AdminLTE-master/plugins/sparklines/sparkline.js}"></script>
+		<!-- daterangepicker -->
+		<script th:src="@{/AdminLTE-master/plugins/moment/moment.min.js}"></script>
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- date-range-picker -->
+		<script th:src="@{/AdminLTE-master/plugins/daterangepicker/daterangepicker.js}"></script>
+		<!-- Tempusdominus Bootstrap 4 -->
+		<script th:src="@{/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+		<!-- Summernote -->
+		<script th:src="@{/AdminLTE-master/plugins/summernote/summernote-bs4.min.js}"></script>
+		<!-- overlayScrollbars -->
+		<script th:src="@{/AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/AdminLTE-master/dist/js/adminlte.js}"></script>
+		<!-- AdminLTE for demo purposes -->
+		<!-- <script th:src="@{/AdminLTE-master/dist/js/pages/dashboard.js}"></script> -->
+		<script>
+			$(function () {
+		    //Date range picker
+		    $('#reservation').daterangepicker()})
+		</script>
+		<script type="text/javascript">
+		$(function(){
+			$(".levelSearchKey").change(function(){
+				if($(".levelSearchKey").val() == "classTime"){
+					$("#className").css('display', 'none');
+					$("#classTime").css('display', 'block');
+					$("#classPeriod").css('display', 'none');
+				}
+				else if($(".levelSearchKey").val() == "classPeriod"){
+					$("#className").css('display', 'none');
+					$("#classTime").css('display', 'none');
+					$("#classPeriod").css('display', 'block');
+				}
+				else{
+					$("#className").css('display', 'block');
+					$("#classTime").css('display', 'none');
+					$("#classPeriod").css('display', 'none');
+				}													
+			});
+		})
+		$(function(){
+			$(document).on('click','#policyListSearchCheck', function(){
+				
+				var levelSearchKey = $('.levelSearchKey').val();
+				console.log(levelSearchKey)
+				var classPolicySearchValue;
+				if(levelSearchKey == "policyName") classPolicySearchValue = $('#searchByName').val();
+				else if(levelSearchKey == "classPeriod") classPolicySearchValue = $('#searchByPeriod').val();
+				else if(levelSearchKey == "classTime") classPolicySearchValue = $('#searchByTime').val();
+				console.log(levelSearchKey + "<------------------------키")
+				console.log(classPolicySearchValue + "<-----------------------값")
+				
+
+				var htmlTag = "";
+				var sendData = {"levelSearchKey":levelSearchKey, "classPolicySearchValue":classPolicySearchValue};
+				
+				$.ajax({
+					method : 'POST', //요청방식
+					url : '/admin/class/classPolicyListBySearch', //요청주소
+					data : sendData,	//전달 할 파라미터
+					dataType:'json',	//받아 올 포맷 방식
+					// 응답이 완료 되었을 경우 실행
+
+					success : function(data){
+						$('#classPolicyList').html("");
+						for(var i=0; i<data.length; i++){
+							htmlTag += '<tr>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classPolicyName;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classPeriod;
+							htmlTag += '주</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classDay;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classTime;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classPostponeDay;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classPostponeDays;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += data[i].classPostponePeriod;
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += '<a href="/#">수정</a>';							
+							htmlTag += '</td>';
+							htmlTag += '<td>';
+							htmlTag += '<a href="/admin/class/deleteClassPolicy?classPolicyCode=';
+							htmlTag +=	data[i].classPolicyCode
+							htmlTag +=	'">삭제</a>';							
+							htmlTag += '</td>';
+							}
+						console.log(data[0]);
+						//htmlTag += '</th:block> <tr th:unless="${!#lists.isEmpty(classPolicy)}"><td colspan="16">조회된 데이터가 없습니다</td></tr>';
+						$("#classPolicyList").html(htmlTag);
+		    		}
+				});
+			});
+		})
+
+
+		</script>
+</body>
+</html>
