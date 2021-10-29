@@ -6,11 +6,11 @@
 	<resultMap type="LTApplyCode" id="lTApplyCodeResultMap">
 		<result property="lTCode" 					column="lt_code"/>
 		<result property="studentId" 				column="student_id"/>
-		<result property="userName" 				column="user_name"/>
-		<result property="userNickname" 			column="user_nickname"/>
-		<result property="skypeId" 					column="skype_id"/>
-		<result property="userEmail" 				column="user_email"/>
-		<result property="userPhone" 				column="user_phone"/>
+		<result property="userNameEx" 				column="user_name_ex"/>
+		<result property="userNicknameEx" 			column="user_nickname_ex"/>
+		<result property="skypeIdEx" 				column="skype_id_ex"/>
+		<result property="userEmailEx" 				column="user_email_ex"/>
+		<result property="userPhoneEx" 				column="user_phone_ex"/>
 		<result property="lTApplyDate" 				column="lt_apply_date"/>
 		<result property="lTHopeDate" 				column="lt_hope_date"/>
 		<result property="lTHopeTime" 				column="lt_hope_time"/>
@@ -26,15 +26,16 @@
 		</association>
 	</resultMap>
 	
+	<!-- LT신청 -->
 	<insert id="LTApply" parameterType="String">
 			INSERT INTO lt_apply_code
 				(	  lt_code
 					, student_id
-					, user_name
-					, user_nickname
-					, skype_id
-					, user_email
-					, user_phone
+					, user_name_ex
+					, user_nickname_ex
+					, skype_id_ex
+					, user_email_ex
+					, user_phone_ex
 					, lt_apply_date
 					, lt_hope_date
 					, lt_hope_time
@@ -42,11 +43,11 @@
 				) VALUES (
 					(Select CONCAT('level_test_code', '_', (SELECT LPAD(COUNT(*)+1,2,'0') FROM lt_apply_code AS LAC)))
 					, #{studentId}
-					, #{userName}
-					, #{userNickname}
-					, #{skypeId}
-					, #{userEmail}
-					, #{userPhone}
+					, #{userNameEx}
+					, #{userNicknameEx}
+					, #{skypeIdEx}
+					, #{userEmailEx}
+					, #{userPhoneEx}
 					,CURDATE()
 					, #{lTHopeDate}
 					, #{lTHopeTime}
@@ -54,44 +55,47 @@
 				 );
 	</insert>
 	
+	<!-- LT신청목록조회 -->
 	<select id="getlTApplyList" parameterType="String" resultMap="lTApplyCodeResultMap">
 		SELECT
-			l.lt_code
-			,l.lt_apply_date
-			, u.user_name
-			, u.user_email
-			, u.user_phone
+			lt_code
+			,lt_apply_date
+			, user_name_ex
+			, user_email_ex
+			, user_phone_ex
 		FROM
-			lt_apply_code AS l
-		INNER JOIN
-			user_info AS u
-		ON
-			u.user_id=l.student_id
+			lt_apply_code
 	</select>
 	
-	
-	<select id="getLTApplyListBySearchKey" parameterType="String" resultMap="lTApplyCodeResultMap">
+	<!-- LT신청목록검색 -->
+	<select id="getLTApplyListBySearchKey" resultMap="lTApplyCodeResultMap" parameterType="String">
 		SELECT
-			l.lt_code
-			,l.lt_apply_date
-			, u.user_name
-			, u.user_email
-			, u.user_phone
+			lt_code
+			,lt_apply_date
+			, user_name_ex
+			, user_email_ex
+			, user_phone_ex
 		FROM
-			lt_apply_code AS l
-		INNER JOIN
-			user_info AS u
-		ON
-			u.user_id=l.student_id
+			lt_apply_code
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			<if test="levelSearchKey != null and levelSearchKey != ''">
-				${levelSearchKey} LIKE CONCAT('%', #{lTApplySearchValue} ,'%')
+			<if test="searchKey != null and searchKey != ''.toString()">
+				${searchKey} LIKE CONCAT('%', #{searchValue},'%')
 			</if>
-			<if test="searchStartDate != null and searchStartDate != ''">
-				AND DATE(lt_apply_date) BETWEEN #{searchStartDate} AND #{searchEndDate}
+			<if test="dateRangeFirst != null and dateRangeFirst != ''">
+				AND lt_apply_date BETWEEN DATE(#{dateRangeFirst}) AND DATE(#{dateRangeLast})
 			</if>
 		</trim>
 	</select>
+	
+	<!-- LT신청삭제   -->
+	<delete id="deleteLTApplyList" parameterType="String">
+		DELETE 
+		FROM
+			lt_apply_code
+		WHERE
+			lt_code= #{ltCode};
+	</delete>
+	
 	
 	
 	

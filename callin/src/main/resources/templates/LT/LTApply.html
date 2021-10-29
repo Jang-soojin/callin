@@ -93,7 +93,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="userName" id="userName" value="" style="background:#fff">
+											<input type="text" name="userNameEx" id="userNameEx" value="" style="background:#fff">
 											<b id="kname_msg" class="tooltip tooltip-top-right">한글이름을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -105,7 +105,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-user"></i>
-											<input type="text" name="userNickname" id="userNickname" value="" style="background:#fff">
+											<input type="text" name="userNicknameEx" id="userNicknameEx" value="" style="background:#fff">
 											<b id="ename_msg" class="tooltip tooltip-top-right">영어닉네임을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -118,7 +118,7 @@
 								<div class="form-group">
 									<label class="input">
 										<i class="icon-append fa fa-user"></i>
-										<input type="text" name="skypeId" id="skypeId" value="" style="background:#fff">
+										<input type="text" name="skypeIdEx" id="skypeIdEx" value="" style="background:#fff">
 										<b id="skype_msg" class="tooltip tooltip-top-right">스카이프 아이디를 입력해 주세요.</b>
 									</label>
 								</div>
@@ -130,7 +130,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-envelope"></i>
-											<input type="tel" name="userEmail" id="userEmail" value="" style="background:#fff">
+											<input type="tel" name="userEmailEx" id="userEmailEx" value="" style="background:#fff">
 											<b class="tooltip tooltip-top-right">이메일을 입력해 주세요.</b>
 										</label>
 									</div>
@@ -142,7 +142,7 @@
 									<div class="form-group">
 										<label class="input">
 											<i class="icon-append fa fa-phone"></i>
-											<input type="tel" name="userPhone" id="userPhone" value="" style="background:#fff">
+											<input type="tel" name="userPhoneEx" id="userPhoneEx" value="" style="background:#fff">
 											<b class="tooltip tooltip-top-right">핸드폰 번호를 입력해 주세요.</b>
 										</label>
 									</div>
@@ -337,33 +337,33 @@
 						return false;
 					}
 					//=== 한글이름 체크
-					if($('#userName').val()=='') {	
+					if($('#userNameEx').val()=='') {	
 						alert("한글이름을 입력하세요")
-						$('#userName').focus(); 
+						$('#userNameEx').focus(); 
 						return false;
 					}
 					//=== 영문이름 체크
-					if($('#userNickname').val()=='') {	
+					if($('#userNicknameEx').val()=='') {	
 						alert("영문닉네임을 입력하세요")
-						$('#userNickname').focus(); 
+						$('#userNicknameEx').focus(); 
 						return false;
 					}
 					//=== 스카이프선택시 스카이프 아이디 체크
-					if($('#skypeId').val()=='') {	
+					if($('#skypeIdEx').val()=='') {	
 						alert("스카이프아이디를 입력하세요");
-						$('#skypeId').focus(); 
+						$('#skypeIdEx').focus(); 
 						return false;
 					}
 					//=== 이메일 체크
-					if($('#userEmail').val()=='') {	
+					if($('#userEmailEx').val()=='') {	
 						alert("이메일을 입력하세요");
-						$('#userEmail').focus(); 
+						$('#userEmailEx').focus(); 
 						return false;
 					}
 					//=== 전화번호 체크
-					if($('#userPhone').val()=='') {
+					if($('#userPhoneEx').val()=='') {
 						alert("연락처를 입력하세요");
-						$('#userPhone').focus();
+						$('#userPhoneEx').focus();
 						return false;
 					}
 					//=== 테스트날짜 체크

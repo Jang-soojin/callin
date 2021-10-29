@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import callinedu.callin.domain.EbookData;
-import callinedu.callin.domain.EbookLevel;
 import callinedu.callin.mapper.EbookMapper;
 
 @Service
@@ -18,30 +17,6 @@ public class EbookService {
 	@Autowired
 	public EbookService(EbookMapper ebookMapper) {
 	this.ebookMapper = ebookMapper;
-	}
-	
-	  
-	//교재조회
-	public List<EbookData> getEbookList() {
-		List<EbookData> ebookList = ebookMapper.getEbookList();
-		return ebookList;
-	}
-	  
-	  
-	//교재목록검색
-	public List<EbookData> getEbookListBySearchKey(Map<String,Object> map){
-		  
-		String searchKey = (String)map.get("searchKey");
-		String searchValue = (String)map.get("searchValue");
-			  
-		List<EbookData> searchEbookList = ebookMapper.getEbookListBySearchKey(searchKey,searchValue);
-		  
-		return searchEbookList;
-	}
-	
-	//교재삭제
-	public int deleteEbookList(String ebookDataCode) {
-		return ebookMapper.deleteEbookList(ebookDataCode);
 	}
 	
 	//교재등록
@@ -55,9 +30,44 @@ public class EbookService {
 		
 		return ebookMapper.ebookRegister(ebookDataCode,ebookName,ebookLevel,ebookFile,registrationDate,managerId);
 	}
-
-
-
+	  
+	//교재목록조회
+	public List<EbookData> getEbookList() {
+		List<EbookData> ebookList = ebookMapper.getEbookList();
+		return ebookList;
+	}
+	  
+	//교재목록검색
+	public List<EbookData> getEbookListBySearchKey(Map<String,Object> map){
+		  
+		String searchKey = (String)map.get("searchKey");
+		String searchValue = (String)map.get("searchValue");
+			  
+		List<EbookData> searchEbookList = ebookMapper.getEbookListBySearchKey(searchKey,searchValue);
+		  
+		return searchEbookList;
+	}
+	
+	//교재수정
+	public void ebookModify(Map<String, String> map) {
+		String ebookDataCode = (String) map.get("ebookDataCode");
+		String ebookName = (String) map.get("ebookName");
+		String ebookLevel = (String) map.get("ebookLevel");
+		String ebookFile = (String) map.get("ebookFile");
+		
+		ebookMapper.ebookModify(ebookDataCode,ebookName,ebookLevel,ebookFile);
+	}
+	
+	public EbookData getEbookInfoByCode(String ebookDataCode) {
+		System.out.println("service.getEbookInfoByCode 실행");
+		EbookData ebookData= ebookMapper.getEbookInfoByCode(ebookDataCode);
+		return ebookData;
+	}
+	
+	//교재삭제
+	public int deleteEbookList(String ebookDataCode) {
+		return ebookMapper.deleteEbookList(ebookDataCode);
+	}
 
 
 	  

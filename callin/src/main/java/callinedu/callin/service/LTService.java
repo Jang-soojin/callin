@@ -22,15 +22,16 @@ public class LTService {
 	public LTService(LTMapper ltMapper) {
 		this.ltMapper = ltMapper;
 	}
-
+	
+	//LT신청
 	public int LTApply(Map<String, Object> map ) {
 		String tdate = (String) map.get("tdate");
 		String studentId = (String) map.get("studentId");
-		String userName = (String) map.get("userName");
-		String userNickname = (String) map.get("userNickname");
-		String skypeId = (String) map.get("skypeId");
-		String userEmail = (String) map.get("userEmail");
-		String userPhone = (String) map.get("userPhone");
+		String userNameEx = (String) map.get("userNameEx");
+		String userNicknameEx = (String) map.get("userNicknameEx");
+		String skypeIdEx = (String) map.get("skypeIdEx");
+		String userEmailEx = (String) map.get("userEmailEx");
+		String userPhoneEx = (String) map.get("userPhoneEx");
 		String requestedTerm = (String) map.get("requestedTerm");
 		
 		
@@ -43,26 +44,31 @@ public class LTService {
 		System.out.println("lTHopeDate:"+lTHopeDate);
 		System.out.println("lTHopetime1:"+ lTHopeTime1);
 		System.out.println("lTHopetime2:"+lTHopeTime2);
-		return ltMapper.LTApply(studentId, userName, userNickname, skypeId, userEmail, userPhone, lTHopeDate, lTHopeTime, requestedTerm);
+		return ltMapper.LTApply(studentId, userNameEx, userNicknameEx, skypeIdEx, userEmailEx, userPhoneEx, lTHopeDate, lTHopeTime, requestedTerm);
 	}
 	
-
+	//LT신청목록조회
 	public List<LTApplyCode> getLTApplyList() {
 		List<LTApplyCode> lTApplyList = ltMapper.getlTApplyList();
 		return lTApplyList;
 	}
 	
-	public List<LTApplyCode> getLTApplyListBySearchKey(String levelSearchKey, String lTApplySearchValue, String searchStartDate, String searchEndDate){
-
-		if("studentName".equals(levelSearchKey)) 	levelSearchKey = "user_name";
-		if("studentEmail".equals(levelSearchKey)) 	levelSearchKey = "user_email";
-		if("studentTel".equals(levelSearchKey))		levelSearchKey = "user_phone";
+	//LT신청목록검색
+	public List<LTApplyCode> getLTApplyListBySearchKey(Map<String,Object> map){
 		
-		List<LTApplyCode> lTApplyCodeList = ltMapper.getLTApplyListBySearchKey(levelSearchKey, lTApplySearchValue, searchStartDate, searchEndDate );
+		String searchKey = (String)map.get("searchKey");
+		String searchValue = (String)map.get("searchValue");
+		String dateRangeFirst = (String)map.get("dateRangeFirst");
+		String dateRangeLast = (String)map.get("dateRangeLast");
 		
-		log.info("LTService 검색된 리스트: {}", lTApplyCodeList);
+		List<LTApplyCode> lTApplyCodeList = ltMapper.getLTApplyListBySearchKey(searchKey, searchValue, dateRangeFirst, dateRangeLast);
 		
 		return lTApplyCodeList;
+	}
+	
+	//LT신청목록삭제
+	public int deleteLTApplyList(String ltCode) {
+		return ltMapper.deleteLTApplyList(ltCode);
 	}
 	
 

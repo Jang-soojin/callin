@@ -48,18 +48,18 @@
 					<div class="col-12">
 						<div class="card card card-secondary">
 							<div class="card-header">
-								<h3 class="card-title">교재 등록</h3>
+								<h3 class="card-title">교재 수정</h3>
 							</div>
 							<!-- /.card-header -->
 							<div class="card-body">
-								<form id="ebookRegister" th:action="@{/admin/ebook/ebookRegister}" method="post">
+								<form id="ebookModify" th:action="@{/admin/ebook/ebookModify}" method="post">
 									<table class="table table-bordered table-hover" style="border:none; vertical-align: inherit;">
 										<tr>
 											<td class="reg-form-th col-md-2">
 												<span>교재코드</span>
 											</td>
 											<td class="reg-form-td" colspan="3">
-												<input type="text" class="form-control" id="ebookDataCode" name="ebookDataCode">
+												<input type="text" class="form-control" id="ebookDataCode" name="ebookDataCode" th:value="${ebookData.ebookDataCode}" readonly="readonly">
 											</td>
 										</tr>
 										<tr>
@@ -67,7 +67,7 @@
 												<span>교재명</span>
 											</td>
 											<td class="reg-form-td" colspan="3">
-												<input type="text" class="form-control" id="ebookName" name="ebookName">
+												<input type="text" class="form-control" id="ebookName" name="ebookName" th:value="${ebookData.ebookName}">
 											</td>
 										</tr>
 										<tr>
@@ -102,7 +102,7 @@
 												<span>등록일자</span>
 											</td>
 											<td class="reg-form-td"colspan="3">
-												<input type="text" class="form-control" id="registrationDate" name="registrationDate">
+												<input type="text" class="form-control" id="registrationDate" name="registrationDate"  th:value="${ebookData.registrationDate}" readonly="readonly">
 											</td>
 										</tr>
 										<tr>
@@ -110,7 +110,7 @@
 												<span>등록자ID</span>
 											</td>
 											<td class="reg-form-td"colspan="3">
-												<input type="text" class="form-control" id="managerId" name="managerId">
+												<input type="text" class="form-control" id="managerId" name="managerId"  th:value="${ebookData.managerId}" readonly="readonly">
 											</td>
 										</tr>
 										</tbody>
@@ -118,8 +118,8 @@
 											<tr>
 												<td colspan="4">
 													<div class="reg_button" style="text-align: center;">
-														<button type="button" class="btn btn-primary" id="reg_submit">
-															<i aria-hidden="true"></i>등록하기
+														<button type="submit" class="btn btn-primary" id="reg_submit">
+															<i aria-hidden="true"></i>수정하기
 														</button>
 														<a class="btn btn-secondary" onclick="location.href='ebookList'">
 															<i aria-hidden="true"></i>목록
@@ -153,7 +153,7 @@
 			//=== 유효성검사
 			$(function(){
 				$('#reg_submit').click(function(){
-					var form = document.getElementById('ebookRegister');
+					var form = document.getElementById('ebookModify');
 					//=== 교재명
 					if($('#ebookName').val()=='') {	
 						alert("교재명을 입력하세요")
@@ -172,8 +172,8 @@
 						$('#ebookFile').focus(); 
 						return false;
 					}
-					alert('등록이 완료되었습니다!'); 
-					document.getElementById('ebookRegister').submit();
+					alert('수정이 완료되었습니다!'); 
+					document.getElementById('ebookModify').submit();
 				});
 			});
 			
