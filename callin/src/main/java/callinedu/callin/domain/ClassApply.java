@@ -8,6 +8,7 @@ public class ClassApply {
 	private String registrationDate;
 	private String applyApproveCode;	
 	private String applyApproveDate;
+	private RegularClass regularClass;
 	public String getStudentId() {
 		return studentId;
 	}
@@ -50,6 +51,12 @@ public class ClassApply {
 	public void setApplyApproveDate(String applyApproveDate) {
 		this.applyApproveDate = applyApproveDate;
 	}
+	public RegularClass getRegularClass() {
+		return regularClass;
+	}
+	public void setRegularClass(RegularClass regularClass) {
+		this.regularClass = regularClass;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -67,6 +74,8 @@ public class ClassApply {
 		builder.append(applyApproveCode);
 		builder.append(", applyApproveDate=");
 		builder.append(applyApproveDate);
+		builder.append(", regularClass=");
+		builder.append(regularClass);
 		builder.append("]");
 		return builder.toString();
 	}
