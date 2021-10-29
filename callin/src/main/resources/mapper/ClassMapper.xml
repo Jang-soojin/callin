@@ -40,7 +40,7 @@
 		<result property="applyApproveCode"			column="apply_approve_code"/>
 		<result property="applyApproveDate"			column="apply_approve_date"/>
 		<association property="regularClass" javaType="RegularClass">
-			<result property="regularClassCode" 		column="regular_class_code"/>
+			<id property="regularClassCode" 		column="regular_class_code"/>
 			<result property="classPolicyCode" 			column="class_policy_code"/>
 			<result property="courseName" 				column="course_name"/>
 			<result property="courseLanguage" 			column="course_language"/>
@@ -231,15 +231,13 @@
 	<select id="getClassApplyList" parameterType="ClassApply" resultMap="classApplyResultMap">
 		SELECT
 			student_id,
-			re, 
-			class_period, 
-			class_day, 
-			class_time, 
-			class_postpone_day, 
-			class_postpone_days, 
-			class_postpone_period
+			regular_class_code, 
+			class_start_time, 
+			class_start_date, 
+			registration_date, 
+			apply_approve_code, 
+			apply_approve_date
 		FROM 
-			class_policy order by class_policy_name ASC limit 0,10;
+			class_apply order by student_id ASC limit 0,10;
 	</select>
-	
 </mapper>
