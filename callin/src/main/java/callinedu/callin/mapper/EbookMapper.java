@@ -31,6 +31,8 @@ public interface EbookMapper {
 	public int deleteEbookList(String ebookDataCode);
 	//교재난이도조회
 	public List<EbookLevel> getEbookLevelList();
+	//교재파일다운로드
+	
 
 
 }

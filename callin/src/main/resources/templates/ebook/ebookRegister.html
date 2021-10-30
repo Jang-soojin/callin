@@ -24,6 +24,45 @@
 		width:300px;
 		display: inline;
 	}
+	 /* input file type */ 
+	 .input-file {
+	 	display: inline-block;
+	 }
+	 .input-file [type="file"] {
+	 	position: absolute;
+	 	width: 1px; 
+	 	height: 1px; 
+	 	padding: 0; 
+	 	margin: -1px; 
+	 	overflow: hidden; 
+	 	clip: rect(0, 0, 0, 0); 
+	 	border: 0 none; 
+	 }
+	 .input-file .file-label { 
+		 display: inline-block; 
+		 min-width: 53px; 
+		 height: 27px; 
+		 line-height: 30px; 
+		 padding: 0 10px; 
+		 border-radius: 2px; 
+		 font-size: 13px; 
+		 background-color: #6c757d; 
+		 color: #fff; 
+		 text-align: center;
+	 } 
+	 .input-file .file-name { 
+		 width: 300px; 
+		 background: #f5f5f5; 
+		 height: 27px; 
+		 line-height: 26px; 
+		 text-indent: 5px; 
+		 border: 1px solid #bbb; 
+	 }
+	  /* 접근성 탭 포커스 스타일 */
+	  .file-focus { 
+	  	outline: 1px dotted #d2310e; 
+	  }
+
 </style>	
 	<div class="content-wrapper">
 		<section class="content-header">
@@ -91,9 +130,10 @@
 												<span>교재 파일</span>
 											</td>
 											<td class="reg-form-td" colspan="3">
-												<div class="custom-file">
-							                      <input type="file" class="custom-file-input" id="ebookFile" name="ebookFile">
-							                      <label class="custom-file-label" for="customFile">Choose file</label>
+							                    <div class="input-file">
+								                    <input type="text" readonly="readonly" class="file-name" />
+								                    <label for="ebookFile" class="file-label">찾아보기</label>
+								                    <input type="file" name="ebookFile" id="ebookFile" class="file-upload" />
 							                    </div>
 											</td>
 										</tr>
@@ -177,7 +217,33 @@
 				});
 			});
 			
-			
+			//===인풋 타입의 파일 업로드  디자인 커스텀, 접근성 포커스 이동
+			(function($){
+				var $fileBox = null;
+				
+				$(function() { init(); 
+				})
+				function init() {
+					$fileBox = $('.input-file'); 
+					fileLoad(); 
+					} 
+				function fileLoad() { 
+					$.each($fileBox, function(idx){
+						var $this = $fileBox.eq(idx),
+							$btnUpload = $this.find('[type="file"]'),
+							$label = $this.find('.file-label'); 
+						$btnUpload.on('change', function() { 
+							var $target = $(this), 
+								fileName = $target.val(),
+								$fileText = $target.siblings('.file-name'); 
+							$fileText.val(fileName); }) 
+							$btnUpload.on('focusin focusout', function(e) {
+								e.type == 'focusin' ?
+										$label.addClass('file-focus') : $label.removeClass('file-focus');
+										}) 
+									})
+								}
+				})(jQuery);
 			
 	
 	
