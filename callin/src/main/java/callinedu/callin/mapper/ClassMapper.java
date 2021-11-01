@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import callinedu.callin.domain.ClassApply;
 import callinedu.callin.domain.ClassPolicy;
 import callinedu.callin.domain.RegularClass;
 
@@ -28,4 +29,6 @@ public interface ClassMapper {
 	public int addRegularClass(RegularClass regularClass);
 
 	public List<RegularClass> getRegularClass();
+
+	public List<ClassApply> getClassApplyList();
 }
