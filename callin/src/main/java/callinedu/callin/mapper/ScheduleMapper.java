@@ -1,6 +1,7 @@
 package callinedu.callin.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,4 +14,5 @@ public interface ScheduleMapper {
 
 	public List<Schedule> getAllSchedule();
 	
+	public Map<String, Object> getStudentNumber();
 }

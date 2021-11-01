@@ -31,4 +31,12 @@ public interface ClassMapper {
 	public List<RegularClass> getRegularClass();
 
 	public List<ClassApply> getClassApplyList();
+	
+	/* 2021.10.31 김경수 추가 쿼리 */
+	public String getClassPolicyCode(String className);
+
+	public List<RegularClass> searchRegularClass(String policyCode);
+
+	public void applyClass(String regularClassCode,	String classStartDate, String classStartTime, String introduction);
+	/* 2021.10.31 김경수 추가 쿼리 */
 }

@@ -9,7 +9,144 @@
 
 <!-- contents layout:fragment 정의 -->
 <th:block layout:fragment="customContents">
-	<h1 th:text="${h1text}">Hello! Spring boot!</h1>
+	
+
+<!-- STACKED BAR CHART -->
+         <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>통계</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- STACKED BAR CHART -->
+            <div class="card" >
+              <div class="card-header" style="background-color: #343a40; color:white;">
+                <h3 class="card-title">수강생 통계</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="stackedBarChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+          </div>
+          <!-- /.col (RIGHT) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script> 
+<script th:src="@{/AdminLTE-master/plugins/chart.js/Chart.min.js}"></script>
+<script>
+  
+  $(function () {
+		var request = $.ajax({
+			//환율 open API URL 
+			url : "/statistics", //요청 url
+			method : "POST", //요청 방식
+			data : {}, //요청하는 곳에 전달될 데이타
+			dataType : "json" //응답되어 받은 데이타를 parsing 시킬 방식
+			});
+		request.done(function(data) {
+			const MONTHS = [
+				  'January',
+				  'February',
+				  'March',
+				  'April',
+				  'May',
+				  'June',
+				  'July',
+				  'August',
+				  'September',
+				  'October',
+				  'November',
+				  'December'
+			];
+		    //---------------------
+		    //- STACKED BAR CHART -
+		    //---------------------
+		    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+		    var stackedBarChartData = {
+		    	      labels  : MONTHS,
+		    	      datasets: [
+		    	        {
+		    	          label               : '기존 수강생',
+		    	          backgroundColor     : 'rgba(52,58,64,0.7)',
+		    	          borderColor         : 'rgba(210, 214, 222, 1)',
+		    	          pointRadius         : false,
+		    	          pointColor          : 'rgba(210, 214, 222, 1)',
+		    	          pointStrokeColor    : '#c1c7d1',
+		    	          pointHighlightFill  : '#fff',
+		    	          pointHighlightStroke: 'rgba(220,220,220,1)',
+		    	          data                : [data.JanEnd-data.January, data.FebEnd-data.February, data.MarEnd-data.March, data.AprEnd-data.April, data.MayEnd-data.May, data.JunEnd-data.June, data.JulEnd-data.July, data.AugEnd-data.August, data.SepEnd-data.September, data.OctEnd-data.October, data.NovEnd, data.DecEnd-data.December ]
+		    	        },
+		    	        {
+		    	          label               : '신규 수강생',
+		    	          backgroundColor     : 'rgba(255,213,0,0.7)',
+		    	          borderColor         : 'rgba(60,141,188,0.8)',
+		    	          pointRadius          : false,
+		    	          pointColor          : '#3b8bba',
+		    	          pointStrokeColor    : 'rgba(60,141,188,1)',
+		    	          pointHighlightFill  : '#fff',
+		    	          pointHighlightStroke: 'rgba(60,141,188,1)',
+		    	          data                : [data.January, data.February, data.March, data.April, data.May, data.June, data.July, data.August, data.September, data.October, data.November, data.December ]
+		    	        },
+		    	      ]
+		    	    }
+
+		    var stackedBarChartOptions = {
+		      responsive              : true,
+		      maintainAspectRatio     : false,
+		      scales: {
+		        xAxes: [{
+		          stacked: true,
+		        }],
+		        yAxes: [{
+		          stacked: true
+		        }]
+		      }
+		    }
+
+		    new Chart(stackedBarChartCanvas, {
+		      type: 'bar',
+		      data: stackedBarChartData,
+		      options: stackedBarChartOptions
+		    })
+
+		});
+		
+		request.fail(function(jqXHR, textStatus) {
+			alert("요청 실패: " + textStatus);
+		});
+  
+	
+  })
+</script>
 </th:block>
 
 </html>

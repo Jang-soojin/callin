@@ -4,8 +4,8 @@ public class Schedule {
 	//회원테이블 컬럼 매칭
 	private String scheduleRegisterCode;
 	private String regularClassCode;
-	private String teacherId2;
-	private String studentId2;
+	private String teacherId;
+	private String userId;
 	private String classStartDay;
 	private String classStartTime;
 	private String classEndTime;
@@ -15,12 +15,6 @@ public class Schedule {
 	private String classEvaluation;
 	private String classProgress;
 	private String allDay;
-	public String getAllDay() {
-		return allDay;
-	}
-	public void setAllDay(String allDay) {
-		this.allDay = allDay;
-	}
 	public String getScheduleRegisterCode() {
 		return scheduleRegisterCode;
 	}
@@ -33,17 +27,17 @@ public class Schedule {
 	public void setRegularClassCode(String regularClassCode) {
 		this.regularClassCode = regularClassCode;
 	}
-	public String getTeacherId2() {
-		return teacherId2;
+	public String getTeacherId() {
+		return teacherId;
 	}
-	public void setTeacherId2(String teacherId2) {
-		this.teacherId2 = teacherId2;
+	public void setTeacherId(String teacherId) {
+		this.teacherId = teacherId;
 	}
-	public String getStudentId2() {
-		return studentId2;
+	public String getUserId() {
+		return userId;
 	}
-	public void setStudentId2(String studentId2) {
-		this.studentId2 = studentId2;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getClassStartDay() {
 		return classStartDay;
@@ -93,6 +87,12 @@ public class Schedule {
 	public void setClassProgress(String classProgress) {
 		this.classProgress = classProgress;
 	}
+	public String getAllDay() {
+		return allDay;
+	}
+	public void setAllDay(String allDay) {
+		this.allDay = allDay;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -100,10 +100,10 @@ public class Schedule {
 		builder.append(scheduleRegisterCode);
 		builder.append(", regularClassCode=");
 		builder.append(regularClassCode);
-		builder.append(", teacherId2=");
-		builder.append(teacherId2);
-		builder.append(", studentId2=");
-		builder.append(studentId2);
+		builder.append(", teacherId=");
+		builder.append(teacherId);
+		builder.append(", userId=");
+		builder.append(userId);
 		builder.append(", classStartDay=");
 		builder.append(classStartDay);
 		builder.append(", classStartTime=");
@@ -125,5 +125,8 @@ public class Schedule {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+	
 	
 }

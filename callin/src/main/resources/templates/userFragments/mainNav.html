@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<!-- Navbar -->
+	    <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav" th:fragment="mainNavFragment">
+            <div class="container">
+                <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.html">Start Bootstrap</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/user}">Home</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/user}">소개</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/user}">수강 안내</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/user}">수강 과정</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/user}">레벨테스트</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/user/ClassRegister}">수강신청</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/user}">수강 문의</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/user}">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</html>

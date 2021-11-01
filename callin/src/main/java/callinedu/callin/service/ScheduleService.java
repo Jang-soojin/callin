@@ -54,7 +54,7 @@ public class ScheduleService {
 		ArrayList<Map<String,Object>> allEvents = new ArrayList<>();
 		for(int i=0; i<scheduleList.size(); i++) {
 			Map<String, Object> obj = new HashMap<String,Object>();
-			String title = scheduleList.get(i).getStudentId2();
+			String title = scheduleList.get(i).getUserId();
 			String startDay = scheduleList.get(i).getClassStartDay();
 			String startTime = scheduleList.get(i).getClassStartTime();
 			String endDay = scheduleList.get(i).getClassEndDay();
@@ -92,5 +92,11 @@ public class ScheduleService {
 		
 		return allEvents;
 	}
+	
+	public Map<String, Object> getStudentNumber() {
+		Map<String, Object> studentNumber = scheduleMapper.getStudentNumber();
+		return studentNumber;
+	}
+
 
 }

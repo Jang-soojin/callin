@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="@{layout/userDefault}">
+
+<th:block layout:fragment="customContents">
+<style>
+	.reg-form-block{
+		vertical-align: middle !important;
+		border : none;
+		background-color: white;
+ 		border-bottom: solid black 1px;
+ 		margin: 10px 5px;
+	}
+	.reg-form-select{
+		vertical-align: middle !important;
+		border : none;
+		background-color: white;
+ 		border-bottom: solid black 1px;
+ 		margin: 10px 5px;
+ 		width:40%;
+	}
+	.apply-info input, select{
+		width:100%;
+		display: inline;
+		margin-bottom: 30px !important;
+	}
+	.apply-info{
+		padding: 40px 80px;
+		text-align:left;
+	}
+	#radio-M, #radio-F{
+		width:30px !important;
+	}
+	
+	.btn-apply{
+		text-align: center;
+		background-color: #e9e9e9;
+		border: 3px gray solid;
+		margin: 15px 5px;
+		height: 40px;
+		vertical-align: middle;
+		padding-top: 1.5%;
+		cursor: pointer;
+		box-shadow : 1px 1px 1px gray;
+	}
+	.btn-apply:active{
+		border: 3px #bc8056 solid;
+		transition-duration: 0.3s;
+		box-shadow : none
+	}
+	
+	.btn-period{
+		padding-top: 1%;
+		min-width: 75px;
+	}
+	.btn-time{
+		font-size: medium;
+		padding-top: 1%;
+		width: 12%;
+		min-width: 65px;
+	}
+	.btn-days{
+		padding-top: 1%;
+	}
+	input:focus, textarea:focus {
+    outline: none;
+	}
+	label{
+		margin-top: 10px;
+		font-weight: bold
+	}
+	.class-start{
+		margin-top: 10px;
+		margin-bottom: 10px;
+		font-weight: bold
+		
+	}
+	.user_birth{
+		margin-left: 15px !important;
+		width: 95px !important;
+		display: inline !important;
+		text-align: center;
+		margin-right: 5px;
+	}
+</style>
+<div  style=" background-color: antiquewhite;">
+	<section class="page-section clearfix" style="padding-top: 80px; margin-top: 0px;">
+		<div class="container">
+			<div class="product-item" style="text-align: -webkit-center;">
+				<div>
+					<h1 class="font_0" style="font-size: 45px; text-align: center;">
+						<span style="font-size: 45px;">Class Registration</span>
+					</h1>
+					<div id="line" style="text-align: center; border-top: solid black 1px; width: 250px; height: 10px"></div>
+					<h3 class="font_3" style="font-size: 17px; text-align: center;">
+						<span style="font-family: open sans, sans-serif; display: block">Every Saturday, take this one and only class planned and customized for you.&nbsp;</span> 
+						<span style="font-family: open sans, sans-serif; display: block">Meet the better version of yourself in Callin. </span>
+					</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="page-section clearfix" style="padding-bottom: 80px; margin-bottom: 0px;">
+		<div class="container">
+			<div class="product-item" style="text-align: -webkit-center;">
+				<form class="bg-faded p-5 me-auto rounded"  action="/user/applyClass" method="post" style="background-color: white; width:70%; margin: 0 auto;">
+					<div style="margin: 0 0 50px 0; font-size: x-large; font-weight: bolder;">REGISTRATION FORM</div>
+					<div class="row apply-info">
+						<div class="col-md-12">
+							<label for="name" class="jm">수업 과정</label>
+<!-- 								<div> -->
+<!-- 									<select class="reg-form-block" name="name1"> -->
+<!-- 										<option></option> -->
+<!-- 									</select> -->
+<!-- 								</div> -->
+							<div class="row">
+								<div class="col-md-2 btn-apply btn-period">
+									<span class="jm">4주</span>
+								</div>
+								<div class="col-md-2 btn-apply btn-period">
+									<span class="jm">8주</span>
+								</div>
+								<div class="col-md-2 btn-apply btn-period">
+									<span class="jm">12주</span>
+								</div>
+								<input type="text" style="display: none;" name="apply-period">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<label for="name" class="jm">수업 시간</label>
+							<div class="row">
+								<div class="col-md-1 btn-apply btn-time">
+									<span  class="jm">10분</span>
+								</div>
+								<div class="col-md-1 btn-apply btn-time">
+									<span class="jm">20분</span>
+								</div>
+								<div class="col-md-1 btn-apply btn-time">
+									<span class="jm">30분</span>
+								</div>
+								<div class="col-md-1 btn-apply btn-time">
+									<span class="jm">40분</span>
+								</div>
+								<div class="col-md-1 btn-apply btn-time">
+									<span class="jm">50분</span>
+								</div>
+								<div class="col-md-1 btn-apply btn-time">
+									<span class="jm">60분</span>
+								</div>
+								<input type="text" style="display: none;"  name="apply-time">
+							</div> 
+						</div>
+						<div class="col-md-12">
+							<label for="name" class="jm">수업 요일</label>
+							<div class="row" >
+								<div class="col-md-2 btn-apply btn-days" style="width:15%;  min-width: 85px;">
+									<span class="jm">화 목</span>
+								</div>
+								<div class="col-md-2 btn-apply btn-days" style="width:15%; min-width: 85px;">
+									<span class="jm">월 수 금</span>
+								</div>
+								<div class="col-md-2 btn-apply btn-days" style="width:24%;  min-width: 130px;">
+									<span class="jm">월 화 수 목 금</span>
+								</div>
+								<div class="col-md-2 btn-apply btn-days" style="width:12%;  min-width: 85px;">
+									<span class="jm">토 일</span>
+								</div>
+								<input type="text" style="display: none;"  name="apply-days">
+							</div> 
+						</div>
+						<div class="col-md-12">
+							<div class="row" >
+								<div class="col-md-12 course-info" style="width :100% ; height:100%; margin-bottom: 30px">
+								</div>
+							</div> 
+						</div>
+						<div class="row">
+							<div class="col-md-8 jm">
+								<label for="name" class="class-start jm">희망 수업 시작일</label>
+								<input type="text" style="display: none;" id="class-start-date"  name="class-start-date">
+								<div class="form-group" style="margin: 0px">
+									<select id="year" class="user_birth form-control  " style=" margin-left: 0px !important;" ></select>년 
+									<select id="month" class="user_birth form-control  "></select>월 
+									<select id="day" class="user_birth form-control  " ></select>일 
+									<div class="check_font" id="birth_check"></div>
+								</div>
+							</div>
+							<div class="col-md-4 jm">
+								<label for="name" class="class-start jm">희망 수업 시작시간</label>
+								<div class="form-group" style="margin: 0px">
+									<input type="text" class="form-control timepicker" id="class_start_time" name="class_start_time" placeholder="Class Start Time" style=" text-align: center;">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<label for="name">Self-introduction (English only)</label>
+							<div>
+								<textarea class="reg-form-block" name="introduction"  style="border: dashed 1px black; margin-top: 10px; margin-bottom: 10px; height: 200px; width: 100%; padding:15px;"></textarea>
+							</div>
+						</div>
+						<div style="text-align: center;">
+							<button aria-disabled="false" id="submit" style="margin:50px 40px 0 40px;"><span>REGISTER &amp; PAY</span></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+ </div>       
+<script th:src="@{/AdminLTE-master/plugins/jquery/jquery.min.js}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+		$('.btn-apply').click(function(){
+			var applyInfo = null;
+			applyInfo = $(this).find('span').text();
+			$(this).parent().find('input').val(applyInfo);
+			console.log(applyInfo);
+			$(this).parent().find('.btn-apply').css({
+				'background-color' : '#e9e9e9',
+				'border': '3px gray solid' 
+			})
+			$(this).css({
+				'background-color' : '#f0bd7a8a',
+				'border': '3px #bc8056 solid', 
+				'transition-duration': '0.3s',
+				'box-shadow' : 'none'
+				
+			})
+			
+			var applyPeriod = $('input[name=apply-period]').val();
+			var applyTime = $('input[name=apply-time]').val();
+			var applyDays = $('input[name=apply-days]').val().replace(/ /g,'');
+			if(applyPeriod!='' && applyTime!='' && applyDays!=''){
+				console.log(applyPeriod+'/'+applyDays+'/'+applyTime)
+				var className = applyPeriod+'/'+applyDays+'/'+applyTime;
+				
+				var request = $.ajax({
+					url : "/user/getRegularClass", 
+					method : "POST",
+					data : {className :className},
+					dataType : "json" 
+				});
+				request.done(function(data) {
+					console.log(data.length)
+					$('.course-info').text('')
+						var tr = 
+								'<label style="margin-bottom: 10px; font-weight : bolder"  class="jm">수업 상세 정보</label>'
+								+'<input type="text" style="display: none;" id="course-name"  name="course-name">'
+								+'<input type="text" style="display: none;" id="regular-class-code"  name="regular-class-code">'
+								+'<table style="text-align: center; vertical-align: middle; margin-bottom: 0;padding: 0 !important;" class="table table-bordered" >'
+								+'<thead>'
+								+ '<tr>' 
+								+ '<th style = "width:30%">클래스코드</th>'
+								+ '<th style = "width:30%">수업명</th>'
+								+ '<th style = "width:30%">수강료</th>'
+								+ '<th style = "width:10%">언어</th>'
+								+ '</tr>'
+								+ '</thead>'; 
+						
+						if(data.length == 0){
+							tr += '<td colspan="3"> 개설된 수업이 없습니다.</td>'
+							
+						}else{
+							
+						$.each(data , function(i){ 
+							tr += '<td>'
+							+ '<span id="regularCode">'+data[i].regularClassCode +'</span>'
+							+ '</td><td>' 
+							+ '<button type="button" class="btn selectCourse" style="box-shadow : none">'+data[i].courseName+'</button>'
+							+ '</td><td>' 
+							+ data[i].courseTuition
+							+ '</td><td>' 
+							+ data[i].courseLanguage
+							+ '</td></tr>'; 
+						});
+						}
+						tr += '</table>'
+					$('.course-info').append(tr)
+					
+					$('.selectCourse').click(function(){
+						$('#course-name').val($(this).text());
+						$('#regular-class-code').val($(this).parents('tr').find('#regularCode').text());
+						
+					})
+					
+				});
+
+				request.fail(function(jqXHR, textStatus) {
+					alert("요청 실패: " + textStatus);
+				});
+			}
+			
+		})
+		
+		$('#submit').click(function(){
+			
+			var classStartDay = $('#year').val()+'/'+$('#month').val()+'/'+$('#day').val();
+			$('#class-start-date').val(classStartDay);
+			
+			alert('수강 신청이 접수되었습니다')
+		})
+	})
+</script>
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){ 
+		var now = new Date(); 
+		var year = now.getFullYear(); 
+		var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
+		var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate()); 
+		
+		//년도 selectbox만들기 
+		for(var i = year ; i >= 1900 ; i--) { 
+			$('#year').append('<option value="' + i + '">' + i + '</option>'); 
+		} 
+		// 월별 selectbox 만들기 
+		for(var i=1; i <= 12; i++) { 
+			var mm = i > 9 ? i : "0"+i ; 
+			$('#month').append('<option value="' + mm + '">' + mm + '</option>'); 
+		} 
+		// 일별 selectbox 만들기 
+		for(var i=1; i <= 31; i++) { 
+			var dd = i > 9 ? i : "0"+i ; 
+			$('#day').append('<option value="' + dd + '">' + dd+ '</option>'); 
+		};
+			$("#year > option[value="+year+"]").attr("selected", "true"); 
+			$("#month > option[value="+mon+"]").attr("selected", "true");
+			$("#day > option[value="+day+"]").attr("selected", "true"); 
+	})
+
+
+	$('.timepicker').timepicker({
+	    timeFormat: 'HH:mm',
+	    interval: 10,
+	    minTime: '06:00',
+	    maxTime: '23:50',
+	    defaultTime: '6',
+	    startTime: '06:00',
+	    dynamic: false,
+	    dropdown: true,
+	    scrollbar: true
+	});
+</script>	
+	
+</th:block>
+</html>
