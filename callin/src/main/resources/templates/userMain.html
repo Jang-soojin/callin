@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="@{layout/userDefault}">
+
+<th:block layout:fragment="customTitle">
+	<title th:text="${title}"></title>
+</th:block>
+
+<!-- contents layout:fragment 정의 -->
+<th:block layout:fragment="customContents">
+	<section class="page-section clearfix">
+            <div class="container">
+                <div class="intro">
+                    <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" th:src="@{/userPage-Template/assets/img/class.png}" alt="..." />
+                    <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                        <h2 class="section-heading mb-4">
+                            <span class="section-heading-upper">ABOUT</span>
+                            <span class="section-heading-lower">Callin Education</span>
+                        </h2>
+                        <p class="mb-3">Callin is On-line based language education organisation. 
+                        	Callin provides one-on-one English news debate class to international students who are in need of the language lessons.
+							Our class is only conducted on weekend using Skype which is a free voice call application.  </p>
+                        <p class="mb-3">Callin은 온라인 어학 교육시설로서 Callin의 수업은 매주 토요일 무료 음성전화 어플리케이션 Skype를 이용하여 진행되며, Callin에서는 선생님과 학생이 영자신문을 이용한 1대1 토론식 수업을 진행하고 있습니다.  </p>
+                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="#!">Visit Us Today!</a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="page-section cta">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-9 mx-auto">
+                        <div class="cta-inner bg-faded text-center rounded">
+                            <h2 class="section-heading mb-4">
+                                <span class="section-heading-lower" style="font-weight: 500; font-size: 2rem;">Register</span>
+                                <span class="section-heading-upper" style="font-weight: 300;">You can register to study in Callin</span>
+                            </h2>
+                            <p class="mb-0" style="font-size: 20px;">If you're ready to fully commit your time and effort every Saturday,<br> you may register in Callin to take weekly English news class. </p>
+                        	 <div class="intro-button mx-auto"><a class="btn btn-primary btn-md" href="#!" style ="margin-top: 20px">Register</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="page-section">
+            <div class="container">
+                <div class="product-item">
+                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" th:src="@{/userPage-Template/assets/img/Einstein.png}" alt="..."  style="margin-left: inherit !important;"/>
+                    <div class="product-item-description d-flex ms-auto">
+                        <div class="bg-faded p-5 rounded">
+                        <p class="mb-0">It is the supreme art of the teacher to awaken joy in creative expression and knowledge.</p>
+                        <p class="mb-0">- Albert Einstein </p>
+                        <p class="mb-0" style="margin-top: 10px">스승으로서의 최고 미덕이란 창조적인 표현과 지식을 통해 학생들을 깨우는 일 입니다.</p>
+                        <p class="mb-0" style="margin-top: 10px">- 알버트 아인슈타인</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</th:block>
+
+</html>

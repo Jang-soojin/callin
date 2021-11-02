@@ -15,4 +15,9 @@ public class MainController {
 		model.addAttribute("title", "3팀 팀프로젝트");
 		return "main";
 	}
+	@GetMapping("/user")
+	public String userMain(Model model) {
+		model.addAttribute("title", "3팀 팀프로젝트");
+		return "userMain";
+	}
 }

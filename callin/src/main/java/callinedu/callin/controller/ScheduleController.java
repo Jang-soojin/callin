@@ -44,4 +44,12 @@ public class ScheduleController {
 		return allEvents;
 	}
 	
+	@PostMapping("/statistics")
+	@ResponseBody
+	public Map<String, Object> statistics(){
+		System.out.println("loadSchedule 요청 확인~");
+		Map<String, Object> studentNumber = scheduleService.getStudentNumber();
+		return studentNumber;
+	}
+	
 }

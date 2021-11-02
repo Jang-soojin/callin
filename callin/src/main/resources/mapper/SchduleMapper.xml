@@ -7,8 +7,8 @@
 <resultMap type="Schedule" id="schduleMap">
 			<result property="scheduleRegisterCode" column="schedule_register_code"/>
 			<result property="regularClassCode" 	column="regular_class_code"/>
-			<result property="teacherId2" 			column="teacher_id2"/>
-			<result property="studentId2" 			column="student_id2"/>
+			<result property="teacherId" 			column="teacher_id"/>
+			<result property="userId" 				column="user_id"/>
 			<result property="classStartDay" 		column="class_start_day"/>
 			<result property="classStartTime" 		column="class_start_time"/>
 			<result property="classEndTime" 		column="class_end_time"/>
@@ -23,8 +23,8 @@
 		INSERT INTO schedule_register (
 			 schedule_register_code
 			, regular_class_code
-			, teacher_id2
-			, student_id2
+			, teacher_id
+			, user_id
 			, class_start_day
 			, class_end_day
 			, class_start_time
@@ -52,7 +52,7 @@
 	</insert>
 	<select id="getAllSchedule" resultMap="schduleMap">
 		SELECT 
-			student_id2
+			user_id
 			,class_start_day
 			,class_end_day
 			,class_start_time
@@ -62,5 +62,35 @@
 		FROM
 			schedule_register
 	</select>
-	
+	<select id="getStudentNumber" resultType="Map">
+		SELECT 
+		 	 sum(case when SUBSTR(class_start_day,6,2) = '01' then 1 else 0 end) AS January
+			,sum(case when SUBSTR(class_start_day,6,2) = '02' then 1 else 0 end) AS February
+			,sum(case when SUBSTR(class_start_day,6,2) = '03' then 1 else 0 end) AS March
+			,sum(case when SUBSTR(class_start_day,6,2) = '04' then 1 else 0 end) AS April
+			,sum(case when SUBSTR(class_start_day,6,2) = '05' then 1 else 0 end) AS May
+			,sum(case when SUBSTR(class_start_day,6,2) = '06' then 1 else 0 end) AS June
+			,sum(case when SUBSTR(class_start_day,6,2) = '07' then 1 else 0 end) AS July
+			,sum(case when SUBSTR(class_start_day,6,2) = '08' then 1 else 0 end) AS August
+			,sum(case when SUBSTR(class_start_day,6,2) = '09' then 1 else 0 end) AS September
+			,sum(case when SUBSTR(class_start_day,6,2) = '10' then 1 else 0 END) AS October
+			,sum(case when SUBSTR(class_start_day,6,2) = '11' then 1 else 0 end) AS November
+			,sum(case when SUBSTR(class_start_day,6,2) = '12' then 1 else 0 end) AS December
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '01' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '01' then 1 else 0 END) FROM schedule_register) AS JanEnd 
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '02' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '02' then 1 else 0 END) FROM schedule_register) AS FebEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '03' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '03' then 1 else 0 END) FROM schedule_register) AS MarEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '04' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '04' then 1 else 0 END) FROM schedule_register) AS AprEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '05' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '05' then 1 else 0 END) FROM schedule_register) AS MayEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '06' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '06' then 1 else 0 END) FROM schedule_register) AS JunEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '07' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '07' then 1 else 0 END) FROM schedule_register) AS JulEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '08' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '08' then 1 else 0 END) FROM schedule_register) AS AugEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '09' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '09' then 1 else 0 END) FROM schedule_register) AS SepEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '10' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '10' then 1 else 0 END) FROM schedule_register) AS OctEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '11' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '11' then 1 else 0 END) FROM schedule_register) AS NovEnd
+			,@TotalStudent := @TotalStudent+(select sum(case when SUBSTR(class_start_day,6,2) = '12' then 1 else 0 END) FROM schedule_register)-(select sum(case when SUBSTR(class_end_day,6,2) = '12' then 1 else 0 END) FROM schedule_register) AS DecEnd
+		FROM 
+			schedule_register as r, (select @TotalStudent:=0) as t
+		WHERE 
+			SUBSTR(class_register_day,1,4) = SUBSTR(CURDATE(),1,4)
+	</select>
 </mapper>

@@ -82,5 +82,20 @@ public class ClassService {
 		List<ClassApply> classApplyList = classMapper.getClassApplyList();
 		return classApplyList;
 	}
+	
+	/* 2021.10.31 김경수 추가 */
+
+	public List<RegularClass> searchRegularClass(String className) {
+		
+		String policyCode = classMapper.getClassPolicyCode(className);
+		List<RegularClass> regularClass = classMapper.searchRegularClass(policyCode);
+		return regularClass;
+	}
+	public void applyClass(String regularClassCode, String classStartDate, String classStartTime, String introduction) {
+		
+		
+		classMapper.applyClass(regularClassCode,classStartDate,classStartTime,introduction);
+	}
+	/* 2021.10.31 김경수 추가 */
 
 }

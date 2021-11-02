@@ -1,24 +1,40 @@
 package callinedu.callin.controller;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import callinedu.callin.domain.RegularClass;
 import callinedu.callin.domain.User;
+import callinedu.callin.service.ClassService;
 import callinedu.callin.service.UserService;
 
 @Controller
 public class UserController {
 	private final UserService userService;
+	private final ClassService classService;
 	
-	public UserController(UserService userService) {
+	public UserController(UserService userService, ClassService classSercive) {
 		this.userService = userService;
+		this.classService = classSercive;
 	}
+	
 	
 	@PostMapping("/register")
 	public String addUser(	@RequestParam(name="user_id") String id,
@@ -36,7 +52,7 @@ public class UserController {
 		System.out.println("생년월일 결합 : "+birth);
 		userService.addUser(id, pw, name, nickname, skypeId, birth, gender, email, phoneNumber);
 		
-		return "login/login"; 
+		return "redirect:/login"; 
 	}
 	
 	@GetMapping("/register")
@@ -102,4 +118,40 @@ public class UserController {
 				return "redirect:/login";
 			}
 	}
+	
+	/* ↓↓↓↓↓↓↓↓↓↓유저 페이지↓↓↓↓↓↓ */
+	
+	@GetMapping("/user/ClassRegister")
+	public String classRegister(	){
+		return "userPage/classRegister"; 
+		
+	}
+	/* 2021.10.31 김경수 추가 */
+	@RequestMapping(value="/user/getRegularClass", method= RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public List<RegularClass> regularClass(@RequestParam(name="className", required = false) String className ,Model model) {
+		System.out.println("정규수업 등록 컨트롤러 실행");
+		model.addAttribute("title", "정규수업");
+		model.addAttribute("midTitle", "정규수업등록");
+		List<RegularClass> regularClass = classService.searchRegularClass(className);
+		
+		return regularClass;
+	}
+	
+	@PostMapping("/user/applyClass")
+	public String applyClass(
+							@RequestParam(name="regular-class-code", required = false) String regularClassCode
+							,@RequestParam(name="class-start-date", required = false) String classStartDate
+							,@RequestParam(name="class_start_time", required = false) String classStartTime
+							,@RequestParam(name="introduction", required = false) String introduction
+							) {
+		System.out.println(regularClassCode);
+		System.out.println(classStartDate);
+		System.out.println(classStartTime);
+		System.out.println(introduction);
+		classService.applyClass(regularClassCode,classStartDate,classStartTime,introduction);
+		return "redirect:/user";
+	}
+	
+	/* 2021.10.31 김경수 추가 */
 }

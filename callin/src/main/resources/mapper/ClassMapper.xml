@@ -240,4 +240,60 @@
 		FROM 
 			class_apply order by student_id ASC limit 0,10;
 	</select>
+	
+	<!-- 2021.10.31 김경수 추가 쿼리 -->
+		<select id="getClassPolicyCode" parameterType="String" resultType="String">
+			SELECT
+				 p.class_policy_code
+			FROM 
+				class_policy as p
+			WHERE 
+				class_policy_name = #{classTime}
+		</select>	
+		<select id="searchRegularClass" parameterType="String" resultMap="regularClassResultMap">
+			SELECT
+				r.regular_class_code,
+				r.class_policy_code, 
+				r.course_name, 
+				r.course_language, 
+				r.course_tuition,
+				p.class_period,
+				p.class_day,
+				p.class_time
+			FROM 
+				regular_class AS r
+			INNER JOIN
+				class_policy AS p
+			ON
+				p.class_policy_code = r.class_policy_code
+	
+			WHERE p.class_policy_code = #{policyCode}
+		</select>	
+		
+		<insert id="applyClass" parameterType="String">
+			INSERT INTO class_apply (
+				 class_apply_code
+				,student_id
+				,regular_class_code
+				,class_start_time
+				,class_start_date
+				,introduction
+				,registration_date
+				,apply_approve_code)
+				VALUES(
+				(Select CONCAT('classApply', (SELECT LPAD(COUNT(*)+1,3,'0') FROM class_apply AS CA)))
+				,'ksk1908'
+				,#{regularClassCode}
+				,#{classStartTime}
+				,#{classStartDate}
+				,#{introduction}
+				,CURDATE()
+				,'미승인'
+			) 
+			
+		</insert>
+	<!-- 2021.10.31 김경수 추가 쿼리 -->
+	
+	
+	
 </mapper>
