@@ -268,7 +268,8 @@ $(document).ready(function(){//페이지 읽기 후 스크립트 읽기(시작)
 				}
 				
 				var pwVal = $('#user_pw').val();
-				if(pwVal =='' || pwVal==''){ //패스워드/패스워드 확인 입력 여부 체크
+				var pwValCheck = $('#user_pw2').val();
+				if(pwVal =='' || pwValCheck==''){ //패스워드/패스워드 확인 입력 여부 체크
 					alert('패스워드를 입력해주세요');
 					return false;
 				}
@@ -289,15 +290,7 @@ $(document).ready(function(){//페이지 읽기 후 스크립트 읽기(시작)
 					alert('스카이프 아이디를 입력해주세요.');
 					return false;
 				}
-				if($('#skype_pw').val()==''){//스카이프 아이디 입력 여부 체크
-					alert('스카이프 패스워드를 입력해주세요.');
-					return false;
-				}
-				if(isNaN($('#unit_pay').val())==true){ // 숫자가 아니라면 알림
-					alert('단위 급여는 숫자만 입력할 수 있습니다..');
-					return false;
-				}
-				
+
 				//1. 날짜 유효성 검사 체크 (현재일<생년월일 불가능)
 				var now = new Date(); 
 				var year = now.getFullYear(); 
